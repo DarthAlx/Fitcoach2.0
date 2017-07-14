@@ -1,0 +1,396 @@
+
+
+
+
+
+/*ALX*/
+
+.topclear{
+	margin-top: 100px;
+}
+.datepicker {
+    z-index: 99999;
+}
+
+.stepwizard-step p {
+    margin-top: 10px;
+}
+
+.stepwizard-row {
+    display: table-row;
+}
+
+.stepwizard {
+    display: table;
+    width: 100%;
+    position: relative;
+}
+
+.stepwizard-step button[disabled] {
+    opacity: 1 !important;
+    filter: alpha(opacity=100) !important;
+}
+
+.stepwizard-row:before {
+    top: 14px;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+    z-order: 0;
+
+}
+
+.stepwizard-step {
+    display: table-cell;
+    text-align: center;
+    position: relative;
+}
+.btn-circle {
+    width: 56px;
+    height: 56px;
+    text-align: center;
+    padding: 12px 0;
+    font-size: 20px;
+    line-height: 1;
+    border-radius: 35px;
+    margin-top: -14px;
+    border: solid 3px #ccc !important;
+    opacity:1 !important;
+    -webkit-box-shadow:inset 0px 0px 0px 3px #fff !important;
+    -moz-box-shadow:inset 0px 0px 0px 3px #fff !important;
+    -o-box-shadow:inset 0px 0px 0px 3px #fff !important;
+    -ms-box-shadow:inset 0px 0px 0px 3px #fff !important;
+    box-shadow:inset 0px 0px 0px 3px #fff !important;
+    background-color:#428bca;
+}
+
+
+
+
+
+
+
+.profile {
+  margin: 20px 0;
+}
+
+/* Profile sidebar */
+.profile-sidebar {
+  padding: 20px 0 10px 0;
+  background: #F1F3FA;
+	border-radius: 15px;
+}
+
+.profile-userpic img {
+  float: none;
+  margin: 0 auto;
+  width: 50%;
+  height: 50%;
+  -webkit-border-radius: 50% !important;
+  -moz-border-radius: 50% !important;
+  border-radius: 50% !important;
+	min-width: 100px;
+  min-height: 100px;
+	max-width: 100px;
+  max-height: 100px;
+}
+
+.profile-usertitle {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.profile-usertitle-name {
+  color: #5a7391;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.profile-usertitle-job {
+  text-transform: uppercase;
+  color: #5b9bd1;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.profile-userbuttons {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.profile-userbuttons .btn {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 15px;
+  margin-right: 5px;
+}
+
+.profile-userbuttons .btn:last-child {
+  margin-right: 0px;
+}
+
+.profile-usermenu {
+  margin-top: 30px;
+}
+
+.profile-usermenu ul li {
+  border-bottom: 1px solid #f0f4f7;
+}
+
+.profile-usermenu ul li:last-child {
+  border-bottom: none;
+}
+
+.profile-usermenu ul li a {
+  color: #93a3b5;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.profile-usermenu ul li a i {
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.profile-usermenu ul li a:hover {
+  background-color: #fafcfd;
+  color: #5b9bd1;
+}
+
+.profile-usermenu ul li.active {
+  border-bottom: none;
+}
+
+.profile-usermenu ul li.active a {
+  color: #5b9bd1;
+  background-color: #f6f9fb;
+  border-left: 2px solid #5b9bd1;
+  margin-left: -2px;
+}
+
+/* Profile Content */
+.profile-content {
+  padding: 20px;
+  background: #F1F3FA;
+  min-height: 460px;
+	border-radius: 15px;
+}
+
+
+
+/*product*/
+
+.product_large {
+    background: #eeeeee;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 10px;
+}
+.product_large .precio{
+	text-align: center;
+	font-weight: bold;
+	color: #D58628;
+}
+p, form{
+	color: #333 !important;
+}
+
+
+/*Menu*/
+.menuclases{
+	margin-top: 7px !important;
+}
+@media screen and (max-width: 400px){
+	#header .mainMenu{
+		    float: none;
+				display: block !important;
+				margin:20px 0 0 0;
+	}
+	i.fa.fa-2x{
+		font-size: inherit !important;
+	}
+	.logo img{
+		width: 90px;
+		height: auto;
+	}
+	.menuclases{
+		margin-top: 0px !important;
+	}
+}
+/* The Overlay (background) */
+.overlay {
+    /* Height & width depends on how you want to reveal the overlay (see JS below) */
+    height: 100%;
+    width: 0;
+    position: fixed; /* Stay in place */
+    z-index: 99999999999; /* Sit on top */
+    left: 0;
+    top: 0;
+    background-color: rgb(0,0,0); /* Black fallback color */
+    background-color: rgba(0,0,0, 0.9); /* Black w/opacity */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
+
+/* Position the content inside the overlay */
+.overlay-content {
+    position: relative;
+     /* 25% from the top */
+    width: 100%; /* 100% width */
+    text-align: center; /* Centered text/links */
+    margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+}
+
+/* The navigation links inside the overlay */
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block; /* Display block instead of inline */
+    transition: 0.3s; /* Transition effects on hover (color) */
+}
+
+/* When you mouse over the navigation links, change their color */
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+}
+
+/* Position the close button (top right corner) */
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+@media screen and (max-height: 450px) {
+    .overlay a {font-size: 20px}
+    .overlay .closebtn {
+        font-size: 40px;
+        top: 15px;
+        right: 35px;
+    }
+}
+
+
+/* Icon 0 */
+
+ #nav-icon0 {
+  width: 30px;
+  height: 35px;
+  position: relative;
+
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .5s ease-in-out;
+  -moz-transition: .5s ease-in-out;
+  -o-transition: .5s ease-in-out;
+  transition: .5s ease-in-out;
+  cursor: pointer;
+}
+
+
+
+/* Icon 2 */
+
+
+#nav-icon0 span {
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 50%;
+  background: #000;
+  opacity: 1;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .25s ease-in-out;
+  -moz-transition: .25s ease-in-out;
+  -o-transition: .25s ease-in-out;
+  transition: .25s ease-in-out;
+	z-index: 9999999999999999;
+}
+#nav-icon0.open span{
+	background: #fff !important;
+	z-index: 9999999999999999;
+}
+#nav-icon0.open{
+	margin-top: 20px !important;
+	float: right;
+}
+#nav-icon0 span:nth-child(even) {
+  left: 50%;
+  border-radius: 0 9px 9px 0;
+}
+
+#nav-icon0 span:nth-child(odd) {
+  left:0px;
+  border-radius: 9px 0 0 9px;
+}
+
+#nav-icon0 span:nth-child(1), #nav-icon0 span:nth-child(2) {
+  top: 0px;
+}
+
+#nav-icon0 span:nth-child(3), #nav-icon0 span:nth-child(4) {
+  top: 10px;
+}
+
+#nav-icon0 span:nth-child(5), #nav-icon0 span:nth-child(6) {
+  top: 20px;
+}
+
+#nav-icon0.open span:nth-child(1),#nav-icon0.open span:nth-child(6) {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+#nav-icon0.open span:nth-child(2),#nav-icon0.open span:nth-child(5) {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+#nav-icon0.open span:nth-child(1) {
+  left: 0px;
+  top: 9px;
+}
+
+#nav-icon0.open span:nth-child(2) {
+  left: calc(50% - 5px);
+  top: 9px;
+}
+
+#nav-icon0.open span:nth-child(3) {
+  left: -50%;
+  opacity: 0;
+}
+
+#nav-icon0.open span:nth-child(4) {
+  left: 100%;
+  opacity: 0;
+}
+
+#nav-icon0.open span:nth-child(5) {
+  left: 0px;
+  top: 19px;
+}
+
+#nav-icon0.open span:nth-child(6) {
+  left: calc(50% - 5px);
+  top: 19px;
+}
