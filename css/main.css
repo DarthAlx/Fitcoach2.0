@@ -2,7 +2,9 @@
 
 
 
-
+@font-face{font-family:Gotham1;src:url(..//fonts/GothamRnd-Medium.otf),url(..//fonts/GothamRnd-Medium.ttf)}
+@font-face{font-family:Gotham2;src:url(..//fonts/GothamRnd-light.otf),url(..//fonts/GothamRnd-light.ttf)}
+@font-face{font-family:Gotham3;src:url(..//fonts/gotham-rounded-book.otf),url(..//fonts/gotham-rounded-book.ttf)}
 /*ALX*/
 
 .topclear{
@@ -393,4 +395,79 @@ p, form{
 #nav-icon0.open span:nth-child(6) {
   left: calc(50% - 5px);
   top: 19px;
+}
+.form-control{
+	position: relative;
+    display: block;
+    width: 100%;
+    text-align: left;
+    font-family: Gotham;
+    font-size: 13px;
+    border: none;
+    border-top: solid 1px transparent;
+    color: #000!important;
+    padding: 20px 12px;
+    min-height: 42px;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    background-color: #fafafa!important;
+    border: 0!important;
+    outline: 0;
+    -webkit-appearance: none!important;
+    border-radius: 3px;
+}
+
+.centrartotal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+
+body.modal-open .pagecontainer{
+    -webkit-filter: blur(7px);
+    -moz-filter: blur(15px);
+    -o-filter: blur(15px);
+    -ms-filter: blur(15px);
+    filter: blur(15px);
+}
+
+.modal-backdrop {background: #f7f7f7;
+	    cursor: url(../images/cross.svg),auto;
+	}
+
+.close {
+    font-size: 50px;
+    display:block;
+}
+#loginmodal .form-control{
+    background: #f4f4f4!important;
+    padding: 15px 12px;
+		font-family: Gotham2;
+
+}
+#loginmodal .btn{
+	font-family: Gotham2;
+color: #fff;
+font-size: 11px;
+letter-spacing: 1px;
+text-transform: capitalize;
+display: block;
+border: 0;
+border-radius: 40px;
+-webkit-appearance: none;
+line-height: 1.4;
+text-align: center;
+padding: 15px;
+transition: .3s linear;
+cursor: pointer;
+width: 100%;
+    cursor: pointer;
+}
+#loginmodal h4{
+    font-family: Gotham1;
+		color: #D58628 !important;
 }

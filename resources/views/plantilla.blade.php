@@ -49,6 +49,9 @@
 
 	</head>
 <body class="home">
+	<div class="pagecontainer">
+
+
 
    <header id="header"><div class="headerWrap clear is-sticky">
 <a class="logo" id="logo" href="{{ url('/') }}">
@@ -58,7 +61,7 @@
 			<nav class="mainMenu">
         <ul class="clear">
           <li class="menuclases"><a href="#">CLASES</a></li>
-          <li><a href="#"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a> </li>
+          <li><a href="#" data-toggle="modal" data-target="#loginmodal"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a> </li>
           <li><a href="#"><i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i></a></li>
           <li>
             <div id="nav-icon0" onclick="openNav()">
@@ -124,6 +127,26 @@
   		</div>
 
 	</footer>
+	</div>
+
+	<!-- Modal -->
+<div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3 col-lg-2 text-center centrartotal">
+        <button type="button" class="close visible-xs" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
+        <br><br>
+        <h4>Entrar o registrarse</h4>
+        <hr>
+				<form id="loginform" class="form-horizontal" role="form" action="{{ url('/entrar') }}" method="post">
+						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+						<input id="login-username" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Correo electrónico">
+						<input id="btn-login" type="submit" class="btn btn-success" value="Entrar" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
+				</form>
+      </div>
+    </div>
+  </div>
+</div>
 
 
     <script>
