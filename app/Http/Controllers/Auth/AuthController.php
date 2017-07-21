@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
+use App\Http\Requests;
+use App\User;
 
 class AuthController extends Controller
 {
@@ -40,6 +43,16 @@ class AuthController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+
+     public function userExist(Request $request)
+     {
+
+           ?>
+           <p>hola</p>
+           <?php
+
+     }
+
     protected function validator(array $data)
     {
         return Validator::make($data, [

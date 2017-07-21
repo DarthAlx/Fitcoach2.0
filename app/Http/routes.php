@@ -32,6 +32,7 @@ Route::get('/aviso', function () {
 
 // Authentication routes...
 Route::get('entrar', 'Auth\AuthController@getLogin');
+Route::post('userExist', 'Auth\AuthController@userExist');
 Route::post('entrar', 'Auth\AuthController@postLogin');
 Route::get('salir', 'Auth\AuthController@getLogout');
 // Registration routes...

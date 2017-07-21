@@ -133,20 +133,34 @@
 <div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="container">
     <div class="row">
-      <div class="col-sm-3 col-lg-2 text-center centrartotal">
+      <div class="col-sm-3 col-lg-3 text-center centrartotal">
         <button type="button" class="close visible-xs" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
         <br><br>
         <h4>Entrar o registrarse</h4>
-        <hr>
+
 				<form id="loginform" class="form-horizontal" role="form" action="{{ url('/entrar') }}" method="post">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+						<input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
 						<input id="login-username" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Correo electrónico">
-						<input id="btn-login" type="submit" class="btn btn-success" value="Entrar" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
+
 				</form>
+				<button id="btn-login"  class="btn btn-success" onclick="userExist()" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Entrar</button>
       </div>
     </div>
   </div>
 </div>
+<script type="text/javascript">
+function userExist(){
+	email = $('#login-username').val();
+	_token= $('#token').val();
+	alert(_token);
+	$.post("http://localhost/Fitcoach2.0/userExist", {
+	email : email,
+	_token : _token
+	}, function(data) {
+			alert("ok");
+	});
+}
+		</script>
 
 
     <script>
