@@ -136,14 +136,40 @@
       <div class="col-sm-3 col-lg-3 text-center centrartotal">
         <button type="button" class="close visible-xs" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
         <br><br>
-        <h4>Entrar o registrarse</h4>
+				<div id="login1">
+					<h4>Entrar o registrarse</h4>
+					<input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
+					<input id="login-username" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Correo electrónico">
+					<button id="btn-login"  class="btn btn-success" onclick="userExist()" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Entrar</button>
+				</div>
+				<div id="login2" style="display: none;">
+					<h4>Bienvenido a Fitcoach</h4>
+					<form id="loginform" class="form-horizontal" role="form" action="{{ url('/entrar') }}" method="post">
+							<input type="hidden" name="_token" value="{{ csrf_token() }}">
+							<input id="emaillogin1" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Correo electrónico" required>
+							<input id="passlogin1" type="password" class="form-control" name="password" placeholder="Contraseña" required>
+							<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Entrar</button>
+					</form>
+				</div>
+				<div id="login3" style="display: none;">
+					<h4>Registrar una nueva cuenta</h4>
+					<form id="loginform" class="form-horizontal" role="form" action="{{ url('/registro') }}" method="post">
+							<input type="hidden" name="_token" value="{{ csrf_token() }}">
+							<input id="emaillogin2" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Correo electrónico" required>
+							<input type="text" class="form-control" name="name" placeholder="Nombre" required>
+							<input type="text" class="form-control datepicker" name="dob" placeholder="Fecha de nacimiento" required>
+							<select class="form-control" name="genero" required>
+								<option value="">Genero</option>
+								<option value="Masculino">Masculino</option>
+								<option value="Femenino">Femenino</option>
+							</select>
+							<input  type="password" class="form-control" name="password" placeholder="Contraseña" required>
+							<input type="password" class="form-control" name="password_confirmation" placeholder="Repetir contraseña"  required>
+							<input type="hidden" class="form-control" name="role" value="usuario" required>
+							<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Entrar</button>
+					</form>
+				</div>
 
-				<form id="loginform" class="form-horizontal" role="form" action="{{ url('/entrar') }}" method="post">
-						<input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
-						<input id="login-username" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Correo electrónico">
-
-				</form>
-				<button id="btn-login"  class="btn btn-success" onclick="userExist()" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Entrar</button>
       </div>
     </div>
   </div>
@@ -152,12 +178,23 @@
 function userExist(){
 	email = $('#login-username').val();
 	_token= $('#token').val();
-	alert(_token);
 	$.post("http://localhost/Fitcoach2.0/userExist", {
 	email : email,
 	_token : _token
 	}, function(data) {
-			alert("ok");
+		 val = data;
+			if (val=="true") {
+				$('#login1').hide();
+				$('#emaillogin1').val($('#login-username').val());
+				$("#passlogin1").focus();
+				$('#login2').show();
+			}
+			else{
+				$('#login1').hide();
+				$('#emaillogin2').val($('#login-username').val());
+				$("#emailconflogin2").focus();
+				$('#login3').show();
+			}
 	});
 }
 		</script>

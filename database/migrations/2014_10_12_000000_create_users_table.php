@@ -18,6 +18,8 @@ class CreateUsersTable extends Migration
         $table->string('email')->unique();
         $table->string('password', 60);
         $table->enum('role',['usuario', 'instructor', 'admin', 'superadmin'])->default('usuario');
+        $table->string('dob');
+        $table->string('genero');
         $table->rememberToken();
         $table->timestamps();
     });

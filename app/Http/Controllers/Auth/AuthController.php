@@ -10,7 +10,6 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\User;
 
 class AuthController extends Controller
 {
@@ -62,6 +61,20 @@ class AuthController extends Controller
         ]);
     }
 
+    public function postRegister(Request $request)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        Auth::login($this->create($request->all()));
+        return redirect($this->redirectPath());
+    }
+
     /**
      * Create a new user instance after a valid registration.
      *
@@ -70,12 +83,18 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'role' => bcrypt($data['role']),
+            'role' => $data['role'],
+            'dob' => $data['dob'],
+            'genero' => $data['genero']
         ]);
+
+
+
     }
 
     public function loginPath()
