@@ -439,10 +439,10 @@ body.modal-open .pagecontainer{
 	    cursor: url(../images/cross.svg),auto;
 	}
 
-.close {
+/*.close {
     font-size: 50px;
     display:block;
-}
+}*/
 #loginmodal .form-control{
     background: #f4f4f4!important;
     padding: 15px 12px;
@@ -470,4 +470,59 @@ width: 100%;
 #loginmodal h4{
     font-family: Gotham1;
 		color: #D58628 !important;
+}
+
+
+
+ .nombre{
+	color: #BEC0BE;
+	text-decoration: underline;
+	font-family: Gotham1;
+}
+
+.sidebar button{
+	background: #efefef;
+	width: 100%;
+	color: #bababa;
+	margin-bottom: 12px;
+	padding: 10px 12px;
+	border-radius: 0px;
+}
+.sidebar button span{
+	float: left;
+}
+.sidebar button i{
+	float: right;
+}
+
+.btn-success{
+	font-family: Gotham2;
+color: #fff;
+font-size: 11px;
+letter-spacing: 1px;
+text-transform: capitalize;
+display: block;
+border: 0;
+border-radius: 40px !important;
+-webkit-appearance: none;
+line-height: 1.4;
+text-align: center;
+padding: 15px;
+transition: .3s linear;
+cursor: pointer;
+width: 100%;
+cursor: pointer;
+color: #fff !important;
+background-color: #D58628 !important;
+border-color: rgba(213, 134, 40, 0.64) !important;
+}
+
+.listadeclases{
+	margin-top: 20px;
+	width: 70%;
+	margin: 0 auto;
+}
+.modal h4{
+	font-family: Gotham1;
+color: #D58628 !important;
 }

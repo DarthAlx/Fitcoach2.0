@@ -129,6 +129,8 @@
 	</footer>
 	</div>
 
+
+
 	<!-- Modal -->
 <div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="container">
@@ -138,9 +140,11 @@
         <br><br>
 				<div id="login1">
 					<h4>Entrar o registrarse</h4>
+					<form>
 					<input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
 					<input id="login-username" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Correo electrónico">
 					<button id="btn-login"  class="btn btn-success" onclick="userExist()" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Entrar</button>
+					</form>
 				</div>
 				<div id="login2" style="display: none;">
 					<h4>Bienvenido a Fitcoach</h4>
@@ -156,6 +160,7 @@
 					<form id="loginform" class="form-horizontal" role="form" action="{{ url('/registro') }}" method="post">
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 							<input id="emaillogin2" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Correo electrónico" required>
+							<input type="email" class="form-control" name="email_confirmation" value="{{ old('email_confirmation') }}" placeholder="Confirmar correo electrónico" required>
 							<input type="text" class="form-control" name="name" placeholder="Nombre" required>
 							<input type="text" class="form-control datepicker" name="dob" placeholder="Fecha de nacimiento" required>
 							<select class="form-control" name="genero" required>
@@ -165,7 +170,7 @@
 							</select>
 							<input  type="password" class="form-control" name="password" placeholder="Contraseña" required>
 							<input type="password" class="form-control" name="password_confirmation" placeholder="Repetir contraseña"  required>
-							<input type="hidden" class="form-control" name="role" value="usuario" required>
+
 							<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Entrar</button>
 					</form>
 				</div>
@@ -215,6 +220,6 @@ $(document).ready(function() {
 	});
 });
 </script>
-
+@yield('modals')
 </body>
 </html>

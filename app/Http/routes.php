@@ -54,9 +54,19 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 Route::group(['middleware' => 'administradores'], function(){
 
 });
-Route::group(['middleware' => 'usuario'], function(){
 
+
+Route::group(['middleware' => 'usuarios'], function(){
+  Route::get('/perfil', function () {
+    $user = App\User::find(Auth::user()->id);
+    return view('perfil', ['user'=>$user]) ;
+  });
+  Route::post('actualizar-perfil', 'DetalleController@store');
+  Route::put('actualizar-perfil', 'DetalleController@update');
+  Route::put('actualizar-contraseña', 'UserController@updatePassword');
 });
-Route::group(['middleware' => 'instructor'], function(){
+
+
+Route::group(['middleware' => 'instructores'], function(){
 
 });

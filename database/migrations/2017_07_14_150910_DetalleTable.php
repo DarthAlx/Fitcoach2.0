@@ -12,7 +12,16 @@ class DetalleTable extends Migration
      */
     public function up()
     {
-        //
+      Schema::create('detalles', function (Blueprint $table) {
+        $table->increments('id');
+        $table->string('photo');
+        $table->string('tel');
+        $table->string('intereses');
+        $table->string('rfc');
+        $table->string('clases');
+        $table->integer('user_id');
+        $table->timestamps();
+    });
     }
 
     /**
@@ -22,6 +31,6 @@ class DetalleTable extends Migration
      */
     public function down()
     {
-        //
+      Schema::drop('detalles');
     }
 }

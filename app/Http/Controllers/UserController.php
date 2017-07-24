@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Detalles;
 
 class UserController extends Controller
 {
@@ -29,6 +31,24 @@ class UserController extends Controller
       else {
         ?>false<?php
       }
+
+    }
+
+    public function updatePassword(Request $request){
+      if ($request->password==$request->password_confirmation) {
+        $user = User::find(Auth::user()->id);
+        $user->password=bcrypt($request->password);
+        $user->save();
+        Session::flash('mensaje', 'Contraseña actualizada!');
+        Session::flash('class', 'success');
+        return redirect()->intended(url('/perfil'));
+      }
+      else {
+        Session::flash('mensaje', 'Las contraseñas deben coincidir!');
+        Session::flash('class', 'danger');
+        return redirect()->intended(url('/perfil'));
+      }
+
 
     }
 
@@ -84,7 +104,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**

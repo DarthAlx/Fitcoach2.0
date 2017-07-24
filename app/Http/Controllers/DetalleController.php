@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\User;
+use App\Detalle;
+use Illuminate\Support\Facades\Session;
 
 class DetalleController extends Controller
 {
@@ -37,7 +40,17 @@ class DetalleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $usuario = User::find(Auth::user()->id);
+      $usuario->dob = $request->dob;
+      $usuario->save();
+      $detalles = new Detalle();
+      $detalles->tel = $request->tel;
+      $detalles->intereses = $request->intereses;
+      $detalles->user_id=Auth::user()->id;
+      $detalles->save();
+      Session::flash('mensaje', 'Perfil actualizado!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/perfil'));
     }
 
     /**
@@ -69,9 +82,19 @@ class DetalleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+      $usuario = User::find(Auth::user()->id);
+      $usuario->dob = $request->dob;
+      $usuario->save();
+      $detalles = Detalle::where('user_id', Auth::user()->id)->first();
+      $detalles->tel = $request->tel;
+      $detalles->intereses = $request->intereses;
+      $detalles->save();
+
+      Session::flash('mensaje', 'Perfil actualizado!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/perfil'));
     }
 
     /**
