@@ -12,7 +12,16 @@ class TarjetaTable extends Migration
      */
     public function up()
     {
-        //
+      Schema::create('tarjetas', function (Blueprint $table) {
+        $table->increments('id');
+        $table->string('identificador');
+        $table->string('num');
+        $table->string('mes');
+        $table->string('año');
+        $table->string('nombre');
+        $table->integer('user_id');
+        $table->timestamps();
+    });
     }
 
     /**
@@ -22,6 +31,6 @@ class TarjetaTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('tarjetas');
     }
 }

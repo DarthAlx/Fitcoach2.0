@@ -64,6 +64,12 @@ Route::group(['middleware' => 'usuarios'], function(){
   Route::post('actualizar-perfil', 'DetalleController@store');
   Route::put('actualizar-perfil', 'DetalleController@update');
   Route::put('actualizar-contraseña', 'UserController@updatePassword');
+
+  Route::post('agregar-direccion', 'DireccionController@store');
+  Route::put('actualizar-direccion', 'DireccionController@update');
+  Route::delete('eliminar-direccion', 'DireccionController@destroy');
+
+  Route::post('agregar-tarjeta', 'TarjetaController@store');
 });
 
 

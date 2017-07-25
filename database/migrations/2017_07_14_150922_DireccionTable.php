@@ -12,7 +12,19 @@ class DireccionTable extends Migration
      */
     public function up()
     {
-        //
+      Schema::create('direcciones', function (Blueprint $table) {
+          $table->increments('id');
+          $table->string('identificador');
+          $table->string('calle');
+          $table->string('numero_ext');
+          $table->string('numero_int');
+          $table->string('colonia');
+          $table->string('municipio_del');
+          $table->string('cp');
+          $table->string('estado');
+          $table->integer('user_id');
+          $table->timestamps();
+      });
     }
 
     /**
@@ -22,6 +34,6 @@ class DireccionTable extends Migration
      */
     public function down()
     {
-        //
+      Schema::drop('direcciones');
     }
 }

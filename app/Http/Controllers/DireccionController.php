@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Direccion;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class DireccionController extends Controller
 {
@@ -37,7 +40,12 @@ class DireccionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $guardar = new Direccion($request->all());
+      $guardar->user_id = Auth::user()->id;
+      $guardar->save();
+      Session::flash('mensaje', 'Dirección guardada!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/perfil'));
     }
 
     /**
@@ -69,9 +77,21 @@ class DireccionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+      $direccion = Direccion::find($request->direccion_id);
+      $direccion->identificador = $request->identificador;
+      $direccion->calle = $request->calle;
+      $direccion->numero_ext = $request->numero_ext;
+      $direccion->numero_int = $request->numero_int;
+      $direccion->colonia = $request->colonia;
+      $direccion->municipio_del = $request->municipio_del;
+      $direccion->cp = $request->cp;
+      $direccion->estado = $request->estado;
+      $direccion->save();
+      Session::flash('mensaje', 'Dirección actualizada!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/perfil'));
     }
 
     /**
@@ -80,8 +100,12 @@ class DireccionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+      $direccion = Direccion::find($request->direccion_id);
+      $direccion->delete();
+      Session::flash('mensaje', 'Dirección eliminada correctamente!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/perfil'));
     }
 }

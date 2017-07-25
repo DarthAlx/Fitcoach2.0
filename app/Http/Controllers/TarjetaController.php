@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Tarjeta;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class TarjetaController extends Controller
 {
@@ -37,7 +40,12 @@ class TarjetaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $guardar = new Tarjeta($request->all());
+      $guardar->user_id = Auth::user()->id;
+      $guardar->save();
+      Session::flash('mensaje', 'Tarjeta guardada!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/perfil'));
     }
 
     /**
