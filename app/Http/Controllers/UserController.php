@@ -24,7 +24,7 @@ class UserController extends Controller
 
     public function userExist(Request $request)
     {
-      $user= User::where('email', $request->email)->first();
+      $user = User::where('email', $request->email)->first();
       if ($user) {
         ?>true<?php
       }

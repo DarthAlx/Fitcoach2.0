@@ -68,9 +68,15 @@
                   @endif
         					<input type="hidden" name="_token" value="{{ csrf_token() }}">
         					<input class="form-control datepicker" type="text" value="{{ $user->dob }}" name="dob" required>
-                  <input class="form-control" type="tel" value="@if($user->detalles) {{ $user->detalles->tel }} @endif" placeholder="5555555555" name="tel" required>
-                  <input class="form-control" type="text" value="@if($user->detalles) {{ $user->detalles->intereses }} @endif" placeholder="Yoga, spinning, zumba..." name="intereses">
-        					<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Actualizar</button
+                  @if($user->detalles)
+                    <input class="form-control" type="tel" value="{{ $user->detalles->tel }}" placeholder="5555555555" name="tel" required>
+                    <input class="form-control" type="text" value="{{ $user->detalles->intereses }}" placeholder="Yoga, spinning, zumba..." name="intereses">
+                  @else
+                    <input class="form-control" type="tel" value="" placeholder="5555555555" name="tel" required>
+                    <input class="form-control" type="text" value="" placeholder="Yoga, spinning, zumba..." name="intereses">
+                  @endif
+
+        					<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Actualizar</button>
 
 
                 </form>
@@ -96,7 +102,7 @@
         					<input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <input class="form-control" type="password" name="password" placeholder="Nueva contraseña" required>
                   <input class="form-control" type="password" name="password_confirmation" placeholder="Confirmar contraseña" required>
-        					<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Actualizar</button
+        					<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Actualizar</button>
                 </form>
       				</div>
       </div>

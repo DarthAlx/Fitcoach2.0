@@ -526,3 +526,6 @@ border-color: rgba(213, 134, 40, 0.64) !important;
 	font-family: Gotham1;
 color: #D58628 !important;
 }
+.datepicker {
+    padding: -1px;
+}
