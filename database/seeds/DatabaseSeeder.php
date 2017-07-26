@@ -15,7 +15,12 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
         $this->call(UserSeeder::class);
         $this->call(SliderSeeder::class);
-
+        $this->call(ClaseSeeder::class);
+        $this->call(ZonaSeeder::class);
+        $this->call(CondominioSeeder::class);
+        $this->call(OrdenSeeder::class);
+        $this->call(ParticularSeeder::class);
+        $this->call(ResidencialesSeeder::class);
         Model::reguard();
     }
 }

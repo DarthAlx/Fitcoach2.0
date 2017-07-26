@@ -12,7 +12,12 @@ class ZonaTable extends Migration
      */
     public function up()
     {
-        //
+      Schema::create('zonas', function (Blueprint $table) {
+        $table->increments('id');
+        $table->string('identificador');
+        $table->string('descripcion');
+        $table->timestamps();
+      });
     }
 
     /**
@@ -22,6 +27,6 @@ class ZonaTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('zonas');
     }
 }

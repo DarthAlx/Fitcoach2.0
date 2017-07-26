@@ -12,7 +12,16 @@ class ParticularTable extends Migration
      */
     public function up()
     {
-        //
+      Schema::create('particulares', function (Blueprint $table) {
+          $table->increments('id');
+          $table->date('fecha');
+          $table->string('hora');
+          $table->integer('user_id');
+          $table->integer('clase_id');
+          $table->string('zonas');
+          $table->string('recurrencia');
+          $table->timestamps();
+      });
     }
 
     /**
@@ -22,6 +31,6 @@ class ParticularTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('particulares');
     }
 }

@@ -12,7 +12,20 @@ class ResidencialTable extends Migration
      */
     public function up()
     {
-        //
+      Schema::create('residenciales', function (Blueprint $table) {
+          $table->increments('id');
+          $table->date('fecha');
+          $table->string('hora');
+          $table->integer('user_id');
+          $table->integer('condominio_id');
+          $table->integer('clase_id');
+          $table->string('precio');
+          $table->string('audiencia');
+          $table->string('cupo');
+          $table->string('tipo');
+          $table->string('descripcion');
+          $table->timestamps();
+      });
     }
 
     /**
@@ -22,6 +35,6 @@ class ResidencialTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('residenciales');
     }
 }

@@ -14,10 +14,17 @@
     <div class="col-md-4 sidebar">
       <hr>
       <div class="claseanterior text-center">
-        <h4>CLASE ANTERIOR</h4>
-        <h1>YOGA</h1>
-        <h2>HERMAN</h2>
-        <button type="button" class="btn btn-success">Calificar</button>
+        @if ($user->ordenes)
+          <h4>CLASE ANTERIOR</h4>
+          <?php
+          $ultima= App\Orden::where('user_id', $user->id)->orderBy('fecha', 'desc')->first();
+          $coachu= App\User::find($ultima->coach_id);
+           ?>
+           <h1>{{$ultima->nombre}}</h1>
+           <h2>{{$coachu->name}}</h2>
+           <button type="button" class="btn btn-success">Calificar</button>
+
+        @endif
       </div>
       <hr>
       <h4>MIS DATOS</h4>
@@ -262,8 +269,8 @@
                       {{ method_field('PUT') }}
 
             					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-                      <input class="form-control" type="text" value="{{ Ucfirst($tarjeta->identificador) }}" id="identificador{{ $tarjeta->id }}" name="identificador" placeholder="Ej: Crédito, Mi tarjeta, Banco ..." required>
-                      <input class="form-control" type="num" value="{{ Ucfirst($tarjeta->num) }}" id="num{{ $tarjeta->id }}" name="num" placeholder="No. de tarjeta" required>
+                      <input class="form-control" type="text" value="{{ Ucfirst($tarjeta->identificador) }}" name="identificador" placeholder="Ej: Crédito, Mi tarjeta, Banco ..." required>
+                      <input class="form-control" type="num" value="{{ Ucfirst($tarjeta->num) }}" name="num" placeholder="No. de tarjeta" required>
                       <select class="form-control" id="mes{{ $tarjeta->id }}" name="mes" required>
                          <option value="">Mes de exp.</option>
                          <option value="01">01</option>
@@ -300,7 +307,7 @@
                          <script type="text/javascript">
                           if (document.getElementById('año{{ $tarjeta->id }}') != null) document.getElementById('año{{ $tarjeta->id }}').value = '{!! $tarjeta->año !!}';
                          </script>
-                         <input class="form-control" type="text" value="{{ Ucfirst($tarjeta->nombre) }}" id="nombre{{ $tarjeta->id }}" placeholder="Nombre del titular" name="nombre" required>
+                         <input class="form-control" type="text" value="{{ Ucfirst($tarjeta->nombre) }}" placeholder="Nombre del titular" name="nombre" required>
                          <input type="hidden" value="{{ $tarjeta->id }}" name="tarjeta_id">
                          <div class="text-center">
                            <button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important; width: 40%; display: inline-block;">Actualizar</button>

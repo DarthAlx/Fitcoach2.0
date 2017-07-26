@@ -12,7 +12,13 @@ class CondominioTable extends Migration
      */
     public function up()
     {
-        //
+      Schema::create('condominios', function (Blueprint $table) {
+        $table->increments('id');
+        $table->string('identificador');
+        $table->string('direccion');
+        $table->string('imagen');
+        $table->timestamps();
+      });
     }
 
     /**
@@ -22,6 +28,6 @@ class CondominioTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('condominios');
     }
 }

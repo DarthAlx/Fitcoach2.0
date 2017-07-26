@@ -12,7 +12,19 @@ class OrdenTable extends Migration
      */
     public function up()
     {
-        //
+      Schema::create('ordenes', function (Blueprint $table) {
+          $table->increments('id');
+          $table->integer('order_id');
+          $table->integer('user_id');
+          $table->integer('coach_id');
+          $table->string('nombre');
+          $table->date('fecha');
+          $table->string('cantidad');
+          $table->string('metadata');
+          $table->string('status');
+          $table->string('estado');
+          $table->timestamps();
+      });
     }
 
     /**
@@ -22,6 +34,6 @@ class OrdenTable extends Migration
      */
     public function down()
     {
-        //
+      Schema::drop('ordenes');
     }
 }
