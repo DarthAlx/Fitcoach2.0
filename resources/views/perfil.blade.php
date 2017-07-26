@@ -26,7 +26,11 @@
       <button type="button" class="btn" data-toggle="modal" data-target="#cambiarcontraseña"><span>Contraseña</span> <i class="fa fa-pencil" aria-hidden="true"></i></button>
       <hr>
       <h4>FORMAS DE PAGO</h4>
-      <button type="button" class="btn"><span>Mastercard</span></button>
+      @if(!$user->tarjetas->isEmpty())
+        @foreach ($user->tarjetas as $tarjeta)
+          <button type="button" class="btn" data-toggle="modal" data-target="#tarjeta{{$tarjeta->id}}"><span>{{$tarjeta->identificador}}</span>  <i class="fa fa-pencil" aria-hidden="true"></i></button>
+        @endforeach
+      @endif
       <button type="button" class="btn" data-toggle="modal" data-target="#agregartarjeta"><span>Nueva tarjeta +</span></button>
     </div>
     <div class="col-md-8">
@@ -146,7 +150,7 @@
                         </script>
                         <div class="text-center">
                           <button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important; width: 40%; display: inline-block;">Actualizar</button>
-                          <a href="#" class="btn btn-success" style="color: #fff !important; background-color: red !important; border-color: red !important; width: 40%; display: inline-block;" onclick="javascript: document.getElementById('botoneliminar{{ $direccion->id }}').click();">Borrar</a>
+                          <a href="#" class="btn btn-success" style="color: #fff !important; background-color: #d9534f !important; border-color: #d9534f !important; width: 40%; display: inline-block;" onclick="javascript: document.getElementById('botoneliminar{{ $direccion->id }}').click();">Borrar</a>
                         </div>
                         <hr>
                       </form>
@@ -194,13 +198,10 @@
 <div class="modal fade" id="agregartarjeta" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-
       <div class="modal-body">
-
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
-
       				<div>
-      					<h4>Agregat tarjeta</h4>
+      					<h4>Agregar tarjeta</h4>
                 <form action="{{ url('/agregar-tarjeta') }}" method="post">
         					<input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <input class="form-control" type="text" value="{{ old('identificador') }}" name="identificador" placeholder="Ej: Crédito, Mi tarjeta, Banco ..." required>
@@ -244,5 +245,81 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal contraseña -->
 
+@if(!$user->tarjetas->isEmpty())
+  @foreach ($user->tarjetas as $tarjeta)
+    <div class="modal fade" id="tarjeta{{$tarjeta->id}}" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+          <div class="modal-body">
+
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
+
+          				<div>
+          					<h4>Editar tarjeta</h4>
+                    <form action="{{ url('/actualizar-tarjeta') }}" method="post">
+
+                      {{ method_field('PUT') }}
+
+            					<input type="hidden" name="_token" value="{{ csrf_token() }}">
+                      <input class="form-control" type="text" value="{{ Ucfirst($tarjeta->identificador) }}" id="identificador{{ $tarjeta->id }}" name="identificador" placeholder="Ej: Crédito, Mi tarjeta, Banco ..." required>
+                      <input class="form-control" type="num" value="{{ Ucfirst($tarjeta->num) }}" id="num{{ $tarjeta->id }}" name="num" placeholder="No. de tarjeta" required>
+                      <select class="form-control" id="mes{{ $tarjeta->id }}" name="mes" required>
+                         <option value="">Mes de exp.</option>
+                         <option value="01">01</option>
+                         <option value="02">02</option>
+                         <option value="03">03</option>
+                         <option value="04">04</option>
+                         <option value="05">05</option>
+                         <option value="06">06</option>
+                         <option value="07">07</option>
+                         <option value="08">08</option>
+                         <option value="09">09</option>
+                         <option value="10">10</option>
+                         <option value="11">11</option>
+                         <option value="12">12</option>
+                       </select>
+                       <script type="text/javascript">
+                         if (document.getElementById('mes{{ $tarjeta->id }}') != null) document.getElementById('mes{{ $tarjeta->id }}').value = '{!! $tarjeta->mes !!}';
+                       </script>
+                       <select class="form-control" id="año{{ $tarjeta->id }}" name="año" required>
+                           <option value="">Año de exp.</option>
+                           <option value="2017">2017</option>
+                           <option value="2018">2018</option>
+                           <option value="2019">2019</option>
+                           <option value="2020">2020</option>
+                           <option value="2021">2021</option>
+                           <option value="2022">2022</option>
+                           <option value="2023">2023</option>
+                           <option value="2024">2024</option>
+                           <option value="2025">2025</option>
+                           <option value="2026">2026</option>
+                           <option value="2027">2027</option>
+                           <option value="2028">2028</option>
+                         </select>
+                         <script type="text/javascript">
+                          if (document.getElementById('año{{ $tarjeta->id }}') != null) document.getElementById('año{{ $tarjeta->id }}').value = '{!! $tarjeta->año !!}';
+                         </script>
+                         <input class="form-control" type="text" value="{{ Ucfirst($tarjeta->nombre) }}" id="nombre{{ $tarjeta->id }}" placeholder="Nombre del titular" name="nombre" required>
+                         <input type="hidden" value="{{ $tarjeta->id }}" name="tarjeta_id">
+                         <div class="text-center">
+                           <button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important; width: 40%; display: inline-block;">Actualizar</button>
+                           <a href="#" class="btn btn-success" style="color: #fff !important; background-color: #d9534f !important; border-color: #d9534f !important; width: 40%; display: inline-block;" onclick="javascript: document.getElementById('botoneliminart{{ $tarjeta->id }}').click();">Borrar</a>
+                         </div>
+
+                    </form>
+                    <form style="display: none;" action="{{ url('/eliminar-tarjeta') }}" method="post">
+                        {!! csrf_field() !!}
+                        {{ method_field('DELETE') }}
+                        <input type="hidden" name="tarjeta_id" value="{{ $tarjeta->id }}">
+                        <input type="submit" id="botoneliminart{{ $tarjeta->id }}">
+                      </form>
+          				</div>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal detalles user -->
+  @endforeach
+@endif
 
 @endsection

@@ -10,6 +10,7 @@ use App\Tarjeta;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
+
 class TarjetaController extends Controller
 {
     /**
@@ -77,9 +78,18 @@ class TarjetaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $tarjeta = Tarjeta::find($request->tarjeta_id);
+        $tarjeta->identificador = $request->identificador;
+        $tarjeta->num = $request->num;
+        $tarjeta->mes = $request->mes;
+        $tarjeta->año = $request->año;
+        $tarjeta->nombre = $request->nombre;
+        $tarjeta->save();
+        Session::flash('mensaje', 'Tarjeta actualizada!');
+        Session::flash('class', 'success');
+        return redirect()->intended(url('/perfil'));
     }
 
     /**
@@ -88,8 +98,12 @@ class TarjetaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $tarjeta = Tarjeta::find($request->tarjeta_id);
+        $tarjeta->delete();
+        Session::flash('mensaje', 'Tarjeta eliminada correctamente!');
+        Session::flash('class', 'success');
+        return redirect()->intended(url('/perfil'));
     }
 }

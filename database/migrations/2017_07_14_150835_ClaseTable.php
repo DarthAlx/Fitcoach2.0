@@ -12,7 +12,16 @@ class ClaseTable extends Migration
      */
     public function up()
     {
-        //
+      Schema::create('clases', function (Blueprint $table) {
+        $table->increments('id');
+        $table->string('nombre');
+        $table->string('tipo');
+        $table->string('descripcion');
+        $table->string('imagen');
+        $table->string('precio');
+        $table->string('precio_especial');
+        $table->timestamps();
+      });
     }
 
     /**
@@ -22,6 +31,6 @@ class ClaseTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('clases');
     }
 }
