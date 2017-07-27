@@ -18,7 +18,7 @@ class DetalleSeeder extends Seeder
       ]);
 
       DB::table('detalles')->insert([
-        'photo'=>'dumy.png',
+        'photo'=>'dummy.png',
         'tel'=>'5555555',
         'rfc'=>'MOAJ920930LK0',
         'clases'=>'1',

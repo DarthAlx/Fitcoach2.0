@@ -72,6 +72,8 @@ Route::group(['middleware' => 'usuarios'], function(){
   Route::post('agregar-tarjeta', 'TarjetaController@store');
   Route::put('actualizar-tarjeta', 'TarjetaController@update');
   Route::delete('eliminar-tarjeta', 'TarjetaController@destroy');
+
+  Route::put('cancelar-orden', 'OrdenController@update');
 });
 
 

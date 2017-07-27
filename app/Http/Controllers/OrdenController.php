@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Orden;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class OrdenController extends Controller
 {
@@ -69,9 +72,14 @@ class OrdenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+      $orden = Orden::find($request->ordencancelar);
+      $orden->status = 'cancelada';
+      $orden->save();
+      Session::flash('mensaje', 'Orden cancelada!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/perfil'));
     }
 
     /**

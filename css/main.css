@@ -6,7 +6,15 @@
 @font-face{font-family:Gotham2;src:url(..//fonts/GothamRnd-light.otf),url(..//fonts/GothamRnd-light.ttf)}
 @font-face{font-family:Gotham3;src:url(..//fonts/gotham-rounded-book.otf),url(..//fonts/gotham-rounded-book.ttf)}
 /*ALX*/
-
+.gotham1{
+	font-family: Gotham1;
+}
+.gotham2{
+	font-family: Gotham2;
+}
+.gotham3{
+	font-family: Gotham3;
+}
 .topclear{
 	margin-top: 100px;
 }
@@ -406,7 +414,7 @@ p, form{
     border: none;
     border-top: solid 1px transparent;
     color: #000!important;
-    
+
     min-height: 42px;
     letter-spacing: 1px;
     margin-bottom: 15px;
@@ -528,4 +536,39 @@ color: #D58628 !important;
 }
 .datepicker {
     padding: -1px;
+}
+.btn-clases{
+    font-family: Gotham2;
+    color: #fff;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    display: block;
+    border: 1;
+    border-radius: 40px !important;
+    -webkit-appearance: none;
+    line-height: 1.4;
+    text-align: center;
+    padding: 15px;
+    transition: .3s linear;
+    cursor: pointer;
+    width: 100%;
+    cursor: pointer;
+    color: #000 !important;
+    background-color: #fff !important;
+    border-color: #000 !important;
+}
+@media screen and (max-width: 450px) {
+	.title {
+		font-family: Gotham2;
+	    font-size: 40px;
+	    color: #efeeee;
+	}
+}
+@media screen and (min-width: 451px) {
+	.title {
+		font-family: Gotham2;
+	    font-size: 60px;
+	    color: #efeeee;
+	}
 }
