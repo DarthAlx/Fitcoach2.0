@@ -16,9 +16,19 @@ class OrdenSeeder extends Seeder
         'user_id'=>'2',
         'coach_id'=>'3',
         'nombre'=>'Yoga',
-        'fecha'=>'30-07-2017',
+        'fecha'=>'2017-07-27',
         'cantidad'=>'500',
-        'metadata'=>'metadata',
+        'metadata'=>'particular,08:00 AM',
+        'status'=>'terminada'
+        ]);
+      DB::table('ordenes')->insert([
+        'order_id'=>'ordernum258',
+        'user_id'=>'2',
+        'coach_id'=>'3',
+        'nombre'=>'Yoga',
+        'fecha'=>'2017-07-30',
+        'cantidad'=>'500',
+        'metadata'=>'particular,04:00 PM',
         'status'=>'pagada'
         ]);
     }

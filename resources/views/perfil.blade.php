@@ -14,16 +14,19 @@
     <div class="col-md-4 sidebar">
       <hr>
       <div class="claseanterior text-center">
+        <h4>CLASE ANTERIOR</h4>
         @if ($user->ordenes)
-          <h4>CLASE ANTERIOR</h4>
           <?php
-          $ultima= App\Orden::where('user_id', $user->id)->orderBy('fecha', 'desc')->first();
-          $coachu= App\User::find($ultima->coach_id);
-           ?>
-           <h1>{{$ultima->nombre}}</h1>
-           <h2>{{$coachu->name}}</h2>
-           <button type="button" class="btn btn-success">Calificar</button>
-
+          $ultima= App\Orden::where('user_id', $user->id)->where('status', 'terminada')->orderBy('fecha', 'desc')->first();
+          if ($ultima) {
+            $coachu= App\User::find($ultima->coach_id);
+             ?>
+             <h1>{{$ultima->nombre}}</h1>
+             <h2>{{$coachu->name}}</h2>
+             <button type="button" class="btn btn-success">Calificar</button>
+          <?php } else{ ?>
+            <p>No has tomado ninguna clase.</p>
+            <?php } ?>
         @endif
       </div>
       <hr>
@@ -49,7 +52,31 @@
       <p>&nbsp;</p>
       <div id="proximas" class="listadeclases">
         <div class="list-group">
-          <a href="#" class="list-group-item"><i class="fa fa-home" aria-hidden="true"></i> YOGA | 25 Julio | 20:00 <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i></a>
+          @if ($user->ordenes)
+            <?php
+            $proximas= App\Orden::where('user_id', $user->id)->where('status', 'pagada')->orderBy('fecha', 'desc')->get();
+            if ($proximas) {
+              date_default_timezone_set('America/Mexico_City');
+              foreach ($proximas as $proxima) {
+                $metadata= explode(',',$proxima->metadata);
+
+                $fecha=date_create($proxima->fecha);
+                setlocale(LC_TIME, "es-ES");
+               ?>
+               <a href="#" class="list-group-item">
+                 @if($metadata[0]=="particular")
+                   <i class="fa fa-home" aria-hidden="true"></i>
+                 @else
+                   <i class="fa fa-building" aria-hidden="true"></i>
+                 @endif
+                 {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $metadata[1] }}
+                 <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
+               </a>
+            <?php } } else{ ?>
+              <p>No has tomado ninguna clase.</p>
+              <?php  } ?>
+          @endif
+
         </div>
       </div>
 
