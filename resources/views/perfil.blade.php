@@ -99,7 +99,7 @@
         <div class="list-group">
           @if ($user->ordenes)
             <?php
-            $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'terminada')->orWhere('status', 'cancelada')->orderBy('fecha', 'asc')->get();
+            $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'terminada')->orWhere('status', 'cancelada')->orderBy('fecha', 'desc')->get();
             if ($pasadas) {
               date_default_timezone_set('America/Mexico_City');
               foreach ($pasadas as $pasada) {
@@ -108,7 +108,7 @@
                 $fecha=date_create($pasada->fecha);
                 setlocale(LC_TIME, "es-ES");
                ?>
-               <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$pasada->id}}">
+               <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
                  @if ($pasada->status=="cancelada")
                    <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                  @else
@@ -482,6 +482,79 @@
        </div><!-- /.modal contraseña -->
     <?php } }?>
 
+
+
+
+
+
+    <?php
+    $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'terminada')->orWhere('status', 'cancelada')->orderBy('fecha', 'desc')->get();
+    if ($pasadas) {
+      date_default_timezone_set('America/Mexico_City');
+      foreach ($pasadas as $pasada) {
+        $metadata= explode(',',$pasada->metadata);
+        $coach = App\User::find($pasada->coach_id);
+        $direccion= App\Direccion::find($metadata[2]);
+        $fecha=date_create($pasada->fecha);
+        setlocale(LC_TIME, "es-ES");
+
+
+       ?>
+       <div class="modal fade" id="pasadas{{$pasada->id}}" tabindex="-1" role="dialog">
+         <div class="modal-dialog" role="document">
+           <div class="modal-content">
+
+             <div class="modal-body">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
+               <div class="container-bootstrap" style="width: 100%;">
+                 <div class="row">
+                   <div class="col-sm-4 sidebar">
+                     <div class="text-center">
+                            <h1>{{$pasada->nombre}}</h1>
+                            <div class="profile-userpic">
+                              <img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" class="img-responsive" alt="">
+                            </div>
+                            <h2>{{$coach->name}}</h2>
+
+                     </div>
+                   </div>
+                   <div class="col-sm-8">
+                     <div class="title ">
+                       @if ($pasada->status=="terminada")
+                         Terminada
+                       @endif
+                       @if ($pasada->status=="cancelada")
+                         Cancelada
+                       @endif
+                     </div>
+                     <div class="gotham2">
+                       <h2>Hora: {{$metadata[1]}}</h2>
+                       <h2>Lugar: {{$direccion->identificador}}</h2>
+                     </div>
+                   </div>
+                   <div class="col-sm-12 text-center">
+                     <p>&nbsp;</p>
+                     @if ($pasada->status=="terminada")
+                       <form class="" action="{{url('/calificar-orden')}}" method="post">
+                         {!! csrf_field() !!}
+                         <input type="hidden" name="calificacion" value="">
+                         <input type="hidden" name="orden_id" value="{{$pasada->id}}">
+                         <button type="submit" class="btn btn-primary btn-lg" name="button">Calificar</button>
+                       </form>
+                     @endif
+
+
+                   </div>
+                 </div>
+               </div>
+
+
+
+             </div>
+           </div><!-- /.modal-content -->
+         </div><!-- /.modal-dialog -->
+       </div><!-- /.modal contraseña -->
+    <?php } }?>
 
 
 @endsection

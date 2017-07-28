@@ -61,7 +61,13 @@
 			<nav class="mainMenu">
         <ul class="clear">
           <li class="menuclases"><a href="#">CLASES</a></li>
-          <li><a href="#" data-toggle="modal" data-target="#loginmodal"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a> </li>
+					@if (Auth::guest())
+							<li><a href="#" data-toggle="modal" data-target="#loginmodal"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a> </li>
+					@else
+						<li><a href="{{url('perfil')}}" data-toggle="tooltip" data-placement="bottom" title="Hola {{strtok(Auth::user()->name, " ")}}"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a> </li>
+						<li><a href="{{url('salir')}}"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></a> </li>
+					@endif
+
           <li><a href="#"><i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i></a></li>
           <li>
             <div id="nav-icon0" onclick="openNav()">
@@ -88,10 +94,13 @@
     </div>
     <!-- Overlay content -->
     <div class="overlay-content">
-      <a href="#">About</a>
-      <a href="#">Services</a>
-      <a href="#">Clients</a>
-      <a href="#">Contact</a>
+	     <a href="#">ACTIVACIÓN DE CONDOMINIOS</a>
+      <a href="{{url('instructores')}}">INSTRUCTORES</a>
+      <a href="#">RESERVAR</a>
+      <a href="#">CONDOMINIOS</a>
+			<a href="#">¿QUIÉNES SOMOS?</a>
+			<a href="#">LEGAL</a>
+			<a href="#">CONTACTO</a>
     </div>
 
   </div>
@@ -218,6 +227,9 @@ $(document).ready(function() {
 		placeholder: "Filtro",
 		allowClear: true
 	});
+	$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 });
 </script>
 @yield('modals')

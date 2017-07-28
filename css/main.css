@@ -572,3 +572,17 @@ color: #D58628 !important;
 	    color: #efeeee;
 	}
 }
+
+
+@media (min-width: 768px){
+	.modal-dialog {
+	    width: 700px;
+	    margin: 30px auto;
+	}
+}
+@media (min-width: 992px){
+	.modal-dialog {
+	    width: 900px;
+	    margin: 30px auto;
+	}
+}

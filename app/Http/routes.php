@@ -28,7 +28,10 @@ Route::get('/clasesdeportivas', function () {
 Route::get('/aviso', function () {
     return view('aviso');
 });
-
+Route::get('/instructores', function () {
+  $coaches = App\User::where('role', 'instructor')->get();
+    return view('instructores', ['coaches'=>$coaches]);
+});
 
 // Authentication routes...
 Route::get('entrar', 'Auth\AuthController@getLogin');
