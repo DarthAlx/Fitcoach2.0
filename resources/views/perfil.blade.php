@@ -7,7 +7,8 @@
   <div class="row profile">
       <div class="col-sm-12">
         @include('holders.notificaciones')
-        <h2>Hola <span class="nombre">{{$user->name}}</span></h2>
+        <?php $nombre=explode(" ",$user->name); ?>
+        <h2>Hola <span class="nombre">{{ucfirst($nombre[0])}} {{ucfirst($nombre[1])}}</span></h2>
       </div>
   </div>
   <div class="row">
@@ -20,9 +21,11 @@
           $ultima= App\Orden::where('user_id', $user->id)->where('status', 'terminada')->orderBy('fecha', 'desc')->first();
           if ($ultima) {
             $coachu= App\User::find($ultima->coach_id);
+            $nombre=explode(" ",$coachu->name);
              ?>
+
              <h1>{{$ultima->nombre}}</h1>
-             <h2>{{$coachu->name}}</h2>
+             <h2>{{ucfirst($nombre[0])}}</h2>
              <button type="button" class="btn btn-success">Calificar</button>
           <?php } else{ ?>
             <p>No has tomado ninguna clase.</p>
@@ -444,7 +447,8 @@
                             <div class="profile-userpic">
                               <img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" class="img-responsive" alt="">
                             </div>
-                            <h2>{{$coach->name}}</h2>
+                            <?php $nombre=explode(" ",$coach->name); ?>
+                            <h2>{{ucfirst($nombre[0])}}</h2>
 
                      </div>
                    </div>
@@ -514,7 +518,8 @@
                             <div class="profile-userpic">
                               <img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" class="img-responsive" alt="">
                             </div>
-                            <h2>{{$coach->name}}</h2>
+                            <?php $nombre=explode(" ",$coach->name); ?>
+                            <h2>{{ucfirst($nombre[0])}}</h2>
 
                      </div>
                    </div>

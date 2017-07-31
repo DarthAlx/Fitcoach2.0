@@ -33,6 +33,8 @@ Route::get('/instructores', function () {
     return view('instructores', ['coaches'=>$coaches]);
 });
 
+Route::post('carrito', 'OrdenController@cartinst');
+
 // Authentication routes...
 Route::get('entrar', 'Auth\AuthController@getLogin');
 Route::post('userExist', 'UserController@userExist');

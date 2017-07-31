@@ -13,14 +13,14 @@
 	          <a data-toggle="modal" data-target="#coach{{$coach->id}}"><img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" alt=""></a>
 	          <div class="overlay">
 	            <div class="teamItemNameWrap">
-	              <a style="text-decoration:none;" data-toggle="modal" data-target="#coach{{$coach->id}}"><h3>{{ucfirst($coach->name)}}</h3></a>
+								<?php $nombre=explode(" ",$coach->name); ?>
+	              <a style="text-decoration:none;" data-toggle="modal" data-target="#coach{{$coach->id}}"><h3>{{ucfirst($nombre[0])}}</h3></a>
 	            </div>
 	            <!--p>Formativa</p-->
 	          </div>
 	        </div>
 	      @endforeach
 			@endif
-
     </div>
   </div>
 	</section>
@@ -94,6 +94,8 @@
 						<div class="modal-body">
 
 							<?php
+							$clase=App\Clase::find($coach->detalles->clases);
+
 							$fecha = date('Y-m-d');
 							$fechas=array();
 							$fechasformateadas=array();
@@ -105,10 +107,13 @@
 								$nuevafecha = date ( 'Y-m-d' , $nuevafecha );
 								$format=date("d", strtotime($nuevafecha));
 								$numdias=date("w", strtotime($nuevafecha));
-								$arraydia=array('Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado');
+								$nummeses=date("n", strtotime($nuevafecha));
+								$arraydia=array('Dom','Lun','Mar','Mié','Jue','Vie','Sáb');
+								$arraymes=array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto', 'Septiembre','Octubre','Noviembre','Diciembre');
 								$num=$arraydia[intval($numdias)];
+								$nummes=$arraymes[intval($nummeses)-1];
 								$fechas[]= $nuevafecha;
-								$fechasformateadas[]=ucfirst($num . " " . $format);
+								$fechasformateadas[]=ucfirst($num . " " . $format . " " .$nummes);
 							}
 
 							 ?>
@@ -116,8 +121,10 @@
 
         <div class="row">
       		<div class="col-md-12">
-						<form action="index.html" method="post">
-						<h1 class="title">{{ucfirst($coach->name)}}</h1>
+						<form action="{{url('carrito')}}" method="post">
+							{!! csrf_field() !!}
+							<?php $nombre=explode(" ",$coach->name); ?>
+						<h1 class="title">{{ucfirst($nombre[0])}} : {{ucfirst($clase->nombre)}}</h1>
 							<div id="myCarousel" class="carousel slide">
 			        <div class="carousel-inner">
 								@for ($i=0; $i < 5 ; $i++)
@@ -139,9 +146,9 @@
 															<?php $existe=App\Orden::where('coach_id', $particular->user_id)->where('fecha', $fechas[$x])->where('hora', $particular->hora)->first(); ?>
 															@if (!$existe)
 																@if ($particular->fecha==$fechas[$x]||in_array($dia_n, explode(",",$particular->recurrencia)))
-																	<li class="list-group-item" onclick="agregaracarrito('{{$particular->id}}');">
-																		<input type="checkbox" id="carrito{{$particular->id}}" name="carrito[]" value="{{$particular->id}}" style="display:none">
-																		{{$particular->hora}} <i class="fa fa-square-o pull-right fa{{$particular->id}}" aria-hidden="true"></i>
+																	<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}');" style="cursor:pointer;">
+																		<input type="checkbox" id="carrito{{$x}}{{$particular->id}}" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
+																		{{$particular->hora}} <i class="fa fa-square-o pull-right fa{{$x}}{{$particular->id}}" aria-hidden="true"></i>
 																	</li>
 																@endif
 															@endif
@@ -178,9 +185,7 @@
 
 	<script type="text/javascript">
 		function agregaracarrito(valor){
-
 			if (document.getElementById('carrito'+valor).checked) {
-
 				document.getElementById('carrito'+valor).checked = false;
 				$('#carrito'+valor).removeClass('seleccionada');
 				$('.fa'+valor).removeClass('fa-square');
