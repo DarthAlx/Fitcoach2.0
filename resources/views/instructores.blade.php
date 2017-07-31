@@ -70,7 +70,6 @@
 				 									{{strftime("%d %B", strtotime($residencial->fecha))}} | {{ $residencial->hora }} | {{$residencial->condominio->identificador}}
 				 									<i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
 												</a>
-
 											@endforeach
 										@else
 											Este coach no tiene horarios disponibles.
@@ -93,109 +92,106 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-body">
+
 							<?php
-							$fecha = date('Y-m-j');
+							$fecha = date('Y-m-d');
 							$fechas=array();
-							setlocale(LC_TIME, "es-ES");
+							$fechasformateadas=array();
+							setlocale(LC_TIME, "es-MX");
+							date_default_timezone_set('America/Mexico_City');
 
 							for ($i=0; $i < 30 ; $i++) {
 								$nuevafecha = strtotime ( '+'.$i.'day' , strtotime ( $fecha ) ) ;
-								$nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+								$nuevafecha = date ( 'Y-m-d' , $nuevafecha );
+								$format=date("d", strtotime($nuevafecha));
+								$numdias=date("w", strtotime($nuevafecha));
+								$arraydia=array('Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado');
+								$num=$arraydia[intval($numdias)];
 								$fechas[]= $nuevafecha;
+								$fechasformateadas[]=ucfirst($num . " " . $format);
 							}
 
 							 ?>
 			<div class="container-fluid" id="trabajo">
+
         <div class="row">
       		<div class="col-md-12">
+						<form action="index.html" method="post">
 						<h1 class="title">{{ucfirst($coach->name)}}</h1>
-						<div id="myCarousel" class="carousel slide">
-		        <ol class="carousel-indicators">
-		            <li data-target="#myCarousel" data-slide-to="0" class="active"> </li>
-		            <li data-target="#myCarousel" data-slide-to="1"> </li>
-
-		        </ol>
-
-		        <div class="carousel-inner">
-		        <div class="item active">
-			        <div class="row-fluid">
-				        <div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[0])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[1])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[2])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[3])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[4])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[5])))}}</div>
-
+							<div id="myCarousel" class="carousel slide">
+			        <div class="carousel-inner">
+								@for ($i=0; $i < 5 ; $i++)
+									@if ($i==0)
+										<div class="item active">
+									@else
+										<div class="item">
+									@endif
+						        <div class="row-fluid">
+											@for ($x=$i*6; $x < ($i+1)*6 ; $x++)
+												<div class="col-sm-2 col-xs-4 separacion">
+													{{$fechasformateadas[$x]}}
+													<ul class="list-group calendarioinst">
+														<?php $particulares=App\Particular::all();
+														list($año, $mes, $dia) = explode("-", $fechas[$x]);
+														$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
+														?>
+														@foreach ($particulares as $particular)
+															<?php $existe=App\Orden::where('coach_id', $particular->user_id)->where('fecha', $fechas[$x])->where('hora', $particular->hora)->first(); ?>
+															@if (!$existe)
+																@if ($particular->fecha==$fechas[$x]||in_array($dia_n, explode(",",$particular->recurrencia)))
+																	<li class="list-group-item" onclick="agregaracarrito('{{$particular->id}}');">
+																		<input type="checkbox" id="carrito{{$particular->id}}" name="carrito[]" value="{{$particular->id}}" style="display:none">
+																		{{$particular->hora}} <i class="fa fa-square-o pull-right fa{{$particular->id}}" aria-hidden="true"></i>
+																	</li>
+																@endif
+															@endif
+														@endforeach
+													</ul>
+												</div>
+											@endfor
+						        </div>
+					        </div>
+								@endfor
 			        </div>
-		        </div>
-						<div class="item">
-			        <div class="row-fluid">
-				        <div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[6])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[7])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[8])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[9])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[10])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[11])))}}</div>
 
+
+			        <a class="left carousel-control" href="#myCarousel" data-slide="prev"><em class="fa fa-2x fa-chevron-left" aria-hidden="true" style="color: #000;"></em>
+			        </a>
+			        <a class="right carousel-control" href="#myCarousel" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
+			        </a>
 			        </div>
-		        </div>
-						<div class="item">
-			        <div class="row-fluid">
-				        <div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[12])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[13])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[14])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[15])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[16])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[17])))}}</div>
 
-			        </div>
-		        </div>
-						<div class="item">
-			        <div class="row-fluid">
-				        <div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[18])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[19])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[20])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[21])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[22])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[23])))}}</div>
-
-			        </div>
-		        </div>
-						<div class="item">
-			        <div class="row-fluid">
-				        <div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[24])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[25])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[26])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[27])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[28])))}}</div>
-								<div class="col-sm-2 col-xs-4">{{ucfirst(strftime("%A %d", strtotime($fechas[29])))}}</div>
-
-			        </div>
-		        </div>
-
-
-
-
-
-
-
-
-		        </div>
-
-		        <a class="left carousel-control" href="#myCarousel" data-slide="prev"><em class="fa fa-2x fa-chevron-left" aria-hidden="true" style="color: #000;"></em>
-		        </a>
-		        <a class="right carousel-control" href="#myCarousel" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
-		        </a>
-		        </div>
-
+							<input type="submit" class="btn btn-primary btn-lg pull-right" name="" value="Reservar">
+							</form>
         	</div>
+
         </div>
       </div>
 
 						</div>
+
 					</div><!-- /.modal-content -->
 				</div><!-- /.modal-dialog -->
 			</div><!-- /.modal detalles user -->
 		@endforeach
 	@endif
+
+	<script type="text/javascript">
+		function agregaracarrito(valor){
+
+			if (document.getElementById('carrito'+valor).checked) {
+
+				document.getElementById('carrito'+valor).checked = false;
+				$('#carrito'+valor).removeClass('seleccionada');
+				$('.fa'+valor).removeClass('fa-square');
+				$('.fa'+valor).addClass('fa-square-o');
+			}
+			else {
+				document.getElementById('carrito'+valor).checked = true;
+				$('#carrito'+valor).addClass('seleccionada');
+				$('.fa'+valor).removeClass('fa-square-o');
+				$('.fa'+valor).addClass('fa-square');
+			}
+		}
+	</script>
 @endsection

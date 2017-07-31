@@ -85,7 +85,7 @@
                  @else
                    <i class="fa fa-building" aria-hidden="true"></i>
                  @endif
-                 {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $metadata[1] }}
+                 {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $proxima->hora }}
                  <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                </a>
             <?php } } else{ ?>
@@ -118,7 +118,7 @@
                      <i class="fa fa-building" aria-hidden="true"></i>
                    @endif
                   @endif
-                 {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $metadata[1] }}
+                 {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $proxima->hora }}
                  <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                </a>
             <?php } } else{ ?>
@@ -416,11 +416,11 @@
       foreach ($proximas as $proxima) {
         $metadata= explode(',',$proxima->metadata);
         $coach = App\User::find($proxima->coach_id);
-        $direccion= App\Direccion::find($metadata[2]);
+        $direccion= App\Direccion::find($metadata[1]);
         $fecha=date_create($proxima->fecha);
         setlocale(LC_TIME, "es-ES");
 
-        $horadeclase = new DateTime($proxima->fecha . ' ' . $metadata[1]);
+        $horadeclase = new DateTime($proxima->fecha . ' ' . $proxima->hora);
         $horaactual = new DateTime("now");
         $dteDiff  = $horaactual->diff($horadeclase);
 
@@ -453,7 +453,7 @@
                        {{Ucfirst($metadata[0])}}
                      </div>
                      <div class="gotham2">
-                       <h2>Hora: {{$metadata[1]}}</h2>
+                       <h2>Hora: {{$proxima->hora}}</h2>
                        <h2>Lugar: {{$direccion->identificador}}</h2>
                      </div>
                    </div>
@@ -494,7 +494,7 @@
       foreach ($pasadas as $pasada) {
         $metadata= explode(',',$pasada->metadata);
         $coach = App\User::find($pasada->coach_id);
-        $direccion= App\Direccion::find($metadata[2]);
+        $direccion= App\Direccion::find($metadata[1]);
         $fecha=date_create($pasada->fecha);
         setlocale(LC_TIME, "es-ES");
 
@@ -528,7 +528,7 @@
                        @endif
                      </div>
                      <div class="gotham2">
-                       <h2>Hora: {{$metadata[1]}}</h2>
+                       <h2>Hora: {{$proxima->hora}}</h2>
                        <h2>Lugar: {{$direccion->identificador}}</h2>
                      </div>
                    </div>

@@ -19,6 +19,7 @@ class OrdenTable extends Migration
           $table->integer('coach_id');
           $table->string('nombre');
           $table->date('fecha');
+          $table->string('hora');
           $table->string('cantidad');
           $table->string('metadata');
           $table->string('status');

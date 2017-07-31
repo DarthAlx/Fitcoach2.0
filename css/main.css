@@ -586,3 +586,20 @@ color: #D58628 !important;
 	    margin: 30px auto;
 	}
 }
+
+.calendarioinst {
+    min-height: 400px;
+}
+
+
+.carousel-control {
+    top: 40%;
+     width: inherit ;
+    font-size: 10px;
+}
+.carousel-control.left, .carousel-control.right {
+background-image: none;
+}
+.separacion{
+	border-right: 1px solid #ccc;
+}
