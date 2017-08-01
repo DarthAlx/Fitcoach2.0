@@ -32,6 +32,14 @@ Route::get('/instructores', function () {
   $coaches = App\User::where('role', 'instructor')->get();
     return view('instructores', ['coaches'=>$coaches]);
 });
+Route::get('/condominios', function () {
+  $condominios = App\Condominio::all();
+    return view('condominios', ['condominios'=>$condominios]);
+});
+Route::get('/clasesdeportivas', function () {
+  $clases = App\Clase::where('tipo', 'Deportiva')->get();
+    return view('clases', ['clases'=>$clases]);
+});
 
 Route::post('carrito', 'OrdenController@cartinst');
 

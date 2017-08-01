@@ -7,10 +7,10 @@
 		<div class="">
 		<div class="container-bootstrap-fluid">
 			<div class="row">
-				<div class="col-lg-9">
+				<div class="col-sm-9">
 					<div class="title">COACHES</div>
 				</div>
-				<div class="col-lg-3">
+				<div class="col-sm-3">
 					<div class="buscador">
 						<div class="input-group">
 						<input type="text" class="form-control" placeholder="Buscar...">
@@ -133,12 +133,19 @@
 											<div class="col-sm-8 sidebar">
 												<div class="title pull-right">
 													${{$residencial->precio}}
-													<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
+
 												</div>
+												<img src="{{ url('uploads/condominios') }}/{{ $residencial->condominio->imagen }}" class="img-responsive">
+												<form action="{{url('carrito')}}" method="post">
+													{!! csrf_field() !!}
+													<input type="hidden" name="residencial_id" value="{{$residencial->id}}">
+													<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
+												</form>
 											</div>
 										</div>
 
 									</div>
+
 		      </div>
 		    </div><!-- /.modal-content -->
 		  </div><!-- /.modal-dialog -->
@@ -186,6 +193,13 @@
 							{!! csrf_field() !!}
 							<?php $nombre=explode(" ",$coach->name); ?>
 						<h1 class="title">{{ucfirst($nombre[0])}} : {{ucfirst($clase->nombre)}}</h1>
+
+						<p class="gotham3">
+							@foreach ($coach->zonas as $zona)
+								&nbsp; {{$zona->identificador}} &nbsp;
+							@endforeach
+						</p>
+
 							<div id="myCarousel" class="carousel slide">
 			        <div class="carousel-inner">
 								@for ($i=0; $i < 5 ; $i++)

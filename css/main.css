@@ -242,10 +242,11 @@ p, form{
     z-index: 99999999999; /* Sit on top */
     left: 0;
     top: 0;
-    background-color: rgb(0,0,0); /* Black fallback color */
-    background-color: rgba(0,0,0, 0.9); /* Black w/opacity */
+    background-color: #EF7E19; /* Black fallback color */
+    background-color: #EF7E19; /* Black w/opacity */
     overflow-x: hidden; /* Disable horizontal scroll */
     transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+		color: #fff;
 }
 
 /* Position the content inside the overlay */
@@ -262,14 +263,14 @@ p, form{
     padding: 8px;
     text-decoration: none;
     font-size: 36px;
-    color: #818181;
+    color: #fff;
     display: block; /* Display block instead of inline */
     transition: 0.3s; /* Transition effects on hover (color) */
 }
 
 /* When you mouse over the navigation links, change their color */
 .overlay a:hover, .overlay a:focus {
-    color: #f1f1f1;
+    color: #e0e0e0;
 }
 
 /* Position the close button (top right corner) */
@@ -602,4 +603,12 @@ background-image: none;
 }
 .separacion{
 	border-right: 1px solid #ccc;
+}
+
+.teamItem img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+		object-fit: fill;
 }

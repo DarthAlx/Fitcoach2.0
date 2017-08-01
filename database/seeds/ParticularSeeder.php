@@ -16,7 +16,6 @@ class ParticularSeeder extends Seeder
         'hora'=>'7:00',
         'user_id'=>'3',
         'clase_id'=>'1',
-        'zonas'=>'1,2',
         'recurrencia'=>'1,2'
       ]);
       DB::table('particulares')->insert([
@@ -24,7 +23,6 @@ class ParticularSeeder extends Seeder
         'hora'=>'8:00',
         'user_id'=>'3',
         'clase_id'=>'1',
-        'zonas'=>'1,2',
         'recurrencia'=>''
       ]);
     }
