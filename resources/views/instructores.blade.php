@@ -5,7 +5,23 @@
 	    &nbsp;
 	  </div>
 		<div class="">
-    <div class="title">COACHES</div>
+		<div class="container-bootstrap-fluid">
+			<div class="row">
+				<div class="col-lg-9">
+					<div class="title">COACHES</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="buscador">
+						<div class="input-group">
+						<input type="text" class="form-control" placeholder="Buscar...">
+						<span class="input-group-btn">
+							<button class="form-control" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+						</span>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
     <div class="teamItemWrap clear">
 			@if ($coaches)
 				@foreach ($coaches as $coach)
@@ -42,7 +58,8 @@
 													 <div class="profile-userpic">
 														 <img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" class="img-responsive" alt="">
 													 </div>
-													 <h2>{{$coach->name}}</h2>
+													 <?php $nombre=explode(" ",$coach->name); ?>
+													 <h2>{{ucfirst($nombre[0])}}</h2>
 
 										</div>
 									</div>
@@ -84,6 +101,50 @@
 		@endforeach
 	@endif
 
+
+@if ($coach->residenciales)
+	@foreach ($coach->residenciales as $residencial)
+		<div class="modal fade" id="condominio{{$residencial->id}}" tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-body">
+		              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
+									<div class="container-bootstrap" style="width: 100%;">
+										<div class="row">
+											<div class="col-sm-4 sidebar">
+												<div class="text-center">
+																<div class="title">
+																		{{$residencial->clase->nombre}}
+
+																</div>
+															 <div class="profile-userpic">
+																 <img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" class="img-responsive" alt="">
+															 </div>
+															 <?php $nombre=explode(" ",$coach->name); ?>
+															 <h2>{{ucfirst($nombre[0])}}</h2>
+												</div>
+												<div class="gotham2">
+													<p>Hora: {{$residencial->hora}}</p>
+													<p>Lugar: {{$residencial->condominio->identificador}}<br>{{$residencial->condominio->direccion}}</p>
+													<p>Cupo: {{$residencial->cupo}}</p>
+												</div>
+
+											</div>
+											<div class="col-sm-8 sidebar">
+												<div class="title pull-right">
+													${{$residencial->precio}}
+													<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
+												</div>
+											</div>
+										</div>
+
+									</div>
+		      </div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal contraseña -->
+	@endforeach
+@endif
 
 
 	@if ($coaches)
@@ -168,7 +229,7 @@
 			        </a>
 			        </div>
 
-							<input type="submit" class="btn btn-primary btn-lg pull-right" name="" value="Reservar">
+							<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
 							</form>
         	</div>
 

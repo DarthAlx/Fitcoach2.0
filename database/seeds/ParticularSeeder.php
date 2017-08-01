@@ -20,7 +20,7 @@ class ParticularSeeder extends Seeder
         'recurrencia'=>'1,2'
       ]);
       DB::table('particulares')->insert([
-        'fecha'=>'2017-07-30',
+        'fecha'=>'2017-08-01',
         'hora'=>'8:00',
         'user_id'=>'3',
         'clase_id'=>'1',
