@@ -242,7 +242,9 @@
 			        <a class="right carousel-control" href="#myCarousel" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
 			        </a>
 			        </div>
+							<div id="clasesseleccionadas" class="title text-center">
 
+							</div>
 							<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
 							</form>
         	</div>
@@ -259,18 +261,23 @@
 	@endif
 
 	<script type="text/javascript">
+	clasesseleccionadas=0;
 		function agregaracarrito(valor){
 			if (document.getElementById('carrito'+valor).checked) {
 				document.getElementById('carrito'+valor).checked = false;
 				$('#carrito'+valor).removeClass('seleccionada');
 				$('.fa'+valor).removeClass('fa-square');
 				$('.fa'+valor).addClass('fa-square-o');
+				clasesseleccionadas--;
+				$('#clasesseleccionadas').html(clasesseleccionadas+" clases seleccionadas.");
 			}
 			else {
 				document.getElementById('carrito'+valor).checked = true;
 				$('#carrito'+valor).addClass('seleccionada');
 				$('.fa'+valor).removeClass('fa-square-o');
 				$('.fa'+valor).addClass('fa-square');
+				clasesseleccionadas++;
+				$('#clasesseleccionadas').html(clasesseleccionadas+" clases seleccionadas.");
 			}
 		}
 	</script>
