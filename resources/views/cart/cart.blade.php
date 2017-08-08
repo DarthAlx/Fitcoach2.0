@@ -9,8 +9,7 @@
       @foreach ($items as $product)
 
 										<h6><strong>{{ $product->price}} <span class="text-muted"></span></strong></h6>
-
-							@endforeach
+      @endforeach
     </div>
   </div>
 </section>

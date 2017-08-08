@@ -42,6 +42,10 @@ Route::get('/clasesdeportivas', function () {
 });
 
 Route::post('carrito', 'OrdenController@cartinst');
+Route::get('/carrito', function () {
+  $items=Cart::content();
+  return view('cart.cart',['items'=>$items]);
+});
 
 // Authentication routes...
 Route::get('entrar', 'Auth\AuthController@getLogin');
