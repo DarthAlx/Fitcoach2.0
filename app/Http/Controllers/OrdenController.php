@@ -7,8 +7,11 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Orden;
+use App\Particular;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Cart;
+use App\User;
 
 class OrdenController extends Controller
 {
@@ -19,7 +22,16 @@ class OrdenController extends Controller
      */
     public function cartinst(Request $request)
     {
-        dd($request->all());
+      foreach ($request->carrito as $item) {
+
+        $items=explode(",",$item);
+        $clase=Particular::find($items[0]);
+        Cart::add($clase->clase->id,$clase->clase->nombre,1,$clase->clase->precio, ['tipo'=>$clase->clase->tipo,'fecha' => $items[1],'hora' => $clase->hora]);
+      }
+
+
+    $items=Cart::content();
+    return view('cart.cart',['items'=>$items]);
     }
 
 

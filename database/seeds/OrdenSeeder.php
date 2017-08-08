@@ -52,7 +52,7 @@ class OrdenSeeder extends Seeder
           'user_id'=>'2',
           'coach_id'=>'3',
           'nombre'=>'Yoga',
-          'fecha'=>'2017-08-01',
+          'fecha'=>'2017-08-05',
           'hora'=>'7:00',
           'cantidad'=>'500',
           'metadata'=>'particular,1',

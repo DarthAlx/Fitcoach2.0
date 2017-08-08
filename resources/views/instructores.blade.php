@@ -245,6 +245,7 @@
 							<div id="clasesseleccionadas" class="title text-center">
 
 							</div>
+							<input type="hidden" name="cantidad" id="cantidad">
 							<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
 							</form>
         	</div>
@@ -269,6 +270,7 @@
 				$('.fa'+valor).removeClass('fa-square');
 				$('.fa'+valor).addClass('fa-square-o');
 				clasesseleccionadas--;
+				$('#cantidad').val(clasesseleccionadas);
 				$('#clasesseleccionadas').html(clasesseleccionadas+" clases seleccionadas.");
 			}
 			else {
@@ -277,6 +279,7 @@
 				$('.fa'+valor).removeClass('fa-square-o');
 				$('.fa'+valor).addClass('fa-square');
 				clasesseleccionadas++;
+				$('#cantidad').val(clasesseleccionadas);
 				$('#clasesseleccionadas').html(clasesseleccionadas+" clases seleccionadas.");
 			}
 		}
