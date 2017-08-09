@@ -67,6 +67,8 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 
 
+
+
 // Zonas seguras
 Route::group(['middleware' => 'administradores'], function(){
 
@@ -91,6 +93,7 @@ Route::group(['middleware' => 'usuarios'], function(){
   Route::delete('eliminar-tarjeta', 'TarjetaController@destroy');
 
   Route::put('cancelar-orden', 'OrdenController@update');
+  Route::get('removefromcart/{id}', 'OrdenController@destroy');
 });
 
 

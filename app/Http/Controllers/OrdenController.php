@@ -26,7 +26,7 @@ class OrdenController extends Controller
 
         $items=explode(",",$item);
         $clase=Particular::find($items[0]);
-        Cart::add($clase->clase->id,$clase->clase->nombre,1,$clase->clase->precio, ['tipo'=>$clase->clase->tipo,'fecha' => $items[1],'hora' => $clase->hora]);
+        Cart::add($clase->clase->id,$clase->clase->nombre,1,$clase->clase->precio, ['tipo'=>$clase->clase->tipo,'fecha' => $items[1],'hora' => $clase->hora, 'coach' => $clase->user_id]);
       }
 
 
@@ -101,8 +101,15 @@ class OrdenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($rowId)
     {
-        //
+      Cart::remove($rowId);
+      Session::flash('mensaje', 'La clase se eliminó del carrito.');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/carrito'));
+    }
+
+    public function llenar_direcciones(Request $request){
+
     }
 }

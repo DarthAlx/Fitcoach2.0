@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Cart;
 
 class AuthController extends Controller
 {
@@ -108,8 +109,15 @@ class AuthController extends Controller
         return url('/clases');
       }
       else {
-        return url('/perfil');
+        if (Cart::content()->count()>0){
+          return url('/carrito');
+        }
+        else {
+          return url('/perfil');
+        }
+
       }
+
 
     }
 }
