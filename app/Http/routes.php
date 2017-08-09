@@ -94,6 +94,8 @@ Route::group(['middleware' => 'usuarios'], function(){
 
   Route::put('cancelar-orden', 'OrdenController@update');
   Route::get('removefromcart/{id}', 'OrdenController@destroy');
+
+  Route::post('cargartarjeta', 'OrdenController@cargartarjeta');
 });
 
 

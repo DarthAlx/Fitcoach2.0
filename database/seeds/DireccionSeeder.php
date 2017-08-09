@@ -24,5 +24,15 @@ class DireccionSeeder extends Seeder
         'user_id'=>'2'
       ]);
 
+      DB::table('tarjetas')->insert([
+
+        'identificador'=>'Visa',
+        'num'=>'55555555555',
+        'nombre'=>'Alexis Morales',
+        'mes'=>'02',
+        'año'=>'17',
+        'user_id'=>'2'
+      ]);
+
     }
 }

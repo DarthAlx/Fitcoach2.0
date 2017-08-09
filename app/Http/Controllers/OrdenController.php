@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Cart;
 use App\User;
+use App\Tarjeta;
 
 class OrdenController extends Controller
 {
@@ -111,5 +112,11 @@ class OrdenController extends Controller
 
     public function llenar_direcciones(Request $request){
       $direccion=App\Direccion::find($request->direccion);
+    }
+    public function cargartarjeta(Request $request)
+    {
+      $tarjeta = Tarjeta::find($request->tarjeta);
+    
+      echo $tarjeta->num.",".$tarjeta->nombre.",".$tarjeta->mes.",".$tarjeta->año;
     }
 }
