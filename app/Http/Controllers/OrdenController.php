@@ -110,6 +110,6 @@ class OrdenController extends Controller
     }
 
     public function llenar_direcciones(Request $request){
-
+      $direccion=App\Direccion::find($request->direccion);
     }
 }
