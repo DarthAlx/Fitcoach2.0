@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Session;
 use Cart;
 use App\User;
 use App\Tarjeta;
+use App\Direccion;
 
 class OrdenController extends Controller
 {
@@ -109,14 +110,121 @@ class OrdenController extends Controller
       Session::flash('class', 'success');
       return redirect()->intended(url('/carrito'));
     }
-
-    public function llenar_direcciones(Request $request){
-      $direccion=App\Direccion::find($request->direccion);
-    }
     public function cargartarjeta(Request $request)
     {
       $tarjeta = Tarjeta::find($request->tarjeta);
-    
+
       echo $tarjeta->num.",".$tarjeta->nombre.",".$tarjeta->mes.",".$tarjeta->año;
+    }
+
+    public function cargo(Request $request)
+    {
+      \Conekta\Conekta::setApiKey("key_fr9YE9Y98jxYQ9NJrJTZXw");
+      $items=Cart::content();
+
+      foreach ($items as $product) {
+        $precio = $product->price;
+        $decimales   = '.';
+        $pos = strpos($precio, $decimales);
+        if ($pos === false) {
+            $precio_completo=$precio.".00";
+        }
+        else {
+          $precio_completo=$product->price;
+        }
+
+          $productos[]=array(
+            'name' => $product->name,
+            'unit_price' => str_replace('.', '',$precio_completo),
+            'quantity' => 1,
+            'metadata' => array(
+              'tipo' => 'particular',
+              'id' => $product->id,
+              'coach' => $product->options->coach,
+              'fecha' => $product->options->fecha,
+              'hora' => $product->options->hora
+            )
+          );
+      }
+
+
+
+      try{
+        $order=\Conekta\Order::create(array(
+          'currency' => 'MXN',
+          "customer_info" => array(
+            "name" => $request->name,
+            "email" => $request->email,
+            "phone" => "5555555555"
+          ), //customer_info
+          'line_items' => $productos,
+          'charges' => array(
+            array(
+              'payment_method' => array(
+                'type' => 'card',
+                "token_id" => $request->tokencard
+              )
+            )
+          )
+        ));
+        if ($request->tarjeta==""&&$request->identificadortarjeta) {
+          $tarjeta = new Tarjeta();
+          $tarjeta->identificador = $request->identificadortarjeta;
+          $tarjeta->num= $request->numero;
+          $tarjeta->nombre = $request->nombre;
+          $tarjeta->mes = $request->mes;
+          $tarjeta->año = $request->año;
+          $tarjeta->user_id = Auth::user()->id;
+          $tarjeta->save();
+        }
+
+        if ($request->direccion=="") {
+          $direccion = new Direccion();
+          $direccion->identificador=$request->identificadordireccion;
+          $direccion->calle=$request->calle;
+          $direccion->numero_ext=$request->numero_ext;
+          $direccion->numero_int=$request->numero_int;
+          $direccion->colonia=$request->colonia;
+          $direccion->municipio_del=$request->municipio_del;
+          $direccion->cp=$request->cp;
+          $direccion->estado=$request->estado;
+          $direccion->user_id = Auth::user()->id;
+          $direccion->save();
+        }
+
+        foreach ($productos as $producto) {
+          $guardar = new Orden();
+          $guardar->order_id=$order->id;
+          $guardar->user_id=Auth::user()->id;
+          $guardar->coach_id=$producto['metadata']['coach'];
+          $guardar->nombre=$producto['name'];
+          $guardar->fecha=$producto['metadata']['fecha'];
+          $guardar->hora=$producto['metadata']['hora'];
+          $guardar->cantidad=$producto['unit_price'];
+          $guardar->metadata=implode(",", $producto['metadata']);
+          $guardar->status='pagada';
+          $guardar->save();
+        }
+        Cart::destroy();
+
+        Session::flash('mensaje', "Orden completada! revisa <a class='alert-link' href='".url('/mis-ordenes')."'>tus ordenes.</a>");
+        Session::flash('class', 'success');
+        return redirect()->intended(url('/carrito'));
+
+        } catch (\Conekta\ProccessingError $error){
+        echo $error->getMesage();
+        } catch (\Conekta\ParameterValidationError $error){
+          $conektaError = $error->getConektaMessage();
+   var_dump($conektaError->type);
+   var_dump($conektaError->details);
+
+   //Object iteration
+   $conektaError = $error->getConektaMessage();
+   foreach ($conektaError->details as $key) {
+     echo($key->debug_message);
+   }
+        } catch (\Conekta\Handler $error){
+        echo $error->getMessage();
+        }
     }
 }

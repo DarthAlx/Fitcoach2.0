@@ -617,3 +617,11 @@ background-image: none;
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
 }
+
+.calendario{
+	    width: 100%;
+			margin: 0 auto !important;
+}
+.modal {
+    z-index: 999999999 !important;
+}

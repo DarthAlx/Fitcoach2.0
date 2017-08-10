@@ -157,7 +157,7 @@
 	@if ($coaches)
 		@foreach ($coaches as $coach)
 			<div class="modal fade" id="calendario{{$coach->id}}" tabindex="-1" role="dialog">
-				<div class="modal-dialog" role="document">
+				<div class="modal-dialog calendario" role="document">
 					<div class="modal-content">
 						<div class="modal-body">
 
@@ -246,7 +246,7 @@
 
 							</div>
 							<input type="hidden" name="cantidad" id="cantidad">
-							<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
+							<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar" id="reservar" disabled>
 							</form>
         	</div>
 
@@ -272,6 +272,9 @@
 				clasesseleccionadas--;
 				$('#cantidad').val(clasesseleccionadas);
 				$('#clasesseleccionadas').html(clasesseleccionadas+" clases seleccionadas.");
+				if (clasesseleccionadas<=0) {
+					$('#reservar').prop( "disabled", true );
+				}
 			}
 			else {
 				document.getElementById('carrito'+valor).checked = true;
@@ -281,6 +284,7 @@
 				clasesseleccionadas++;
 				$('#cantidad').val(clasesseleccionadas);
 				$('#clasesseleccionadas').html(clasesseleccionadas+" clases seleccionadas.");
+				$('#reservar').prop( "disabled", false );
 			}
 		}
 	</script>

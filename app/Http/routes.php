@@ -96,6 +96,8 @@ Route::group(['middleware' => 'usuarios'], function(){
   Route::get('removefromcart/{id}', 'OrdenController@destroy');
 
   Route::post('cargartarjeta', 'OrdenController@cargartarjeta');
+
+  Route::post('cargo', 'OrdenController@cargo');
 });
 
 
