@@ -68,7 +68,7 @@
 						<li><a href="{{url('salir')}}"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></a> </li>
 					@endif
 
-          <li><a href="#"><i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i></a></li>
+          <li><a href="{{url('/carrito')}}"><i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i></a></li>
           <li>
             <div id="nav-icon0" onclick="openNav()">
               <a href="#"><i class="fa fa-bars fa-2x" aria-hidden="true"></i></a>
@@ -177,6 +177,7 @@
 								<option value="Masculino">Masculino</option>
 								<option value="Femenino">Femenino</option>
 							</select>
+							<input type="tel" class="form-control" name="tel" minlength="10" placeholder="Teléfono (10 dígitos)" required>
 							<input  type="password" class="form-control" name="password" placeholder="Contraseña" required>
 							<input type="password" class="form-control" name="password_confirmation" placeholder="Repetir contraseña"  required>
 

@@ -47,6 +47,10 @@ Route::get('/carrito', function () {
   return view('cart.cart',['items'=>$items]);
 });
 
+Route::get('/recibo', function () {
+    return view('recibo');
+});
+
 // Authentication routes...
 Route::get('entrar', 'Auth\AuthController@getLogin');
 Route::post('userExist', 'UserController@userExist');

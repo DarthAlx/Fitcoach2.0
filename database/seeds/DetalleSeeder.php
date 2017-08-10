@@ -12,11 +12,10 @@ class DetalleSeeder extends Seeder
     public function run()
     {
       DB::table('detalles')->insert([
-        'tel'=>'5555555',
+        'tel'=>'5555555555',
         'intereses'=>'Yoga',
         'user_id'=>'2'
       ]);
-
       DB::table('detalles')->insert([
         'photo'=>'dummy.png',
         'tel'=>'5555555',

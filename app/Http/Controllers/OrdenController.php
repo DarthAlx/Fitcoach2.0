@@ -155,7 +155,7 @@ class OrdenController extends Controller
           "customer_info" => array(
             "name" => $request->name,
             "email" => $request->email,
-            "phone" => "5555555555"
+            "phone" => "+521".$request->phone
           ), //customer_info
           'line_items' => $productos,
           'charges' => array(
@@ -212,19 +212,18 @@ class OrdenController extends Controller
         return redirect()->intended(url('/carrito'));
 
         } catch (\Conekta\ProccessingError $error){
-        echo $error->getMesage();
+          Session::flash('mensaje', $error->getMesage());
+          Session::flash('class', 'danger');
+          return redirect()->intended(url('/carrito'));
         } catch (\Conekta\ParameterValidationError $error){
-          $conektaError = $error->getConektaMessage();
-   var_dump($conektaError->type);
-   var_dump($conektaError->details);
-
-   //Object iteration
-   $conektaError = $error->getConektaMessage();
-   foreach ($conektaError->details as $key) {
-     echo($key->debug_message);
-   }
+          Session::flash('mensaje', $error->getMesage());
+          Session::flash('class', 'danger');
+          return redirect()->intended(url('/carrito'));
+        }
         } catch (\Conekta\Handler $error){
-        echo $error->getMessage();
+          Session::flash('mensaje', $error->getMesage());
+          Session::flash('class', 'danger');
+          return redirect()->intended(url('/carrito'));
         }
     }
 }

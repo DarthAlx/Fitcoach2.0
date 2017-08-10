@@ -42,9 +42,9 @@ class DetalleController extends Controller
     {
       $usuario = User::find(Auth::user()->id);
       $usuario->dob = $request->dob;
+      $usuario->tel = $request->tel;
       $usuario->save();
       $detalles = new Detalle();
-      $detalles->tel = $request->tel;
       $detalles->intereses = $request->intereses;
       $detalles->user_id=Auth::user()->id;
       $detalles->save();
@@ -86,9 +86,9 @@ class DetalleController extends Controller
     {
       $usuario = User::find(Auth::user()->id);
       $usuario->dob = $request->dob;
+      $usuario->tel = $request->tel;
       $usuario->save();
       $detalles = Detalle::where('user_id', Auth::user()->id)->first();
-      $detalles->tel = $request->tel;
       $detalles->intereses = $request->intereses;
       $detalles->save();
 

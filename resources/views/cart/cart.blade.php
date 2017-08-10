@@ -14,10 +14,15 @@
     <div class="col-sm-12">
       @include('holders.notificaciones')
       <div class="cart-header">
-        <h1 class="title">{{Cart::content()->count()}} Clases <strong class="pull-right">${{Cart::total()}}</strong></h1>
-        <div class="text-center">
-          <i class="fa fa-chevron-down" aria-hidden="true" data-toggle="collapse" data-target="#carrito" aria-expanded="false" aria-controls="carrito"></i>
-        </div>
+        @if (Cart::content()->count()>0)
+          <h1 class="title">{{Cart::content()->count()}} Clases <strong class="pull-right">${{Cart::total()}}</strong></h1>
+          <div class="text-center">
+            <i class="fa fa-chevron-down" aria-hidden="true" data-toggle="collapse" data-target="#carrito" aria-expanded="false" aria-controls="carrito"></i>
+          </div>
+        @else
+          <h1 class="title">Tu carrito está vacio.</h1>
+        @endif
+
       </div>
 
       <div class="collapse" id="carrito">
@@ -66,6 +71,7 @@
 
     </div>
     <p>&nbsp;</p>
+    @if (Cart::content()->count()>0)
     <form action="{{url('cargo')}}" method="POST" id="card-form">
     <div class="col-sm-6">
 
@@ -130,7 +136,7 @@
                             </div>
                           </div>
                           <input id="tokencsrf" type="hidden" name="_token" value="{{ csrf_token() }}">
-                    @endif
+
     </div>
     <div class="col-sm-6">
 
@@ -196,7 +202,7 @@
         </div>
 				<input type="hidden" name="name" value="{{$user->name}}">
 				<input type="hidden" name="email" value="{{$user->email}}">
-				<input type="hidden" name="phone" value="{{$user->detalles->tel}}">
+				<input type="hidden" name="phone" value="{{$user->tel}}">
 
 
         <div class="form-group">
@@ -206,7 +212,7 @@
         </div>
     </div>
     </form>
-
+@endif <!--carritovacio-->
     @if (!$user->direcciones->isEmpty())
       <script type="text/javascript">
         $('#direccion').change(function(){
@@ -251,6 +257,7 @@
           }
         });
       </script>
+    @endif
     @if (!$user->tarjetas->isEmpty())
       <script type="text/javascript">
         $('#tarjeta').change(function(){
@@ -341,8 +348,9 @@
            }
         });
     </script>
+  @endif
 
-    @endif
+
   </div>
 </section>
 @endsection
