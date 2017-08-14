@@ -100,7 +100,7 @@ class AuthController extends Controller
 
     public function loginPath()
     {
-        return url('/entrar');
+        return url('/');
     }
 
     public function redirectPath()

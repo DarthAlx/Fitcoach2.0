@@ -199,7 +199,7 @@
 function userExist(){
 	email = $('#login-username').val();
 	_token= $('#token').val();
-	$.post("http://localhost/Fitcoach2.0/userExist", {
+	$.post("{{url('/')}}/userExist", {
 	email : email,
 	_token : _token
 	}, function(data) {

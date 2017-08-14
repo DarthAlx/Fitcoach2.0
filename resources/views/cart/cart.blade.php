@@ -290,7 +290,7 @@
             $('#cvvlabel').show();
             tarjeta = $('#tarjeta').val();
             _token= $('#tokencsrf').val();
-            $.post("http://localhost/Fitcoach2.0/cargartarjeta", {
+            $.post("{{url('/')}}/cargartarjeta", {
 
             tarjeta : tarjeta,
             _token : _token
