@@ -95,7 +95,7 @@
 													<div class="col-sm-2 col-xs-4 separacion">
 														{{$fechasformateadas[$x]}}
 														<ul class="list-group calendarioinst">
-															<?php $particulares=App\particular::all();
+															<?php $particulares=App\Particular::all();
 															list($año, $mes, $dia) = explode("-", $fechas[$x]);
 															$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 															?>
