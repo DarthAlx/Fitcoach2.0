@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(OrdenSeeder::class);
         $this->call(ParticularSeeder::class);
         $this->call(ResidencialesSeeder::class);
+        $this->call(folio::class);
         Model::reguard();
     }
 }

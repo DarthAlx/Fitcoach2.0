@@ -16,11 +16,16 @@ class Administradores
      */
     public function handle($request, Closure $next)
     {
+      if (Auth::guest()) {
+        return redirect()->intended(url('/404'));
+      }
+      else {
       $usuario=User::find(Auth::user()->id);
       if ($usuario->role!="superadmin") {
         Session::flash('mensaje', 'No tienes permisos para ver esta página');
         Session::flash('class', 'warning');
-        return redirect()->intended(url('/entrar'));
+        return redirect()->intended(url('/404'));
+      }
       }
         return $next($request);
     }

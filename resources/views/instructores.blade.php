@@ -79,14 +79,21 @@
 											@foreach ($coach->residenciales as $residencial)
 												<?php
 												date_default_timezone_set('America/Mexico_City');
-				                $fecha=date_create($residencial->fecha);
+				                $fecha=new DateTime($residencial->fecha);
+												$hoy=new DateTime("now");
 				                setlocale(LC_TIME, "es-ES");
+												$interval = date_diff($hoy, $fecha);
+												$intervalo = intval($interval->format('%R%a días'));
 													?>
-												<a href="#" class="list-group-item" data-toggle="modal" data-target="#condominio{{$residencial->id}}">
-													<i class="fa fa-building" aria-hidden="true"></i>
-				 									{{strftime("%d %B", strtotime($residencial->fecha))}} | {{ $residencial->hora }} | {{$residencial->condominio->identificador}}
-				 									<i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
-												</a>
+
+													@if ($residencial->ocupados<$residencial->cupo&&$intervalo>=0)
+														<a href="#" class="list-group-item" data-toggle="modal" data-target="#condominio{{$residencial->id}}">
+															<i class="fa fa-building" aria-hidden="true"></i>
+						 									{{strftime("%d %B", strtotime($residencial->fecha))}} | {{ $residencial->hora }} | {{$residencial->condominio->identificador}}
+						 									<i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
+														</a>
+													@endif
+
 											@endforeach
 										@else
 											Este coach no tiene horarios disponibles.
@@ -126,7 +133,9 @@
 												<div class="gotham2">
 													<p>Hora: {{$residencial->hora}}</p>
 													<p>Lugar: {{$residencial->condominio->identificador}}<br>{{$residencial->condominio->direccion}}</p>
-													<p>Cupo: {{$residencial->cupo}}</p>
+													<p>Cupo: {{$residencial->cupo}} personas <br>
+														 Lugares disponibles: {{intval($residencial->cupo)-intval($residencial->ocupados)}}
+													</p>
 												</div>
 
 											</div>
@@ -139,6 +148,7 @@
 												<form action="{{url('carrito')}}" method="post">
 													{!! csrf_field() !!}
 													<input type="hidden" name="residencial_id" value="{{$residencial->id}}">
+													<input type="hidden" name="tipo" value="Residencial">
 													<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
 												</form>
 											</div>
@@ -223,6 +233,7 @@
 																@if ($particular->fecha==$fechas[$x]||in_array($dia_n, explode(",",$particular->recurrencia)))
 																	<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}');" style="cursor:pointer;">
 																		<input type="checkbox" id="carrito{{$x}}{{$particular->id}}" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
+																		<input type="hidden" name="tipo" value="Particular">
 																		{{$particular->hora}} <i class="fa fa-square-o pull-right fa{{$x}}{{$particular->id}}" aria-hidden="true"></i>
 																	</li>
 																@endif

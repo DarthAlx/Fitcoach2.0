@@ -8,12 +8,14 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Orden;
 use App\Particular;
+use App\Residencial;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Cart;
 use App\User;
 use App\Tarjeta;
 use App\Direccion;
+use App\Folio;
 
 class OrdenController extends Controller
 {
@@ -24,16 +26,19 @@ class OrdenController extends Controller
      */
     public function cartinst(Request $request)
     {
-      foreach ($request->carrito as $item) {
-
-        $items=explode(",",$item);
-        $clase=Particular::find($items[0]);
-        Cart::add($clase->clase->id,$clase->clase->nombre,1,$clase->clase->precio, ['tipo'=>$clase->clase->tipo,'fecha' => $items[1],'hora' => $clase->hora, 'coach' => $clase->user_id]);
+      if ($request->tipo=="Residencial") {
+        $clase=Residencial::find($request->residencial_id);
+        Cart::add($clase->id,$clase->clase->nombre,1,$clase->precio, ['tipo'=>'residencial','fecha' => $clase->fecha,'hora' => $clase->hora, 'coach' => $clase->user_id]);
       }
-
-
-    $items=Cart::content();
-    return view('cart.cart',['items'=>$items]);
+      if ($request->tipo=="Particular") {
+        foreach ($request->carrito as $item) {
+          $items=explode(",",$item);
+          $clase=Particular::find($items[0]);
+          Cart::add($clase->clase->id,$clase->clase->nombre,1,$clase->clase->precio, ['tipo'=>'particular','fecha' => $items[1],'hora' => $clase->hora, 'coach' => $clase->user_id]);
+        }
+      }
+      $items=Cart::content();
+      return view('cart.cart',['items'=>$items]);
     }
 
 
@@ -132,7 +137,7 @@ class OrdenController extends Controller
         else {
           $precio_completo=$product->price;
         }
-
+        if ($product->options->tipo=="particular") {
           $productos[]=array(
             'name' => $product->name,
             'unit_price' => str_replace('.', '',$precio_completo),
@@ -145,6 +150,23 @@ class OrdenController extends Controller
               'hora' => $product->options->hora
             )
           );
+        }
+        if ($product->options->tipo=="residencial") {
+          $esresidencial=true;
+          $productos[]=array(
+            'name' => $product->name,
+            'unit_price' => str_replace('.', '',$precio_completo),
+            'quantity' => 1,
+            'metadata' => array(
+              'tipo' => 'residencial',
+              'id' => $product->id,
+              'coach' => $product->options->coach,
+              'fecha' => $product->options->fecha,
+              'hora' => $product->options->hora
+            )
+          );
+        }
+
       }
 
 
@@ -167,6 +189,7 @@ class OrdenController extends Controller
             )
           )
         ));
+
         if ($request->tarjeta==""&&$request->identificadortarjeta) {
           $tarjeta = new Tarjeta();
           $tarjeta->identificador = $request->identificadortarjeta;
@@ -178,7 +201,7 @@ class OrdenController extends Controller
           $tarjeta->save();
         }
 
-        if ($request->direccion=="") {
+        if ($request->direccion==""&&$request->esresidencial!="true") {
           $direccion = new Direccion();
           $direccion->identificador=$request->identificadordireccion;
           $direccion->calle=$request->calle;
@@ -191,10 +214,11 @@ class OrdenController extends Controller
           $direccion->user_id = Auth::user()->id;
           $direccion->save();
         }
-
+        $folio=Folio::first();
         foreach ($productos as $producto) {
           $guardar = new Orden();
           $guardar->order_id=$order->id;
+          $guardar->folio=$folio->folio;
           $guardar->user_id=Auth::user()->id;
           $guardar->coach_id=$producto['metadata']['coach'];
           $guardar->nombre=$producto['name'];
@@ -204,26 +228,48 @@ class OrdenController extends Controller
           $guardar->metadata=implode(",", $producto['metadata']);
           $guardar->status='pagada';
           $guardar->save();
+          if ($producto['metadata']['tipo']=="residencial") {
+            $residencial= Residencial::find($producto['metadata']['id']);
+            $residencial->ocupados++;
+            $residencial->save();
+          }
+
         }
+        $folio->folio++;
+        $folio->save();
+
         Cart::destroy();
 
         Session::flash('mensaje', "Orden completada! revisa <a class='alert-link' href='".url('/mis-ordenes')."'>tus ordenes.</a>");
         Session::flash('class', 'success');
+        return redirect()->intended(url('/recibo')."/".$order->id);
+
+      } catch (\Conekta\ProccessingError $error){
+        Session::flash('mensaje', $error->getMessage());
+        Session::flash('class', 'danger');
+        return redirect()->intended(url('/carrito'));
+      } catch (\Conekta\ParameterValidationError $error){
+
+        Session::flash('mensaje', $error->getMessage());
+        Session::flash('class', 'danger');
         return redirect()->intended(url('/carrito'));
 
-        } catch (\Conekta\ProccessingError $error){
-          Session::flash('mensaje', $error->getMesage());
-          Session::flash('class', 'danger');
-          return redirect()->intended(url('/carrito'));
-        } catch (\Conekta\ParameterValidationError $error){
-          Session::flash('mensaje', $error->getMesage());
-          Session::flash('class', 'danger');
-          return redirect()->intended(url('/carrito'));
-        }
-        } catch (\Conekta\Handler $error){
-          Session::flash('mensaje', $error->getMesage());
-          Session::flash('class', 'danger');
-          return redirect()->intended(url('/carrito'));
-        }
+      } catch (\Conekta\Handler $error){
+        Session::flash('mensaje', $error->getMessage());
+        Session::flash('class', 'danger');
+        return redirect()->intended(url('/carrito'));
+      }
+
+
+
+      }
+
+
+      public function receipt($id)
+      {
+        $ordenes=Orden::where('order_id', $id)->get();
+        $datos=Orden::where('order_id', $id)->first();
+        $user=User::find($datos->user_id);
+        return view('recibo',['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user]);
+      }
     }
-}

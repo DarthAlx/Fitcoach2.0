@@ -22,6 +22,7 @@ class ResidencialTable extends Migration
           $table->string('precio');
           $table->string('audiencia');
           $table->string('cupo');
+          $table->string('ocupados');
           $table->string('tipo');
           $table->string('descripcion');
           $table->timestamps();

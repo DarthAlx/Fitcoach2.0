@@ -60,7 +60,13 @@
 </a>
 			<nav class="mainMenu">
         <ul class="clear">
-          <li class="menuclases"><a href="#">CLASES</a></li>
+          <li class="menuclases"><a href="#">CLASES</a>
+						<ul>
+							<li><a href="{{ url('/clasesdeportivas') }}">Deportivas</a></li>
+							<li><a href="#">Culturales</a></li>
+							<li><a href="#">Eventos</a></li>
+					  </ul>
+					</li>
 					@if (Auth::guest())
 							<li><a href="#" data-toggle="modal" data-target="#loginmodal"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a> </li>
 					@else
@@ -97,7 +103,7 @@
 	     <a href="#">ACTIVACIÓN DE CONDOMINIOS</a>
       <a href="{{url('instructores')}}">INSTRUCTORES</a>
       <a href="#">RESERVAR</a>
-      <a href="#">CONDOMINIOS</a>
+      <a href="{{url('condominios')}}">CONDOMINIOS</a>
 			<a href="#">¿QUIÉNES SOMOS?</a>
 			<a href="#">LEGAL</a>
 			<a href="#">CONTACTO</a>

@@ -47,7 +47,7 @@
   @if ($condominios)
 		@foreach ($condominios as $condominio)
 			<div class="modal fade" id="calendario{{$condominio->id}}" tabindex="-1" role="dialog">
-				<div class="modal-dialog" role="document">
+				<div class="modal-dialog calendario" role="document">
 					<div class="modal-content">
 						<div class="modal-body">
 
@@ -101,8 +101,7 @@
 														$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 														?>
 														@foreach ($residenciales as $residencial)
-															<?php $existe=App\Orden::where('coach_id', $residencial->user_id)->where('fecha', $fechas[$x])->where('hora', $residencial->hora)->first(); ?>
-															@if (!$existe)
+															@if ($residencial->ocupados<$residencial->cupo)
 																@if ($residencial->fecha==$fechas[$x])
                                   <?php $nombre=explode(" ",$residencial->user->name); ?>
 																	<li class="list-group-item text-center"  data-toggle="modal" data-target="#residencial{{$condominio->id}}{{$residencial->id}}" style="cursor:pointer;">
@@ -167,7 +166,11 @@
     												<div class="gotham2">
     													<p>Hora: {{$residencial->hora}}</p>
     													<p>Lugar: {{$residencial->condominio->identificador}}<br>{{$residencial->condominio->direccion}}</p>
-    													<p>Cupo: {{$residencial->cupo}}</p>
+    													<p>Cupo: {{$residencial->cupo}} personas <br>
+																 Lugares disponibles: {{intval($residencial->cupo)-intval($residencial->ocupados)}}
+															</p>
+															<p>Audiencia: {{$residencial->audiencia}}</p>
+
     												</div>
 
     											</div>
@@ -179,6 +182,7 @@
     												<form action="{{url('carrito')}}" method="post">
     													{!! csrf_field() !!}
     													<input type="hidden" name="residencial_id" value="{{$residencial->id}}">
+															<input type="hidden" name="tipo" value="Residencial">
     													<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
     												</form>
     											</div>

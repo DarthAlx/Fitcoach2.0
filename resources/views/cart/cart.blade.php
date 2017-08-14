@@ -41,8 +41,17 @@
 											Horario: {{ $product->options->hora }}<br>
 											<?php $coach=App\User::find($product->options->coach); ?>
 											Coach: {{ $coach->name }}<br>
+                      @if ($product->options->tipo=="residencial")
+                        <?php $residencial=App\Residencial::find($product->id); $esresidencial=true;?>
+                      Dirección: {{$residencial->condominio->direccion}}
+                    @else
+                      <?php $esresidencial=false; ?>
+
+                      @endif
+
 
 										</small></h4>
+
 
 
 								</div>
@@ -74,7 +83,7 @@
     @if (Cart::content()->count()>0)
     <form action="{{url('cargo')}}" method="POST" id="card-form">
     <div class="col-sm-6">
-
+      @if (!$esresidencial)
                         @if (!$user->direcciones->isEmpty())
                           <div class="form-group">
                             <label class="col-sm-3 control-label" for="card-number">Dirección</label>
@@ -97,13 +106,13 @@
                           </div>
                           <div class="form-group"  id="calleNuevolabel">
                             <label class="col-sm-3 control-label" for="card-holder-name">Calle</label>
-                            <div class="col-sm-5">
+                            <div class="col-sm-9 col-md-5">
                               <input class="form-control" type="text" value="{{ old('calle') }}" id="calleNuevo"  name="calle">
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-6 col-md-2">
                               <input class="form-control" type="text" value="{{ old('numero_ext') }}" id="numero_extNuevo"  name="numero_ext" placeholder="# Ext" >
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-6 col-md-2">
                               <input class="form-control" type="text" value="{{ old('numero_int') }}" id="numero_intNuevo"  name="numero_int" placeholder="# Int">
                             </div>
                           </div>
@@ -135,6 +144,11 @@
                               </select>
                             </div>
                           </div>
+                          <input type="hidden" name="esresidencial" value="false">
+                        @else
+                          <input type="hidden" name="esresidencial" value="true">
+                        @endif <!--esresidencial-->
+
                           <input id="tokencsrf" type="hidden" name="_token" value="{{ csrf_token() }}">
 
     </div>

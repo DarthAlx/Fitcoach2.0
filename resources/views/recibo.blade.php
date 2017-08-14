@@ -13,8 +13,8 @@
 						<h2>Ticket de Compra</h2>
 
 						<p style="float: right;">
-							Fecha: <br>
-							Folio:
+							Fecha: {{$datos->fecha}}<br>
+							Folio: {{$datos->folio}}
 						</p>
 					</div>
 				</div>
@@ -28,8 +28,9 @@
 						C.P. 52774
 					</p>
 					<p>
-						Cliente:
+						Cliente: <br>
 
+						{{$user->name}}
 					</p>
 				</div>
 			</div>
@@ -51,6 +52,44 @@
 							</td>
 							<td class="col-xs-2">
 								Total
+							</td>
+						</tr>
+						<?php $grantotal=0; ?>
+						@foreach ($ordenes as $orden)
+							<?php $tipo=explode(',',$orden->metadata);
+										$grantotal=$grantotal+intval($orden->cantidad);
+							?>
+							<tr>
+								<td class="col-xs-1">
+									1
+								</td>
+								<td class="col-xs-3">
+									{{$orden->nombre}}
+								</td>
+								<td class="col-xs-4">
+									Clase {{$tipo[0]}}
+								</td>
+								<td class="col-xs-2">
+									{{ substr("$orden->cantidad", 0, -2) }}.{{substr("$orden->cantidad", -2) }}
+								</td>
+								<td class="col-xs-2">
+									{{ substr("$orden->cantidad", 0, -2) }}.{{substr("$orden->cantidad", -2) }}
+								</td>
+							</tr>
+						@endforeach
+						<tr>
+							<td class="col-xs-8" colspan="3">
+
+							</td>
+							<td class="col-xs-2">
+								Subtotal <br>
+								Importe total <br>
+								Pagado <br>
+							</td>
+							<td class="col-xs-2">
+								{{ substr("$grantotal", 0, -2) }}.{{substr("$grantotal", -2) }} <br>
+								{{ substr("$grantotal", 0, -2) }}.{{substr("$grantotal", -2) }} <br>
+								{{ substr("$grantotal", 0, -2) }}.{{substr("$grantotal", -2) }} <br>
 							</td>
 						</tr>
 					</table>

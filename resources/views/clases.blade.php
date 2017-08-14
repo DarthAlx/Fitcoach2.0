@@ -45,7 +45,7 @@
 	  @if ($clases)
 			@foreach ($clases as $clase)
 				<div class="modal fade" id="calendario{{$clase->id}}" tabindex="-1" role="dialog">
-					<div class="modal-dialog" role="document">
+					<div class="modal-dialog calendario" role="document">
 						<div class="modal-content">
 							<div class="modal-body">
 
@@ -106,6 +106,7 @@
 	                                  <?php $nombre=explode(" ",$particular->user->name); ?>
 																		<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}');" style="cursor:pointer;">
 																			<input type="checkbox" id="carrito{{$x}}{{$particular->id}}" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
+																			<input type="hidden" name="tipo" value="Particular">
 																			{{$particular->hora}} <i class="fa fa-square-o pull-right fa{{$x}}{{$particular->id}}" aria-hidden="true"></i>
 																		</li>
 																	@endif

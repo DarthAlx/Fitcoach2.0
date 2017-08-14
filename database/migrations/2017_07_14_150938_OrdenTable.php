@@ -14,10 +14,11 @@ class OrdenTable extends Migration
     {
       Schema::create('ordenes', function (Blueprint $table) {
           $table->increments('id');
-          $table->integer('order_id');
+          $table->string('order_id');
           $table->integer('user_id');
           $table->integer('coach_id');
           $table->string('nombre');
+          $table->string('folio');
           $table->date('fecha');
           $table->string('hora');
           $table->string('cantidad');

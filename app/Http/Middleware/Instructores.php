@@ -15,11 +15,16 @@ class Instructores
      */
     public function handle($request, Closure $next)
     {
-      $usuario=User::find(Auth::user()->id);
-      if ($usuario->role!="instructor") {
-        Session::flash('mensaje', 'No tienes permisos para ver esta página');
-        Session::flash('class', 'warning');
-        return redirect()->intended(url('/entrar'));
+      if (Auth::guest()) {
+        return redirect()->intended(url('/404'));
+      }
+      else {
+        $usuario=User::find(Auth::user()->id);
+        if ($usuario->role!="instructor") {
+          Session::flash('mensaje', 'No tienes permisos para ver esta página');
+          Session::flash('class', 'warning');
+          return redirect()->intended(url('/404'));
+        }
       }
         return $next($request);
     }

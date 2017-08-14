@@ -47,9 +47,7 @@ Route::get('/carrito', function () {
   return view('cart.cart',['items'=>$items]);
 });
 
-Route::get('/recibo', function () {
-    return view('recibo');
-});
+
 
 // Authentication routes...
 Route::get('entrar', 'Auth\AuthController@getLogin');
@@ -102,6 +100,9 @@ Route::group(['middleware' => 'usuarios'], function(){
   Route::post('cargartarjeta', 'OrdenController@cargartarjeta');
 
   Route::post('cargo', 'OrdenController@cargo');
+
+  Route::get('/recibo/{id}', 'OrdenController@receipt');
+
 });
 
 
