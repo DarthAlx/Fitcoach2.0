@@ -1146,13 +1146,13 @@
     snapToStep: false,
     showSeconds: false,
     showInputs: true,
-    showMeridian: true,
+    showMeridian: false,
     template: 'dropdown',
     appendWidgetTo: 'body',
     showWidgetOnAddonClick: true,
     icons: {
-      up: 'glyphicon glyphicon-chevron-up',
-      down: 'glyphicon glyphicon-chevron-down'
+      up: 'fa fa-chevron-up',
+      down: 'fa fa-chevron-down'
     },
     maxHours: 24,
     explicitMode: false

@@ -41,11 +41,28 @@ class DetalleController extends Controller
     public function store(Request $request)
     {
       $usuario = User::find(Auth::user()->id);
-      $usuario->dob = $request->dob;
+      $dob=date_create($request->dob);
+      $usuario->dob = date_format($dob,"Y-m-d");
       $usuario->tel = $request->tel;
       $usuario->save();
       $detalles = new Detalle();
       $detalles->intereses = $request->intereses;
+      $detalles->user_id=Auth::user()->id;
+      $detalles->save();
+      Session::flash('mensaje', 'Perfil actualizado!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/perfil'));
+    }
+
+    public function storeinst(Request $request)
+    {
+      $usuario = User::find(Auth::user()->id);
+      $dob=date_create($request->dob);
+      $usuario->dob = date_format($dob,"Y-m-d");
+      $usuario->tel = $request->tel;
+      $usuario->save();
+      $detalles = new Detalle();
+      $detalles->rfc = $request->rfc;
       $detalles->user_id=Auth::user()->id;
       $detalles->save();
       Session::flash('mensaje', 'Perfil actualizado!');
@@ -85,11 +102,28 @@ class DetalleController extends Controller
     public function update(Request $request)
     {
       $usuario = User::find(Auth::user()->id);
-      $usuario->dob = $request->dob;
+      $dob=date_create($request->dob);
+      $usuario->dob = date_format($dob,"Y-m-d");
       $usuario->tel = $request->tel;
       $usuario->save();
       $detalles = Detalle::where('user_id', Auth::user()->id)->first();
       $detalles->intereses = $request->intereses;
+      $detalles->save();
+
+      Session::flash('mensaje', 'Perfil actualizado!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/perfil'));
+    }
+
+    public function updateinst(Request $request)
+    {
+      $usuario = User::find(Auth::user()->id);
+      $dob=date_create($request->dob);
+      $usuario->dob = date_format($dob,"Y-m-d");
+      $usuario->tel = $request->tel;
+      $usuario->save();
+      $detalles = Detalle::where('user_id', Auth::user()->id)->first();
+      $detalles->rfc = $request->rfc;
       $detalles->save();
 
       Session::flash('mensaje', 'Perfil actualizado!');

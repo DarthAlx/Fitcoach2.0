@@ -111,5 +111,8 @@ Route::group(['middleware' => 'instructores'], function(){
     $user = App\User::find(Auth::user()->id);
     return view('perfilinstructor', ['user'=>$user]) ;
   });
+  Route::post('actualizar-perfil', 'DetalleController@storeinst');
+  Route::put('actualizar-perfil', 'DetalleController@updateinst');
+  Route::put('actualizar-contraseña', 'UserController@updatePassword');
   Route::post('agregar-horario', 'ParticularController@store');
 });

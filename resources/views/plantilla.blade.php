@@ -35,6 +35,7 @@
     <!-- Languaje -->
     <script src="{{asset('js/datepicker/locales/bootstrap-datepicker.es.min.js')}}"></script>
 
+
 		<script type="text/javascript" src="{{asset('js/timepicker/bootstrap-timepicker.js')}}"></script>
 
 		<script src="{{asset('js/ckeditor/ckeditor.js')}}"></script>
@@ -237,10 +238,10 @@ $(document).ready(function() {
 	$(function () {
   $('[data-toggle="tooltip"]').tooltip()
 });
-$('.datepicker').datepicker({
-    format: 'yyyy-mm-dd'
+$('.mitimepicker').timepicker();
 });
-});
+
+
 </script>
 @yield('modals')
 </body>

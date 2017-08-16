@@ -158,13 +158,13 @@
                   @endif
         					<input type="hidden" name="_token" value="{{ csrf_token() }}">
         					<input class="form-control datepicker" type="text" value="{{ $user->dob }}" name="dob" required>
-                  <input class="form-control" type="tel" value="{{ $user->tel }}" placeholder="Teléfono (10 dígitos)" name="tel" required>
+                  <input class="form-control" type="tel" value="{{ $user->tel }}" placeholder="Teléfono (10 dígitos)" minlength="10" maxinlength="10" name="tel" required>
                   @if($user->detalles)
-
                     <input class="form-control" type="text" value="{{ $user->detalles->intereses }}" placeholder="Yoga, spinning, zumba..." name="intereses">
+                    
                   @else
-
                     <input class="form-control" type="text" value="" placeholder="Yoga, spinning, zumba..." name="intereses">
+                    
                   @endif
 
         					<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Actualizar</button>

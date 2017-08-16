@@ -153,14 +153,14 @@
                     {{ method_field('PUT') }}
                   @endif
         					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-        					<input class="form-control datepicker" type="text" value="{{ $user->dob }}" name="dob" required>
-                  <input class="form-control" type="tel" value="{{ $user->tel }}" placeholder="Teléfono (10 dígitos)" name="tel" required>
+        					<input class="form-control datepicker" type="text" value="{{ $user->dob }}" placeholder="Fecha de nacimiento" name="dob" required>
+                  <input class="form-control" type="tel" value="{{ $user->tel }}" placeholder="Teléfono (10 dígitos)" name="tel" minlength="10" maxlength="10" required>
                   @if($user->detalles)
 
-                    <input class="form-control" type="text" value="{{ $user->detalles->intereses }}" placeholder="Yoga, spinning, zumba..." name="intereses">
+                    <input class="form-control" type="text" value="{{ $user->detalles->rfc }}" placeholder="RFC" name="rfc">
                   @else
 
-                    <input class="form-control" type="text" value="" placeholder="Yoga, spinning, zumba..." name="intereses">
+                    <input class="form-control" type="text" value="" placeholder="RFC" name="rfc">
                   @endif
 
         					<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Actualizar</button>
