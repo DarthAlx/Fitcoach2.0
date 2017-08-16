@@ -236,7 +236,10 @@ $(document).ready(function() {
 	});
 	$(function () {
   $('[data-toggle="tooltip"]').tooltip()
-})
+});
+$('.datepicker').datepicker({
+    format: 'yyyy-mm-dd'
+});
 });
 </script>
 @yield('modals')

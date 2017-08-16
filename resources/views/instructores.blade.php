@@ -280,7 +280,10 @@
 				$('#carrito'+valor).removeClass('seleccionada');
 				$('.fa'+valor).removeClass('fa-square');
 				$('.fa'+valor).addClass('fa-square-o');
-				clasesseleccionadas--;
+				if (clasesseleccionadas>0) {
+					clasesseleccionadas--;
+				}
+
 				$('#cantidad').val(clasesseleccionadas);
 				$('#clasesseleccionadas').html(clasesseleccionadas+" clases seleccionadas.");
 				if (clasesseleccionadas<=0) {

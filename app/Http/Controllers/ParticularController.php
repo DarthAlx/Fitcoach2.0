@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Particular;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+
 
 class ParticularController extends Controller
 {
@@ -37,7 +41,16 @@ class ParticularController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $guardar = new Particular($request->all());
+      if ($request->recurrencia) {
+        $guardar->recurrencia=implode(",", $request->recurrencia);
+      }
+      $guardar->fecha = date_create($request->fecha);
+      $guardar->user_id = Auth::user()->id;
+      $guardar->save();
+      Session::flash('mensaje', 'Horario guardado!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/perfil'));
     }
 
     /**

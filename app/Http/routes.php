@@ -109,6 +109,7 @@ Route::group(['middleware' => 'usuarios'], function(){
 Route::group(['middleware' => 'instructores'], function(){
   Route::get('/perfil', function () {
     $user = App\User::find(Auth::user()->id);
-    return view('perfil', ['user'=>$user]) ;
+    return view('perfilinstructor', ['user'=>$user]) ;
   });
+  Route::post('agregar-horario', 'ParticularController@store');
 });
