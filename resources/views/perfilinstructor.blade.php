@@ -34,7 +34,7 @@
       </div>
       <hr>
       <h4>HORARIOS</h4>
-      <button type="button" class="btn" data-toggle="modal" data-target="#horarionuevo"><span>Agregar horario</span> <i class="fa fa-calendar" aria-hidden="true"></i></button>
+      <button type="button" class="btn" data-toggle="modal" data-target="#horarionuevo"><span>Ver horarios</span> <i class="fa fa-calendar" aria-hidden="true"></i></button>
       <hr>
       <h4>MIS DATOS</h4>
       <button type="button" class="btn" data-toggle="modal" data-target="#datosdeusuario"><span>Datos de usuario</span> <i class="fa fa-pencil" aria-hidden="true"></i></button>
@@ -200,14 +200,79 @@
 
 
 <div class="modal fade" id="horarionuevo" tabindex="-1" role="dialog">
+  <?php $permitidas = explode(",",$user->detalles->clases);
+
+        $clases = App\Clase::whereIn('id', $permitidas)->get(); ?>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
-      				<div>
-                <?php $permitidas = explode(",",$user->detalles->clases);
+              <button type="button" style="width: 100%" class="list-group-item" name="button" data-toggle="collapse" data-target="#horariosguardados" aria-expanded="false" aria-controls="horariosguardados">Tus horarios</button>
+              <div class="collapse" id="horariosguardados">
+                @if (!$user->particulares->isEmpty())
+                  @foreach ($user->particulares as $particular)
+                    <button style="width: 100%" class="btn btn-default" type="button" data-toggle="collapse" data-target="#horario{{$particular->id}}" aria-expanded="false" aria-controls="horario{{$particular->id}}">{{$particular->clase->nombre}} - {{$particular->fecha}} - {{$particular->hora}}</button>
+                    <div class="collapse" id="horario{{$particular->id}}">
+                      <form action="{{ url('/actualizar-horario') }}" method="post">
+                        {{ method_field('PUT') }}
+                        <select class="form-control" id="clase{{ $particular->id }}" name="clase_id" required>
+                         <option value="">Selecciona una clase</option>
+                         @foreach ($clases as $clase)
+                           <option value="{{ $clase->id }}">{{ $clase->nombre }}</option>
+                         @endforeach
+                       </select>
+                       <script type="text/javascript">
+                         if (document.getElementById('clase{{ $particular->id }}') != null) document.getElementById('clase{{ $particular->id }}').value = '{!! $particular->clase_id !!}';
+                       </script>
+                        <input class="form-control datepicker" type="text" placeholder="Fecha (si no es recurrente)" value="{{ $particular->fecha }}" name="fecha">
+                        <input value="{{ $particular->hora }}" class="form-control mitimepicker" type="text" name="hora" required  placeholder="Hora" / >
+                        <label>Recurrencia</label>
+                        <div class="checkbox">
+                          <label><input type='checkbox' class="recurrentes" id="check{{$particular->id}}1" name="recurrencia[]"  value="1">L &nbsp;  &nbsp;  </label>
+                          <label><input type='checkbox' class="recurrentes" id="check{{$particular->id}}2" name="recurrencia[]"  value="2">M &nbsp;  &nbsp;  </label>
+                          <label><input type='checkbox' class="recurrentes" id="check{{$particular->id}}3" name="recurrencia[]"  value="3">M &nbsp;  &nbsp;  </label>
+                          <label><input type='checkbox' class="recurrentes" id="check{{$particular->id}}4" name="recurrencia[]"  value="4">J &nbsp;  &nbsp;  </label>
+                          <label><input type='checkbox' class="recurrentes" id="check{{$particular->id}}5" name="recurrencia[]"  value="5">V &nbsp;  &nbsp;  </label>
+                          <label><input type='checkbox' class="recurrentes" id="check{{$particular->id}}6" name="recurrencia[]"  value="6">S &nbsp;  &nbsp;  </label>
+                          <label><input type='checkbox' class="recurrentes" id="check{{$particular->id}}0" name="recurrencia[]"  value="0">D &nbsp;  &nbsp;  </label>
+                        </div>
+                        <?php
+                                          $recurrencias = explode(",",$particular->recurrencia);
+                                      ?>
+                                     <script type="text/javascript">
+                                       @foreach ($recurrencias as $recurrencia)
+                                         document.getElementById('check{{$particular->id}}{{$recurrencia}}').checked = true;
+                                       @endforeach
+                                     </script>
 
-                      $clases = App\Clase::whereIn('id', $permitidas)->get(); ?>
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="horario_id" value="{{ $particular->id }}">
+                        <div class="text-center">
+                          <button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important; width: 40%; display: inline-block;">Actualizar</button>
+                          <a href="#" class="btn btn-success" style="color: #fff !important; background-color: #d9534f !important; border-color: #d9534f !important; width: 40%; display: inline-block;" onclick="javascript: document.getElementById('botoneliminar{{ $particular->id }}').click();">Borrar</a>
+                        </div>
+                        <hr>
+                      </form>
+                      <form style="display: none;" action="{{ url('/eliminar-horario') }}" method="post">
+                        {!! csrf_field() !!}
+                        {{ method_field('DELETE') }}
+                        <input type="hidden" name="horario_id" value="{{ $particular->id }}">
+                        <input type="submit" id="botoneliminar{{ $particular->id }}">
+                      </form>
+                    </div>
+                  @endforeach
+                @else
+                  <p>No tienes horarios guardados.</p>
+                @endif
+
+
+
+                <p>&nbsp;</p>
+              </div>
+              <button type="button" style="width: 100%" class="well" name="button" data-toggle="collapse" data-target="#nuevohorario" aria-expanded="false" aria-controls="nuevohorario">Agregar horario</button>
+              <div class="collapse" id="nuevohorario">
+              <div>
+
       					<h4>Agregar horario</h4>
                 <form action="{{ url('/agregar-horario') }}" method="post">
                   <select class="form-control"  name="clase_id" required>
@@ -232,6 +297,7 @@
                   <button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Guardar</button>
                 </form>
       				</div>
+              </div>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

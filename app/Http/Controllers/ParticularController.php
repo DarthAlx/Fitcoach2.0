@@ -82,9 +82,19 @@ class ParticularController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+      $horario = Particular::find($request->horario_id);
+      $horario->clase_id = $request->clase_id;
+      $horario->fecha = $request->fecha;
+      $horario->hora = $request->hora;
+      if ($request->recurrencia) {
+        $horario->recurrencia=implode(",", $request->recurrencia);
+      }
+      $horario->save();
+      Session::flash('mensaje', 'Horario actualizado!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/perfil'));
     }
 
     /**
@@ -93,8 +103,12 @@ class ParticularController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+      $horario = Particular::find($request->horario_id);
+      $horario->delete();
+      Session::flash('mensaje', 'Horario eliminado correctamente!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/perfil'));
     }
 }

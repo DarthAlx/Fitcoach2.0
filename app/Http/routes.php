@@ -115,4 +115,6 @@ Route::group(['middleware' => 'instructores'], function(){
   Route::put('actualizar-perfil', 'DetalleController@updateinst');
   Route::put('actualizar-contraseña', 'UserController@updatePassword');
   Route::post('agregar-horario', 'ParticularController@store');
+  Route::put('actualizar-horario', 'ParticularController@update');
+  Route::delete('eliminar-horario', 'ParticularController@destroy');
 });
