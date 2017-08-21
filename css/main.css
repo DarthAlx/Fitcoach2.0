@@ -625,3 +625,7 @@ background-image: none;
 .modal {
     z-index: 999999999 !important;
 }
+
+.fa-6 {
+    font-size: 15em;
+}

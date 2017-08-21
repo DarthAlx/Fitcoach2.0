@@ -48,6 +48,7 @@
 					<div class="modal-dialog calendario" role="document">
 						<div class="modal-content">
 							<div class="modal-body">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
 
 								<?php
 								$fecha = date('Y-m-d');
@@ -95,7 +96,8 @@
 													<div class="col-sm-2 col-xs-4 separacion">
 														{{$fechasformateadas[$x]}}
 														<ul class="list-group calendarioinst">
-															<?php $particulares=App\Particular::all();
+
+															<?php $particulares=App\Particular::where('clase_id', $clase->id)->get();
 															list($año, $mes, $dia) = explode("-", $fechas[$x]);
 															$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 															?>
@@ -107,6 +109,11 @@
 																		<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}');" style="cursor:pointer;">
 																			<input type="checkbox" id="carrito{{$x}}{{$particular->id}}" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
 																			<input type="hidden" name="tipo" value="Particular">
+																			{{$particular->user->name}}<br>
+																			@foreach ($particular->user->zonas as $zona)
+																				{{$zona->identificador}}
+																			@endforeach
+																			<br>
 																			{{$particular->hora}} <i class="fa fa-square-o pull-right fa{{$x}}{{$particular->id}}" aria-hidden="true"></i>
 																		</li>
 																	@endif

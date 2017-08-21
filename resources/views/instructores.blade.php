@@ -170,6 +170,7 @@
 				<div class="modal-dialog calendario" role="document">
 					<div class="modal-content">
 						<div class="modal-body">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
 
 							<?php
 							$clase=App\Clase::find($coach->detalles->clases);
@@ -223,7 +224,7 @@
 												<div class="col-sm-2 col-xs-4 separacion">
 													{{$fechasformateadas[$x]}}
 													<ul class="list-group calendarioinst">
-														<?php $particulares=App\Particular::all();
+														<?php $particulares=App\Particular::where('user_id', $coach->id)->get();
 														list($año, $mes, $dia) = explode("-", $fechas[$x]);
 														$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 														?>
