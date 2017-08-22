@@ -8,16 +8,17 @@
 		<div class="container-bootstrap-fluid">
 			<div class="row">
 				<div class="col-sm-9">
-					<div class="title">DEPORTIVAS</div>
+					<div class="title" style="font-size: 10vw;">DEPORTIVAS</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="buscador">
-						<div class="input-group">
-						<input type="text" class="form-control" placeholder="Buscar...">
-						<span class="input-group-btn">
-							<button class="form-control" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
-						</span>
-					</div>
+						<div class="footerSubscribe">
+			  			<form>
+			  				<input class="" type="text" name="" value="" placeholder="Buscar...">
+								<button class="btnSubscribe" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+			  			</form>
+			  		</div>
+
 					</div>
 				</div>
 			</div>

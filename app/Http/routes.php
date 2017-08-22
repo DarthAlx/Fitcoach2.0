@@ -78,7 +78,7 @@ Route::group(['middleware' => 'administradores'], function(){
 
 
 Route::group(['middleware' => 'usuarios'], function(){
-  Route::get('/perfil', function () {
+  Route::get('/perfil1', function () {
     $user = App\User::find(Auth::user()->id);
     return view('perfil', ['user'=>$user]) ;
   });

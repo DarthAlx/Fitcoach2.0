@@ -135,7 +135,7 @@
   		<div class="footerSubscribe">
   			<form>
   				<input class="" type="text" name="" size="20" value="" placeholder="Email">
-  				<input class="btnSubscribe" type="submit" value="Subscribirse">
+  				<button class="btnSubscribe" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
   			</form>
   		</div>
   		<div class="copyright">

@@ -564,14 +564,21 @@ color: #D58628 !important;
 		font-family: Gotham2;
 	    font-size: 40px;
 	    color: #efeeee;
+			text-align: center;
 	}
+	.buscador .footerSubscribe {
+    margin-top: 0px !important;
+}
 }
 @media screen and (min-width: 451px) {
 	.title {
 		font-family: Gotham2;
 	    font-size: 60px;
 	    color: #efeeee;
+
 	}
+
+
 }
 
 
@@ -580,12 +587,18 @@ color: #D58628 !important;
 	    width: 700px;
 	    margin: 30px auto;
 	}
+	.buscador .footerSubscribe {
+    margin-top: 2.5vh;
+}
 }
 @media (min-width: 992px){
 	.modal-dialog {
 	    width: 900px;
 	    margin: 30px auto;
 	}
+	.buscador .footerSubscribe {
+    margin-top: 4.5vh;
+}
 }
 
 .calendarioinst {
@@ -628,4 +641,17 @@ background-image: none;
 
 .fa-6 {
     font-size: 15em;
+}
+
+.footerSubscribe .btnSubscribe {
+    position: absolute;
+    top: 12px;
+    right: 23px;
+    width: 19px;
+    height: 14px;
+    border: 0;
+    background: #fff;
+}
+.footerSubscribe .btnSubscribe {
+    text-indent: 0px;
 }
