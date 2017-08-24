@@ -240,7 +240,7 @@ p, form{
     width: 0;
     position: fixed; /* Stay in place */
     z-index: 99999999999; /* Sit on top */
-    left: 0;
+    right: 0;
     top: 0;
     background-color: #EF7E19; /* Black fallback color */
     background-color: #EF7E19; /* Black w/opacity */
@@ -410,7 +410,7 @@ p, form{
     display: block;
     width: 100%;
     text-align: left;
-    font-family: Gotham;
+    font-family: Gotham2;
     font-size: 13px;
     border: none;
     border-top: solid 1px transparent;
@@ -569,6 +569,28 @@ color: #D58628 !important;
 	.buscador .footerSubscribe {
     margin-top: 0px !important;
 }
+#header .headerWrap {
+    height: 60px;
+    border-bottom-color: rgba(0,0,0,0);
+}
+.mainMenu {
+
+}
+.mainMenu ul {
+
+    float: right;
+    margin-right: 10px;
+}
+.slideDesc {
+    top: 60% !important;
+}
+.teamItem {
+    width: 50%!important;
+}
+.cart-header .title {
+
+		font-size: 4vw!important;
+}
 }
 @media screen and (min-width: 451px) {
 	.title {
@@ -654,4 +676,16 @@ background-image: none;
 }
 .footerSubscribe .btnSubscribe {
     text-indent: 0px;
+}
+
+.calendario .title{
+	    font-size: 4vw!important;
+			line-height: 1;
+}
+
+label, .product-name strong, .residencial .title{
+	color: #D58628 !important
+}
+.product-name strong, .residencial .title{
+	text-transform: uppercase;
 }

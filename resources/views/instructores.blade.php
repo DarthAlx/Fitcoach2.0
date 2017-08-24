@@ -22,6 +22,7 @@
 				</div>
 			</div>
 		</div>
+		<p>&nbsp;</p>
     <div class="teamItemWrap clear">
 			@if ($coaches)
 				@foreach ($coaches as $coach)
@@ -37,6 +38,9 @@
 	        </div>
 	      @endforeach
 			@endif
+
+
+
     </div>
   </div>
 	</section>
@@ -114,7 +118,7 @@
 		<div class="modal fade" id="condominio{{$residencial->id}}" tabindex="-1" role="dialog">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
-		      <div class="modal-body">
+		      <div class="modal-body residencial">
 		              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
 									<div class="container-bootstrap" style="width: 100%;">
 										<div class="row">
@@ -144,12 +148,17 @@
 													${{$residencial->precio}}
 
 												</div>
-												<img src="{{ url('uploads/condominios') }}/{{ $residencial->condominio->imagen }}" class="img-responsive">
+												<!--img src="{{ url('uploads/condominios') }}/{{ $residencial->condominio->imagen }}" class="img-responsive"-->
 												<form action="{{url('carrito')}}" method="post">
 													{!! csrf_field() !!}
 													<input type="hidden" name="residencial_id" value="{{$residencial->id}}">
 													<input type="hidden" name="tipo" value="Residencial">
-													<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
+													<div class="row">
+														<div class="col-sm-8 col-sm-offset-4">
+																<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
+														</div>
+													</div>
+
 												</form>
 											</div>
 										</div>
@@ -211,7 +220,7 @@
 							@endforeach
 						</p>
 
-							<div id="myCarousel" class="carousel slide">
+							<div id="myCarousel" class="carousel slide" data-wrap="false">
 			        <div class="carousel-inner">
 								@for ($i=0; $i < 5 ; $i++)
 									@if ($i==0)
@@ -254,11 +263,21 @@
 			        <a class="right carousel-control" href="#myCarousel" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
 			        </a>
 			        </div>
-							<div id="clasesseleccionadas" class="title text-center">
-
-							</div>
 							<input type="hidden" name="cantidad" id="cantidad">
-							<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar" id="reservar" disabled>
+							<p>&nbsp;</p>
+							<div class="row">
+								<div class="col-sm-8">
+									<div id="clasesseleccionadas" class="title text-center">
+		 								0 clases seleccionadas.
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar" id="reservar" disabled>
+								</div>
+							</div>
+
+
+
 							</form>
         	</div>
 

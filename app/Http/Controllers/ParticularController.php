@@ -48,7 +48,7 @@ class ParticularController extends Controller
       $guardar->fecha = date_create($request->fecha);
       $guardar->user_id = Auth::user()->id;
       $guardar->save();
-      Session::flash('mensaje', 'Horario guardado!');
+      Session::flash('mensaje', '!Horario guardado!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/perfil'));
     }
@@ -92,7 +92,7 @@ class ParticularController extends Controller
         $horario->recurrencia=implode(",", $request->recurrencia);
       }
       $horario->save();
-      Session::flash('mensaje', 'Horario actualizado!');
+      Session::flash('mensaje', '!Horario actualizado!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/perfil'));
     }
@@ -107,7 +107,7 @@ class ParticularController extends Controller
     {
       $horario = Particular::find($request->horario_id);
       $horario->delete();
-      Session::flash('mensaje', 'Horario eliminado correctamente!');
+      Session::flash('mensaje', '!Horario eliminado correctamente!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/perfil'));
     }

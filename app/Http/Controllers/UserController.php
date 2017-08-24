@@ -39,12 +39,12 @@ class UserController extends Controller
         $user = User::find(Auth::user()->id);
         $user->password=bcrypt($request->password);
         $user->save();
-        Session::flash('mensaje', 'Contraseña actualizada!');
+        Session::flash('mensaje', '!Contraseña actualizada!');
         Session::flash('class', 'success');
         return redirect()->intended(url('/perfil'));
       }
       else {
-        Session::flash('mensaje', 'Las contraseñas deben coincidir!');
+        Session::flash('mensaje', '!Las contraseñas deben coincidir!');
         Session::flash('class', 'danger');
         return redirect()->intended(url('/perfil'));
       }

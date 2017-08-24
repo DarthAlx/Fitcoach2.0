@@ -44,7 +44,7 @@ class TarjetaController extends Controller
       $guardar = new Tarjeta($request->all());
       $guardar->user_id = Auth::user()->id;
       $guardar->save();
-      Session::flash('mensaje', 'Tarjeta guardada!');
+      Session::flash('mensaje', '!Tarjeta guardada!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/perfil'));
     }
@@ -87,7 +87,7 @@ class TarjetaController extends Controller
         $tarjeta->año = $request->año;
         $tarjeta->nombre = $request->nombre;
         $tarjeta->save();
-        Session::flash('mensaje', 'Tarjeta actualizada!');
+        Session::flash('mensaje', '!Tarjeta actualizada!');
         Session::flash('class', 'success');
         return redirect()->intended(url('/perfil'));
     }
@@ -102,7 +102,7 @@ class TarjetaController extends Controller
     {
         $tarjeta = Tarjeta::find($request->tarjeta_id);
         $tarjeta->delete();
-        Session::flash('mensaje', 'Tarjeta eliminada correctamente!');
+        Session::flash('mensaje', '!Tarjeta eliminada correctamente!');
         Session::flash('class', 'success');
         return redirect()->intended(url('/perfil'));
     }

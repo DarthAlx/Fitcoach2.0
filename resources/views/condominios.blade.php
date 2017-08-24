@@ -22,6 +22,7 @@
 				</div>
 			</div>
 		</div>
+		<p>&nbsp;</p>
     <div class="teamItemWrap clear">
 			@if ($condominios)
 				@foreach ($condominios as $condominio)
@@ -50,7 +51,7 @@
 				<div class="modal-dialog calendario" role="document">
 					<div class="modal-content">
 						<div class="modal-body">
-
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
 							<?php
 							$fecha = date('Y-m-d');
 							$fechas=array();
@@ -83,7 +84,7 @@
 
 
 
-							<div id="myCarousel" class="carousel slide">
+							<div id="myCarousel" class="carousel slide"  data-wrap="false">
 			        <div class="carousel-inner">
 								@for ($i=0; $i < 5 ; $i++)
 									@if ($i==0)
@@ -147,7 +148,7 @@
     		<div class="modal fade" id="residencial{{$condominio->id}}{{$residencial->id}}" tabindex="-1" role="dialog">
     		  <div class="modal-dialog" role="document">
     		    <div class="modal-content">
-    		      <div class="modal-body">
+    		      <div class="modal-body  residencial">
     		              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
     									<div class="container-bootstrap" style="width: 100%;">
     										<div class="row">
@@ -178,12 +179,16 @@
     												<div class="title pull-right">
     													${{$residencial->precio}}
     												</div>
-    												<img src="{{ url('uploads/condominios') }}/{{ $residencial->condominio->imagen }}" class="img-responsive">
+    												<!--img src="{{ url('uploads/condominios') }}/{{ $residencial->condominio->imagen }}" class="img-responsive"-->
     												<form action="{{url('carrito')}}" method="post">
     													{!! csrf_field() !!}
     													<input type="hidden" name="residencial_id" value="{{$residencial->id}}">
 															<input type="hidden" name="tipo" value="Residencial">
-    													<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
+															<div class="row">
+																<div class="col-sm-8 col-sm-offset-4">
+																		<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
+																</div>
+															</div>
     												</form>
     											</div>
     										</div>

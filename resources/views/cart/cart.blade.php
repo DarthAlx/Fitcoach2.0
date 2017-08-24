@@ -123,7 +123,7 @@
                             </div>
                           </div>
                           <div class="form-group"  id="municipio_delNuevolabel">
-                            <label class="col-sm-3 control-label" for="card-number">Municipio / Delegación</label>
+                            <label class="col-sm-3 control-label" for="card-number">Municipio / Del</label>
                             <div class="col-sm-9">
                              <input class="form-control" type="text" value="{{ old('municipio_del') }}" id="municipio_delNuevo"  name="municipio_del" >
                             </div>

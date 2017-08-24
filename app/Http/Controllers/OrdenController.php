@@ -97,7 +97,7 @@ class OrdenController extends Controller
       $orden = Orden::find($request->ordencancelar);
       $orden->status = 'cancelada';
       $orden->save();
-      Session::flash('mensaje', 'Orden cancelada!');
+      Session::flash('mensaje', '!Orden cancelada!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/perfil'));
     }
@@ -240,7 +240,7 @@ class OrdenController extends Controller
 
         Cart::destroy();
 
-        Session::flash('mensaje', "Orden completada! revisa <a class='alert-link' href='".url('/mis-ordenes')."'>tus ordenes.</a>");
+        Session::flash('mensaje', "!Orden completada! revisa <a class='alert-link' href='".url('/mis-ordenes')."'>tus ordenes.</a>");
         Session::flash('class', 'success');
         return redirect()->intended(url('/recibo')."/".$order->id);
 

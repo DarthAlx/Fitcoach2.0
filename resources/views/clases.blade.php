@@ -23,6 +23,7 @@
 				</div>
 			</div>
 		</div>
+		<p>&nbsp;</p>
     <div class="teamItemWrap clear">
 			@if ($clases)
 				@foreach ($clases as $clase)
@@ -84,7 +85,7 @@
 
 
 
-								<div id="myCarousel" class="carousel slide">
+								<div id="myCarousel" class="carousel slide" data-wrap="false">
 				        <div class="carousel-inner">
 									@for ($i=0; $i < 5 ; $i++)
 										@if ($i==0)
@@ -133,11 +134,19 @@
 				        </a>
 				        <a class="right carousel-control" href="#myCarousel" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
 				        </a>
-								<div id="clasesseleccionadas" class="title text-center">
 
-								</div>
 								<input type="hidden" name="cantidad" id="cantidad">
-								<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
+								<p>&nbsp;</p>
+								<div class="row">
+									<div class="col-sm-8">
+										<div id="clasesseleccionadas" class="title text-center">
+			 								0 clases seleccionadas.
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar" id="reservar" disabled>
+									</div>
+								</div>
 								</form>
 				        </div>
 	        	</div>
