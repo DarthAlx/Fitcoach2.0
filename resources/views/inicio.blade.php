@@ -26,14 +26,14 @@
 			<p>&nbsp;</p>
 			<div class="container-bootstrap text-center">
 				<div class="row">
-					<div class="col-sm-4 col-sm-offset-2 text-center">
-						<a href="{{ url('/clasesdeportivas') }}" class="btn-success btn">
+					<div class="col-sm-4 col-sm-offset-2 text-center botoninicio">
+						<a href="{{ url('/clasesdeportivas') }}">
 							<i class="fa fa-home fa-6" aria-hidden="true"></i>
 							<h3>CLASE <br> PARTICULAR</h3>
 						</a>
 					</div>
-					<div class="col-sm-4 text-center">
-						<a href="{{url('condominios')}}" class="btn-success btn">
+					<div class="col-sm-4 text-center botoninicio">
+						<a href="{{url('condominios')}}">
 							<i class="fa fa-building fa-6" aria-hidden="true"></i>
 							<h3>CONDOMINIOS <br> AFILIADOS</h3>
 						</a>

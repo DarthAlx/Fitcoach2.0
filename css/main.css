@@ -664,6 +664,7 @@ background-image: none;
 
 .fa-6 {
     font-size: 15em;
+		padding-top: 15px;
 }
 
 .footerSubscribe .btnSubscribe {
@@ -689,4 +690,13 @@ label, .product-name strong, .residencial .title{
 }
 .product-name strong, .residencial .title{
 	text-transform: uppercase;
+}
+.botoninicio:hover{
+	background-color:  #D58628;
+}
+.botoninicio a{
+	color:  #D58628;
+}
+.botoninicio:hover a{
+	color:  #fff;
 }
