@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Cart;
-
+use Illuminate\Support\Facades\Lang;
 class AuthController extends Controller
 {
     /*
@@ -101,6 +101,12 @@ class AuthController extends Controller
     public function loginPath()
     {
         return url('/');
+    }
+    protected function getFailedLoginMessage()
+    {
+        return Lang::has('auth.failed')
+                ? Lang::get('auth.failed')
+                : 'Los datos no coinciden.';
     }
 
     public function redirectPath()

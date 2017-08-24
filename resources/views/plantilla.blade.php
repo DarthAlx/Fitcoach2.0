@@ -69,7 +69,7 @@
 					  </ul>
 					</li>
 					@if (Auth::guest())
-							<li><a href="#" data-toggle="modal" data-target="#loginmodal"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a> </li>
+							<li><a href="#" data-toggle="modal" data-target="#loginmodal" id="loginboton"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a> </li>
 					@else
 						<li><a href="{{url('perfil')}}" data-toggle="tooltip" data-placement="bottom" title="Hola {{strtok(Auth::user()->name, " ")}}"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a> </li>
 						<li><a href="{{url('salir')}}"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></a> </li>
@@ -157,6 +157,8 @@
 				<div id="login1">
 					<h4>Entrar o registrarse</h4>
 
+					<div style="color: #fff; font-weight: 600; font-size: 18px;" id="errores">&nbsp;</div>
+
 					<input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
 					<input id="login-username" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Correo electrónico">
 					<button id="btn-login"  class="btn btn-success" onclick="userExist()" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Entrar</button>
@@ -164,6 +166,7 @@
 				</div>
 				<div id="login2" style="display: none;">
 					<h4>Bienvenido a Fitcoach</h4>
+
 					<form id="loginform" class="form-horizontal" role="form" action="{{ url('/entrar') }}" method="post">
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 							<input id="emaillogin1" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Correo electrónico" required>
@@ -243,6 +246,19 @@ $('.mitimepicker').timepicker();
 
 
 </script>
+
+@if (count($errors)>0)
+  <script type="text/javascript">
+
+    @foreach ($errors->all() as $error)
+      var inner=document.getElementById('errores').innerHTML;
+      document.getElementById('errores').innerHTML=inner+"<span>{{ $error }}</span><br>";
+    @endforeach
+    document.getElementById('loginboton').click();
+  </script>
+
+@endif
+
 @yield('modals')
 </body>
 </html>
