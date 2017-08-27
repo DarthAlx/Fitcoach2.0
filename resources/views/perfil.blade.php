@@ -7,7 +7,10 @@
   <div class="row profile">
       <div class="col-sm-12">
         @include('holders.notificaciones')
-        <?php $nombre=explode(" ",$user->name); ?>
+        <?php $nombre=explode(" ",$user->name);
+        if ( ! isset($nombre[1])) {
+            $nombre[1] = null;
+        }?>
         <h2>Hola <span class="nombre">{{ucfirst($nombre[0])}} {{ucfirst($nombre[1])}}</span></h2>
       </div>
   </div>
@@ -161,10 +164,10 @@
                   <input class="form-control" type="tel" value="{{ $user->tel }}" placeholder="Teléfono (10 dígitos)" minlength="10" maxinlength="10" name="tel" required>
                   @if($user->detalles)
                     <input class="form-control" type="text" value="{{ $user->detalles->intereses }}" placeholder="Yoga, spinning, zumba..." name="intereses">
-                    
+
                   @else
                     <input class="form-control" type="text" value="" placeholder="Yoga, spinning, zumba..." name="intereses">
-                    
+
                   @endif
 
         					<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Actualizar</button>

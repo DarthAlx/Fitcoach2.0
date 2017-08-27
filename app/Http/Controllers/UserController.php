@@ -41,12 +41,12 @@ class UserController extends Controller
         $user->save();
         Session::flash('mensaje', '!Contraseña actualizada!');
         Session::flash('class', 'success');
-        return redirect()->intended(url('/perfil'));
+        return redirect($this->redirectPath());
       }
       else {
         Session::flash('mensaje', '!Las contraseñas deben coincidir!');
         Session::flash('class', 'danger');
-        return redirect()->intended(url('/perfil'));
+        return redirect($this->redirectPath());
       }
 
 
@@ -116,5 +116,21 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function redirectPath()
+    {
+      $usuario = User::find(Auth::user()->id);
+      if (Auth::user()->role=="superadmin" || Auth::user()->role=="admin") {
+        return url('/admin');
+      }
+      if (Auth::user()->role=="instructor") {
+        return url('/perfilinstructor');
+      }
+      else {
+          return url('/perfil');
+      }
+
+
     }
 }

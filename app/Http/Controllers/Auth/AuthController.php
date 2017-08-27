@@ -113,7 +113,10 @@ class AuthController extends Controller
     {
       $usuario = User::find(Auth::user()->id);
       if (Auth::user()->role=="superadmin" || Auth::user()->role=="admin") {
-        return url('/clases');
+        return url('/admin');
+      }
+      if (Auth::user()->role=="instructor") {
+        return url('/perfilinstructor');
       }
       else {
         if (Cart::content()->count()>0){

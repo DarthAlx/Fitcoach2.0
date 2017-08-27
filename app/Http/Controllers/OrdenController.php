@@ -99,7 +99,7 @@ class OrdenController extends Controller
       $orden->save();
       Session::flash('mensaje', '!Orden cancelada!');
       Session::flash('class', 'success');
-      return redirect()->intended(url('/perfil'));
+      return redirect($this->redirectPath());
     }
 
     /**
@@ -271,5 +271,21 @@ class OrdenController extends Controller
         $datos=Orden::where('order_id', $id)->first();
         $user=User::find($datos->user_id);
         return view('recibo',['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user]);
+      }
+
+      public function redirectPath()
+      {
+        $usuario = User::find(Auth::user()->id);
+        if (Auth::user()->role=="superadmin" || Auth::user()->role=="admin") {
+          return url('/admin');
+        }
+        if (Auth::user()->role=="instructor") {
+          return url('/perfilinstructor');
+        }
+        else {
+            return url('/perfil');
+        }
+
+
       }
     }

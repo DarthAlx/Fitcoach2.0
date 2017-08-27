@@ -50,7 +50,7 @@ class ParticularController extends Controller
       $guardar->save();
       Session::flash('mensaje', '!Horario guardado!');
       Session::flash('class', 'success');
-      return redirect()->intended(url('/perfil'));
+      return redirect($this->redirectPath());
     }
 
     /**
@@ -94,7 +94,7 @@ class ParticularController extends Controller
       $horario->save();
       Session::flash('mensaje', '!Horario actualizado!');
       Session::flash('class', 'success');
-      return redirect()->intended(url('/perfil'));
+      return redirect($this->redirectPath());
     }
 
     /**
@@ -109,6 +109,22 @@ class ParticularController extends Controller
       $horario->delete();
       Session::flash('mensaje', '!Horario eliminado correctamente!');
       Session::flash('class', 'success');
-      return redirect()->intended(url('/perfil'));
+      return redirect($this->redirectPath());
+    }
+
+    public function redirectPath()
+    {
+      $usuario = User::find(Auth::user()->id);
+      if (Auth::user()->role=="superadmin" || Auth::user()->role=="admin") {
+        return url('/admin');
+      }
+      if (Auth::user()->role=="instructor") {
+        return url('/perfilinstructor');
+      }
+      else {
+          return url('/perfil');
+      }
+
+
     }
 }

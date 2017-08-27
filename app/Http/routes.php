@@ -117,4 +117,7 @@ Route::group(['middleware' => 'instructores'], function(){
   Route::post('agregar-horario', 'ParticularController@store');
   Route::put('actualizar-horario', 'ParticularController@update');
   Route::delete('eliminar-horario', 'ParticularController@destroy');
+
+  Route::post('actualizar-bancarios', 'BancariosController@store');
+  Route::put('actualizar-bancarios', 'BancariosController@update');
 });

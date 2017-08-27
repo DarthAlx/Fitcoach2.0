@@ -28,7 +28,7 @@
              <h2>{{ucfirst($nombre[0])}}</h2>
              <button type="button" class="btn btn-success">Calificar</button>
           <?php } else{ ?>
-            <p>No has tomado ninguna clase.</p>
+            <p>No has dado ninguna clase.</p>
             <?php } ?>
         @endif
       </div>
@@ -38,7 +38,7 @@
       <hr>
       <h4>MIS DATOS</h4>
       <button type="button" class="btn" data-toggle="modal" data-target="#datosdeusuario"><span>Datos de usuario</span> <i class="fa fa-pencil" aria-hidden="true"></i></button>
-      <button type="button" class="btn" data-toggle="modal" data-target="#direcciones"><span>Pago</span> <i class="fa fa-pencil" aria-hidden="true"></i></button>
+      <button type="button" class="btn" data-toggle="modal" data-target="#datosbancarios"><span>Pago</span> <i class="fa fa-pencil" aria-hidden="true"></i></button>
       <button type="button" class="btn" data-toggle="modal" data-target="#cambiarcontraseña"><span>Contraseña</span> <i class="fa fa-pencil" aria-hidden="true"></i></button>
 
     </div>
@@ -161,6 +161,51 @@
                   @else
 
                     <input class="form-control" type="text" value="" placeholder="RFC" name="rfc">
+                  @endif
+
+        					<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Actualizar</button>
+
+
+                </form>
+      				</div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal detalles user -->
+
+
+<div class="modal fade" id="datosbancarios" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-body">
+
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
+
+      				<div>
+      					<h4>Editar datos bancarios</h4>
+                <form action="{{ url('/actualizar-bancarios') }}" method="post">
+                  @if($user->bancarios)
+                    {{ method_field('PUT') }}
+                  @endif
+        					<input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+
+                  @if($user->bancarios)
+                    <input class="form-control" type="text" value="{{ $user->bancarios->banco }}" placeholder="Banco" name="banco" required>
+                    <input class="form-control" type="text" value="{{ $user->bancarios->cta }}" placeholder="Cuenta" name="cta" required>
+                    <input class="form-control" type="text" value="{{ $user->bancarios->clabe }}" placeholder="CLABE" name="clabe" required>
+                    <input class="form-control" type="text" value="{{ $user->bancarios->tarjeta }}" placeholder="Tarjeta" name="tarjeta" required>
+                    <textarea class="form-control" placeholder="Información adicional" name="adicional" required>{{ $user->bancarios->adicional }}</textarea>
+
+                  @else
+
+                    <input class="form-control" type="text" value="{{ old('banco') }}" placeholder="Banco" name="banco" required>
+                    <input class="form-control" type="text" value="{{ old('cta') }}" placeholder="Cuenta" name="cta" required>
+                    <input class="form-control" type="text" value="{{ old('clabe') }}" placeholder="CLABE" name="clabe" required>
+                    <input class="form-control" type="text" value="{{ old('tarjeta') }}" placeholder="Tarjeta" name="tarjeta" required>
+                    <textarea class="form-control" placeholder="Información adicional" name="adicional" required>{{ old('adicional') }}</textarea>
+
                   @endif
 
         					<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Actualizar</button>
