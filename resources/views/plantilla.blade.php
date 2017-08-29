@@ -56,8 +56,8 @@
 
    <header id="header"><div class="headerWrap clear is-sticky">
 <a class="logo" id="logo" href="{{ url('/') }}">
-        <img src="{{ url('images/logo.png') }}" alt="" width="161" height="46" class="logo-white">
-        <img class="logo-black" src="{{ url('images/logo.png') }}" width="117" height="34" alt="">
+        <img src="{{ url('images/Logo-FITCOACH.png') }}" alt="" width="161" height="46" class="logo-white">
+        <img class="logo-black" src="{{ url('images/Logo-FITCOACH.png') }}" width="117" height="34" alt="">
 </a>
 			<nav class="mainMenu">
         <ul class="clear">
@@ -157,7 +157,7 @@
 				<div id="login1">
 					<h4>Entrar o registrarse</h4>
 
-					<div style="color: #fff; font-weight: 600; font-size: 18px;" id="errores">&nbsp;</div>
+					<div style="color: #000; font-weight: 600; font-size: 18px;" id="errores">&nbsp;</div>
 
 					<input id="token" type="hidden" name="_token" value="{{ csrf_token() }}">
 					<input id="login-username" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Correo electrónico">
@@ -165,7 +165,7 @@
 
 				</div>
 				<div id="login2" style="display: none;">
-					<h4>Bienvenido a Fitcoach</h4>
+					<h4>Bienvenido a FITCOACH</h4>
 
 					<form id="loginform" class="form-horizontal" role="form" action="{{ url('/entrar') }}" method="post">
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">

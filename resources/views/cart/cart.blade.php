@@ -7,7 +7,7 @@
   <div class="modal-body row">
     @if (Auth::guest())
       <div class="col-sm-12">
-          <h1 class="gotham2 text-center">Inicia sesión o registrate con nosotros! <br><br><br> <button type="button" data-toggle="modal" data-target="#loginmodal" class="btn btn-success" style="width: 65%; margin: 0 auto;">Comienza ya!</button></h1>
+          <h1 class="gotham2 text-center">¡Inicia sesión o registrate con nosotros! <br><br><br> <button type="button" data-toggle="modal" data-target="#loginmodal" class="btn btn-success" style="width: 65%; margin: 0 auto;">¡Comienza ya!</button></h1>
       </div>
     @else
       <?php $user=App\User::find(Auth::user()->id); ?>

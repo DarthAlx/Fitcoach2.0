@@ -45,7 +45,7 @@
     <div class="col-md-8">
       <hr>
       <div class="text-center">
-        <button type="button" id="btnproximas" class="btn btn-success" style="display:inline-block; width:40%;" onclick="verclases('proximas')">Proximas clases</button>
+        <button type="button" id="btnproximas" class="btn btn-success" style="display:inline-block; width:40%;" onclick="verclases('proximas')">Próximas clases</button>
         <button type="button" id="btnpasadas" class="btn btn-clases" style="display:inline-block; width:40%;" onclick="verclases('pasadas')">Clases pasadas</button>
         <script type="text/javascript">
           function verclases(valor) {
