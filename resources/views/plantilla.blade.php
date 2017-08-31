@@ -133,9 +133,10 @@
 
   		</ul>
   		<div class="footerSubscribe">
-  			<form>
-  				<input class="" type="text" name="" size="20" value="" placeholder="Email">
-  				<button class="btnSubscribe" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+  			<form action="//fitcoach.us16.list-manage.com/subscribe/post?u=0b165717bbc98ca53d19e7bbf&amp;id=b27b9f9a8e" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+  				<input class=""  type="email" value="" name="EMAIL" id="mce-EMAIL" size="20" value="" placeholder="Email">
+					<div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_0b165717bbc98ca53d19e7bbf_b27b9f9a8e" tabindex="-1" value=""></div>
+  				<button id="mc-embedded-subscribe" class="btnSubscribe" type="submit"><i class="fa fa-envelope" aria-hidden="true"></i></button>
   			</form>
   		</div>
   		<div class="copyright">
@@ -180,18 +181,18 @@
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 							<input id="emaillogin2" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Correo electrónico" required>
 							<input type="email" class="form-control" name="email_confirmation" value="{{ old('email_confirmation') }}" placeholder="Confirmar correo electrónico" required>
-							<input type="text" class="form-control" name="name" placeholder="Nombre" required>
-							<input type="text" class="form-control datepicker" name="dob" placeholder="Fecha de nacimiento" required>
-							<select class="form-control" name="genero" required>
+							<input type="text" class="form-control" value="{{ old('name') }}" name="name" placeholder="Nombre" required>
+							<input type="text" class="form-control datepicker" value="{{ old('dob') }}" name="dob" placeholder="Fecha de nacimiento" required>
+							<select class="form-control" name="genero" value="{{ old('genero') }}" required>
 								<option value="">Genero</option>
 								<option value="Masculino">Masculino</option>
 								<option value="Femenino">Femenino</option>
 							</select>
-							<input type="tel" class="form-control" name="tel" minlength="10" placeholder="Teléfono (10 dígitos)" required>
+							<input type="tel" class="form-control" name="tel" value="{{ old('tel') }}" minlength="10" placeholder="Teléfono (10 dígitos)" required>
 							<input  type="password" class="form-control" name="password" placeholder="Contraseña" required>
 							<input type="password" class="form-control" name="password_confirmation" placeholder="Repetir contraseña"  required>
 
-							<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Entrar</button>
+							<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Registrar</button>
 					</form>
 				</div>
 

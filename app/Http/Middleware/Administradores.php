@@ -22,7 +22,10 @@ class Administradores
       }
       else {
       $usuario=User::find(Auth::user()->id);
-      if ($usuario->role!="superadmin") {
+      if ($usuario->role=="superadmin"||$usuario->role=="admin") {
+
+      }
+      else {
         Session::flash('mensaje', 'No tienes permisos para ver esta página');
         Session::flash('class', 'warning');
         return redirect()->intended(url('/404'));

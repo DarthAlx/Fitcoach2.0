@@ -7,7 +7,10 @@
   <div class="row profile">
       <div class="col-sm-12">
         @include('holders.notificaciones')
-        <?php $nombre=explode(" ",$user->name); ?>
+        <?php $nombre=explode(" ",$user->name);
+        if ( ! isset($nombre[1])) {
+            $nombre[1] = null;
+        }?>
         <h2>Hola <span class="nombre">{{ucfirst($nombre[0])}} {{ucfirst($nombre[1])}}</span></h2>
       </div>
   </div>

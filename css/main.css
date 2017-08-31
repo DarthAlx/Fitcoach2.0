@@ -437,11 +437,11 @@ p, form{
 }
 
 body.modal-open .pagecontainer{
-    -webkit-filter: blur(7px);
-    -moz-filter: blur(15px);
-    -o-filter: blur(15px);
-    -ms-filter: blur(15px);
-    filter: blur(15px);
+    -webkit-filter: blur(30px);
+    -moz-filter: blur(30px);
+    -o-filter: blur(30px);
+    -ms-filter: blur(30px);
+    filter: blur(30px);
 }
 
 .modal-backdrop {background: #f7f7f7;

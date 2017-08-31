@@ -73,7 +73,10 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 // Zonas seguras
 Route::group(['middleware' => 'administradores'], function(){
-
+  Route::get('/usuarios', function () {
+    $usuarios = App\User::where('role', 'admin')->get();
+      return view('usuarios', ['usuarios'=>$usuarios]);
+  });
 });
 
 

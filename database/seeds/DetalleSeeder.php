@@ -23,5 +23,9 @@ class DetalleSeeder extends Seeder
         'clases'=>'1',
         'user_id'=>'3'
       ]);
+      DB::table('detalles')->insert([
+        'photo'=>'dummy.png',
+        'user_id'=>'4'
+      ]);
     }
 }

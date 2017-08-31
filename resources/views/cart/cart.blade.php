@@ -85,7 +85,7 @@
     <div class="col-sm-6">
       @if (!$esresidencial)
                         @if (!$user->direcciones->isEmpty())
-                          <div class="form-group">
+                          <div class="form-group row">
                             <label class="col-sm-3 control-label" for="card-number">Dirección</label>
                             <div class="col-sm-9">
                               <select class="form-control" id="direccion" name="direccion">
@@ -98,13 +98,13 @@
                           </div>
 
                         @endif
-                          <div class="form-group"  id="identificadorNuevolabel">
+                          <div class="form-group row"  id="identificadorNuevolabel">
                             <label class="col-sm-3 control-label" for="card-number">Identificador</label>
                             <div class="col-sm-9">
                               <input class="form-control" type="text" value="{{ old('identificador') }}" id="identificadorNuevo"  name="identificadordireccion" placeholder="Ej: Casa, Condominio, Oficina ...">
                             </div>
                           </div>
-                          <div class="form-group"  id="calleNuevolabel">
+                          <div class="form-group row"  id="calleNuevolabel">
                             <label class="col-sm-3 control-label" for="card-holder-name">Calle</label>
                             <div class="col-sm-9 col-md-5">
                               <input class="form-control" type="text" value="{{ old('calle') }}" id="calleNuevo"  name="calle">
@@ -116,25 +116,25 @@
                               <input class="form-control" type="text" value="{{ old('numero_int') }}" id="numero_intNuevo"  name="numero_int" placeholder="# Int">
                             </div>
                           </div>
-                          <div class="form-group"  id="coloniaNuevolabel">
+                          <div class="form-group row"  id="coloniaNuevolabel">
                             <label class="col-sm-3 control-label" for="card-number">Colonia</label>
                             <div class="col-sm-9">
                               <input class="form-control" type="text" value="{{ old('colonia') }}" id="coloniaNuevo"  name="colonia" >
                             </div>
                           </div>
-                          <div class="form-group"  id="municipio_delNuevolabel">
+                          <div class="form-group row"  id="municipio_delNuevolabel">
                             <label class="col-sm-3 control-label" for="card-number">Municipio / Del</label>
                             <div class="col-sm-9">
                              <input class="form-control" type="text" value="{{ old('municipio_del') }}" id="municipio_delNuevo"  name="municipio_del" >
                             </div>
                           </div>
-                          <div class="form-group"  id="cpNuevolabel">
+                          <div class="form-group row"  id="cpNuevolabel">
                             <label class="col-sm-3 control-label" for="card-number">Código postal</label>
                             <div class="col-sm-9">
                              <input class="form-control" type="text" value="{{ old('cp') }}" id="cpNuevo"  name="cp" >
                             </div>
                           </div>
-                          <div class="form-group"  id="estadoNuevolabel">
+                          <div class="form-group row"  id="estadoNuevolabel">
                             <label class="col-sm-3 control-label" for="card-number">Estado</label>
                             <div class="col-sm-9">
                               <select class="form-control"  name="estado" id="estadoNuevo" >
@@ -162,7 +162,7 @@
           <p>&nbsp;</p>
         </div>
         @if (!$user->tarjetas->isEmpty())
-          <div class="form-group">
+          <div class="form-group row">
             <label class="col-sm-3 control-label" for="card-number">Tarjeta</label>
             <div class="col-sm-9">
               <select class="form-control" id="tarjeta" name="tarjeta">
