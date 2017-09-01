@@ -93,7 +93,7 @@
 													@if ($residencial->ocupados<$residencial->cupo&&$intervalo>=0)
 														<a href="#" class="list-group-item" data-toggle="modal" data-target="#condominio{{$residencial->id}}">
 															<i class="fa fa-building" aria-hidden="true"></i>
-						 									{{strftime("%d %B", strtotime($residencial->fecha))}} | {{ $residencial->hora }} | {{$residencial->condominio->identificador}}
+						 									{{strftime("%d %b", strtotime($residencial->fecha))}} | {{ $residencial->hora }} | {{$residencial->condominio->identificador}}
 						 									<i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
 														</a>
 													@endif
@@ -134,17 +134,17 @@
 															 <?php $nombre=explode(" ",$coach->name); ?>
 															 <h2>{{ucfirst($nombre[0])}}</h2>
 												</div>
-												<div class="gotham2">
-													<p>Hora: {{$residencial->hora}}</p>
-													<p>Lugar: {{$residencial->condominio->identificador}}<br>{{$residencial->condominio->direccion}}</p>
-													<p>Cupo: {{$residencial->cupo}} personas <br>
-														 Lugares disponibles: {{intval($residencial->cupo)-intval($residencial->ocupados)}}
+												<div class="gotham2 text-center">
+													<p><strong>Hora:</strong> {{$residencial->hora}}</p>
+													<p><strong>Lugar:</strong> {{$residencial->condominio->identificador}}<br>{{$residencial->condominio->direccion}}</p>
+													<p><strong>Cupo:</strong> {{$residencial->cupo}} personas <br>
+														 <strong>Lugares disponibles:</strong> {{intval($residencial->cupo)-intval($residencial->ocupados)}}
 													</p>
 												</div>
 
 											</div>
 											<div class="col-sm-8 sidebar">
-												<div class="title pull-right">
+												<div class="title text-center">
 													${{$residencial->precio}}
 
 												</div>

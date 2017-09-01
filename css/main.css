@@ -15,9 +15,7 @@
 .gotham3{
 	font-family: Gotham3;
 }
-.topclear{
-	margin-top: 100px;
-}
+
 .datepicker {
     z-index: 99999;
 }
@@ -592,15 +590,62 @@ color: #D58628 !important;
 
 		font-size: 4vw!important;
 }
+.teamItem .overlay a {
+    margin-top: -90px;
+}
+.teamItemNameWrap h3 {
+    font-size: 16px;
+}
+.slideDesc h3 {
+    font-size: 35px;
+}
+.logo img {
+    width: 81px;
+    height: auto;
+    margin: 8% 0;
+}
+.mainMenu {
+    margin: 22px 5px 0px 0;
+}
+#loginmodal h4 {
+    font-size: 18px;
+}
+.topclear{
+	margin-top: 40px;
+}
+#myNav a {
+    font-size: 20px;
+}
+.buscador{
+	text-align: center;
+}
 }
 @media screen and (min-width: 451px) {
+	.topclear{
+		margin-top: 100px;
+	}
 	.title {
 		font-family: Gotham2;
 	    font-size: 60px;
 	    color: #efeeee;
 
 	}
+	.teamItemNameWrap h3 {
+	    font-size: 20px;
+	}
+	.slideDesc h3 {
+	    font-size: 60px;
+	}
+	.mainMenu {
 
+    margin: 25px 36px 0px 0;
+}
+#loginmodal h4 {
+    font-size: 22px;
+}
+#myNav a {
+    font-size: 36px;
+}
 
 }
 
@@ -623,6 +668,12 @@ color: #D58628 !important;
     margin-top: 4.5vh;
 }
 }
+@media (min-width: 1250px){
+	.teamItem .overlay a {
+	    margin-top: -20px;
+	}
+}
+
 
 .calendarioinst {
     min-height: 400px;

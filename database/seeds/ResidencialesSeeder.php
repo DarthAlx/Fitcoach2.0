@@ -12,7 +12,7 @@ class ResidencialesSeeder extends Seeder
     public function run()
     {
       DB::table('residenciales')->insert([
-        'fecha'=>'2017-08-25',
+        'fecha'=>'2017-09-15',
         'hora'=>'13:00',
         'user_id'=>'3',
         'condominio_id'=>'1',

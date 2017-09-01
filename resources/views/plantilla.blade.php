@@ -103,7 +103,7 @@
     <div class="overlay-content">
 	     <a href="#">ACTIVACIÓN DE CONDOMINIOS</a>
       <a href="{{url('instructores')}}">INSTRUCTORES</a>
-      <a href="#">RESERVAR</a>
+      <a href="{{url('/')}}#botones">RESERVAR</a>
       <a href="{{url('condominios')}}">CONDOMINIOS</a>
 			<a href="#">¿QUIÉNES SOMOS?</a>
 			<a href="#">LEGAL</a>
@@ -156,7 +156,7 @@
         <button type="button" class="close visible-xs" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
         <br><br>
 				<div id="login1">
-					<h4>Entrar o registrarse</h4>
+					<h4>Entrar o Registrarse</h4>
 
 					<div style="color: #000; font-weight: 600; font-size: 18px;" id="errores">&nbsp;</div>
 
