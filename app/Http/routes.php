@@ -32,7 +32,7 @@ Route::get('/instructores', function () {
   $coaches = App\User::where('role', 'instructor')->get();
     return view('instructores', ['coaches'=>$coaches]);
 });
-Route::get('/condominios', function () {
+Route::get('/residenciales', function () {
   $condominios = App\Condominio::all();
     return view('condominios', ['condominios'=>$condominios]);
 });
@@ -73,10 +73,45 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 // Zonas seguras
 Route::group(['middleware' => 'administradores'], function(){
-  Route::get('/usuarios', function () {
-    $usuarios = App\User::where('role', 'admin')->get();
-      return view('usuarios', ['usuarios'=>$usuarios]);
+  Route::get('/admin', function () {
+    $user = App\User::find(Auth::user()->id);
+    return view('admin.admin', ['user'=>$user]) ;
   });
+  Route::get('/admins', function () {
+    $usuarios = App\User::where('role', 'admin')->get();
+    $modulos = App\Modulo::all();
+      return view('admin.usuarios', ['usuarios'=>$usuarios, 'modulos'=>$modulos]);
+  });
+  Route::get('/condominios', function () {
+    $condominios = App\Condominio::all();
+      return view('admin.condominios', ['condominios'=>$condominios]);
+  });
+  Route::post('agregar-condominio', 'CondominioController@store');
+  Route::put('actualizar-condominio', 'CondominioController@update');
+  Route::delete('eliminar-condominio', 'CondominioController@destroy');
+
+  Route::get('/clases', function () {
+    $clases = App\Clase::all();
+      return view('admin.clases', ['clases'=>$clases]);
+  });
+  Route::post('agregar-clase', 'ClaseController@store');
+  Route::put('actualizar-clase', 'ClaseController@update');
+  Route::delete('eliminar-clase', 'ClaseController@destroy');
+
+  Route::get('/grupos', function () {
+    $grupos = App\Residencial::all();
+    $coaches = App\User::where('role', 'instructor')->get();
+    $clases = App\Clase::all();
+    $condominios = App\Condominio::all();
+      return view('admin.residenciales', ['grupos'=>$grupos, 'coaches'=>$coaches, 'clases'=>$clases, 'condominios'=>$condominios]);
+  });
+  Route::post('agregar-grupo', 'ResidencialController@store');
+  Route::put('actualizar-grupo', 'ResidencialController@update');
+  Route::delete('eliminar-grupo', 'ResidencialController@destroy');
+
+  Route::post('agregar-admin', 'UserController@storeadmin');
+  Route::put('actualizar-admin', 'UserController@updateadmin');
+  Route::delete('eliminar-admin', 'UserController@destroyadmin');
 });
 
 

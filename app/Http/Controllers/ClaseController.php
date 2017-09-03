@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use App\Clase;
 
 class ClaseController extends Controller
 {
@@ -37,7 +42,36 @@ class ClaseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      if ($request->hasFile('imagen')) {
+      $file = $request->file('imagen');
+      if ($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="png") {
+
+
+        $name = $request->nombre ."-". time(). "." . $file->getClientOriginalExtension();
+        $path = base_path('uploads/clases/');
+
+        $file-> move($path, $name);
+
+        $guardar = new Clase($request->all());
+        $guardar->imagen = $name;
+
+        $guardar->save();
+        Session::flash('mensaje', '¡Clase guardada correctamente!');
+        Session::flash('class', 'success');
+        return redirect()->intended(url('/clases'));
+      }
+      else{
+        Session::flash('mensaje', 'El archivo no es una imagen valida.');
+        Session::flash('class', 'danger');
+        return redirect()->intended(url('/clases'));
+      }
+
+    }
+    else{
+      Session::flash('mensaje', 'El archivo no es una imagen valida.');
+      Session::flash('class', 'danger');
+      return redirect()->intended(url('/clases'));
+    }
     }
 
     /**
@@ -69,9 +103,52 @@ class ClaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+
+      if ($request->hasFile('imagen')) {
+              $file = $request->file('imagen');
+              if ($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="png") {
+                $name = $request->nombre . "-". time()."." . $file->getClientOriginalExtension();
+                $path = base_path('uploads/clases/');
+                $file-> move($path, $name);
+                $clase = Clase::find($request->clase_id);
+                File::delete($path . $clase->imagen);
+                $clase->imagen = $name;
+                $clase->nombre = $request->nombre;
+                $clase->tipo = $request->tipo;
+                $clase->descripcion = $request->descripcion;
+
+                $clase->precio = $request->precio;
+                $clase->precio_especial = $request->precio_especial;
+                $clase->save();
+
+
+                Session::flash('mensaje', '¡Clase actualizada!');
+                Session::flash('class', 'success');
+                return redirect()->intended(url('/clases'));
+              }
+              else{
+                Session::flash('mensaje', 'El archivo no es una imagen valida.');
+                Session::flash('class', 'danger');
+                return redirect()->intended(url('/clases'));
+              }
+
+            }
+            else{
+              $clase = Clase::find($request->clase_id);
+              $clase->nombre = $request->nombre;
+              $clase->tipo = $request->tipo;
+              $clase->descripcion = $request->descripcion;
+              $clase->precio = $request->precio;
+              $clase->precio_especial = $request->precio_especial;
+              $clase->save();
+
+
+              Session::flash('mensaje', '¡Clase actualizada!');
+              Session::flash('class', 'success');
+              return redirect()->intended(url('/clases'));
+            }
     }
 
     /**
@@ -80,8 +157,14 @@ class ClaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+      $path = base_path('uploads/clases/');
+      $clase = Clase::find($request->clase_id);
+      File::delete($path . $clase->imagen);
+      $clase->delete();
+      Session::flash('mensaje', 'Clase eliminada correctamente!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/clases'));
     }
 }

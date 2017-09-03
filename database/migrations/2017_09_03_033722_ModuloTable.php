@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DetalleTable extends Migration
+class ModuloTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,10 @@ class DetalleTable extends Migration
      */
     public function up()
     {
-      Schema::create('detalles', function (Blueprint $table) {
+      Schema::create('modulos', function (Blueprint $table) {
         $table->increments('id');
-        $table->string('photo');
-        $table->string('tel');
-        $table->string('intereses');
-        $table->string('permisos');
-        $table->string('rfc');
-        $table->string('clases');
-        $table->integer('user_id');
+        $table->string('nombre');
+
         $table->timestamps();
     });
     }
@@ -32,6 +27,6 @@ class DetalleTable extends Migration
      */
     public function down()
     {
-      Schema::drop('detalles');
+        Schema::drop('modulos');
     }
 }

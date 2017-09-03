@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
-use App\Detalles;
+use App\Detalle;
+use Validator;
 
 class UserController extends Controller
 {
@@ -72,6 +73,41 @@ class UserController extends Controller
     {
         //
     }
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|confirmed|min:6',
+        ]);
+    }
+    public function storeadmin(Request $request)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+        else {
+          $guardar = new User($request->all());
+          $guardar->role="admin";
+          $guardar->password=bcrypt($request->password);
+          $guardar->save();
+          $permisos = new Detalle();
+          if ($request->permisos) {
+            $permisos->permisos=implode(",", $request->permisos);
+            $permisos->user_id=$guardar->id;
+          }
+          $permisos->save();
+          Session::flash('mensaje', '¡Admin guardado!');
+          Session::flash('class', 'success');
+          return redirect()->intended(url('/admins'));
+        }
+    }
+
+
 
     /**
      * Display the specified resource.
@@ -102,10 +138,49 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
 
+     protected function validatorUpdate(array $data)
+    {
+        return Validator::make($data, [
+            'name' => 'required|max:255',
+            'password' => 'confirmed|min:6'
+        ]);
     }
+    public function updateadmin(Request $request)
+    {
+      $validator = $this->validatorUpdate($request->all());
+
+      if ($validator->fails()) {
+          $this->throwValidationException(
+              $request, $validator
+          );
+      }
+      else {
+        $guardar = User::find($request->admin_id);
+        $guardar->name=$request->name;
+        $guardar->email=$request->email;
+        $guardar->dob=$request->dob;
+        $guardar->tel=$request->tel;
+        $guardar->genero=$request->genero;
+        if ($request->password) {
+          $guardar->password=bcrypt($request->password);
+        }
+
+        $guardar->role="admin";
+        $guardar->save();
+        $permisos = Detalle::find($guardar->detalles->id);
+        if ($request->permisos) {
+          $permisos->permisos=implode(",", $request->permisos);
+          $permisos->user_id=$guardar->id;
+        }
+        $permisos->save();
+        Session::flash('mensaje', '¡Admin actualizado!');
+        Session::flash('class', 'success');
+        return redirect()->intended(url('/admins'));
+      }
+    }
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -113,9 +188,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroyadmin(Request $request)
     {
-        //
+      $admin = User::find($request->admin_id);
+      $admin->delete();
+      Session::flash('mensaje', '!Admin eliminado correctamente!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/admins'));
     }
 
     public function redirectPath()

@@ -19,6 +19,7 @@
 		<link rel="stylesheet" type="text/css" href="{{ url('css/style.css') }}" media="screen" />
 		<link rel="stylesheet" type="text/css" href="{{ url('css/adaptive.css') }}" media="screen" />
 		<link rel="stylesheet" type="text/css" href="{{ url('css/bootstrap.css') }}">
+		<link rel="stylesheet" href="{{ url('js/data-tables/DT_bootstrap.css') }}" />
 		<link rel="stylesheet" type="text/css" href="{{ url('css/main.css') }}" media="screen" />
 		<link href="{{ url('css/select2.min.css') }}" rel="stylesheet" />
 		<script type="text/javascript" src="{{ url('js/jquery-1.10.2.min.js') }}"></script>
@@ -70,10 +71,17 @@
 					</li>
 					@if (Auth::guest())
 							<li><a href="#" data-toggle="modal" data-target="#loginmodal" id="loginboton"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a> </li>
-					@else
+					@elseif (Auth::user()->role=="usuario")
 						<li><a href="{{url('perfil')}}" data-toggle="tooltip" data-placement="bottom" title="Hola {{strtok(Auth::user()->name, " ")}}"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a> </li>
 						<li><a href="{{url('salir')}}"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></a> </li>
+					@elseif (Auth::user()->role=="instructor")
+						<li><a href="{{url('perfilinstructor')}}" data-toggle="tooltip" data-placement="bottom" title="Hola {{strtok(Auth::user()->name, " ")}}"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a> </li>
+						<li><a href="{{url('salir')}}"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></a> </li>
+					@elseif (Auth::user()->role=="admin"||Auth::user()->role=="superadmin")
+						<li><a href="{{url('admin')}}" data-toggle="tooltip" data-placement="bottom" title="Hola {{strtok(Auth::user()->name, " ")}}"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a> </li>
+						<li><a href="{{url('salir')}}"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></a> </li>
 					@endif
+
 
           <li><a href="{{url('/carrito')}}"><i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i></a></li>
           <li>
@@ -104,7 +112,7 @@
 	     <a href="#">ACTIVACIÓN DE CONDOMINIOS</a>
       <a href="{{url('instructores')}}">INSTRUCTORES</a>
       <a href="{{url('/')}}#botones">RESERVAR</a>
-      <a href="{{url('condominios')}}">CONDOMINIOS</a>
+      <a href="{{url('residenciales')}}">CONDOMINIOS</a>
 			<a href="#">¿QUIÉNES SOMOS?</a>
 			<a href="#">LEGAL</a>
 			<a href="#">CONTACTO</a>
@@ -261,5 +269,10 @@ $('.mitimepicker').timepicker();
 @endif
 
 @yield('modals')
+<!--dynamic table-->
+<script type="text/javascript" language="javascript" src="{{ url('js/advanced-datatable/js/jquery.dataTables.js') }}"></script>
+<script type="text/javascript" src="{{ url('js/data-tables/DT_bootstrap.js') }}"></script>
+<!--dynamic table initialization -->
+<script src="{{ url('js/dynamic_table_init.js') }}"></script>
 </body>
 </html>

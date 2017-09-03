@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ParticularSeeder::class);
         $this->call(ResidencialesSeeder::class);
         $this->call(folio::class);
+        $this->call(ModuloSeeder::class);
         Model::reguard();
     }
 }

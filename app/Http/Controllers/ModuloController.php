@@ -6,11 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Residencial;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
-class ResidencialController extends Controller
+class ModuloController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -40,12 +37,7 @@ class ResidencialController extends Controller
      */
     public function store(Request $request)
     {
-      $guardar = new Residencial($request->all());
-      $guardar->ocupados=0;
-      $guardar->save();
-      Session::flash('mensaje', '!Grupo guardado!');
-      Session::flash('class', 'success');
-      return redirect()->intended(url('/grupos'));
+        //
     }
 
     /**
@@ -77,23 +69,9 @@ class ResidencialController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-      $grupo = Residencial::find($request->grupo_id);
-      $grupo->fecha = $request->fecha;
-      $grupo->hora = $request->hora;
-      $grupo->user_id = $request->user_id;
-      $grupo->condominio_id = $request->condominio_id;
-      $grupo->clase_id = $request->clase_id;
-      $grupo->precio = $request->precio;
-      $grupo->audiencia = $request->audiencia;
-      $grupo->tipo = $request->tipo;
-      $grupo->cupo = $request->cupo;
-      $grupo->descripcion = $request->descripcion;
-      $grupo->save();
-      Session::flash('mensaje', '!Grupo actualizado!');
-      Session::flash('class', 'success');
-      return redirect()->intended(url('/grupos'));
+        //
     }
 
     /**
@@ -102,12 +80,8 @@ class ResidencialController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-      $grupo = Residencial::find($request->grupo_id);
-      $grupo->delete();
-      Session::flash('mensaje', '!Grupo eliminado correctamente!');
-      Session::flash('class', 'success');
-      return redirect()->intended(url('/grupos'));
+        //
     }
 }
