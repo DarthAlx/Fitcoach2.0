@@ -112,6 +112,9 @@ Route::group(['middleware' => 'administradores'], function(){
   Route::post('agregar-admin', 'UserController@storeadmin');
   Route::put('actualizar-admin', 'UserController@updateadmin');
   Route::delete('eliminar-admin', 'UserController@destroyadmin');
+  Route::get('/ventas', function () {
+      return view('admin.ventas');
+  });
 });
 
 

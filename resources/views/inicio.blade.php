@@ -32,7 +32,7 @@
 						</a>
 					</div>
 					<div class="col-sm-4 text-center">
-						<a href="{{url('condominios')}}">
+						<a href="{{url('residenciales')}}">
 							<img src="{{ url('images/building.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/building2.png')}}'" onmouseout="this.src='{{ url('images/building.png')}}'" alt="">
 
 						</a>
