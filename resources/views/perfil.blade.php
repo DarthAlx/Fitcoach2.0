@@ -35,7 +35,95 @@
             <?php } ?>
         @endif
       </div>
-      <hr>
+
+      <div class="clasesperfil visible-xs">
+        <hr>
+        <div class="text-center">
+          <button type="button" id="btnproximas" class="btn btn-success" style="display:inline-block; width:40%;" onclick="verclases('proximas')">Próximas clases</button>
+          <button type="button" id="btnpasadas" class="btn btn-clases" style="display:inline-block; width:40%;" onclick="verclases('pasadas')">Clases pasadas</button>
+          <script type="text/javascript">
+            function verclases(valor) {
+              if (valor=="proximas") {
+                $('#pasadas').hide();
+                $('#btnpasadas').addClass('btn-clases');$('#btnpasadas').removeClass('btn-success');
+                $('#proximas').show();
+                $('#btnproximas').addClass('btn-success');$('#btnproximas').removeClass('btn-clases');
+              }
+              if (valor=="pasadas") {
+                $('#proximas').hide();
+                $('#btnproximas').addClass('btn-clases');$('#btnproximas').removeClass('btn-success');
+                $('#pasadas').show();
+                $('#btnpasadas').addClass('btn-success');$('#btnpasadas').removeClass('btn-clases');
+              }
+            }
+          </script>
+        </div>
+
+        <p>&nbsp;</p>
+        <div id="proximas" class="listadeclases">
+          <div class="list-group">
+            @if ($user->ordenes)
+              <?php
+              $proximas= App\Orden::where('user_id', $user->id)->where('status', 'pagada')->orderBy('fecha', 'asc')->get();
+              if ($proximas) {
+                date_default_timezone_set('America/Mexico_City');
+                foreach ($proximas as $proxima) {
+                  $metadata= explode(',',$proxima->metadata);
+
+                  $fecha=date_create($proxima->fecha);
+                  setlocale(LC_TIME, "es-ES");
+                 ?>
+                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
+                   @if($metadata[0]=="particular")
+                     <i class="fa fa-home" aria-hidden="true"></i>
+                   @else
+                     <i class="fa fa-building" aria-hidden="true"></i>
+                   @endif
+                   {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $proxima->hora }}
+                   <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
+                 </a>
+              <?php } } else{ ?>
+                <p>No has tomado ninguna clase.</p>
+                <?php  } ?>
+            @endif
+
+          </div>
+        </div>
+        <div id="pasadas" class="listadeclases" style="display:none;">
+          <div class="list-group">
+            @if ($user->ordenes)
+              <?php
+              $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'terminada')->orWhere('status', 'cancelada')->orderBy('fecha', 'desc')->get();
+              if ($pasadas) {
+                date_default_timezone_set('America/Mexico_City');
+                foreach ($pasadas as $pasada) {
+                  $metadata= explode(',',$pasada->metadata);
+
+                  $fecha=date_create($pasada->fecha);
+                  setlocale(LC_TIME, "es-ES");
+                 ?>
+                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
+                   @if ($pasada->status=="cancelada")
+                     <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                   @else
+                     @if($metadata[0]=="particular")
+                       <i class="fa fa-home" aria-hidden="true"></i>
+                     @else
+                       <i class="fa fa-building" aria-hidden="true"></i>
+                     @endif
+                    @endif
+                   {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $proxima->hora }}
+                   <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
+                 </a>
+              <?php } } else{ ?>
+                <p>No has tomado ninguna clase.</p>
+                <?php  } ?>
+            @endif
+
+          </div>
+        </div>
+        </div>
+<hr>
       <h4>MIS DATOS</h4>
       <button type="button" class="btn" data-toggle="modal" data-target="#datosdeusuario"><span>Datos de usuario</span> <i class="fa fa-pencil" aria-hidden="true"></i></button>
       <button type="button" class="btn" data-toggle="modal" data-target="#direcciones"><span>Direcciones</span> <i class="fa fa-pencil" aria-hidden="true"></i></button>
@@ -50,6 +138,7 @@
       <button type="button" class="btn" data-toggle="modal" data-target="#agregartarjeta"><span>Nueva tarjeta +</span></button>
     </div>
     <div class="col-md-8">
+    <div class="clasesperfil hidden-xs">
       <hr>
       <div class="text-center">
         <button type="button" id="btnproximas" class="btn btn-success" style="display:inline-block; width:40%;" onclick="verclases('proximas')">Próximas clases</button>
@@ -71,6 +160,7 @@
           }
         </script>
       </div>
+
       <p>&nbsp;</p>
       <div id="proximas" class="listadeclases">
         <div class="list-group">
@@ -133,6 +223,7 @@
           @endif
 
         </div>
+      </div>
       </div>
 
     </div>

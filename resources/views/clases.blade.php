@@ -85,7 +85,7 @@
 
 
 
-								<div id="myCarousel" class="carousel slide" data-wrap="false">
+								<div id="myCarousel1" class="carousel slide hidden-xs" data-wrap="false">
 				        <div class="carousel-inner">
 									@for ($i=0; $i < 5 ; $i++)
 										@if ($i==0)
@@ -130,10 +130,63 @@
 				        </div>
 
 
-				        <a class="left carousel-control" href="#myCarousel" data-slide="prev"><em class="fa fa-2x fa-chevron-left" aria-hidden="true" style="color: #000;"></em>
+				        <a class="left carousel-control" href="#myCarousel1" data-slide="prev"><em class="fa fa-2x fa-chevron-left" aria-hidden="true" style="color: #000;"></em>
 				        </a>
-				        <a class="right carousel-control" href="#myCarousel" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
+				        <a class="right carousel-control" href="#myCarousel1" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
 				        </a>
+							</div>
+
+
+							<div id="myCarousel" class="carousel slide visible-xs" data-wrap="false">
+							<div class="carousel-inner">
+								@for ($i=0; $i < 15 ; $i++)
+									@if ($i==0)
+										<div class="item active">
+									@else
+										<div class="item">
+									@endif
+										<div class="row-fluid">
+											@for ($x=$i*2; $x < ($i+1)*2 ; $x++)
+												<div class="col-xs-6 separacion">
+													{{$fechasformateadas[$x]}}
+													<ul class="list-group calendarioinst">
+
+														<?php $particulares=App\Particular::where('clase_id', $clase->id)->get();
+														list($año, $mes, $dia) = explode("-", $fechas[$x]);
+														$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
+														?>
+														@foreach ($particulares as $particular)
+															<?php $existe=App\Orden::where('coach_id', $particular->user_id)->where('fecha', $fechas[$x])->where('hora', $particular->hora)->first(); ?>
+															@if (!$existe)
+																@if ($particular->fecha==$fechas[$x]||in_array($dia_n, explode(",",$particular->recurrencia)))
+																	<?php $nombre=explode(" ",$particular->user->name); ?>
+																	<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}');" style="cursor:pointer;">
+																		<input type="checkbox" id="carrito{{$x}}{{$particular->id}}" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
+																		<input type="hidden" name="tipo" value="Particular">
+																		{{$particular->user->name}}<br>
+																		@foreach ($particular->user->zonas as $zona)
+																			{{$zona->identificador}}
+																		@endforeach
+																		<br>
+																		{{$particular->hora}} <i class="fa fa-square-o pull-right fa{{$x}}{{$particular->id}}" aria-hidden="true"></i>
+																	</li>
+																@endif
+															@endif
+														@endforeach
+													</ul>
+												</div>
+											@endfor
+										</div>
+									</div>
+								@endfor
+							</div>
+
+
+							<a class="left carousel-control" href="#myCarousel" data-slide="prev"><em class="fa fa-2x fa-chevron-left" aria-hidden="true" style="color: #000;"></em>
+							</a>
+							<a class="right carousel-control" href="#myCarousel" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
+							</a>
+						</div>
 
 								<input type="hidden" name="cantidad" id="cantidad">
 								<p>&nbsp;</p>
@@ -148,7 +201,6 @@
 									</div>
 								</div>
 								</form>
-				        </div>
 	        	</div>
 
 	        </div>

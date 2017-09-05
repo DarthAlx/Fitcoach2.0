@@ -110,7 +110,7 @@
     <!-- Overlay content -->
     <div class="overlay-content">
 	     <a href="#">ACTIVACIÓN DE CONDOMINIOS</a>
-      <a href="{{url('instructores')}}">INSTRUCTORES</a>
+      <a href="{{url('coaches')}}">COACHES</a>
       <a href="{{url('/')}}#botones">RESERVAR</a>
       <a href="{{url('residenciales')}}">CONDOMINIOS</a>
 			<a href="#">¿QUIÉNES SOMOS?</a>
@@ -160,7 +160,7 @@
 <div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="container">
     <div class="row">
-      <div class="col-sm-3 col-lg-3 text-center centrartotal">
+      <div class="col-xs-8 col-sm-3 col-lg-3 text-center centrartotal">
         <button type="button" class="close visible-xs" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
         <br><br>
 				<div id="login1">
@@ -274,5 +274,6 @@ $('.mitimepicker').timepicker();
 <script type="text/javascript" src="{{ url('js/data-tables/DT_bootstrap.js') }}"></script>
 <!--dynamic table initialization -->
 <script src="{{ url('js/dynamic_table_init.js') }}"></script>
+<div class="modal-backdrop"></div>
 </body>
 </html>

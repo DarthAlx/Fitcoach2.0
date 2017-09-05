@@ -28,7 +28,7 @@ Route::get('/clasesdeportivas', function () {
 Route::get('/aviso', function () {
     return view('aviso');
 });
-Route::get('/instructores', function () {
+Route::get('/coaches', function () {
   $coaches = App\User::where('role', 'instructor')->get();
     return view('instructores', ['coaches'=>$coaches]);
 });
