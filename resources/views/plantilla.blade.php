@@ -157,7 +157,7 @@
 
 
 	<!-- Modal -->
-<div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="true">
   <div class="container">
     <div class="row">
       <div class="col-xs-8 col-sm-3 col-lg-3 text-center centrartotal">
@@ -274,6 +274,5 @@ $('.mitimepicker').timepicker();
 <script type="text/javascript" src="{{ url('js/data-tables/DT_bootstrap.js') }}"></script>
 <!--dynamic table initialization -->
 <script src="{{ url('js/dynamic_table_init.js') }}"></script>
-<div class="modal-backdrop"></div>
 </body>
 </html>

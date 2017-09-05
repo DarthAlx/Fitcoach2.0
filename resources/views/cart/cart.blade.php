@@ -7,7 +7,7 @@
   <div class="modal-body row">
     @if (Auth::guest())
       <div class="col-sm-12">
-          <h1 class="gotham2 text-center">¡Inicia sesión o registrate con nosotros! <br><br><br> <button type="button" data-toggle="modal" data-target="#loginmodal" class="btn btn-success" style="width: 65%; margin: 0 auto;">¡Comienza ya!</button></h1>
+          <h1 class="gotham2 text-center" style="padding: 20vh 0;">¡Inicia sesión o registrate con nosotros! <br><br><br> <button type="button" data-toggle="modal" data-target="#loginmodal" class="btn btn-success" style="width: 65%; margin: 0 auto;">Entrar</button></h1>
       </div>
     @else
       <?php $user=App\User::find(Auth::user()->id); ?>
@@ -86,10 +86,10 @@
       @if (!$esresidencial)
                         @if (!$user->direcciones->isEmpty())
                           <div class="form-group row">
-                            <label class="col-sm-3 control-label" for="card-number">Dirección</label>
+                            <label class="col-sm-3 control-label" for="card-number">Direcciónes guardadas</label>
                             <div class="col-sm-9">
                               <select class="form-control" id="direccion" name="direccion">
-                                <option value="">Nueva dirección</option>
+                                <option value="">Agregar dirección</option>
                                 @foreach ($user->direcciones as $direccion)
                                   <option value="{{$direccion->id}}">{{$direccion->identificador}}</option>
                                 @endforeach
