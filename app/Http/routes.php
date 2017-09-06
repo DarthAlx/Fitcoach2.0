@@ -29,6 +29,30 @@ Route::get('/clasesdeportivas', function () {
 Route::get('/aviso', function () {
     return view('aviso');
 });
+Route::get('/bolsa-de-trabajo', function () {
+    return view('bolsa');
+});
+Route::post('/bolsa-de-trabajo', function (Illuminate\Http\Request $request) {
+    $datos[]=$request;
+
+    if ($datos[0]->hasFile('cv')) {
+      $file = $datos[0]->file('cv');
+      $name = "cv-". time(). "." . $file->getClientOriginalExtension();
+      $path = base_path('uploads/temp/');
+      $file-> move($path, $name);
+    }
+    $datos[]=$name;
+    Mail::send('emails.bolsa', ['datos'=>$datos[0]], function ($m) use ($datos) {
+
+        $m->from($datos[0]->email, $datos[0]->nombre);
+        $m->attach(url('/uploads/temp/'.$datos[1]), ['as' => $datos[1]]);
+        $m->to('alx.morales@outlook.com', 'FITCOACH México')->subject('Bolsa de trabajo');
+    });
+    Illuminate\Support\Facades\File::delete($path . $name);
+    Illuminate\Support\Facades\Session::flash('mensaje', '!Mensaje enviado!');
+    Illuminate\Support\Facades\Session::flash('class', 'success');
+    return redirect()->intended(url('/bolsa-de-trabajo'));
+});
 Route::get('/coaches', function () {
   $coaches = App\User::where('role', 'instructor')->get();
     return view('instructores', ['coaches'=>$coaches]);
