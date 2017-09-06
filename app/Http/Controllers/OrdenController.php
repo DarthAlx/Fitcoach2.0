@@ -16,7 +16,7 @@ use App\User;
 use App\Tarjeta;
 use App\Direccion;
 use App\Folio;
-
+use Mail;
 class OrdenController extends Controller
 {
     /**
@@ -47,9 +47,16 @@ class OrdenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+      $user = User::findOrFail(1);
+      $ordenes=Orden::where('order_id', $id)->get();
+      $datos=Orden::where('order_id', $id)->first();
+        Mail::send('receipt', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {
+            $m->from('alxunscarred@gmail.com', 'FITCOACH México');
+$m->attach(url('/images/Logo-FITCOACH.png'), ['as' => 'foto.png']);
+            $m->to($user->email, $user->name)->subject('¡Orden recibida!');
+        });
     }
 
     /**

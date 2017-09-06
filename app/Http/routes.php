@@ -11,6 +11,7 @@
 |
 */
 // Rutas publicas
+Route::get('mail/{id}', 'OrdenController@create');
 Route::get('/', function () {
   $sliders = App\Slider::orderBy('order', 'asc')->get();
   return view('inicio', ['sliders'=>$sliders]) ;
