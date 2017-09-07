@@ -52,9 +52,8 @@ class OrdenController extends Controller
       $user = User::findOrFail(1);
       $ordenes=Orden::where('order_id', $id)->get();
       $datos=Orden::where('order_id', $id)->first();
-        Mail::send('receipt', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {
+        Mail::send('emails.receipt', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {
             $m->from('alxunscarred@gmail.com', 'FITCOACH México');
-$m->attach(url('/images/Logo-FITCOACH.png'), ['as' => 'foto.png']);
             $m->to($user->email, $user->name)->subject('¡Orden recibida!');
         });
     }
@@ -299,6 +298,17 @@ $m->attach(url('/images/Logo-FITCOACH.png'), ['as' => 'foto.png']);
         $user=User::find($datos->user_id);
         return view('recibo',['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user]);
       }
+
+      public function invoice($id)
+    {
+        $ordenes=Orden::where('order_id', $id)->get();
+        $datos=Orden::where('order_id', $id)->first();
+        $user=User::find($datos->user_id);
+        $view =  \View::make('emails.receipt', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user])->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('invoice');
+    }
 
       public function redirectPath()
       {
