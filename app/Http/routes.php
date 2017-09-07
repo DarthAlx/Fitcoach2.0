@@ -16,6 +16,8 @@ Route::get('/', function () {
   $sliders = App\Slider::orderBy('order', 'asc')->get();
   return view('inicio', ['sliders'=>$sliders]) ;
 });
+Route::get('ventas', 'OrdenController@ventas');
+Route::post('ventas', 'OrdenController@ventaspost');
 Route::get('/nosotros', function () {
     return view('nosotros');
 });
@@ -137,9 +139,6 @@ Route::group(['middleware' => 'administradores'], function(){
   Route::post('agregar-admin', 'UserController@storeadmin');
   Route::put('actualizar-admin', 'UserController@updateadmin');
   Route::delete('eliminar-admin', 'UserController@destroyadmin');
-  Route::get('/ventas', function () {
-      return view('admin.ventas');
-  });
 });
 
 

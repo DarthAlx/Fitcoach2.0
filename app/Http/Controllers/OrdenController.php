@@ -59,6 +59,8 @@ $m->attach(url('/images/Logo-FITCOACH.png'), ['as' => 'foto.png']);
         });
     }
 
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -76,9 +78,27 @@ $m->attach(url('/images/Logo-FITCOACH.png'), ['as' => 'foto.png']);
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function ventas()
     {
-        //
+      $month = date('m');
+      $year = date('Y');
+      $from= date('Y-m-d', mktime(0,0,0, $month, 1, $year));
+      $day = date("d", mktime(0,0,0, $month+1, 0, $year));
+      $to = date('Y-m-d', mktime(0,0,0, $month, $day, $year));
+
+      $ventas = Orden::whereBetween('fecha', array($from, $to))->get();
+      return view('admin.ventas',['ventas'=>$ventas]);
+    }
+    public function ventaspost(Request $request)
+    {
+      $from_n = strtotime ( $request->form )  ;
+      $to_n = strtotime ( $request->to )  ;
+      $from = date ( 'Y-m-d' , $from_n );
+      $to = date ( 'Y-m-d' , $to_n );
+
+      $ventas = Orden::whereBetween('fecha', array($from, $to))->get();
+      return view('admin.ventas',['ventas'=>$ventas]);
+
     }
 
     /**
