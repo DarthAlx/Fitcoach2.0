@@ -34,7 +34,7 @@
 							<input type="text" class="form-control datepicker" name="to" placeholder="Hasta..." value="{{$to}}">
 					</div>
 					<div class="col-sm-3 col-md-2">
-							<input type="submit" value="Enviar" class="btn btn-success">
+							<input type="submit" value="Ver periodo" class="btn btn-success">
 					</div>
 				</form>
 			</div>
@@ -59,7 +59,7 @@
 						      <td>{{$venta->fecha}}</td>
 						      <td>{{$venta->user->name}}</td>
 						      <td>{{$venta->cantidad}}</td>
-									<td></td>
+									<td><a href="{{url('/printinvoice')}}/{{$venta->order_id}}" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a></td>
 						  </tr>
 						@endforeach
 					@else

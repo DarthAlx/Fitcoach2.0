@@ -9,7 +9,7 @@
 						<tbody>
 							<tr>
 								<td colspan="2">
-									<img src="{{  asset('/images/Logo-FITCOACH.png')}}" alt="" class="pull-left" style="width: 40%">
+									<img src="{{  url('/images/Logo-FITCOACH.png')}}" alt="" class="pull-left">
 								</td>
 							</tr>
 							<tr>

@@ -307,7 +307,7 @@ class OrdenController extends Controller
         $view =  \View::make('emails.receipt', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user])->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
-        return $pdf->stream('invoice');
+        return $pdf->stream('invoice.pdf');
     }
 
       public function redirectPath()
