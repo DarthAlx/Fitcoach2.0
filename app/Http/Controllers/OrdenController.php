@@ -188,9 +188,7 @@ class OrdenController extends Controller
     {
       $orden = Orden::find($request->ordencancelar);
       $orden->status = 'Cancelada';
-      $metadata=explode(",",$orden->metadata);
-      $metadata[]=$request->tipocancelacion;
-      $orden->metadata= implode(",",$metadata);
+      $orden->metadata=$request->tipocancelacion;
       $orden->save();
       Session::flash('mensaje', '!Orden Cancelada!');
       Session::flash('class', 'success');

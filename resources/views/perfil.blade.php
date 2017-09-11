@@ -65,7 +65,7 @@
             @if ($user->ordenes)
               <?php
               $proximas= App\Orden::where('user_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'desc')->get();
-              if ($proximas) {
+              if (!$proximas->isEmpty()) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($proximas as $proxima) {
 
@@ -94,7 +94,7 @@
             @if ($user->ordenes)
               <?php
               $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orderBy('fecha', 'desc')->get();
-              if ($pasadas) {
+              if (!$pasadas->isEmpty()) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($pasadas as $pasada) {
 
@@ -112,7 +112,7 @@
                        <i class="fa fa-building" aria-hidden="true"></i>
                      @endif
                     @endif
-                   {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $proxima->hora }}
+                   {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
                    <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                  </a>
               <?php } } else{ ?>
@@ -167,7 +167,7 @@
           @if ($user->ordenes)
             <?php
             $proximas= App\Orden::where('user_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
-            if ($proximas) {
+            if (!$proximas->isEmpty()) {
               date_default_timezone_set('America/Mexico_City');
               foreach ($proximas as $proxima) {
 
@@ -195,7 +195,7 @@
           @if ($user->ordenes)
             <?php
             $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orderBy('fecha', 'desc')->get();
-            if ($pasadas) {
+            if (!$pasadas->isEmpty()) {
               date_default_timezone_set('America/Mexico_City');
               foreach ($pasadas as $pasada) {
 
@@ -212,7 +212,7 @@
                      <i class="fa fa-building" aria-hidden="true"></i>
                    @endif
                   @endif
-                 {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $proxima->hora }}
+                 {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
                  <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                </a>
             <?php } } else{ ?>
@@ -507,7 +507,7 @@
 
     <?php
     $proximas= App\Orden::where('user_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
-    if ($proximas) {
+    if (!$proximas->isEmpty()) {
       date_default_timezone_set('America/Mexico_City');
       foreach ($proximas as $proxima) {
         $coach = App\User::find($proxima->coach_id);
@@ -604,7 +604,7 @@ Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio 
 
     <?php
     $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orderBy('fecha', 'desc')->get();
-    if ($pasadas) {
+    if (!$pasadas->isEmpty()) {
       date_default_timezone_set('America/Mexico_City');
       foreach ($pasadas as $pasada) {
 
@@ -650,7 +650,7 @@ Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio 
                        @endif
                      </div>
                      <div class="gotham2">
-                       <h2>Hora: {{$proxima->hora}}</h2>
+                       <h2>Hora: {{$pasada->hora}}</h2>
                        <h2>Lugar: {{$dire}}</h2>
                      </div>
                    </div>
