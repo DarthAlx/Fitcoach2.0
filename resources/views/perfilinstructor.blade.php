@@ -21,7 +21,7 @@
         <h4>CLASE ANTERIOR</h4>
         @if ($user->ordenes)
           <?php
-          $ultima= App\Orden::where('user_id', $user->id)->where('status', 'terminada')->orderBy('fecha', 'desc')->first();
+          $ultima= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orderBy('fecha', 'desc')->first();
           if ($ultima) {
             $coachu= App\User::find($ultima->coach_id);
             $nombre=explode(" ",$coachu->name);
@@ -72,7 +72,7 @@
         <div class="list-group">
           @if ($user->ordenes)
             <?php
-            $proximas= App\Orden::where('user_id', $user->id)->where('status', 'pagada')->orderBy('fecha', 'asc')->get();
+            $proximas= App\Orden::where('user_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
             if ($proximas) {
               date_default_timezone_set('America/Mexico_City');
               foreach ($proximas as $proxima) {
@@ -101,7 +101,7 @@
         <div class="list-group">
           @if ($user->ordenes)
             <?php
-            $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'terminada')->orWhere('status', 'cancelada')->orderBy('fecha', 'desc')->get();
+            $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orderBy('fecha', 'desc')->get();
             if ($pasadas) {
               date_default_timezone_set('America/Mexico_City');
               foreach ($pasadas as $pasada) {
@@ -111,7 +111,7 @@
                 setlocale(LC_TIME, "es-ES");
                ?>
                <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
-                 @if ($pasada->status=="cancelada")
+                 @if ($pasada->status=="Cancelada")
                    <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                  @else
                    @if($metadata[0]=="particular")
@@ -433,7 +433,7 @@
 
 
     <?php
-    $proximas= App\Orden::where('user_id', $user->id)->where('status', 'pagada')->orderBy('fecha', 'asc')->get();
+    $proximas= App\Orden::where('user_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
     if ($proximas) {
       date_default_timezone_set('America/Mexico_City');
       foreach ($proximas as $proxima) {
@@ -512,7 +512,7 @@
 
 
     <?php
-    $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'terminada')->orWhere('status', 'cancelada')->orderBy('fecha', 'desc')->get();
+    $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orderBy('fecha', 'desc')->get();
     if ($pasadas) {
       date_default_timezone_set('America/Mexico_City');
       foreach ($pasadas as $pasada) {
@@ -545,10 +545,10 @@
                    </div>
                    <div class="col-sm-8">
                      <div class="title ">
-                       @if ($pasada->status=="terminada")
-                         Terminada
+                       @if ($pasada->status=="Completa")
+                         Completa
                        @endif
-                       @if ($pasada->status=="cancelada")
+                       @if ($pasada->status=="Cancelada")
                          Cancelada
                        @endif
                      </div>
@@ -559,7 +559,7 @@
                    </div>
                    <div class="col-sm-12 text-center">
                      <p>&nbsp;</p>
-                     @if ($pasada->status=="terminada")
+                     @if ($pasada->status=="Completa")
                        <form class="" action="{{url('/calificar-orden')}}" method="post">
                          {!! csrf_field() !!}
                          <input type="hidden" name="calificacion" value="">

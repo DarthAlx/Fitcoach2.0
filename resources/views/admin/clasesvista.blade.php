@@ -13,15 +13,28 @@
 		<div class="container-bootstrap-fluid">
 			<div class="row">
 				<div class="col-sm-9">
-					<div class="title" style="font-size: 10vw;">VENTAS</div>
+					<div class="title" style="font-size: 10vw;">CLASES</div>
 				</div>
 
 			</div>
 			<div class="row">
 
-				<form action="{{url('ventas')}}" method="post">
+				<form action="{{url('clasesvista')}}" method="post">
 					{!! csrf_field() !!}
-					<div class="col-sm-offset-3 col-sm-3 col-md-2 col-md-offset-6">
+					<div class=" col-sm-3 col-md-2 col-md-offset-4">
+						<select class="form-control" name="status" id="status">
+							<option value="*">Todas</option>
+							<option value="Proxima">Proxima</option>
+							<option value="Cancelada">Cancelada</option>
+							<option value="porrevisar">Por revisar</option>
+							<option value="Completa">Completada</option>
+							<option value="abonada">Abonada</option>
+						</select>
+						<script type="text/javascript">
+							document.getElementById('status').value='{!!$status!!}';
+						</script>
+					</div>
+					<div class="col-sm-3 col-md-2">
 							<input type="text" class="form-control datepicker" name="from" placeholder="Desde..." value="{{$from}}">
 					</div>
 					<div class="col-sm-3 col-md-2">
@@ -32,51 +45,29 @@
 					</div>
 				</form>
 			</div>
-			<div class="row">
-				<div class="col-sm-12">
-					<h1 class=" title pull-left">CLASES:  <span>{{count($ventas)}}</span></h1>
-						@if ($ventas)
-							<?php $total =0; ?>
-							@foreach ($ventas as $venta)
-								<?php $total = $total + $venta->cantidad; ?>
-							@endforeach
-						@endif
-						<h1 class=" title pull-right">TOTAL:  <span>${{$total}}</span></h1>
-				</div>
-			</div>
 
 			<div class="row">
 				<div class="adv-table table-responsive">
 			  <table class="display table table-bordered table-striped table-hover" id="dynamic-table">
 			  <thead>
 			  <tr>
-			      <th>Ticket #</th>
-			      <th>Fecha</th>
-			      <th>Cliente</th>
-			      <th>Total</th>
-						<th></th>
+			      <th>Folio #</th>
+			      <th>Clase</th>
+			      <th>Coach</th>
+			      <th>Status</th>
 			  </tr>
 			  </thead>
 			  <tbody>
 
-					@if ($ventas)
-						@foreach ($ventas as $venta)
+					@if ($clases)
+						@foreach ($clases as $clase)
 							<tr style="cursor: pointer;">
-						      <td>{{$venta->order_id}}</td>
-						      <td>{{$venta->fecha}}</td>
-						      <td>{{$venta->user->name}}</td>
-						      <td>{{$venta->cantidad}}</td>
-									<td><a href="{{url('/printinvoice')}}/{{$venta->order_id}}" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a></td>
+						      <td>{{$clase->folio}}</td>
+						      <td>{{$clase->nombre}}</td>
+						      <td>{{$clase->user->name}}</td>
+						      <td>{{$clase->status}}</td>
 						  </tr>
 						@endforeach
-					@else
-						<tr style="cursor: pointer;">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-						</tr>
 					@endif
 
 
@@ -84,11 +75,10 @@
 			  </tbody>
 			  <tfoot>
 			  <tr>
-					<th>Ticket #</th>
-					<th>Fecha</th>
-					<th>Cliente</th>
-					<th>Total</th>
-					<th></th>
+					<th>Folio #</th>
+					<th>Clase</th>
+					<th>Coach</th>
+					<th>Status</th>
 			  </tr>
 			  </tfoot>
 			  </table>

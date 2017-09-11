@@ -17,6 +17,9 @@ class OrdenTable extends Migration
           $table->string('order_id');
           $table->integer('user_id');
           $table->integer('coach_id');
+          $table->integer('asociado');
+          $table->string('tipo');
+          $table->string('direccion');
           $table->string('nombre');
           $table->string('folio');
           $table->date('fecha');

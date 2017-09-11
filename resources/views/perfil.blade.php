@@ -21,7 +21,7 @@
         <h4>CLASE ANTERIOR</h4>
         @if ($user->ordenes)
           <?php
-          $ultima= App\Orden::where('user_id', $user->id)->where('status', 'terminada')->orderBy('fecha', 'desc')->first();
+          $ultima= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orderBy('fecha', 'desc')->first();
           if ($ultima) {
             $coachu= App\User::find($ultima->coach_id);
             $nombre=explode(" ",$coachu->name);
@@ -64,17 +64,17 @@
           <div class="list-group">
             @if ($user->ordenes)
               <?php
-              $proximas= App\Orden::where('user_id', $user->id)->where('status', 'pagada')->orderBy('fecha', 'asc')->get();
+              $proximas= App\Orden::where('user_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'desc')->get();
               if ($proximas) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($proximas as $proxima) {
-                  $metadata= explode(',',$proxima->metadata);
+
 
                   $fecha=date_create($proxima->fecha);
                   setlocale(LC_TIME, "es-ES");
                  ?>
                  <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
-                   @if($metadata[0]=="particular")
+                   @if($proxima->tipo=="particular")
                      <i class="fa fa-home" aria-hidden="true"></i>
                    @else
                      <i class="fa fa-building" aria-hidden="true"></i>
@@ -93,20 +93,20 @@
           <div class="list-group">
             @if ($user->ordenes)
               <?php
-              $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'terminada')->orWhere('status', 'cancelada')->orderBy('fecha', 'desc')->get();
+              $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orderBy('fecha', 'desc')->get();
               if ($pasadas) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($pasadas as $pasada) {
-                  $metadata= explode(',',$pasada->metadata);
+
 
                   $fecha=date_create($pasada->fecha);
                   setlocale(LC_TIME, "es-ES");
                  ?>
                  <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
-                   @if ($pasada->status=="cancelada")
+                   @if ($pasada->status=="Cancelada")
                      <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                    @else
-                     @if($metadata[0]=="particular")
+                     @if($pasada->tipo=="particular")
                        <i class="fa fa-home" aria-hidden="true"></i>
                      @else
                        <i class="fa fa-building" aria-hidden="true"></i>
@@ -141,42 +141,41 @@
     <div class="clasesperfil hidden-xs">
       <hr>
       <div class="text-center">
-        <button type="button" id="btnproximas" class="btn btn-success" style="display:inline-block; width:40%;" onclick="verclases('proximas')">Próximas clases</button>
-        <button type="button" id="btnpasadas" class="btn btn-clases" style="display:inline-block; width:40%;" onclick="verclases('pasadas')">Clases pasadas</button>
+        <button type="button" id="btnproximaslg" class="btn btn-success" style="display:inline-block; width:40%;" onclick="verclaseslg('proximaslg')">Próximas clases</button>
+        <button type="button" id="btnpasadaslg" class="btn btn-clases" style="display:inline-block; width:40%;" onclick="verclaseslg('pasadaslg')">Clases pasadas</button>
         <script type="text/javascript">
-          function verclases(valor) {
-            if (valor=="proximas") {
-              $('#pasadas').hide();
-              $('#btnpasadas').addClass('btn-clases');$('#btnpasadas').removeClass('btn-success');
-              $('#proximas').show();
-              $('#btnproximas').addClass('btn-success');$('#btnproximas').removeClass('btn-clases');
+          function verclaseslg(valor) {
+            if (valor=="proximaslg") {
+              $('#pasadaslg').hide();
+              $('#btnpasadaslg').addClass('btn-clases');$('#btnpasadaslg').removeClass('btn-success');
+              $('#proximaslg').show();
+              $('#btnproximaslg').addClass('btn-success');$('#btnproximaslg').removeClass('btn-clases');
             }
-            if (valor=="pasadas") {
-              $('#proximas').hide();
-              $('#btnproximas').addClass('btn-clases');$('#btnproximas').removeClass('btn-success');
-              $('#pasadas').show();
-              $('#btnpasadas').addClass('btn-success');$('#btnpasadas').removeClass('btn-clases');
+            if (valor=="pasadaslg") {
+              $('#proximaslg').hide();
+              $('#btnproximaslg').addClass('btn-clases');$('#btnproximaslg').removeClass('btn-success');
+              $('#pasadaslg').show();
+              $('#btnpasadaslg').addClass('btn-success');$('#btnpasadaslg').removeClass('btn-clases');
             }
           }
         </script>
       </div>
 
       <p>&nbsp;</p>
-      <div id="proximas" class="listadeclases">
+      <div id="proximaslg" class="listadeclases">
         <div class="list-group">
           @if ($user->ordenes)
             <?php
-            $proximas= App\Orden::where('user_id', $user->id)->where('status', 'pagada')->orderBy('fecha', 'asc')->get();
+            $proximas= App\Orden::where('user_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
             if ($proximas) {
               date_default_timezone_set('America/Mexico_City');
               foreach ($proximas as $proxima) {
-                $metadata= explode(',',$proxima->metadata);
 
                 $fecha=date_create($proxima->fecha);
                 setlocale(LC_TIME, "es-ES");
                ?>
                <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
-                 @if($metadata[0]=="particular")
+                 @if($proxima->tipo=="particular")
                    <i class="fa fa-home" aria-hidden="true"></i>
                  @else
                    <i class="fa fa-building" aria-hidden="true"></i>
@@ -191,24 +190,23 @@
 
         </div>
       </div>
-      <div id="pasadas" class="listadeclases" style="display:none;">
+      <div id="pasadaslg" class="listadeclases" style="display:none;">
         <div class="list-group">
           @if ($user->ordenes)
             <?php
-            $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'terminada')->orWhere('status', 'cancelada')->orderBy('fecha', 'desc')->get();
+            $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orderBy('fecha', 'desc')->get();
             if ($pasadas) {
               date_default_timezone_set('America/Mexico_City');
               foreach ($pasadas as $pasada) {
-                $metadata= explode(',',$pasada->metadata);
 
                 $fecha=date_create($pasada->fecha);
                 setlocale(LC_TIME, "es-ES");
                ?>
                <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
-                 @if ($pasada->status=="cancelada")
+                 @if ($pasada->status=="Cancelada")
                    <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                  @else
-                   @if($metadata[0]=="particular")
+                   @if($pasada->tipo=="particular")
                      <i class="fa fa-home" aria-hidden="true"></i>
                    @else
                      <i class="fa fa-building" aria-hidden="true"></i>
@@ -508,13 +506,20 @@
 
 
     <?php
-    $proximas= App\Orden::where('user_id', $user->id)->where('status', 'pagada')->orderBy('fecha', 'asc')->get();
+    $proximas= App\Orden::where('user_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
     if ($proximas) {
       date_default_timezone_set('America/Mexico_City');
       foreach ($proximas as $proxima) {
-        $metadata= explode(',',$proxima->metadata);
         $coach = App\User::find($proxima->coach_id);
-        $direccion= App\Direccion::find($metadata[1]);
+        if ($proxima->tipo=="residencial"){
+          $dire=$proxima->direccion;
+        }
+        else{
+          $direccion= App\Direccion::find($proxima->direccion);
+          $dire=$direccion->identificador;
+        }
+
+
         $fecha=date_create($proxima->fecha);
         setlocale(LC_TIME, "es-ES");
 
@@ -549,24 +554,35 @@
                    </div>
                    <div class="col-sm-8">
                      <div class="title ">
-                       {{Ucfirst($metadata[0])}}
+                       {{Ucfirst($proxima->tipo)}}
                      </div>
                      <div class="gotham2">
                        <h2>Hora: {{$proxima->hora}}</h2>
-                       <h2>Lugar: {{$direccion->identificador}}</h2>
+                       <h2>Lugar: {{$dire}}</h2>
                      </div>
                    </div>
                    <div class="col-sm-12 text-center">
                      <p>&nbsp;</p>
-                     @if ($horastotales>=24)
+
                        <form class="" action="{{url('/cancelar-orden')}}" method="post">
                          {!! csrf_field() !!}
                          {{ method_field('PUT') }}
+                         @if ($horastotales>=24)
+                           <p class="text-center"><strong>IMPORTANTE</strong><br>
+Texto de reembolso.
+¿Estás seguro que deseas continuar?</p>
+                           <input type="hidden" name="tipocancelacion" value="con">
+                         @else
+                           <p class="text-center"><strong>IMPORTANTE</strong><br>
+Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio o devolución por el servicio.
+¿Estás seguro que deseas continuar?</p>
+                           <input type="hidden" name="tipocancelacion" value="sin">
+                         @endif
                          <input type="hidden" name="ordencancelar" value="{{$proxima->id}}">
                          <button type="submit" id="botoncancelar{{$proxima->id}}" class="btn btn-danger btn-lg" name="button" style="display:none;">Confirmar cancelación</button>
                        </form>
                        <button class="btn btn-danger btn-lg" id="botoncancelar2{{$proxima->id}}" name="button" onclick="javascript: document.getElementById('botoncancelar2{{$proxima->id}}').style.display='none'; document.getElementById('botoncancelar{{$proxima->id}}').style.display='inline-block'; ">Cancelar</button>
-                     @endif
+
 
 
                    </div>
@@ -587,13 +603,19 @@
 
 
     <?php
-    $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'terminada')->orWhere('status', 'cancelada')->orderBy('fecha', 'desc')->get();
+    $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orderBy('fecha', 'desc')->get();
     if ($pasadas) {
       date_default_timezone_set('America/Mexico_City');
       foreach ($pasadas as $pasada) {
-        $metadata= explode(',',$pasada->metadata);
+
         $coach = App\User::find($pasada->coach_id);
-        $direccion= App\Direccion::find($metadata[1]);
+        if ($pasada->tipo=="residencial"){
+          $dire=$pasada->direccion;
+        }
+        else{
+          $direccion= App\Direccion::find($pasada->direccion);
+          $dire=$direccion->identificador;
+        }
         $fecha=date_create($pasada->fecha);
         setlocale(LC_TIME, "es-ES");
 
@@ -620,21 +642,21 @@
                    </div>
                    <div class="col-sm-8">
                      <div class="title ">
-                       @if ($pasada->status=="terminada")
-                         Terminada
+                       @if ($pasada->status=="Completa")
+                         Completa
                        @endif
-                       @if ($pasada->status=="cancelada")
+                       @if ($pasada->status=="Cancelada")
                          Cancelada
                        @endif
                      </div>
                      <div class="gotham2">
                        <h2>Hora: {{$proxima->hora}}</h2>
-                       <h2>Lugar: {{$direccion->identificador}}</h2>
+                       <h2>Lugar: {{$dire}}</h2>
                      </div>
                    </div>
                    <div class="col-sm-12 text-center">
                      <p>&nbsp;</p>
-                     @if ($pasada->status=="terminada")
+                     @if ($pasada->status=="Completa")
                        <form class="" action="{{url('/calificar-orden')}}" method="post">
                          {!! csrf_field() !!}
                          <input type="hidden" name="calificacion" value="">

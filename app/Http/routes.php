@@ -140,6 +140,11 @@ Route::group(['middleware' => 'administradores'], function(){
   Route::get('ventas', 'OrdenController@ventas');
   Route::post('ventas', 'OrdenController@ventaspost');
   Route::get('printinvoice/{id}', 'OrdenController@invoice');
+  Route::get('nomina', 'OrdenController@nomina');
+  Route::post('pagar', 'OrdenController@pago');
+  Route::get('historialpagos/{id}', 'OrdenController@historialpagos');
+  Route::get('clasesvista', 'OrdenController@clasesvista');
+  Route::post('clasesvista', 'OrdenController@clasesvistapost');
 });
 
 

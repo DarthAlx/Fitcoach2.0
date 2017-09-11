@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Orden;
+use App\Pago;
 use App\Particular;
 use App\Residencial;
 use Illuminate\Support\Facades\Auth;
@@ -26,16 +27,38 @@ class OrdenController extends Controller
      */
     public function cartinst(Request $request)
     {
-      if ($request->tipo=="Residencial") {
+      $esresidencial=false;
+      if (Cart::content()->count()>0){
+      $items=Cart::content();
+        foreach ($items as $product){
+          if ($product->options->tipo=="residencial"){
+            $esresidencial=true;
+          }
+        }
+
+      }
+
+      if ($request->tipo=="Residencial"&&($esresidencial==true||Cart::content()->count()==0)) {
         $clase=Residencial::find($request->residencial_id);
         Cart::add($clase->id,$clase->clase->nombre,1,$clase->precio, ['tipo'=>'residencial','fecha' => $clase->fecha,'hora' => $clase->hora, 'coach' => $clase->user_id]);
       }
-      if ($request->tipo=="Particular") {
+      elseif($request->tipo=="Particular"&&$esresidencial==false) {
         foreach ($request->carrito as $item) {
           $items=explode(",",$item);
           $clase=Particular::find($items[0]);
-          Cart::add($clase->clase->id,$clase->clase->nombre,1,$clase->clase->precio, ['tipo'=>'particular','fecha' => $items[1],'hora' => $clase->hora, 'coach' => $clase->user_id]);
+          if ($clase->clase->precio_especial) {
+            $precio=$clase->clase->precio_especial;
+          }
+          else {
+            $precio=$clase->clase->precio;
+          }
+          Cart::add($clase->clase->id,$clase->clase->nombre,1,$precio, ['tipo'=>'particular','fecha' => $items[1],'hora' => $clase->hora, 'coach' => $clase->user_id]);
         }
+      }
+      else{
+        Session::flash('mensaje', 'Aún no termina el proceso con otra clase.');
+        Session::flash('class', 'danger');
+        return redirect()->intended(url('/carrito'));
       }
       $items=Cart::content();
       return view('cart.cart',['items'=>$items]);
@@ -47,16 +70,7 @@ class OrdenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
-    {
-      $user = User::findOrFail(1);
-      $ordenes=Orden::where('order_id', $id)->get();
-      $datos=Orden::where('order_id', $id)->first();
-        Mail::send('emails.receipt', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {
-            $m->from('alxunscarred@gmail.com', 'FITCOACH México');
-            $m->to($user->email, $user->name)->subject('¡Orden recibida!');
-        });
-    }
+
 
 
 
@@ -85,9 +99,10 @@ class OrdenController extends Controller
       $day = date("d", mktime(0,0,0, $month+1, 0, $year));
       $to = date('Y-m-d', mktime(0,0,0, $month, $day, $year));
 
-      $ventas = Orden::whereBetween('fecha', array($from, $to))->get();
-      return view('admin.ventas',['ventas'=>$ventas]);
+      $ventas = Orden::where('status', 'Completa')->whereBetween('fecha', array($from, $to))->get();
+      return view('admin.ventas',['ventas'=>$ventas,'from'=>$from,'to'=>$to]);
     }
+
     public function ventaspost(Request $request)
     {
       $from_n = strtotime ( $request->form )  ;
@@ -95,11 +110,62 @@ class OrdenController extends Controller
       $from = date ( 'Y-m-d' , $from_n );
       $to = date ( 'Y-m-d' , $to_n );
 
-      $ventas = Orden::whereBetween('fecha', array($from, $to))->get();
-      return view('admin.ventas',['ventas'=>$ventas]);
+      $ventas = Orden::where('status', 'Completa')->whereBetween('fecha', array($from, $to))->get();
+      return view('admin.ventas',['ventas'=>$ventas,'from'=>$request->from,'to'=>$request->to]);
+
+    }
+    public function clasesvista()
+    {
+      $month = date('m');
+      $year = date('Y');
+      $from= date('Y-m-d', mktime(0,0,0, $month, 1, $year));
+      $day = date("d", mktime(0,0,0, $month+1, 0, $year));
+      $to = date('Y-m-d', mktime(0,0,0, $month, $day, $year));
+      $clases = Orden::whereBetween('fecha', array($from, $to))->get();
+      return view('admin.clasesvista',['clases'=>$clases,'from'=>$from,'to'=>$to,'status'=>'*']);
+    }
+
+    public function clasesvistapost(Request $request)
+    {
+      $from_n = strtotime ( $request->form )  ;
+      $to_n = strtotime ( $request->to )  ;
+      $from = date ( 'Y-m-d' , $from_n );
+      $to = date ( 'Y-m-d' , $to_n );
+      if ($request->status=="*") {
+        $clases = Orden::whereBetween('fecha', array($from, $to))->get();
+      }
+      else {
+        $clases = Orden::where('status', $request->status)->whereBetween('fecha', array($from, $to))->get();
+      }
+
+      return view('admin.clasesvista',['clases'=>$clases,'from'=>$request->from,'to'=>$request->to,'status'=>$request->status]);
 
     }
 
+
+    public function nomina()
+    {
+      $coaches = User::where('role', 'instructor')->get();
+      return view('admin.nomina',['coaches'=>$coaches]);
+    }
+
+    public function pago(Request $request)
+    {
+      $guardar = new Pago($request->all());
+      $fe = strtotime ( $request->fecha )  ;
+      $guardar->fecha= date('Y-m-d',$fe);
+      $guardar->save();
+
+      foreach (explode(",",$guardar->ordenes) as $orden) {
+        $abonar=Orden::find($orden);
+        $abonar->status="abonada";
+        $abonar->save();
+      }
+
+      Session::flash('mensaje', 'El pago se realizó con éxito.');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/nomina'));
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -121,9 +187,12 @@ class OrdenController extends Controller
     public function update(Request $request)
     {
       $orden = Orden::find($request->ordencancelar);
-      $orden->status = 'cancelada';
+      $orden->status = 'Cancelada';
+      $metadata=explode(",",$orden->metadata);
+      $metadata[]=$request->tipocancelacion;
+      $orden->metadata= implode(",",$metadata);
       $orden->save();
-      Session::flash('mensaje', '!Orden cancelada!');
+      Session::flash('mensaje', '!Orden Cancelada!');
       Session::flash('class', 'success');
       return redirect($this->redirectPath());
     }
@@ -170,6 +239,7 @@ class OrdenController extends Controller
             'quantity' => 1,
             'metadata' => array(
               'tipo' => 'particular',
+              'asociado' => $product->id,
               'id' => $product->id,
               'coach' => $product->options->coach,
               'fecha' => $product->options->fecha,
@@ -186,6 +256,7 @@ class OrdenController extends Controller
             'metadata' => array(
               'tipo' => 'residencial',
               'id' => $product->id,
+              'asociado' => $product->id,
               'coach' => $product->options->coach,
               'fecha' => $product->options->fecha,
               'hora' => $product->options->hora
@@ -247,12 +318,25 @@ class OrdenController extends Controller
           $guardar->folio=$folio->folio;
           $guardar->user_id=Auth::user()->id;
           $guardar->coach_id=$producto['metadata']['coach'];
+          $guardar->asociado=$producto['metadata']['asociado'];
+          $guardar->tipo=$producto['metadata']['tipo'];
+          if ($producto['metadata']['tipo']=="residencial") {
+            $residencial=Residencial::find($producto['metadata']['asociado']);
+            $guardar->direccion=$residencial->condominio->identificador.". ".$residencial->condominio->direccion;
+          }else {
+            if ($request->direccion==""&&$request->esresidencial!="true") {
+              $guardar->direccion=$direccion->id;
+            }
+            else {
+              $guardar->direccion=$request->direccion;
+            }
+
+          }
           $guardar->nombre=$producto['name'];
           $guardar->fecha=$producto['metadata']['fecha'];
           $guardar->hora=$producto['metadata']['hora'];
           $guardar->cantidad=$producto['unit_price'];
-          $guardar->metadata=implode(",", $producto['metadata']);
-          $guardar->status='pagada';
+          $guardar->status='Proxima';
           $guardar->save();
           if ($producto['metadata']['tipo']=="residencial") {
             $residencial= Residencial::find($producto['metadata']['id']);
@@ -265,10 +349,10 @@ class OrdenController extends Controller
         $folio->save();
 
         Cart::destroy();
-
-        Session::flash('mensaje', "!Orden completada! revisa <a class='alert-link' href='".url('/mis-ordenes')."'>tus ordenes.</a>");
+        $this->sendinvoice($order->id);
+        Session::flash('mensaje', "!Orden completada! revisa <a class='alert-link' href='".url('/perfil')."'>tus ordenes.</a>");
         Session::flash('class', 'success');
-        return redirect()->intended(url('/recibo')."/".$order->id);
+        return redirect()->intended(url('/carrito'));
 
       } catch (\Conekta\ProccessingError $error){
         Session::flash('mensaje', $error->getMessage());
@@ -308,6 +392,37 @@ class OrdenController extends Controller
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('invoice.pdf');
+    }
+    public function sendinvoice($id)
+    {
+      $ordenes=Orden::where('order_id', $id)->get();
+      $datos=Orden::where('order_id', $id)->first();
+      $user=User::find($datos->user_id);
+        Mail::send('emails.receipt', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {
+            $m->from('alxunscarred@gmail.com', 'FITCOACH México');
+            $m->to($user->email, $user->name)->subject('¡Orden recibida!');
+        });
+    }
+
+    public function sendclassrequest($id)
+    {
+      $ordenes=Orden::where('order_id', $id)->get();
+      $datos=Orden::where('order_id', $id)->first();
+      $user=User::find($datos->coach_id);
+        Mail::send('emails.request', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {
+            $m->from('alxunscarred@gmail.com', 'FITCOACH México');
+            $m->to($user->email, $user->name)->subject('¡Nueva clase agendada!');
+        });
+    }
+
+    public function historialpagos($id)
+    {
+    $user=User::find($id);
+    $pagos=$user->pagos;
+    $view =  \View::make('emails.historial', ['pagos'=>$pagos,'user'=>$user])->render();
+    $pdf = \App::make('dompdf.wrapper');
+    $pdf->loadHTML($view);
+    return $pdf->stream('invoice.pdf');
     }
 
       public function redirectPath()

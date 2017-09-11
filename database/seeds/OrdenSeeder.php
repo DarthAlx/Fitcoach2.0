@@ -20,7 +20,7 @@ class OrdenSeeder extends Seeder
         'hora'=>'13:00',
         'cantidad'=>'500',
         'metadata'=>'particular,1',
-        'status'=>'terminada'
+        'status'=>'Completa'
         ]);
 
         DB::table('ordenes')->insert([
@@ -32,7 +32,7 @@ class OrdenSeeder extends Seeder
           'hora'=>'08:00',
           'cantidad'=>'500',
           'metadata'=>'residencial,1',
-          'status'=>'pagada'
+          'status'=>'Proxima'
           ]);
 
       DB::table('ordenes')->insert([
@@ -44,7 +44,7 @@ class OrdenSeeder extends Seeder
         'hora'=>'16:00',
         'cantidad'=>'500',
         'metadata'=>'particular,1',
-        'status'=>'pagada'
+        'status'=>'Proxima'
         ]);
 
         DB::table('ordenes')->insert([
@@ -56,7 +56,7 @@ class OrdenSeeder extends Seeder
           'hora'=>'7:00',
           'cantidad'=>'500',
           'metadata'=>'particular,1',
-          'status'=>'pagada'
+          'status'=>'Proxima'
           ]);
     }
 }
