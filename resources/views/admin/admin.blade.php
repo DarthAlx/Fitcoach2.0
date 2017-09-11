@@ -31,7 +31,7 @@
       </a>
     </div>
     <div class="col-sm-4 col-xs-6">
-      <a href="{{ url('/') }}">
+      <a href="{{ url('/ventas') }}">
         <img src="{{ url('images/ventas.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/ventas_b.png')}}'" onmouseout="this.src='{{ url('images/ventas.png')}}'" alt="">
       </a>
     </div>
@@ -46,15 +46,11 @@
       </a>
     </div>
     <div class="col-sm-4 col-xs-6">
-      <a href="{{ url('/') }}">
+      <a href="{{ url('/nomina') }}">
         <img src="{{ url('images/nomina.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/nomina_b.png')}}'" onmouseout="this.src='{{ url('images/nomina.png')}}'" alt="">
       </a>
     </div>
-    <div class="col-sm-4 col-xs-6">
-      <a href="{{ url('/') }}">
-        <img src="{{ url('images/listas.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/listas_b.png')}}'" onmouseout="this.src='{{ url('images/listas.png')}}'" alt="">
-      </a>
-    </div>
+
   </div>
 
 
