@@ -24,14 +24,14 @@
 			@include('holders.notificaciones')
 			<p>&nbsp;</p>
 			<p>&nbsp;</p>
-			<div class="container-bootstrap text-center" id="botones">
+			<div class="container-bootstrap-fluid text-center" id="botones">
 				<div class="row">
-					<div class="col-sm-4 col-sm-offset-2 text-center">
+					<div class="col-sm-3 col-sm-offset-2 text-center">
 						<a href="{{ url('/clasesdeportivas') }}">
 							<img src="{{ url('images/home.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/home2.png')}}'" onmouseout="this.src='{{ url('images/home.png')}}'" alt="">
 						</a>
 					</div>
-					<div class="col-sm-4 text-center">
+					<div class="col-sm-3 col-sm-offset-2 text-center">
 						<a href="{{url('residenciales')}}">
 							<img src="{{ url('images/building.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/building2.png')}}'" onmouseout="this.src='{{ url('images/building.png')}}'" alt="">
 
