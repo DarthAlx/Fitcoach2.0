@@ -40,7 +40,7 @@
 					@if ($coaches)
 						@foreach ($coaches as $coach)
 							<?php
-								$ordenes= App\Orden::where('coach_id', $coach->id)->where('status', 'Completa')->get();
+								$ordenes= App\Orden::where('coach_id', $coach->id)->where('status', 'Proxima')->get();
 								$pendiente=0;
 								foreach ($ordenes as $orden) {
 									$pendiente= $pendiente + $orden->cantidad;

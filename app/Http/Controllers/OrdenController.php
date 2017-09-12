@@ -99,7 +99,7 @@ class OrdenController extends Controller
       $day = date("d", mktime(0,0,0, $month+1, 0, $year));
       $to = date('Y-m-d', mktime(0,0,0, $month, $day, $year));
 
-      $ventas = Orden::where('status', 'Completa')->whereBetween('fecha', array($from, $to))->get();
+      $ventas = Orden::whereBetween('fecha', array($from, $to))->get();
       return view('admin.ventas',['ventas'=>$ventas,'from'=>$from,'to'=>$to]);
     }
 
@@ -110,7 +110,7 @@ class OrdenController extends Controller
       $from = date ( 'Y-m-d' , $from_n );
       $to = date ( 'Y-m-d' , $to_n );
 
-      $ventas = Orden::where('status', 'Completa')->whereBetween('fecha', array($from, $to))->get();
+      $ventas = Orden::whereBetween('fecha', array($from, $to))->get();
       return view('admin.ventas',['ventas'=>$ventas,'from'=>$request->from,'to'=>$request->to]);
 
     }

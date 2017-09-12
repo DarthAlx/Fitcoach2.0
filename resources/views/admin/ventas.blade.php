@@ -51,6 +51,7 @@
 			  <thead>
 			  <tr>
 			      <th>Ticket #</th>
+						<th>Orden</th>
 			      <th>Fecha</th>
 			      <th>Cliente</th>
 			      <th>Total</th>
@@ -62,6 +63,7 @@
 					@if ($ventas)
 						@foreach ($ventas as $venta)
 							<tr style="cursor: pointer;">
+									<td>{{$venta->folio}}</td>
 						      <td>{{$venta->order_id}}</td>
 						      <td>{{$venta->fecha}}</td>
 						      <td>{{$venta->user->name}}</td>
@@ -85,6 +87,7 @@
 			  <tfoot>
 			  <tr>
 					<th>Ticket #</th>
+					<th>Orden</th>
 					<th>Fecha</th>
 					<th>Cliente</th>
 					<th>Total</th>

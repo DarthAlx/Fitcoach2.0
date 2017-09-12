@@ -52,6 +52,7 @@
 			  <thead>
 			  <tr>
 			      <th>Folio #</th>
+						<th>Orden</th>
 			      <th>Clase</th>
 			      <th>Coach</th>
 			      <th>Status</th>
@@ -63,6 +64,7 @@
 						@foreach ($clases as $clase)
 							<tr style="cursor: pointer;">
 						      <td>{{$clase->folio}}</td>
+									<td>{{$venta->order_id}}</td>
 						      <td>{{$clase->nombre}}</td>
 						      <td>{{$clase->user->name}}</td>
 						      <td>{{$clase->status}}</td>
@@ -76,6 +78,7 @@
 			  <tfoot>
 			  <tr>
 					<th>Folio #</th>
+					<th>Orden</th>
 					<th>Clase</th>
 					<th>Coach</th>
 					<th>Status</th>

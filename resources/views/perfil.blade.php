@@ -569,12 +569,12 @@
                          {{ method_field('PUT') }}
                          @if ($horastotales>=24)
                            <p class="text-center"><strong>IMPORTANTE</strong><br>
-Texto de reembolso.
+Texto de reembolso.<br>
 ¿Estás seguro que deseas continuar?</p>
                            <input type="hidden" name="tipocancelacion" value="con">
                          @else
                            <p class="text-center"><strong>IMPORTANTE</strong><br>
-Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio o devolución por el servicio.
+Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio o devolución por el servicio.<br>
 ¿Estás seguro que deseas continuar?</p>
                            <input type="hidden" name="tipocancelacion" value="sin">
                          @endif
