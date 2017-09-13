@@ -133,7 +133,7 @@ transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease,left 0.
 #header .is-sticky .mainMenu ul li ul li ul {top: -10px;}
 
 /* Container */
-.container {padding-bottom:262px;width:100%; overflow:hidden;}
+.container {padding-bottom:50px;width:100%; overflow:hidden;}
 
 /* Home slider */
 .homeBxSliderWrap {width: 100%; overflow: hidden;}

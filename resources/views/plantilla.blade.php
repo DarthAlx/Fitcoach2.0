@@ -148,7 +148,7 @@
   			</form>
   		</div>
   		<div class="copyright">
-  			<p>Copyright &copy; 2015. FITCOACH México</p>
+  			<p>Copyright &copy; 2017. FITCOACH México</p>
   		</div>
 
 	</footer>

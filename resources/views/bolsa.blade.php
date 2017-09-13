@@ -19,7 +19,7 @@
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <input name="tel" class="form-control" placeholder="Teléfono" type="text"> </div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-															<label for="">Curriculum vitae</label>
+															<label for="">Adjuntar CV</label>
                                 <input name="cv" class="form-control" placeholder="Curriculum vitae" type="file"> </div>
                             <div class="clearfix">&nbsp;</div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

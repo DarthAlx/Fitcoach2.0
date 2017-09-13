@@ -41,11 +41,19 @@ class OrdenController extends Controller
       if ($request->tipo=="Residencial"&&($esresidencial==true||Cart::content()->count()==0)) {
         $clase=Residencial::find($request->residencial_id);
         Cart::add($clase->id,$clase->clase->nombre,1,$clase->precio, ['tipo'=>'residencial','fecha' => $clase->fecha,'hora' => $clase->hora, 'coach' => $clase->user_id]);
+        Session::flash('mensaje', 'La clase que vas a reservar es únicamente para condóminos del residencial '.$clase->condominio->identificador.'. <br>
+No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
+        Session::flash('class', 'warning');
       }
       elseif($request->tipo=="Particular"&&$esresidencial==false) {
         foreach ($request->carrito as $item) {
           $items=explode(",",$item);
           $clase=Particular::find($items[0]);
+          $zonas=$clase->user->zonas;
+          $stringzona="";
+          foreach ($zonas as $zona) {
+            $stringzona=$stringzona . " " . $zona->identificador;
+          }
           if ($clase->clase->precio_especial) {
             $precio=$clase->clase->precio_especial;
           }
@@ -53,15 +61,18 @@ class OrdenController extends Controller
             $precio=$clase->clase->precio;
           }
           Cart::add($clase->clase->id,$clase->clase->nombre,1,$precio, ['tipo'=>'particular','fecha' => $items[1],'hora' => $clase->hora, 'coach' => $clase->user_id]);
+          Session::flash('mensaje', 'La clase que vas a reservar es únicamente para las zonas '.$stringzona.'.<br>
+  No habrá cambios o devoluciones si no estas en la zona y no es posible para el coach asistir.');
+          Session::flash('class', 'warning');
         }
       }
       else{
         Session::flash('mensaje', 'Aún no termina el proceso con otra clase.');
         Session::flash('class', 'danger');
-        return redirect()->intended(url('/carrito'));
+
       }
       $items=Cart::content();
-      return view('cart.cart',['items'=>$items]);
+      return redirect()->intended(url('/carrito'));
     }
 
 
