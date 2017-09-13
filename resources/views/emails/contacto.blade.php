@@ -15,7 +15,7 @@
 							<tr>
 								<td>
 									<div class="pull-right">
-										<h2>Bolsa de trabajo</h2>
+										<h2>Contacto</h2>
 									</div>
 								</td>
 								<td>
@@ -29,7 +29,7 @@
 												<tbody>
 														<tr>
 																<td colspan="2"><br />
-																	Tienes una nueva petición en la bolsa de trabajo.
+																	Tienes un nuevo mensaje desde contacto FITCOACH.
 																<hr />
 																</td>
 														</tr>

@@ -53,6 +53,25 @@ Route::post('/bolsa-de-trabajo', function (Illuminate\Http\Request $request) {
     Illuminate\Support\Facades\Session::flash('class', 'success');
     return redirect()->intended(url('/bolsa-de-trabajo'));
 });
+
+Route::get('/contacto', function () {
+    return view('contacto');
+});
+
+Route::post('/contacto', function (Illuminate\Http\Request $request) {
+    $datos=$request;
+
+    Mail::send('emails.contacto', ['datos'=>$datos], function ($m) use ($datos) {
+        $m->from($datos->email, $datos->nombre);
+        $m->to('alx.morales@outlook.com', 'FITCOACH México')->subject('Contacto');
+    });
+
+    Illuminate\Support\Facades\Session::flash('mensaje', '!Mensaje enviado!');
+    Illuminate\Support\Facades\Session::flash('class', 'success');
+    return redirect()->intended(url('/contacto'));
+});
+
+
 Route::get('/coaches', function () {
   $coaches = App\User::where('role', 'instructor')->get();
     return view('instructores', ['coaches'=>$coaches]);

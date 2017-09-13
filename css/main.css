@@ -443,9 +443,10 @@ body.modal-open .pagecontainer{
     filter: blur(30px);
 }
 
-.modal-backdrop{background: #f7f7f7;
-	    cursor: url(../images/cross.svg),auto;
-	}
+.modal-open{
+	background: #f7f7f7;
+	cursor: url(../images/cross.svg),auto;
+}
 
 /*.close {
     font-size: 50px;

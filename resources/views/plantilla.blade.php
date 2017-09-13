@@ -136,8 +136,8 @@
   		</div>
   		<ul class="footerMenu clear">
   			<li><a href="{{ url('/aviso') }}">Aviso de Privacidad</a></li>
-  			<li><a href="{{ url('/proximamente') }}">Términos y Condiciones</a></li>
-  			<li><a href="{{ url('/proximamente') }}">Bolsa de Trabajo</a></li>
+  			<li><a href="{{ url('/terminos') }}">Términos y Condiciones</a></li>
+  			<li><a href="{{ url('/bolsa-de-trabajo') }}">Bolsa de Trabajo</a></li>
 
   		</ul>
   		<div class="footerSubscribe">
@@ -160,7 +160,7 @@
 <div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="true">
   <div class="container">
     <div class="row">
-      <div class="col-xs-8 col-sm-3 col-lg-3 text-center centrartotal">
+      <div class="col-xs-8 col-sm-3 col-lg-3 text-center centrartotal" style="cursor: default !important;">
         <button type="button" class="close visible-xs" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
         <br><br>
 				<div id="login1">
