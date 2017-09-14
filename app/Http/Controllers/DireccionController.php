@@ -12,6 +12,20 @@ use Illuminate\Support\Facades\Session;
 
 class DireccionController extends Controller
 {
+
+
+  public function traerdireccion(Request $request)
+  {
+    $direccion = Direccion::find($request->postdireccion);
+    if ($direccion) {
+      ?>
+      <p>
+        <?= $direccion->calle ?> <?= $direccion->numero_ext ?> <?= $direccion->numero_int ?>, <?= $direccion->colonia ?>, <?= $direccion->municipio_del ?>, <?= $direccion->cp ?>, <?= $direccion->estado ?>.
+      </p>
+
+      <?php
+    }
+  }
     /**
      * Display a listing of the resource.
      *

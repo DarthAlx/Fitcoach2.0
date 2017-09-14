@@ -447,7 +447,9 @@ body.modal-open .pagecontainer{
 	background: #f7f7f7;
 	cursor: url(../images/cross.svg),auto;
 }
-
+.modal-dialog{
+	    cursor: default;
+}
 /*.close {
     font-size: 50px;
     display:block;
@@ -756,4 +758,16 @@ label, .product-name strong, .residencial .title{
 }
 .botoninicio:hover a{
 	color:  #fff;
+}
+ol{
+	list-style: lower-alpha;
+}
+ul{
+	list-style: unset;
+}
+ol, ul{
+	padding: 0 40px;
+}
+h2, h4{
+	font-family: 'Lato', sans-serif;
 }

@@ -552,11 +552,12 @@
 
                      </div>
                    </div>
-                   <div class="col-sm-8">
+                   <div class="col-sm-8 text-center">
                      <div class="title ">
                        {{Ucfirst($proxima->tipo)}}
                      </div>
                      <div class="gotham2">
+                       <h2>Fecha: {{$proxima->fecha}}</h2>
                        <h2>Hora: {{$proxima->hora}}</h2>
                        <h2>Lugar: {{$dire}}</h2>
                      </div>

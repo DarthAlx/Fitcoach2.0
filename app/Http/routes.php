@@ -26,8 +26,8 @@ Route::get('/clasesdeportivas', function () {
   $clases = App\Clases::where('tipo', 'Deportiva')->get();
     return view('clasesdeportivas', ['clases'=>$clases]);
 });
-Route::get('/aviso', function () {
-    return view('aviso');
+Route::get('/legales', function () {
+    return view('legales');
 });
 Route::get('/bolsa-de-trabajo', function () {
     return view('bolsa');
@@ -111,7 +111,7 @@ Route::get('password/reset/{token}/{email}', 'Auth\PasswordController@getReset')
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 
-
+Route::post('traerdireccion', 'DireccionController@traerdireccion');
 
 
 

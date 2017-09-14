@@ -150,6 +150,25 @@
                         @endif <!--esresidencial-->
 
                           <input id="tokencsrf" type="hidden" name="_token" value="{{ csrf_token() }}">
+                          <div id="postdireccion">
+
+                          </div>
+                          <script type="text/javascript">
+                          function postDireccion(){
+                          	postdireccion = $('#direccion').val();
+                          	_token= $('#tokencsrf').val();
+                          	$.post("{{url('/traerdireccion')}}", {
+                          	postdireccion : postdireccion,
+                          	_token : _token
+                          	}, function(data) {
+                          		 document.getElementById('postdireccion').innerHTML = data;
+                          	});
+                          }
+
+                          $( "#direccion" ).change(function() {
+                            postDireccion();
+                          });
+                          		</script>
 
     </div>
     <div class="col-sm-6">
