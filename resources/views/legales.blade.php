@@ -18,7 +18,7 @@
 					<h4><strong><a href="#" onclick="legales('privacidad');">Políticas de Privacidad</a></strong></h4>
 				</div>
 				<div class="col-sm-9">
-					<div id="privacidad" style="text-align: justify;">
+					<div id="privacidad" style="text-align: justify; display:none;">
 						<h2 style="margin-top:0px;">AVISO DE PRIVACIDAD</h2>
 						<p>FITCOACH MEXICO S.A. DE C.V., mejor conocido como FITCOACH México, con domicilio en Av. de las Plazas 60 Sayabes Torre 1302 Piso 13, Col. Bosque Real, Huixquilucan, Estado de México, C.P. 52774, México, y portal de internet www.fitcoach.mx, es el responsable del uso y protección de sus datos personales, y al respecto le informamos lo siguiente:</p>
 
@@ -262,14 +262,21 @@ Los datos personales que obtenemos de estas tecnologías de rastreo son los sigu
 			</div>
 		</div>
 		<p>&nbsp;</p>
-
 <script type="text/javascript">
 	function legales(valor){
 		$('#privacidad').fadeOut();
 		$('#terminos').fadeOut();
 		$('#'+valor).fadeIn();
 	}
-
+if ('{{$request->page}}'=="terminos") {
+	legales('terminos');
+}
+else if ('{{$request->page}}'=="privacidad") {
+	legales('privacidad');
+}
+else {
+	legales('terminos');
+}
 </script>
 	</section>
 @endsection

@@ -26,8 +26,8 @@ Route::get('/clasesdeportivas', function () {
   $clases = App\Clases::where('tipo', 'Deportiva')->get();
     return view('clasesdeportivas', ['clases'=>$clases]);
 });
-Route::get('/legales', function () {
-    return view('legales');
+Route::get('/legales', function (Illuminate\Http\Request $request) {
+    return view('legales', ['request'=>$request]);
 });
 Route::get('/bolsa-de-trabajo', function () {
     return view('bolsa');
@@ -192,6 +192,10 @@ Route::group(['middleware' => 'usuarios'], function(){
   Route::post('cargo', 'OrdenController@cargo');
 
   Route::get('/recibo/{id}', 'OrdenController@receipt');
+
+  Route::get('/completa', function () {
+      return view('complete');
+  });
 
 });
 

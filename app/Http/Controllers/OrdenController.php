@@ -359,9 +359,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
 
         Cart::destroy();
         $this->sendinvoice($order->id);
-        Session::flash('mensaje', "!Orden completada! revisa <a class='alert-link' href='".url('/perfil')."'>tus ordenes.</a>");
-        Session::flash('class', 'success');
-        return redirect()->intended(url('/carrito'));
+        return redirect()->intended(url('/completa'));
 
       } catch (\Conekta\ProccessingError $error){
         Session::flash('mensaje', $error->getMessage());
