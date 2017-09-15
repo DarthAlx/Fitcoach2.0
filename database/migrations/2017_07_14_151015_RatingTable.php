@@ -12,7 +12,14 @@ class RatingTable extends Migration
      */
     public function up()
     {
-        //
+      Schema::create('ratings', function (Blueprint $table) {
+          $table->increments('id');
+          $table->string('rate');
+          $table->integer('orden_id');
+          $table->integer('user_id');
+
+          $table->timestamps();
+      });
     }
 
     /**
@@ -22,6 +29,6 @@ class RatingTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('ratings');
     }
 }

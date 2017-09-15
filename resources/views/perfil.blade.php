@@ -21,7 +21,7 @@
         <h4>CLASE ANTERIOR</h4>
         @if ($user->ordenes)
           <?php
-          $ultima= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orderBy('fecha', 'desc')->first();
+          $ultima= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Porrevisar')->orderBy('fecha', 'desc')->first();
           if ($ultima) {
             $coachu= App\User::find($ultima->coach_id);
             $nombre=explode(" ",$coachu->name);
@@ -29,7 +29,22 @@
 
              <h1>{{$ultima->nombre}}</h1>
              <h2>{{ucfirst($nombre[0])}}</h2>
-             <button type="button" class="btn btn-success">Calificar</button>
+             <form class="" action="{{url('/rate')}}" method="post">
+               <div class="rating">
+                <label for="rate1"><i class="fa fa-star" aria-hidden="true"></i></label> <label for="rate2"><i class="fa fa-star" aria-hidden="true"></i></label> <label for="rate3"><i class="fa fa-star" aria-hidden="true"></i></label> <label for="rate4"><i class="fa fa-star" aria-hidden="true"></i></label> <label for="rate5"><i class="fa fa-star" aria-hidden="true"></i></label>
+               </div>
+               <div style="display:none;">
+                 <input type="radio" id="rate1" name="rate" value="1">
+                 <input type="radio" id="rate2" name="rate" value="2">
+                 <input type="radio" id="rate3" name="rate" value="3">
+                 <input type="radio" id="rate4" name="rate" value="4">
+                 <input type="radio" id="rate5" name="rate" value="5">
+               </div>
+               <input type="hidden" name="orden_id" value="{{$ultima->id}}">
+               <input type="hidden" name="_token" value="{{ csrf_token() }}">
+               <button type="submit" class="btn btn-success">Calificar</button>
+             </form>
+
           <?php } else{ ?>
             <p>No has tomado ninguna clase.</p>
             <?php } ?>

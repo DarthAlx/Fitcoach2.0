@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Rating;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 class RatingController extends Controller
 {
     /**
@@ -37,7 +39,12 @@ class RatingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $guardar = new Rating($request->all());
+      $guardar->user_id = Auth::user()->id;
+      $guardar->save();
+      Session::flash('mensaje', '!Calificación guardada!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/perfil'));
     }
 
     /**

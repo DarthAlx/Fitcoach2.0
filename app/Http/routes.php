@@ -194,8 +194,10 @@ Route::group(['middleware' => 'usuarios'], function(){
   Route::get('/recibo/{id}', 'OrdenController@receipt');
 
   Route::get('/completa', function () {
-      return view('complete');
+      return view('cart.complete');
   });
+
+  Route::post('rate', 'RatingController@store');
 
 });
 
