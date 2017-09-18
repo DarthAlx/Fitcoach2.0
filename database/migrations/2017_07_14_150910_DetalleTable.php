@@ -20,6 +20,7 @@ class DetalleTable extends Migration
         $table->string('permisos');
         $table->string('rfc');
         $table->string('clases');
+        $table->string('zonas');
         $table->integer('user_id');
         $table->timestamps();
     });

@@ -18,18 +18,18 @@
     <div class="col-md-4 sidebar">
       <hr>
       <div class="claseanterior text-center">
-        <h4>CLASE ANTERIOR</h4>
+        <h4>PENDIENTE POR PAGAR</h4>
         @if ($user->ordenes)
           <?php
-          $ultima= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orderBy('fecha', 'desc')->first();
-          if ($ultima) {
-            $coachu= App\User::find($ultima->coach_id);
-            $nombre=explode(" ",$coachu->name);
+          $pendientes= App\Orden::where('coach_id', $user->id)->where('status', 'Porrevisar')->orderBy('fecha', 'desc')->get();
+          if ($pendientes) {
+            $cantidad=0;
+            foreach ($pendientes as $pendiente) {
+              $cantidad=$cantidad+$pendiente->cantidad;
+            }
              ?>
 
-             <h1>{{$ultima->nombre}}</h1>
-             <h2>{{ucfirst($nombre[0])}}</h2>
-             <button type="button" class="btn btn-success">Calificar</button>
+             <h1>${{$cantidad}}</h1>
           <?php } else{ ?>
             <p>No has dado ninguna clase.</p>
             <?php } ?>
@@ -70,9 +70,8 @@
       <p>&nbsp;</p>
       <div id="proximas" class="listadeclases">
         <div class="list-group">
-          @if ($user->ordenes)
             <?php
-            $proximas= App\Orden::where('user_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
+            $proximas= App\Orden::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
             if ($proximas) {
               date_default_timezone_set('America/Mexico_City');
               foreach ($proximas as $proxima) {
@@ -93,20 +92,15 @@
             <?php } } else{ ?>
               <p>No has tomado ninguna clase.</p>
               <?php  } ?>
-          @endif
-
         </div>
       </div>
       <div id="pasadas" class="listadeclases" style="display:none;">
         <div class="list-group">
-          @if ($user->ordenes)
             <?php
-            $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orderBy('fecha', 'desc')->get();
+            $pasadas= App\Orden::where('coach_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orWhere('status', 'Porrevisar')->orderBy('fecha', 'desc')->get();
             if ($pasadas) {
               date_default_timezone_set('America/Mexico_City');
               foreach ($pasadas as $pasada) {
-                $metadata= explode(',',$pasada->metadata);
-
                 $fecha=date_create($pasada->fecha);
                 setlocale(LC_TIME, "es-ES");
                ?>
@@ -114,7 +108,7 @@
                  @if ($pasada->status=="Cancelada")
                    <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                  @else
-                   @if($metadata[0]=="particular")
+                   @if($pasada->tipo=="particular")
                      <i class="fa fa-home" aria-hidden="true"></i>
                    @else
                      <i class="fa fa-building" aria-hidden="true"></i>
@@ -126,7 +120,7 @@
             <?php } } else{ ?>
               <p>No has tomado ninguna clase.</p>
               <?php  } ?>
-          @endif
+
 
         </div>
       </div>
@@ -433,13 +427,12 @@
 
 
     <?php
-    $proximas= App\Orden::where('user_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
-    if ($proximas) {
+    $proximas= App\Orden::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
+    if (!$proximas->isEmpty()) {
       date_default_timezone_set('America/Mexico_City');
       foreach ($proximas as $proxima) {
-        $metadata= explode(',',$proxima->metadata);
-        $coach = App\User::find($proxima->coach_id);
-        $direccion= App\Direccion::find($metadata[1]);
+        $cliente = App\User::find($proxima->user_id);
+        $direccion= App\Direccion::find($proxima->direccion);
         $fecha=date_create($proxima->fecha);
         setlocale(LC_TIME, "es-ES");
 
@@ -464,36 +457,21 @@
                    <div class="col-sm-4 sidebar">
                      <div class="text-center">
                             <h1>{{$proxima->nombre}}</h1>
-                            <div class="profile-userpic">
-                              <img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" class="img-responsive" alt="">
-                            </div>
-                            <?php $nombre=explode(" ",$coach->name); ?>
+                            <?php $nombre=explode(" ",$cliente->name); ?>
                             <h2>{{ucfirst($nombre[0])}}</h2>
 
                      </div>
                    </div>
                    <div class="col-sm-8">
                      <div class="title ">
-                       {{Ucfirst($metadata[0])}}
+                       {{Ucfirst($proxima->tipo)}}
                      </div>
                      <div class="gotham2">
+                       <h2>Fecha: {{$proxima->fecha}}</h2>
                        <h2>Hora: {{$proxima->hora}}</h2>
-                       <h2>Lugar: {{$direccion->identificador}}</h2>
+                       <h2>Lugar: {{ $direccion->calle }} {{ $direccion->numero_ext }} {{ $direccion->numero_int }}, {{ $direccion->colonia }}, {{ $direccion->municipio_del }}, {{ $direccion->cp }}, {{ $direccion->estado }}.</h2>
+                       <h2>Teléfono: {{ $proxima->user->tel }}</h2>
                      </div>
-                   </div>
-                   <div class="col-sm-12 text-center">
-                     <p>&nbsp;</p>
-                     @if ($horastotales>=24)
-                       <form class="" action="{{url('/cancelar-orden')}}" method="post">
-                         {!! csrf_field() !!}
-                         {{ method_field('PUT') }}
-                         <input type="hidden" name="ordencancelar" value="{{$proxima->id}}">
-                         <button type="submit" id="botoncancelar{{$proxima->id}}" class="btn btn-danger btn-lg" name="button" style="display:none;">Confirmar cancelación</button>
-                       </form>
-                       <button class="btn btn-danger btn-lg" id="botoncancelar2{{$proxima->id}}" name="button" onclick="javascript: document.getElementById('botoncancelar2{{$proxima->id}}').style.display='none'; document.getElementById('botoncancelar{{$proxima->id}}').style.display='inline-block'; ">Cancelar</button>
-                     @endif
-
-
                    </div>
                  </div>
                </div>
@@ -512,13 +490,12 @@
 
 
     <?php
-    $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orderBy('fecha', 'desc')->get();
-    if ($pasadas) {
+    $pasadas= App\Orden::where('coach_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orWhere('status', 'Porrevisar')->orderBy('fecha', 'desc')->get();
+    if (!$pasadas->isEmpty()) {
       date_default_timezone_set('America/Mexico_City');
       foreach ($pasadas as $pasada) {
-        $metadata= explode(',',$pasada->metadata);
-        $coach = App\User::find($pasada->coach_id);
-        $direccion= App\Direccion::find($metadata[1]);
+        $cliente = App\User::find($pasada->user_id);
+        $direccion= App\Direccion::find($pasada->direccion);
         $fecha=date_create($pasada->fecha);
         setlocale(LC_TIME, "es-ES");
 
@@ -535,10 +512,7 @@
                    <div class="col-sm-4 sidebar">
                      <div class="text-center">
                             <h1>{{$pasada->nombre}}</h1>
-                            <div class="profile-userpic">
-                              <img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" class="img-responsive" alt="">
-                            </div>
-                            <?php $nombre=explode(" ",$coach->name); ?>
+                            <?php $nombre=explode(" ",$cliente->name); ?>
                             <h2>{{ucfirst($nombre[0])}}</h2>
 
                      </div>
@@ -551,24 +525,16 @@
                        @if ($pasada->status=="Cancelada")
                          Cancelada
                        @endif
+                       @if ($pasada->status=="Porrevisar")
+                         Por revisar
+                       @endif
                      </div>
                      <div class="gotham2">
+                       <h2>Fecha: {{$proxima->fecha}}</h2>
                        <h2>Hora: {{$proxima->hora}}</h2>
-                       <h2>Lugar: {{$direccion->identificador}}</h2>
+                       <h2>Lugar: {{ $direccion->calle }} {{ $direccion->numero_ext }} {{ $direccion->numero_int }}, {{ $direccion->colonia }}, {{ $direccion->municipio_del }}, {{ $direccion->cp }}, {{ $direccion->estado }}.</h2>
+                       <h2>Teléfono: {{ $proxima->user->tel }}</h2>
                      </div>
-                   </div>
-                   <div class="col-sm-12 text-center">
-                     <p>&nbsp;</p>
-                     @if ($pasada->status=="Completa")
-                       <form class="" action="{{url('/calificar-orden')}}" method="post">
-                         {!! csrf_field() !!}
-                         <input type="hidden" name="calificacion" value="">
-                         <input type="hidden" name="orden_id" value="{{$pasada->id}}">
-                         <button type="submit" class="btn btn-primary btn-lg" name="button">Calificar</button>
-                       </form>
-                     @endif
-
-
                    </div>
                  </div>
                </div>

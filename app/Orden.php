@@ -12,4 +12,7 @@ class Orden extends Model
      {
        return $this->belongsTo('App\User');
      }
+     public function rate(){
+       return $this->hasOne('App\Rating');
+     }
 }

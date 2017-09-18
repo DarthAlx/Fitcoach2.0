@@ -55,13 +55,16 @@ class User extends Model implements AuthenticatableContract,
     public function ordenes(){
         return $this->hasMany('App\Orden');
     }
-    public function zonas(){
-        return $this->hasMany('App\Zona');
+    public function zona(){
+        return $this->hasMany('App\Zonas_coaches');
     }
     public function bancarios(){
         return $this->hasOne('App\Bancarios');
     }
     public function pagos(){
         return $this->hasMany('App\Pago');
+    }
+    public function rate(){
+      return $this->hasMany('App\Rating');
     }
 }

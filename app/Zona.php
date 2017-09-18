@@ -10,6 +10,9 @@ class Zona extends Model
   protected $fillable = ['identificador', 'descripcion','user_id'];
   public function user()
      {
-       return $this->belongsTo('App\User');
+       return $this->hasMany('App\User');
+     }
+     public function zona(){
+         return $this->hasMany('App\Zonas_coaches');
      }
 }

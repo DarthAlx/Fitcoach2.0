@@ -14,6 +14,16 @@
         <h2>Hola <span class="nombre">{{ucfirst($nombre[0])}} {{ucfirst($nombre[1])}}</span></h2>
       </div>
   </div>
+  <script type="text/javascript">
+  function pintar(valor){
+     for(i = 1; i <= 5; i++){
+   document.getElementById('rate'+i).style.color= "#cccccc";
+     }
+     for(i = 1; i <= valor; i++){
+   document.getElementById('rate'+i).style.color= "goldenrod";
+     }
+ }
+  </script>
   <div class="row">
     <div class="col-md-4 sidebar">
       <hr>
@@ -29,27 +39,42 @@
 
              <h1>{{$ultima->nombre}}</h1>
              <h2>{{ucfirst($nombre[0])}}</h2>
+             @if (!$ultima->rate)
              <form class="" action="{{url('/rate')}}" method="post">
                <div class="rating">
-                <label for="rate1"><i class="fa fa-star" aria-hidden="true"></i></label> <label for="rate2"><i class="fa fa-star" aria-hidden="true"></i></label> <label for="rate3"><i class="fa fa-star" aria-hidden="true"></i></label> <label for="rate4"><i class="fa fa-star" aria-hidden="true"></i></label> <label for="rate5"><i class="fa fa-star" aria-hidden="true"></i></label>
-               </div>
-               <div style="display:none;">
-                 <input type="radio" id="rate1" name="rate" value="1">
-                 <input type="radio" id="rate2" name="rate" value="2">
-                 <input type="radio" id="rate3" name="rate" value="3">
-                 <input type="radio" id="rate4" name="rate" value="4">
-                 <input type="radio" id="rate5" name="rate" value="5">
+                <input type="radio" name="rate" id="rating1" value="1"> <label for="rating1"><i class="fa fa-star fa-2x" id="rate1" aria-hidden="true" onclick="pintar(1);"></i></label>
+                <input type="radio" name="rate" id="rating2" value="2"> <label for="rating2"><i class="fa fa-star fa-2x" id="rate2" aria-hidden="true" onclick="pintar(2);"></i></label>
+                <input type="radio" name="rate" id="rating3" value="3"> <label for="rating3"><i class="fa fa-star fa-2x" id="rate3" aria-hidden="true" onclick="pintar(3);"></i></label>
+                <input type="radio" name="rate" id="rating4" value="4"> <label for="rating4"><i class="fa fa-star fa-2x" id="rate4" aria-hidden="true" onclick="pintar(4);"></i></label>
+                <input type="radio" name="rate" id="rating5" value="5"> <label for="rating5"><i class="fa fa-star fa-2x" id="rate5" aria-hidden="true" onclick="pintar(5);"></i></label>
                </div>
                <input type="hidden" name="orden_id" value="{{$ultima->id}}">
+               <input type="hidden" name="user_id" value="{{$ultima->coach_id}}">
                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                <button type="submit" class="btn btn-success">Calificar</button>
              </form>
+           @else
+             <div class="rating">
+              <input type="radio" name="rate" id="rating1" value="1"> <label for="rating1"><i class="fa fa-star fa-2x" id="rate1" aria-hidden="true" onclick="pintar(1);"></i></label>
+              <input type="radio" name="rate" id="rating2" value="2"> <label for="rating2"><i class="fa fa-star fa-2x" id="rate2" aria-hidden="true" onclick="pintar(2);"></i></label>
+              <input type="radio" name="rate" id="rating3" value="3"> <label for="rating3"><i class="fa fa-star fa-2x" id="rate3" aria-hidden="true" onclick="pintar(3);"></i></label>
+              <input type="radio" name="rate" id="rating4" value="4"> <label for="rating4"><i class="fa fa-star fa-2x" id="rate4" aria-hidden="true" onclick="pintar(4);"></i></label>
+              <input type="radio" name="rate" id="rating5" value="5"> <label for="rating5"><i class="fa fa-star fa-2x" id="rate5" aria-hidden="true" onclick="pintar(5);"></i></label>
+              <div class="tapar">
 
+              </div>
+             </div>
+             <script type="text/javascript">
+               document.getElementById('rate'+{{$ultima->rate->rate}}).click();
+
+             </script>
+             @endif
           <?php } else{ ?>
             <p>No has tomado ninguna clase.</p>
             <?php } ?>
         @endif
       </div>
+
 
       <div class="clasesperfil visible-xs">
         <hr>

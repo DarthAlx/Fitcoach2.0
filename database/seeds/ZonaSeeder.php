@@ -13,14 +13,13 @@ class ZonaSeeder extends Seeder
     {
       DB::table('zonas')->insert([
             'identificador'=>'Polanco',
-            'descripcion'=>'Abarca todas las secciones.',
-            'user_id'=>'3'
+            'descripcion'=>'Abarca todas las secciones.'
         ]);
+
 
         DB::table('zonas')->insert([
               'identificador'=>'Condesa',
-              'descripcion'=>'Abarca todas las secciones.',
-              'user_id'=>'3'
+              'descripcion'=>'Abarca todas las secciones.'
           ]);
     }
 }

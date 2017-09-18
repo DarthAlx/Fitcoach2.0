@@ -81,6 +81,18 @@ Route::get('/residenciales', function () {
     return view('condominios', ['condominios'=>$condominios]);
 });
 Route::get('/clasesdeportivas', function () {
+  $zonas_coaches=App\Zonas_coaches::where('zona_id', 1)->get();
+  foreach ($zonas_coaches as $z_c) {
+    $clases[]=App\Particular::where('user_id', $z_c->user_id)->get();
+  }
+
+dd($clases[1]);
+
+  $clases = App\Clase::where('tipo', 'Deportiva')->get();
+    return view('clases', ['clases'=>$clases]);
+});
+Route::post('/clasesdeportivas', function (Illuminate\Http\Request $request) {
+
   $clases = App\Clase::where('tipo', 'Deportiva')->get();
     return view('clases', ['clases'=>$clases]);
 });
