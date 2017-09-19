@@ -67,4 +67,7 @@ class User extends Model implements AuthenticatableContract,
     public function rate(){
       return $this->hasMany('App\Rating');
     }
+    public function zonas(){
+        return $this->hasMany('App\Zona');
+    }
 }

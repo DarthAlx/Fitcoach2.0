@@ -220,7 +220,7 @@
 							@endforeach
 						</p>
 
-							<div id="myCarousel1" class="carousel slide hidden-xs" data-wrap="false"><!--6 columnas-->
+							<div id="myCarousel{{$coach->id}}" class="carousel slide hidden-xs" data-wrap="false"><!--6 columnas-->
 								<div class="carousel-inner">
 									@for ($i=0; $i < 5 ; $i++)
 										@if ($i==0)
@@ -256,13 +256,13 @@
 						        </div>
 									@endfor
 				        </div>
-			        <a class="left carousel-control" href="#myCarousel1" data-slide="prev"><em class="fa fa-2x fa-chevron-left" aria-hidden="true" style="color: #000;"></em>
+			        <a class="left carousel-control" href="#myCarousel{{$coach->id}}" data-slide="prev"><em class="fa fa-2x fa-chevron-left" aria-hidden="true" style="color: #000;"></em>
 			        </a>
-			        <a class="right carousel-control" href="#myCarousel1" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
+			        <a class="right carousel-control" href="#myCarousel{{$coach->id}}" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
 			        </a>
 			        </div><!--6columnas fin-->
 
-							<div id="myCarousel" class="carousel slide visible-xs" data-wrap="false"><!--2 columnas-->
+							<div id="myCarouselmini{{$coach->id}}" class="carousel slide visible-xs" data-wrap="false"><!--2 columnas-->
 <div class="carousel-inner ">
 								@for ($i=0; $i < 15 ; $i++)
 									@if ($i==0)
@@ -300,9 +300,9 @@
 			        </div>
 
 
-			        <a class="left carousel-control" href="#myCarousel" data-slide="prev"><em class="fa fa-2x fa-chevron-left" aria-hidden="true" style="color: #000;"></em>
+			        <a class="left carousel-control" href="#myCarouselmini{{$coach->id}}" data-slide="prev"><em class="fa fa-2x fa-chevron-left" aria-hidden="true" style="color: #000;"></em>
 			        </a>
-			        <a class="right carousel-control" href="#myCarousel" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
+			        <a class="right carousel-control" href="#myCarouselmini{{$coach->id}}" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
 			        </a>
 			        </div><!--2 columnas fin-->
 

@@ -50,6 +50,11 @@
         <img src="{{ url('images/nomina.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/nomina_b.png')}}'" onmouseout="this.src='{{ url('images/nomina.png')}}'" alt="">
       </a>
     </div>
+    <div class="col-sm-4 col-xs-6">
+      <a href="{{ url('/cupones') }}">
+        <img src="{{ url('images/cupones.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/cupones_b.png')}}'" onmouseout="this.src='{{ url('images/cupones.png')}}'" alt="">
+      </a>
+    </div>
 
   </div>
 

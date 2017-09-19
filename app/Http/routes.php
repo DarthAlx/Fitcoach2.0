@@ -81,12 +81,6 @@ Route::get('/residenciales', function () {
     return view('condominios', ['condominios'=>$condominios]);
 });
 Route::get('/clasesdeportivas', function () {
-  $zonas_coaches=App\Zonas_coaches::where('zona_id', 1)->get();
-  foreach ($zonas_coaches as $z_c) {
-    $clases[]=App\Particular::where('user_id', $z_c->user_id)->get();
-  }
-
-dd($clases[1]);
 
   $clases = App\Clase::where('tipo', 'Deportiva')->get();
     return view('clases', ['clases'=>$clases]);
@@ -102,6 +96,7 @@ Route::get('/carrito', function () {
   $items=Cart::content();
   return view('cart.cart',['items'=>$items]);
 });
+Route::post('descuento', 'CuponeraController@store');
 
 
 
@@ -176,6 +171,11 @@ Route::group(['middleware' => 'administradores'], function(){
   Route::get('historialpagos/{id}', 'OrdenController@historialpagos');
   Route::get('clasesvista', 'OrdenController@clasesvista');
   Route::post('clasesvista', 'OrdenController@clasesvistapost');
+
+  Route::get('cupones', 'CuponController@index');
+  Route::post('agregar-cupon', 'CuponController@store');
+  Route::put('actualizar-cupon', 'CuponController@update');
+  Route::delete('eliminar-cupon', 'CuponController@destroy');
 });
 
 

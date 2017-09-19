@@ -15,7 +15,20 @@
       @include('holders.notificaciones')
       <div class="cart-header">
         @if (Cart::content()->count()>0)
-          <h1 class="title">{{Cart::content()->count()}} Clases <strong class="pull-right">${{Cart::total()}}</strong></h1>
+          @foreach ($items as $product)
+            @if ($product->id=="Desc")
+              <?php $descuento=$product; $tienedescuento=true; break; ?>
+            @else
+              <?php $tienedescuento=false; ?>
+            @endif
+          @endforeach
+
+          <h1 class="title">
+            @if ($tienedescuento)
+            {{Cart::content()->count()-1}}
+            @else
+            {{Cart::content()->count()}}
+            @endif  Clases <strong class="pull-right">${{Cart::total()}}</strong></h1>
           <div class="text-center">
             <i class="fa fa-chevron-down" aria-hidden="true" data-toggle="collapse" data-target="#carrito" aria-expanded="false" aria-controls="carrito"></i>
           </div>
@@ -30,46 +43,57 @@
           <div class="panel-body">
 
 							@foreach ($items as $product)
-							<div class="row">
+                @if ($product->id!="Desc")
+                  <div class="row">
 
-								<div class="col-xs-4">
-									<h4 class="product-name"><strong>{{ $product->name }}</strong></h4>
+    								<div class="col-xs-4">
+    									<h4 class="product-name"><strong>{{ $product->name }}</strong></h4>
 
-										<h4><small>
-											Fecha: {{ $product->options->fecha }}<br>
+    										<h4><small>
+    											Fecha: {{ $product->options->fecha }}<br>
 
-											Horario: {{ $product->options->hora }}<br>
-											<?php $coach=App\User::find($product->options->coach); ?>
-											Coach: {{ $coach->name }}<br>
-                      @if ($product->options->tipo=="residencial")
-                        <?php $residencial=App\Residencial::find($product->id); $esresidencial=true;?>
-                      Dirección: {{$residencial->condominio->direccion}}
-                    @else
-                      <?php $esresidencial=false; ?>
+    											Horario: {{ $product->options->hora }}<br>
+    											<?php $coach=App\User::find($product->options->coach); ?>
+    											Coach: {{ $coach->name }}<br>
+                          @if ($product->options->tipo=="residencial")
+                            <?php $residencial=App\Residencial::find($product->id); $esresidencial=true;?>
+                          Dirección: {{$residencial->condominio->direccion}}
+                        @else
+                          <?php $esresidencial=false; ?>
+                          @endif
+    										</small></h4>
+    								</div>
+    								<div class="col-xs-8">
+    									<div class="col-xs-10 text-right gotham2">
+    										<h6><strong>${{ $product->price}} <span class="text-muted"></span></strong></h6>
+    									</div>
+    									<div class="col-xs-2">
+    										<a href="{{url('removefromcart')}}/{{$product->rowId}}" class="btn btn-link btn-xs">
+    											<i class="fa fa-trash fa-lg" aria-hidden="true"></i> </span>
+    										</a>
+    									</div>
+    								</div>
+    							</div>
+                @endif
 
-                      @endif
 
-
-										</small></h4>
-
-
-
-								</div>
-								<div class="col-xs-8">
-									<div class="col-xs-10 text-right gotham2">
-										<h6><strong>${{ $product->price}} <span class="text-muted"></span></strong></h6>
-									</div>
-
-									<div class="col-xs-2">
-										<a href="{{url('removefromcart')}}/{{$product->rowId}}" class="btn btn-link btn-xs">
-											<i class="fa fa-trash fa-lg" aria-hidden="true"></i> </span>
-										</a>
-									</div>
-								</div>
-
-							</div>
 							<hr>
+
 							@endforeach
+              @if (Cart::content()->count()>0)
+              @if ($tienedescuento)
+                <div class="row">
+                <div class="col-xs-4">
+                  <h4 class="product-name"><strong>{{ $descuento->name }}</strong></h4>
+                </div>
+                <div class="col-xs-8">
+                  <div class="col-xs-10 text-right gotham2">
+                    <h6><strong>{{ $descuento->price}} <span class="text-muted"></span></strong></h6>
+                  </div>
+                </div>
+                </div>
+              @endif
+                @endif
 							<hr>
 
 						</div>
@@ -78,7 +102,23 @@
 
 
 
+
+
     </div>
+    @if (Cart::content()->count()>0)
+    @if (!$tienedescuento)
+    <div class="col-sm-12">
+      <form class="form-inline" action="{{url('descuento')}}" method="POST">
+        {!! csrf_field() !!}
+        <div class="form-group">
+          <label>Código de descuento</label>
+          <input type="text" name="codigo" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-default">Aplicar</button>
+      </form>
+    </div>
+    @endif
+    @endif
     <p>&nbsp;</p>
     @if (Cart::content()->count()>0)
     <form action="{{url('cargo')}}" method="POST" id="card-form">

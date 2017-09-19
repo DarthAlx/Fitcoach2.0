@@ -1,7 +1,5 @@
 <?php
-
 use Illuminate\Database\Seeder;
-
 class ZonaSeeder extends Seeder
 {
     /**
@@ -13,13 +11,13 @@ class ZonaSeeder extends Seeder
     {
       DB::table('zonas')->insert([
             'identificador'=>'Polanco',
-            'descripcion'=>'Abarca todas las secciones.'
+            'descripcion'=>'Abarca todas las secciones.',
+            'user_id'=>'3'
         ]);
-
-
         DB::table('zonas')->insert([
               'identificador'=>'Condesa',
-              'descripcion'=>'Abarca todas las secciones.'
+              'descripcion'=>'Abarca todas las secciones.',
+              'user_id'=>'3'
           ]);
     }
 }

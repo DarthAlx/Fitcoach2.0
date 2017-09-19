@@ -230,21 +230,25 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
     {
       \Conekta\Conekta::setApiKey("key_fr9YE9Y98jxYQ9NJrJTZXw");
       $items=Cart::content();
+      foreach ($items as $product){
+        if ($product->id=="Desc"){
+          $descuento=$product; $tienedescuento=true; break;
+        }else{
+          $tienedescuento=false;
+        }
+      }
+
+
+
 
       foreach ($items as $product) {
-        $precio = $product->price;
-        $decimales   = '.';
-        $pos = strpos($precio, $decimales);
-        if ($pos === false) {
-            $precio_completo=$precio.".00";
-        }
-        else {
-          $precio_completo=$product->price;
-        }
+
+        $precio = $product->price*100;
+
         if ($product->options->tipo=="particular") {
           $productos[]=array(
             'name' => $product->name,
-            'unit_price' => str_replace('.', '',$precio_completo),
+            'unit_price' => $precio,
             'quantity' => 1,
             'metadata' => array(
               'tipo' => 'particular',
@@ -260,7 +264,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
           $esresidencial=true;
           $productos[]=array(
             'name' => $product->name,
-            'unit_price' => str_replace('.', '',$precio_completo),
+            'unit_price' => $precio,
             'quantity' => 1,
             'metadata' => array(
               'tipo' => 'residencial',
@@ -273,28 +277,61 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
           );
         }
 
+        if ($product->id=="Desc"){
+          $descuentos[]=array(
+            'code'   => $product->name,
+            'amount' => $precio*-1,
+            'type'   => 'coupon'
+          );
+        }
+
+
       }
 
 
 
       try{
-        $order=\Conekta\Order::create(array(
-          'currency' => 'MXN',
-          "customer_info" => array(
-            "name" => $request->name,
-            "email" => $request->email,
-            "phone" => "+521".$request->phone
-          ), //customer_info
-          'line_items' => $productos,
-          'charges' => array(
-            array(
-              'payment_method' => array(
-                'type' => 'card',
-                "token_id" => $request->tokencard
+        if ($tienedescuento) {
+          $order=\Conekta\Order::create(array(
+            'currency' => 'MXN',
+            "customer_info" => array(
+              "name" => $request->name,
+              "email" => $request->email,
+              "phone" => "+521".$request->phone
+            ), //customer_info
+            'line_items' => $productos,
+            'discount_lines' => $descuentos,
+            'charges' => array(
+              array(
+                'payment_method' => array(
+                  'type' => 'card',
+                  "token_id" => $request->tokencard
+                )
               )
             )
-          )
-        ));
+          ));
+        }
+        else {
+          $order=\Conekta\Order::create(array(
+            'currency' => 'MXN',
+            "customer_info" => array(
+              "name" => $request->name,
+              "email" => $request->email,
+              "phone" => "+521".$request->phone
+            ), //customer_info
+            'line_items' => $productos,
+            'charges' => array(
+              array(
+                'payment_method' => array(
+                  'type' => 'card',
+                  "token_id" => $request->tokencard
+                )
+              )
+            )
+          ));
+        }
+
+
 
         if ($request->tarjeta==""&&$request->identificadortarjeta) {
           $tarjeta = new Tarjeta();
@@ -322,6 +359,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
         }
         $folio=Folio::first();
         foreach ($productos as $producto) {
+
           $guardar = new Orden();
           $guardar->order_id=$order->id;
           $guardar->folio=$folio->folio;
@@ -344,7 +382,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
           $guardar->nombre=$producto['name'];
           $guardar->fecha=$producto['metadata']['fecha'];
           $guardar->hora=$producto['metadata']['hora'];
-          $guardar->cantidad=$producto['unit_price'];
+          $guardar->cantidad=$producto['unit_price']/100;
           $guardar->status='Proxima';
           $guardar->save();
           if ($producto['metadata']['tipo']=="residencial") {

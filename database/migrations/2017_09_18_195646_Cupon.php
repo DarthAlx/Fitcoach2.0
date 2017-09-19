@@ -1,7 +1,9 @@
 <?php
+
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-class ZonaTable extends Migration
+
+class Cupon extends Migration
 {
     /**
      * Run the migrations.
@@ -10,14 +12,18 @@ class ZonaTable extends Migration
      */
     public function up()
     {
-      Schema::create('zonas', function (Blueprint $table) {
+      Schema::create('cupones', function (Blueprint $table) {
         $table->increments('id');
-        $table->string('identificador');
         $table->string('descripcion');
-        $table->integer('user_id');
+        $table->string('codigo');
+        $table->integer('monto');
+        $table->integer('usos');
+        $table->integer('minimo');
+        $table->date('expiracion');
         $table->timestamps();
-      });
+    });
     }
+
     /**
      * Reverse the migrations.
      *
@@ -25,6 +31,6 @@ class ZonaTable extends Migration
      */
     public function down()
     {
-        Schema::drop('zonas');
+        Schema::drop('cupones');
     }
 }
