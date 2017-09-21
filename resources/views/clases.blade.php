@@ -28,10 +28,10 @@
 			@if ($clases)
 				@foreach ($clases as $clase)
 	        <div class="teamItem">
-	          <a data-toggle="modal" data-target="#clase{{$clase->id}}"><img src="{{ url('uploads/clases') }}/{{ $clase->imagen }}" class="img-responsive"></a>
-	          <div class="overlay">
+	          <a><img src="{{ url('uploads/clases') }}/{{ $clase->imagen }}" class="img-responsive"></a>
+	          <div class="overlay" data-toggle="modal" data-target="#calendario{{$clase->id}}">
 	            <div class="teamItemNameWrap">
-	              <a style="text-decoration:none;" data-toggle="modal" data-target="#calendario{{$clase->id}}"><h3>{{ucfirst($clase->nombre)}}</h3></a>
+	              <a style="text-decoration:none;"><h3>{{ucfirst($clase->nombre)}}</h3></a>
 	            </div>
 	            <!--p>Formativa</p-->
 	          </div>

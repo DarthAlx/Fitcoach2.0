@@ -27,11 +27,11 @@
 			@if ($condominios)
 				@foreach ($condominios as $condominio)
 	        <div class="teamItem">
-	          <a data-toggle="modal" data-target="#condominio{{$condominio->id}}"><img src="{{ url('uploads/condominios') }}/{{ $condominio->imagen }}" class="img-responsive"></a>
-	          <div class="overlay">
+	          <a><img src="{{ url('uploads/condominios') }}/{{ $condominio->imagen }}" class="img-responsive"></a>
+	          <div class="overlay" data-toggle="modal" data-target="#calendario{{$condominio->id}}">
 	            <div class="teamItemNameWrap">
 
-	              <a style="text-decoration:none;" data-toggle="modal" data-target="#calendario{{$condominio->id}}"><h3>{{ucfirst($condominio->identificador)}}</h3></a>
+	              <a style="text-decoration:none;"><h3>{{ucfirst($condominio->identificador)}}</h3></a>
 	            </div>
 	            <!--p>Formativa</p-->
 	          </div>

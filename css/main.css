@@ -765,7 +765,7 @@ ol{
 ul{
 	list-style: unset;
 }
-ol, ul{
+.singlePostWrap ol,.singlePostWrap  ul{
 	padding: 0 40px;
 }
 h2, h4{

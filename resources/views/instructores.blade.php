@@ -27,11 +27,11 @@
 			@if ($coaches)
 				@foreach ($coaches as $coach)
 	        <div class="teamItem">
-	          <a data-toggle="modal" data-target="#coach{{$coach->id}}"><img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" alt=""></a>
-	          <div class="overlay">
+	          <a><img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" alt=""></a>
+	          <div class="overlay" data-toggle="modal" data-target="#coach{{$coach->id}}">
 	            <div class="teamItemNameWrap">
 								<?php $nombre=explode(" ",$coach->name); ?>
-	              <a style="text-decoration:none;" data-toggle="modal" data-target="#coach{{$coach->id}}"><h3>{{ucfirst($nombre[0])}}</h3></a>
+	              <a style="text-decoration:none;"><h3>{{ucfirst($nombre[0])}}</h3></a>
 	            </div>
 	            <!--p>Formativa</p-->
 	          </div>
