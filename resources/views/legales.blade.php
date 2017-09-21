@@ -10,19 +10,19 @@
 			</div>
 		</div>
 
-		<div class="container-bootstrap-fluid">
+		<div class="container-bootstrap-fluid" style="padding-right: 5%; padding-left: 5%;">
 			<div class="row">
 				<div class="col-sm-3">
-					<h4 style="margin-top: 0px;"><strong><a href="#" onclick="legales('terminos');">Términos & condiciones</a></strong></h4>
+					<h4 style="margin-top: 0px;"><strong><a href="#" onclick="legales('terminos');" style="color:#D58628;">Términos & condiciones</a></h5>
 					<p>&nbsp;</p>
-					<h4><strong><a href="#" onclick="legales('privacidad');">Políticas de Privacidad</a></strong></h4>
+					<h4 ><strong><a href="#" onclick="legales('privacidad');" style="color:#D58628;">Políticas de Privacidad</a></strong></h4 >
 				</div>
 				<div class="col-sm-9">
-					<div id="privacidad" style="text-align: justify; display:none;">
-						<h2 style="margin-top:0px;">AVISO DE PRIVACIDAD</h2>
+					<div id="privacidad" class="singlePostWrap" style="text-align: justify; display:none;">
+						<h1 style="margin-top:0px;">AVISO DE PRIVACIDAD</h1>
 						<p>FITCOACH MEXICO S.A. DE C.V., mejor conocido como FITCOACH México, con domicilio en Av. de las Plazas 60 Sayabes Torre 1302 Piso 13, Col. Bosque Real, Huixquilucan, Estado de México, C.P. 52774, México, y portal de internet www.fitcoach.mx, es el responsable del uso y protección de sus datos personales, y al respecto le informamos lo siguiente:</p>
 
-						<h4><strong>¿Para qué fines utilizaremos sus datos personales?</strong></h4>
+						<h5>¿Para qué fines utilizaremos sus datos personales?</h5>
 						<p>Los datos personales que recabamos de usted, los utilizaremos para las siguientes finalidades que son necesarias para el servicio que solicita:</p>
 						<p>
 							<ul>
@@ -43,7 +43,7 @@
 
 La negativa para el uso de sus datos personales para estas finalidades no podrá ser un motivo para que le neguemos los servicios y productos que solicita o contrata con nosotros.
 </p>
-						<h4><strong>¿Qué datos personales utilizaremos para estos fines?</strong></h4>
+						<h5>¿Qué datos personales utilizaremos para estos fines?</h5>
 						<p>Para llevar a cabo las finalidades descritas en el presente aviso de privacidad, utilizaremos los siguientes datos personales:</p>
 						<ul>
 							<li>Datos de identificación</li>
@@ -54,7 +54,7 @@ La negativa para el uso de sus datos personales para estas finalidades no podrá
 						<ul>
 							<li>Datos de salud</li>
 						</ul>
-						<h4><strong>¿Cómo puede acceder, rectificar o cancelar sus datos personales, u oponerse a su uso?</strong></h4>
+						<h5>¿Cómo puede acceder, rectificar o cancelar sus datos personales, u oponerse a su uso?</h5>
 						<p>Usted tiene derecho a conocer qué datos personales tenemos de usted, para qué los utilizamos y las condiciones del uso que les damos (Acceso). Asimismo, es su derecho solicitar la corrección de su información personal en caso de que esté desactualizada, sea inexacta o incompleta (Rectificación); que la eliminemos de nuestros registros o bases de datos cuando considere que la misma no está siendo utilizada adecuadamente (Cancelación); así como oponerse al uso de sus datos personales para fines específicos (Oposición). Estos derechos se conocen como derechos ARCO.</p>
 						<p>Para el ejercicio de cualquiera de los derechos ARCO, usted deberá presentar la solicitud respectiva a través de correo electrónico.</p>
 						<p>Con relación al procedimiento y requisitos para el ejercicio de sus derechos ARCO, le informamos lo siguiente:</p>
@@ -89,7 +89,7 @@ info@fitcoach.mx</li>
 <br>
 5528820141</li>
 						</ol>
-						<h4><strong>Usted puede revocar su consentimiento para el uso de sus datos personales</strong></h4>
+						<h5>Usted puede revocar su consentimiento para el uso de sus datos personales</h5>
 						<p>Usted puede revocar el consentimiento que, en su caso, nos haya otorgado para el tratamiento de sus datos personales. Sin embargo, es importante que tenga en cuenta que no en todos los casos podremos atender su solicitud o concluir el uso de forma inmediata, ya que es posible que por alguna obligación legal requiramos seguir tratando sus datos personales. Asimismo, usted deberá considerar que para ciertos fines, la revocación de su consentimiento implicará que no le podamos seguir prestando el servicio que nos solicitó, o la conclusión de su relación con nosotros.</p>
 						<p>Para revocar su consentimiento deberá presentar su solicitud a través de correo electrónico.</p>
 						<p>Con relación al procedimiento y requisitos para la revocación de su consentimiento, le informamos lo siguiente:</p>
@@ -107,9 +107,9 @@ Nombre, dirección, correo electrónico e identificación oficial</li>
 <br>
 Correo electrónico</li>
 						</ol>
-						<h4><strong>¿Cómo puede limitar el uso o divulgación de su información personal?</strong></h4>
+						<h5>¿Cómo puede limitar el uso o divulgación de su información personal?</h5>
 						<p>Con objeto de que usted pueda limitar el uso y divulgación de su información personal, le ofrecemos los siguientes medios: enviando un correo a info@fitcoach.mx</p>
-						<h4><strong>El uso de tecnologías de rastreo en nuestro portal de internet</strong></h4>
+						<h5>El uso de tecnologías de rastreo en nuestro portal de internet</h5>
 						<p>Le informamos que en nuestra página de internet utilizamos cookies, web beacons u otras tecnologías, a través de las cuales es posible monitorear su comportamiento como usuario de internet, así como brindarle un mejor servicio y experiencia al navegar en nuestra página. Los datos personales que recabamos a través de estas tecnologías, los utilizaremos para estadísticas internas.
 <br>
 Los datos personales que obtenemos de estas tecnologías de rastreo son los siguientes:</p>
@@ -120,14 +120,14 @@ Los datos personales que obtenemos de estas tecnologías de rastreo son los sigu
 	<li>Tipo de sistema operativo del usuario</li>
 	<li>Fecha y hora del inicio y final de una sesión de un usuario</li>
 </ol>
-<h4><strong>¿Cómo puede conocer los cambios en este aviso de privacidad?</strong></h4>
+<h5>¿Cómo puede conocer los cambios en este aviso de privacidad?</h5>
 <p>El presente aviso de privacidad puede sufrir modificaciones, cambios o actualizaciones derivadas de nuevos requerimientos legales; de nuestras propias necesidades por los productos o servicios que ofrecemos; de nuestras prácticas de privacidad; de cambios en nuestro modelo de negocio, o por otras causas. Nuestro aviso de privacidad más actualizado siempre estará disponible para usted en www.fitcoach.com/aviso</p>
 <p>&nbsp;</p>
 <p class="text-right">Última actualización: 08/06/2017</p>
 
 					</div>
-					<div id="terminos" style="text-align: justify;">
-						<h2 style="margin-top:0px;">TÉRMINOS Y CONDICIONES</h2>
+					<div id="terminos" class="singlePostWrap" style="text-align: justify;">
+						<h1 style="margin-top:0px;">TÉRMINOS Y CONDICIONES</h1>
 						<p>FITCOACH MEXICO S.A. de C.V. (en adelante “FITCOACH”, “Compañía”, “Nosotros”, o “Nuestro”), se complace en poner a su disposición los Servicios que
         ofrece, según dicho término se define a continuación, de conformidad con los siguientes Términos y Condiciones que regulan el uso de (i) fitcoach.mx
         (en adelante el “Sitio Web”), independientemente de los medios de acceso a él, tales como computadoras o dispositivos móviles (teléfonos inteligentes
@@ -140,21 +140,21 @@ Los datos personales que obtenemos de estas tecnologías de rastreo son los sigu
     <p>FITCOACH es una compañía que facilita el contacto entre personas que requieren servicios deportivos, culturales y/o recreativos (los “Servicios”),
         las personas que ofrecen dichos Servicios y la contratación de dichos Servicios entre ellos. FITCOACH funge exclusivamente como un enlace o intermediario
         y en ningún momento deberá ser considerada como una empresa que presta servicios deportivos, culturales y/o recreativos.</p>
-    <h4><strong>I. Reglas Generales de Uso</strong></h4>
+    <h5>I. Reglas Generales de Uso</h5>
     <p>a. (i) La información, consejos, conceptos y opiniones publicadas en el Sitio Web no necesariamente reflejan la posición de FITCOACH ni de sus empleados,
         directores o accionistas. Por lo anterior, FITCOACH no se hace responsable por la información, consejos y opiniones que se emitan en el Sitio Web.</p>
     <p>b. FITCOACH se reserva el derecho de bloquear el acceso o remover en forma parcial o total, toda información, comunicación o material que a su exclusivo
         juicio pueda resultar: (i) abusivo, difamatorio, obsceno, ofensivo (ii) fraudulento, artificioso o engañoso, (iii) violatorio de derechos de autor,
         marcas, confidencialidad, secretos industriales o cualquier derecho de propiedad intelectual de un tercero, o (iv) de cualquier forma contravenga
         lo establecido en los presentes Términos y Condiciones.</p>
-    <h4><strong>II. Funcionamiento y Solicitud del Servicio</strong></h4>
+    <h5>II. Funcionamiento y Solicitud del Servicio</h5>
     <p>FITCOACH es una compañía dedicada a conectar a personas que buscan servicios deportivos, culturales y/o recreativos (cada uno un “Cliente”) y prestadores
         de servicios independientes</p>
     <p>que forman parte de la red de FITCOACH (cada uno un “COACH” (en plural “COACHES”), y de manera conjunta con el Cliente los “Usuarios”) que pueden estar
         disponibles para realizar el servicio. La Compañía revisa los antecedentes de cada COACH; sin embargo, la Compañía no garantiza ni garantizará,
         hace o hará ningún tipo de representación con respecto a la fiabilidad, la calidad o idoneidad de dichos proveedores de servicios. La compañía
         no será responsable de la conducta de cualquier COACH o Cliente de la Compañía.</p>
-    <h4><strong>Funcionamiento</strong></h4>
+    <h5>Funcionamiento</h5>
     <p>a) Usted, el Cliente solicita los Servicios por medio del Sitio Web o llamada telefónica. Para ello deberá proporcionar datos fidedignos del lugar
         en donde se prestarán los Servicios, así como sus datos personales para identificarlo, y los datos de pago para que FITCOACH proceda al cobro del
         servicio por parte del COACH.</p>
@@ -167,21 +167,21 @@ Los datos personales que obtenemos de estas tecnologías de rastreo son los sigu
         información podrá ser utilizada por FITCOACH para mejorar y perfeccionar los Servicios, en este sentido, los Usuarios otorgan a la compañía el
         uso no exclusivo e irrevocable libre de regalías para usar, reproducir, divulgar, distribuir, modificar y explotar dichos comentarios sin restricción
         alguna.</p>
-    <h4><strong>Cancelación del Servicio</strong></h4>
+    <h5>Cancelación del Servicio</h5>
     <p>Si el Cliente desea cancelar el Servicio programado, se requiere un aviso de cancelación con al menos 24 horas de anticipación al servicio originalmente
         programado. La notificación deberá ser hecha a través de un correo electrónico dirigido a contacto@fitcoach.mx. En caso que el Cliente no cancele
         el servicio y este no pueda ser prestado por causas ajenas al COACH o a Nosotros, se cobrará la totalidad de las horas reservadas.</p>
-    <h4><strong>Reposición de Clases</strong></h4>
+    <h5>Reposición de Clases</h5>
     <p>La reposición de un Servicio se llevará acabo dependiendo de la causa por la cuál no se pudo prestar de acuerdo a los siguientes puntos:</p>
     <p>a) Si el Servicio no pudo ser llevado a cabo por inasistencia del profesor, la clase podrá ser reprogramada para otra fecha en la cual el COACH esté
         disponible sin ningún cargo extra para el Cliente.</p>
     <p>b) Si el servicio no pudo ser iniciado por situaciones climáticas, la clase podrá ser reprogramada para otra fecha en el cuál el COACH esté disponible
         siempre y cuando el Cliente se haya presentado. En el caso de Servicios grupales, tendrá que haber asistencia de la mayoría del grupo para su reposición.</p>
     <p>c) Si el servicio no pudo ser llevado a cabo por situaciones de causa mayor, la clase no podrá ser reprogramada bajo ninguna circunstancia.</p>
-    <h4><strong>Días Festivos</strong></h4>
+    <h5>Días Festivos</h5>
     <p>La prestación de un Servicio en días festivos dependerá de la disponibilidad del COACH. Estos espacios se irán liberando en el Sitio Web conforme los
         COACHES confirmen su disponibilidad. El Cliente será notificado mínimo 24 horas antes de el Servicio.</p>
-    <h4><strong>III. Obligaciones de los Clientes</strong></h4>
+    <h5>III. Obligaciones de los Clientes</h5>
     <p>Las obligaciones del Cliente, son las que se listan a continuación de manera enunciativa pero no limitativa: (i) cubrir el costo del Servicio, (ii)
         proveer datos verídicos como, nombre, datos de contacto y ubicación donde se llevará a cabo el Servicio así como la existencia de cualquier preferencia
         o especificación para que el COACH pueda llevar a cabo el Servicio de manera puntual y eficiente, (iii) sacar en paz y a salvo al COACH en caso
@@ -192,11 +192,11 @@ Los datos personales que obtenemos de estas tecnologías de rastreo son los sigu
         exhibir, transmitir, distribuir o vincular cualquier material que sea falso o engañoso, discriminatorio, difamatorio, ofensivo u obsceno o que
         pueda incitar a discriminación, odio o violencia contra una persona o grupo de personas a causa de su origen o pertenencia a un grupo étnico, raza
         o religión, a causa de su género o orientación sexual, (viii) asumir todo el riesgo y responsabilidad por el incumplimiento de estas obligaciones.</p>
-    <h4><strong>IV. Cambio de COACHES</strong></h4>
+    <h5>IV. Cambio de COACHES</h5>
     <p>FITCOACH se reserva el derecho de cambiar en cualquier momento que considere oportuno al COACH que esté impartiendo un Servicio sin la obligación de
         dar al Cliente las razones de dicho cambio. La compañía se compromete a enviar un remplazo para brindar el Servicio al Cliente reponiendo cualquier
         Servicio que no pueda ser brindado por razones relacionadas a la acción expresada anteriormente.</p>
-    <h4><strong>V. Derecho de Autor</strong></h4>
+    <h5>V. Derecho de Autor</h5>
     <p>FITCOACH sus logotipos y todo el material que aparece en el Sitio Web, son marcas, nombres de dominio y nombres comerciales propiedad de FITCOACH protegidos
         por leyes federales en</p>
     <p>materia de propiedad intelectual y derechos de autor. Los derechos de autor sobre el contenido, organización, recopilación, información, logotipos,
@@ -206,7 +206,7 @@ Los datos personales que obtenemos de estas tecnologías de rastreo son los sigu
         anuncios, logotipos o en general cualquier indicación que se refiere a la propiedad de información contenida en el Sitio Web. El Usuario se obliga
         a no modificar, reproducir, copiar, rediseñar, descompilar, adaptar, traducir, preparar trabajos derivados del Sitio Web para desarrollar cualquier
         software u otros materiales basados en los mismos.</p>
-    <h4><strong>VI. Condiciones del Pago</strong></h4>
+    <h5>VI. Condiciones del Pago</h5>
     <p>Cualquier cargo hecho por la Compañía será exigible al momento de contratación del Servicio y no será reembolsable. Esta Política de no reembolso será
         aplicable en todo momento, independientemente de su decisión de suspender el uso del Sitio Web o el Servicio. En caso de que el Cliente no esté
         conforme con los Servicio realizados podrá contactar al personal de FITCOACH quién podrá ofrecerle asistencia a través de los teléfonos que para
@@ -215,7 +215,7 @@ Los datos personales que obtenemos de estas tecnologías de rastreo son los sigu
         Estas ofertas o promocionales, a menos que se le haga a Usted, no tendrá validez alguna. FITCOACH puede cambiar los precios por el Servicio cuando
         lo considere necesario. Sugerimos revisar periódicamente en el Sitio Web con el fin de revisar el precio de los Servicios y cualquier modificación
         que los mismos pudieren sufrir.</p>
-    <h4><strong>VII. Deslinde de Responsabilidad</strong></h4>
+    <h5>VII. Deslinde de Responsabilidad</h5>
     <p>El Usuario está de acuerdo que el uso del Sitio Web o de Nuestros Servicios se realiza bajo su propio riesgo. La Compañía no hace ningún tipo de representación
         ni otorga ningún tipo de garantía en cuanto a la confiabilidad, puntualidad, calidad, idoneidad, disponibilidad, exactitud o totalidad de los Servicios
         o del Sitio Web. FITCOACH no garantiza que (i) el uso del Servicio será seguro, oportuno, ininterrumpido o libre de errores (ii) que el Servicio
@@ -232,17 +232,17 @@ Los datos personales que obtenemos de estas tecnologías de rastreo son los sigu
     <p>FITCOACH no asume ningún tipo de responsabilidad por los servicios prestados por proveedores independientes y ajenos a FITCOACH. Así mismo, FITCOACH
         no será responsable, bajo ninguna circunstancia de cualquier daño o perjuicio, directo o indirecto, causado en virtud de los Servicios contratados
         y facilitados a través del Sitio Web o llamada telefónica.</p>
-    <h4><strong>VIII. Modificación a los presentes Términos y Condiciones</strong></h4>
+    <h5>VIII. Modificación a los presentes Términos y Condiciones</h5>
     <p>FITCOACH se reserva el derecho de modificar en cualquier momento que considere oportuno el contenido de estos Términos y Condiciones pudiendo adicionar
         provisiones relativas a áreas específicas o nuevos Servicios que en un futuro FITCOACH proporcione a través del Sitio Web o de llamadas telefónicas,
         los cuales serán publicadas en el Sitio Web para su lectura. Dichas modificaciones formarán parte integrante del presente contrato para todos los
         efectos legales a que haya lugar. Es responsabilidad de los Usuarios verificar de tiempo en tiempo los presentes Términos y Condiciones para verificar
         el contenido de los mismos incluyendo cualquier cambio o modificación.</p>
-    <h4><strong>IX. Indemnización</strong></h4>
+    <h5>IX. Indemnización</h5>
     <p>Al hacer uso del Sitio Web y Servicios de FITCOACH, el Usuario consiente en indemnizar a FITCOACH, sus COACHES, accionistas, proveedores, vendedores
         y asesores de cualquier acción, demanda o reclamación (incluyendo honorarios de abogados y costas judiciales) derivadas de cualquier incumplimiento
         al presente Contrato por parte del Usuario.</p>
-    <h4><strong>X. Limitación de Responsabilidad</strong></h4>
+    <h5>X. Limitación de Responsabilidad</h5>
     <p>FITCOACH no será responsable frente a Usted ni frente a terceros por la no prestación de un Servicio pactado por un COACH de manera externa a la compañía.
         En ningún caso y bajo ninguna circunstancia, FITCOACH, sus directores, empleados, agentes o accionistas serán responsables por los daños o perjuicios
         de cualquier tipo que surjan o se de alguna manera se relacionen con el uso o imposibilidad de usar el Servicio o el Sitio Web, incluyendo sin
@@ -252,7 +252,7 @@ Los datos personales que obtenemos de estas tecnologías de rastreo son los sigu
     <p>comunicaciones, robo, destrucción o acceso no autorizado a los registros de la Compañía. En ningún caso, la responsabilidad de FITCOACH, derivada de
         un contrato, garantía, responsabilidad objetiva o de otro tipo, que surja en relación con el uso o imposibilidad de uso de los Servicios podrá
         superar la compensación que se pague en su caso a FITCOACH por el acceso o el uso de los Servicios.</p>
-    <h4><strong>XI. Legislación Aplicable y Jurisdicción</strong></h4>
+    <h5>XI. Legislación Aplicable y Jurisdicción</h5>
     <p>El presente Contrato se regirá e interpretará de conformidad con las leyes de México, independientemente de las disposiciones relacionadas con conflictos
         de leyes. Cualquier procedimiento de carácter legal que se derive o se relacione con este Contrato será dirimido en los tribunales competentes
         de la Ciudad de México. Las partes del presente Contrato expresamente renuncian a cualquier otra jurisdicción que pudiera corresponderles en razón

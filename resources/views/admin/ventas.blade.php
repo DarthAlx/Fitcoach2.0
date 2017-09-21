@@ -52,7 +52,8 @@
 			  <tr>
 			      <th>Ticket #</th>
 						<th>Orden</th>
-			      <th>Fecha</th>
+			      <th>Fecha de clase</th>
+						<th>Orden creada</th>
 			      <th>Cliente</th>
 			      <th>Total</th>
 						<th></th>
@@ -65,7 +66,8 @@
 							<tr style="cursor: pointer;">
 									<td>{{$venta->folio}}</td>
 						      <td>{{$venta->order_id}}</td>
-						      <td>{{$venta->fecha}}</td>
+						      <td>{{$venta->fecha}} {{$venta->hora}}</td>
+									<td>{{$venta->created_at}}</td>
 						      <td>{{$venta->user->name}}</td>
 						      <td>{{$venta->cantidad}}</td>
 									<td><a href="{{url('/printinvoice')}}/{{$venta->order_id}}" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a></td>
@@ -88,7 +90,8 @@
 			  <tr>
 					<th>Ticket #</th>
 					<th>Orden</th>
-					<th>Fecha</th>
+					<th>Fecha de clase</th>
+					<th>Orden creada</th>
 					<th>Cliente</th>
 					<th>Total</th>
 					<th></th>

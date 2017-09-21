@@ -110,7 +110,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
       $day = date("d", mktime(0,0,0, $month+1, 0, $year));
       $to = date('Y-m-d', mktime(0,0,0, $month, $day, $year));
 
-      $ventas = Orden::whereBetween('fecha', array($from, $to))->get();
+      $ventas = Orden::whereBetween('created_at', array($from, $to))->get();
       return view('admin.ventas',['ventas'=>$ventas,'from'=>$from,'to'=>$to]);
     }
 
@@ -121,7 +121,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
       $from = date ( 'Y-m-d' , $from_n );
       $to = date ( 'Y-m-d' , $to_n );
 
-      $ventas = Orden::whereBetween('fecha', array($from, $to))->get();
+      $ventas = Orden::whereBetween('created_at', array($from, $to))->get();
       return view('admin.ventas',['ventas'=>$ventas,'from'=>$request->from,'to'=>$request->to]);
 
     }
@@ -132,7 +132,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
       $from= date('Y-m-d', mktime(0,0,0, $month, 1, $year));
       $day = date("d", mktime(0,0,0, $month+1, 0, $year));
       $to = date('Y-m-d', mktime(0,0,0, $month, $day, $year));
-      $clases = Orden::whereBetween('fecha', array($from, $to))->get();
+      $clases = Orden::whereBetween('created_at', array($from, $to))->get();
       return view('admin.clasesvista',['clases'=>$clases,'from'=>$from,'to'=>$to,'status'=>'*']);
     }
 
@@ -143,10 +143,10 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
       $from = date ( 'Y-m-d' , $from_n );
       $to = date ( 'Y-m-d' , $to_n );
       if ($request->status=="*") {
-        $clases = Orden::whereBetween('fecha', array($from, $to))->get();
+        $clases = Orden::whereBetween('created_at', array($from, $to))->get();
       }
       else {
-        $clases = Orden::where('status', $request->status)->whereBetween('fecha', array($from, $to))->get();
+        $clases = Orden::where('status', $request->status)->whereBetween('created_at', array($from, $to))->get();
       }
 
       return view('admin.clasesvista',['clases'=>$clases,'from'=>$request->from,'to'=>$request->to,'status'=>$request->status]);
@@ -362,7 +362,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
 
           $guardar = new Orden();
           $guardar->order_id=$order->id;
-          $guardar->folio=$folio->folio;
+          $guardar->folio="W".$folio->folio;
           $guardar->user_id=Auth::user()->id;
           $guardar->coach_id=$producto['metadata']['coach'];
           $guardar->asociado=$producto['metadata']['asociado'];
