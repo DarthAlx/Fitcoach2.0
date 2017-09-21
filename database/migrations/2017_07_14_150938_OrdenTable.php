@@ -28,6 +28,7 @@ class OrdenTable extends Migration
           $table->string('metadata');
           $table->string('status');
           $table->string('estado');
+          $table->string('comentarios');
           $table->timestamps();
       });
     }
