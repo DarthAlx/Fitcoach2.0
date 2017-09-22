@@ -75,8 +75,10 @@
 						      <td>{{$clase->status}}</td>
 									<td>
 										<button type="button" class="btn btn-default" name="button" data-toggle="modal" data-target="#clase{{$clase->id}}">Clase</button>
-										<button type="button" class="btn btn-primary" name="button" data-toggle="modal" data-target="#completar{{$clase->id}}">Completar</button>
-										<button type="button" class="btn btn-danger" name="button">Cancelar</button>
+										@if($clase->status!="Completa")
+											<button type="button" class="btn btn-primary" name="button" data-toggle="modal" data-target="#completar{{$clase->id}}">Completar</button>
+											<button type="button" class="btn btn-danger" name="button">Cancelar</button>
+										@endif
 									</td>
 						  </tr>
 						@endforeach
@@ -138,14 +140,11 @@
 
 				      				</div>
 											<div class="col-sm-7">
-												<form action="{{ url('/actualizar-comentarios') }}" method="post">
-				        					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-													@if ($clase->comentarios!="")
-														<textarea name="name" rows="8" cols="80" class="form-control" name="comentarios" placeholder="Comentarios" required>{{$clase->comentarios}}</textarea>
-													@else
-														<textarea name="name" rows="8" cols="80" class="form-control" name="comentarios" placeholder="Comentarios" required></textarea>
-													@endif
-													<textarea name="name" rows="8" cols="80" class="form-control" name="comentarios" placeholder="Comentarios" required></textarea>
+												<form action="{{ url('/comentarios') }}" method="post">
+														{{ method_field('PUT') }}
+				        						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+														<input type="hidden" name="orden_id" value="{{$clase->id}}">
+														<textarea rows="8" cols="80" class="form-control" name="comentarios" placeholder="Comentarios" required>{{$clase->comentarios}}</textarea>
 				        					<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Guardar</button>
 				                </form>
 											</div>

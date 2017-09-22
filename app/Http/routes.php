@@ -176,6 +176,8 @@ Route::group(['middleware' => 'administradores'], function(){
   Route::post('agregar-cupon', 'CuponController@store');
   Route::put('actualizar-cupon', 'CuponController@update');
   Route::delete('eliminar-cupon', 'CuponController@destroy');
+  Route::put('comentarios', 'OrdenController@comentarios');
+  Route::post('abonar', 'OrdenController@abonar');
 });
 
 

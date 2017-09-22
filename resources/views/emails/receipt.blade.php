@@ -19,7 +19,7 @@
 										<h2>Ticket de Compra</h2>
 									</div>
 								</td>
-								<td>
+								<td align="right">
 									<div class="pull-right">
 										<p style="float: right;">
 											<strong>Fecha:</strong> {{$datos->fecha}}<br>
@@ -70,8 +70,8 @@
 																<td style="width: 10%;">1</td>
 																<td style="width: 30%;">{{$orden->nombre}}</td>
 																<td style="width: 30%;">Clase {{$tipo[0]}}</td>
-																<td style="width: 10%;">{{ substr("$orden->cantidad", 0, -2) }}.{{substr("$orden->cantidad", -2) }}</td>
-																<td style="width: 20%;">{{ substr("$orden->cantidad", 0, -2) }}.{{substr("$orden->cantidad", -2) }}</td>
+																<td style="width: 10%;">${{$orden->cantidad}}</td>
+																<td style="width: 20%;">${{$orden->cantidad}}</td>
 														</tr>
 														@endforeach
 												</tbody>
@@ -85,15 +85,15 @@
 														</tr>
 														<tr>
 																<td align="right" style="width: 90%;"><strong>Subtotal:</strong></td>
-																<td class="text">{{ substr("$grantotal", 0, -2) }}.{{substr("$grantotal", -2) }}</td>
+																<td class="text">${{ $grantotal }}</td>
 														</tr>
 														<tr>
 																<td align="right" style="width: 90%;"><strong>Importe total:</strong></td>
-																<td class="text">{{ substr("$grantotal", 0, -2) }}.{{substr("$grantotal", -2) }}</td>
+																<td class="text">${{ $grantotal }}</td>
 														</tr>
 														<tr>
 																<td align="right" style="width: 90%;"><strong>Pagado:</strong></td>
-																<td class="text">{{ substr("$grantotal", 0, -2) }}.{{substr("$grantotal", -2) }}</td>
+																<td class="text">${{ $grantotal }}</td>
 														</tr>
 
 												</tbody>

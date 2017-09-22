@@ -70,4 +70,7 @@ class User extends Model implements AuthenticatableContract,
     public function zonas(){
         return $this->hasMany('App\Zona');
     }
+    public function abonos(){
+        return $this->hasMany('App\Abono');
+    }
 }

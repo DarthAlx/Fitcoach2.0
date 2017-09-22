@@ -40,10 +40,9 @@
 					@if ($coaches)
 						@foreach ($coaches as $coach)
 							<?php
-								$ordenes= App\Orden::where('coach_id', $coach->id)->where('status', 'Proxima')->get();
 								$pendiente=0;
-								foreach ($ordenes as $orden) {
-									$pendiente= $pendiente + $orden->cantidad;
+								foreach ($coach->abonos as $abono) {
+									$pendiente= $pendiente + $abono->abono;
 								}
 
 								$ultimo=App\Pago::where('user_id', $coach->id)->orderBy('created_at', 'desc')->first();
@@ -105,12 +104,8 @@
 			<?php
 				$ordenes= App\Orden::where('coach_id', $coach->id)->where('status', 'Completa')->get();
 				$pendiente=0;
-				$postordenes=array();
-				if ($ordenes) {
-					foreach ($ordenes as $orden) {
-						$pendiente= $pendiente + $orden->cantidad;
-						$postordenes[]=$orden->id;
-					}
+				foreach ($coach->abonos as $abono) {
+					$pendiente= $pendiente + $abono->abono;
 				}
 
 
@@ -136,7 +131,7 @@
 												</select>
 												<input type="text" name="referencia" class="form-control" value="" placeholder="Referencia" required>
 												<input type="text" name="monto" class="form-control" value="{{$pendiente}}" placeholder="Monto" required>
-												<input type="hidden" name="ordenes" class="form-control" value="{{implode(',',$postordenes)}}" placeholder="Referencia" required>
+												<input type="hidden" name="ordenes" class="form-control"  placeholder="Referencia" required>
 			        					<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Pagar</button>
 			                </form>
 			      				</div>

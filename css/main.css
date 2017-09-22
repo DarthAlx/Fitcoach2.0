@@ -513,7 +513,7 @@ width: 100%;
 color: #fff;
 font-size: 11px;
 letter-spacing: 1px;
-text-transform: capitalize;
+/*text-transform: capitalize;*/
 display: block;
 border: 0;
 border-radius: 40px !important;

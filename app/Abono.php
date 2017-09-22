@@ -16,4 +16,7 @@ class Abono extends Model
       {
         return $this->belongsTo('App\Orden');
       }
+      public function abonos(){
+          return $this->hasOne('App\Abono');
+      }
 }

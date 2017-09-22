@@ -13,6 +13,7 @@ use App\Residencial;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Cart;
+use App\Abono;
 use App\User;
 use App\Tarjeta;
 use App\Direccion;
@@ -153,6 +154,29 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
 
     }
 
+    public function comentarios(Request $request)
+    {
+      $coment = Orden::find($request->orden_id);
+      $coment->comentarios=$request->comentarios;
+      $coment->save();
+      Session::flash('mensaje', 'Comentario hecho.');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/clasesvista'));
+
+    }
+
+    public function abonar(Request $request)
+    {
+      $orden = Orden::find($request->orden_id);
+      $orden->status="Completa";
+      $orden->save();
+      $abono = new Abono($request->all());
+      $abono->save();
+      Session::flash('mensaje', 'Abono completado.');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/clasesvista'));
+    }
+
 
     public function nomina()
     {
@@ -166,16 +190,41 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
       $fe = strtotime ( $request->fecha )  ;
       $guardar->fecha= date('Y-m-d',$fe);
       $guardar->save();
+      $coach = User::find($request->user_id);
+      $pendiente=0;
+      foreach ($coach->abonos as $abono) {
+        $pendiente= $pendiente + $abono->abono;
+      }
+      if ($request->monto==$pendiente) {
+        foreach ($coach->abonos as $abono) {
+          $abono->delete();
+        }
+        Session::flash('mensaje', 'El pago se realizó con éxito.');
+        Session::flash('class', 'success');
+        return redirect()->intended(url('/nomina'));
+      }elseif ($request->monto<$pendiente) {
+        foreach ($coach->abonos as $abono) {
+          $abono->delete();
 
-      foreach (explode(",",$guardar->ordenes) as $orden) {
-        $abonar=Orden::find($orden);
-        $abonar->status="abonada";
-        $abonar->save();
+        }
+        $abono = new Abono();
+        $abono->user_id=$coach->id;
+        $abono->abono=$pendiente-$request->monto;
+        $abono->save();
+        Session::flash('mensaje', 'El pago se realizó con éxito.');
+        Session::flash('class', 'success');
+        return redirect()->intended(url('/nomina'));
+      }
+      else {
+        Session::flash('mensaje', 'Hubo un error en las cantidades.');
+        Session::flash('class', 'danger');
+        return redirect()->intended(url('/nomina'));
       }
 
-      Session::flash('mensaje', 'El pago se realizó con éxito.');
-      Session::flash('class', 'success');
-      return redirect()->intended(url('/nomina'));
+
+
+
+
     }
     /**
      * Show the form for editing the specified resource.
