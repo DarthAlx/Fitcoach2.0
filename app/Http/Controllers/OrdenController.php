@@ -177,6 +177,48 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
       return redirect()->intended(url('/clasesvista'));
     }
 
+    public function cancelar(Request $request)
+    {
+
+
+      if ($request->tipocancelacion=="cupon") {
+        $cupon=App\Cupon::where('codigo', $request->abono)->first();
+        if ($cupon) {
+          $user=User::find($cupon->user->user_id);
+            Mail::send('emails.cupon', ['cupon'=>$cupon,'user'=>$user], function ($m) use ($user) {
+                $m->from('alxunscarred@gmail.com', 'FITCOACH México');
+                $m->to($user->email, $user->name)->subject('¡Tu cupón de reembolso!');
+            });
+
+            $orden = Orden::find($request->orden_id);
+            $orden->status="Cancelada";
+            $orden->metadata="cupon";
+            $orden->save();
+          Session::flash('mensaje', 'Cupón enviado.');
+          Session::flash('class', 'success');
+        }
+        else {
+          Session::flash('mensaje', 'No existe el cupón.');
+          Session::flash('class', 'danger');
+        }
+
+
+      }
+      else {
+        $abono = new Abono($request->all());
+        $abono->save();
+        $orden = Orden::find($request->orden_id);
+        $orden->status="Cancelada";
+        $orden->metadata="abono";
+        $orden->save();
+        Session::flash('mensaje', 'Abono completado.');
+        Session::flash('class', 'success');
+      }
+
+
+      return redirect()->intended(url('/clasesvista'));
+    }
+
 
     public function nomina()
     {

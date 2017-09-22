@@ -77,7 +77,7 @@
 										<button type="button" class="btn btn-default" name="button" data-toggle="modal" data-target="#clase{{$clase->id}}">Clase</button>
 										@if($clase->status!="Completa")
 											<button type="button" class="btn btn-primary" name="button" data-toggle="modal" data-target="#completar{{$clase->id}}">Completar</button>
-											<button type="button" class="btn btn-danger" name="button">Cancelar</button>
+											<button type="button" class="btn btn-danger" name="button" data-toggle="modal" data-target="#cancelar{{$clase->id}}">Cancelar</button>
 										@endif
 									</td>
 						  </tr>
@@ -180,6 +180,43 @@
 													<input type="hidden" name="user_id" value="{{ $coach->id }}">
 													<input type="hidden" name="orden_id" value="{{ $clase->id }}">
 													<input type="number" name="abono" class="form-control" placeholder="Abono" required>
+													<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Completar</button>
+												</form>
+											</div>
+										</div>
+
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal-dialog -->
+			</div><!-- /.modal contraseña -->
+		@endforeach
+	@endif
+
+	@if ($clases)
+		@foreach ($clases as $clase)
+			<div class="modal fade" id="cancelar{{$clase->id}}" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+
+						<div class="modal-body">
+
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
+										<h4 class="title">Cancelar</h4>
+										<?php $coach=App\User::find($clase->coach_id); ?>
+										<p>{{$clase->folio}} - {{$clase->nombre}}</p>
+										<div class="row">
+
+											<div class="col-sm-12">
+												<form action="{{ url('/cancelar') }}" method="post">
+													<input type="hidden" name="_token" value="{{ csrf_token() }}">
+													<input type="hidden" name="user_id" value="{{ $coach->id }}">
+													<input type="hidden" name="orden_id" value="{{ $clase->id }}">
+													<select class="form-control" name="tipocancelacion" required>
+														<option value="">Tipo de cancelación</option>
+														<option value="cupon">Cupon</option>
+														<option value="abono">Abonar</option>
+													</select>
+													<input type="number" name="abono" class="form-control" placeholder="Abono/Cupón" required>
 													<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Completar</button>
 												</form>
 											</div>

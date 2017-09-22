@@ -178,6 +178,7 @@ Route::group(['middleware' => 'administradores'], function(){
   Route::delete('eliminar-cupon', 'CuponController@destroy');
   Route::put('comentarios', 'OrdenController@comentarios');
   Route::post('abonar', 'OrdenController@abonar');
+  Route::post('cancelar', 'OrdenController@cancelar');
 });
 
 

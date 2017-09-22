@@ -73,4 +73,7 @@ class User extends Model implements AuthenticatableContract,
     public function abonos(){
         return $this->hasMany('App\Abono');
     }
+    public function cupon(){
+         return $this->hasOne('App\Cupon');
+       }
 }
