@@ -26,9 +26,8 @@
 							<option value="*">Todas</option>
 							<option value="Proxima">Proxima</option>
 							<option value="Cancelada">Cancelada</option>
-							<option value="porrevisar">Por revisar</option>
+							<option value="Porrevisar">Por revisar</option>
 							<option value="Completa">Completada</option>
-							<option value="abonada">Abonada</option>
 						</select>
 						<script type="text/javascript">
 							document.getElementById('status').value='{!!$status!!}';
@@ -72,10 +71,11 @@
 									<td>{{$clase->created_at}}</td>
 						      <td>{{$clase->nombre}}</td>
 						      <td>{{$clase->user->name}}</td>
-						      <td>{{$clase->status}}</td>
+						      <td>{{$clase->status}} {{$clase->metadata}}
+									</td>
 									<td>
 										<button type="button" class="btn btn-default" name="button" data-toggle="modal" data-target="#clase{{$clase->id}}">Clase</button>
-										@if($clase->status!="Completa")
+										@if($clase->status!="Completa"&&$clase->metadata!="cupon enviado"&&$clase->metadata!="abonada a coach")
 											<button type="button" class="btn btn-primary" name="button" data-toggle="modal" data-target="#completar{{$clase->id}}">Completar</button>
 											<button type="button" class="btn btn-danger" name="button" data-toggle="modal" data-target="#cancelar{{$clase->id}}">Cancelar</button>
 										@endif

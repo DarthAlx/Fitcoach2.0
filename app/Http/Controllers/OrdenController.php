@@ -18,6 +18,8 @@ use App\User;
 use App\Tarjeta;
 use App\Direccion;
 use App\Folio;
+use App\Cupon;
+use App\Cuponera;
 use Mail;
 class OrdenController extends Controller
 {
@@ -182,9 +184,10 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
 
 
       if ($request->tipocancelacion=="cupon") {
-        $cupon=App\Cupon::where('codigo', $request->abono)->first();
+        $cupon=Cupon::where('codigo', $request->abono)->first();
         if ($cupon) {
-          $user=User::find($cupon->user->user_id);
+          $user=User::find($cupon->user->id);
+
             Mail::send('emails.cupon', ['cupon'=>$cupon,'user'=>$user], function ($m) use ($user) {
                 $m->from('alxunscarred@gmail.com', 'FITCOACH México');
                 $m->to($user->email, $user->name)->subject('¡Tu cupón de reembolso!');
@@ -192,7 +195,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
 
             $orden = Orden::find($request->orden_id);
             $orden->status="Cancelada";
-            $orden->metadata="cupon";
+            $orden->metadata="cupon enviado";
             $orden->save();
           Session::flash('mensaje', 'Cupón enviado.');
           Session::flash('class', 'success');
@@ -209,7 +212,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
         $abono->save();
         $orden = Orden::find($request->orden_id);
         $orden->status="Cancelada";
-        $orden->metadata="abono";
+        $orden->metadata="abonada a coach";
         $orden->save();
         Session::flash('mensaje', 'Abono completado.');
         Session::flash('class', 'success');
@@ -333,6 +336,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
 
 
       foreach ($items as $product) {
+
 
         $precio = $product->price*100;
 
@@ -483,6 +487,18 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
           }
 
         }
+
+        foreach ($items as $product) {
+          if ($product->id=="Desc"){
+            $cupon=Cuponera::find($product->options->id);
+            $cupon->orden_id=$order->id;
+            $cupon->save();
+          }
+
+
+        }
+
+
         $folio->folio++;
         $folio->save();
 

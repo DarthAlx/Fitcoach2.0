@@ -20,6 +20,8 @@ class Cupon extends Migration
         $table->integer('usos');
         $table->integer('minimo');
         $table->date('expiracion');
+        $table->integer('user_id');
+        $table->string('tipo');
         $table->timestamps();
     });
     }

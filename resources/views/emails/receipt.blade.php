@@ -83,6 +83,13 @@
 																<hr />
 																</td>
 														</tr>
+														<?php $descuento=App\Cuponera::where('orden_id', $orden->order_id)->first(); ?>
+														@if ($descuento)
+															<tr>
+																	<td align="right" style="width: 90%;"><strong>Descuento:</strong></td>
+																	<td class="text">-${{ $descuento->cupon->monto }}</td>
+															</tr>
+														@endif
 														<tr>
 																<td align="right" style="width: 90%;"><strong>Subtotal:</strong></td>
 																<td class="text">${{ $grantotal }}</td>

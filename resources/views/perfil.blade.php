@@ -612,12 +612,12 @@
                            <p class="text-center"><strong>IMPORTANTE</strong><br>
 Texto de reembolso.<br>
 ¿Estás seguro que deseas continuar?</p>
-                           <input type="hidden" name="tipocancelacion" value="con">
+                           <input type="hidden" name="tipocancelacion" value="24 horas antes">
                          @else
                            <p class="text-center"><strong>IMPORTANTE</strong><br>
 Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio o devolución por el servicio.<br>
 ¿Estás seguro que deseas continuar?</p>
-                           <input type="hidden" name="tipocancelacion" value="sin">
+                           <input type="hidden" name="tipocancelacion" value="sin devolución">
                          @endif
                          <input type="hidden" name="ordencancelar" value="{{$proxima->id}}">
                          <button type="submit" id="botoncancelar{{$proxima->id}}" class="btn btn-danger btn-lg" name="button" style="display:none;">Confirmar cancelación</button>
@@ -644,7 +644,7 @@ Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio 
 
 
     <?php
-    $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orderBy('fecha', 'desc')->get();
+    $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orWhere('status', 'Porrevisar')->orderBy('fecha', 'desc')->get();
     if (!$pasadas->isEmpty()) {
       date_default_timezone_set('America/Mexico_City');
       foreach ($pasadas as $pasada) {

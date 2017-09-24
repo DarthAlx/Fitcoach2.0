@@ -81,7 +81,6 @@
 			  </tr>
 			  </tfoot>
 			  </table>
-
 			  </div>
 			</div>
 		</div>
@@ -146,6 +145,23 @@
 												<input type="number" name="usos" class="form-control" value="{{$cupon->usos}}" placeholder="Maximos usos" required>
 												<input type="number" name="minimo" class="form-control" value="{{$cupon->minimo}}" placeholder="Monto minimo" required>
 			        					<input class="form-control datepicker" type="text" placeholder="Fecha de expiración" value="{{$cupon->expiracion}}" name="expiracion" required>
+												<select class="form-control" name="tipo">
+													<option value="">Tipo de clase</option>
+													<option value="Deportiva">Deportiva</option>
+													<option value="Cultural">Cultural</option>
+													<option value="Evento">Evento</option>
+													<option value="residencial">Residencial</option>
+												</select>
+												<?php $usuarios=App\User::where('role', 'usuario')->get(); ?>
+												<select class="form-control" name="user_id">
+													<option value="">Usuario</option>
+													@foreach ($usuarios as $usuario)
+														<option value="{{$usuario->id}}">{{ucfirst($usuario->name)}} - {{$usuario->email}}</option>
+													@endforeach
+												</select>
+												<p>&nbsp;</p>
+												<p>&nbsp;</p>
+
 			        					<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Actualizar</button>
 			                </form>
 			      				</div>

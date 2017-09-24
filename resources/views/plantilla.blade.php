@@ -20,6 +20,7 @@
 		<link rel="stylesheet" type="text/css" href="{{ url('css/adaptive.css') }}" media="screen" />
 		<link rel="stylesheet" type="text/css" href="{{ url('css/bootstrap.css') }}">
 		<link rel="stylesheet" href="{{ url('js/data-tables/DT_bootstrap.css') }}" />
+		<link rel="stylesheet" type="text/css" href="{{ url('css/select2.min.css') }}" media="screen" />
 		<link rel="stylesheet" type="text/css" href="{{ url('css/main.css') }}" media="screen" />
 		<link href="{{ url('css/select2.min.css') }}" rel="stylesheet" />
 		<script type="text/javascript" src="{{ url('js/jquery-1.10.2.min.js') }}"></script>
@@ -277,5 +278,17 @@ $('.mitimepicker').timepicker();
 <script type="text/javascript" src="{{ url('js/data-tables/DT_bootstrap.js') }}"></script>
 <!--dynamic table initialization -->
 <script src="{{ url('js/dynamic_table_init.js') }}"></script>
+
+
+<script type="text/javascript" src="{{ url('js/select2.min.js') }}"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+$(".select").select2({
+	placeholder: "Elige un usuario",
+	allowClear: true
+});
+});
+</script>
 </body>
 </html>

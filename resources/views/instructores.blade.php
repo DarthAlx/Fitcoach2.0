@@ -112,65 +112,73 @@
 		@endforeach
 	@endif
 
+@if ($coaches)
+	@foreach ($coaches as $coach)
+		@if ($coach->residenciales)
 
-@if ($coach->residenciales)
-	@foreach ($coach->residenciales as $residencial)
-		<div class="modal fade" id="condominio{{$residencial->id}}" tabindex="-1" role="dialog">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-body residencial">
-		              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
-									<div class="container-bootstrap" style="width: 100%;">
-										<div class="row">
-											<div class="col-sm-4 sidebar">
-												<div class="text-center">
-																<div class="title">
-																		{{$residencial->clase->nombre}}
+			@foreach ($coach->residenciales as $residencial)
+				<div class="modal fade" id="condominio{{$residencial->id}}" tabindex="-1" role="dialog">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-body residencial">
+				              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
+											<div class="container-bootstrap" style="width: 100%;">
+												<div class="row">
+													<div class="col-sm-4 sidebar">
+														<div class="text-center">
+																		<div class="title">
+																				{{$residencial->clase->nombre}}
 
-																</div>
-															 <div class="profile-userpic">
-																 <img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" class="img-responsive" alt="">
-															 </div>
-															 <?php $nombre=explode(" ",$coach->name); ?>
-															 <h2>{{ucfirst($nombre[0])}}</h2>
-												</div>
-												<div class="gotham2 text-center">
-													<p><strong>Hora:</strong> {{$residencial->hora}}</p>
-													<p><strong>Lugar:</strong> {{$residencial->condominio->identificador}}<br>{{$residencial->condominio->direccion}}</p>
-													<p><strong>Cupo:</strong> {{$residencial->cupo}} personas <br>
-														 <strong>Lugares disponibles:</strong> {{intval($residencial->cupo)-intval($residencial->ocupados)}}
-													</p>
-												</div>
-
-											</div>
-											<div class="col-sm-8 sidebar">
-												<div class="title text-center">
-													${{$residencial->precio}}
-
-												</div>
-												<!--img src="{{ url('uploads/condominios') }}/{{ $residencial->condominio->imagen }}" class="img-responsive"-->
-												<form action="{{url('carrito')}}" method="post">
-													{!! csrf_field() !!}
-													<input type="hidden" name="residencial_id" value="{{$residencial->id}}">
-													<input type="hidden" name="tipo" value="Residencial">
-													<div class="row">
-														<div class="col-sm-8 col-sm-offset-4">
-																<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
+																		</div>
+																	 <div class="profile-userpic">
+																		 <img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" class="img-responsive" alt="">
+																	 </div>
+																	 <?php $nombre=explode(" ",$coach->name); ?>
+																	 <h2>{{ucfirst($nombre[0])}}</h2>
 														</div>
+														<div class="gotham2 text-center">
+															<p><strong>Hora:</strong> {{$residencial->hora}}</p>
+															<p><strong>Lugar:</strong> {{$residencial->condominio->identificador}}<br>{{$residencial->condominio->direccion}}</p>
+															<p><strong>Cupo:</strong> {{$residencial->cupo}} personas <br>
+																 <strong>Lugares disponibles:</strong> {{intval($residencial->cupo)-intval($residencial->ocupados)}}
+															</p>
+														</div>
+
 													</div>
+													<div class="col-sm-8 sidebar">
+														<div class="title text-center">
+															${{$residencial->precio}}
 
-												</form>
+														</div>
+														<!--img src="{{ url('uploads/condominios') }}/{{ $residencial->condominio->imagen }}" class="img-responsive"-->
+														<form action="{{url('carrito')}}" method="post">
+															{!! csrf_field() !!}
+															<input type="hidden" name="residencial_id" value="{{$residencial->id}}">
+															<input type="hidden" name="tipo" value="Residencial">
+															<div class="row">
+																<div class="col-sm-8 col-sm-offset-4">
+																		<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
+																</div>
+															</div>
+
+														</form>
+													</div>
+												</div>
+
 											</div>
-										</div>
 
-									</div>
-
-		      </div>
-		    </div><!-- /.modal-content -->
-		  </div><!-- /.modal-dialog -->
-		</div><!-- /.modal contraseña -->
+				      </div>
+				    </div><!-- /.modal-content -->
+				  </div><!-- /.modal-dialog -->
+				</div><!-- /.modal contraseña -->
+			@endforeach
+		@endif
 	@endforeach
+
 @endif
+
+
+
 
 
 	@if ($coaches)

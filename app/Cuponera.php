@@ -9,7 +9,7 @@ class Cuponera extends Model
   protected $table = 'cuponera';
   protected $fillable = ['cupon_id', 'user_id', 'orden_id'];
   public function cupon(){
-      return $this->hasOne('App\Cupon');
+      return $this->belongsTo('App\Cupon');
   }
   public function user(){
       return $this->hasOne('App\User');
