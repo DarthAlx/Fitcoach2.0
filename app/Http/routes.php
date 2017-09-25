@@ -160,6 +160,20 @@ Route::group(['middleware' => 'administradores'], function(){
   Route::put('actualizar-grupo', 'ResidencialController@update');
   Route::delete('eliminar-grupo', 'ResidencialController@destroy');
 
+  Route::get('/slides', function () {
+  if (Auth::guest()){
+    return redirect()->intended(url('/entrar'));
+  }
+  else {
+    $slides = App\Slider::orderBy('order', 'asc')->get();
+    return view('admin.slide', ['slides'=>$slides]) ;
+  }
+});
+
+Route::post('agregar-slide', 'SliderController@store');
+Route::any('actualizar-slide/{id}', 'SliderController@update');
+Route::any('eliminar-slide/{id}', 'SliderController@destroy');
+
   Route::post('agregar-admin', 'UserController@storeadmin');
   Route::put('actualizar-admin', 'UserController@updateadmin');
   Route::delete('eliminar-admin', 'UserController@destroyadmin');

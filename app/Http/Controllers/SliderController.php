@@ -6,82 +6,103 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Slider;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 class SliderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+  public function store(Request $request){
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        if ($request->hasFile('image')) {
+          $file = $request->file('image');
+          if ($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="png") {
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+            $name = "Slide" . $request->order . "." . $file->getClientOriginalExtension();
+            $path = base_path('images/content/');
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+            $file-> move($path, $name);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+            $guardar = new Slider($request->all());
+            $guardar->image = $name;
+
+            $guardar->save();
+            Session::flash('mensaje', 'Slide guardado correctamente!');
+            Session::flash('class', 'success');
+            return redirect()->intended(url('/slides'));
+          }
+          else{
+            Session::flash('mensaje', 'El archivo no es una imagen valida.');
+            Session::flash('class', 'danger');
+            return redirect()->intended(url('/slides'));
+          }
+
+        }
+        else{
+          Session::flash('mensaje', 'El archivo no es una imagen valida.');
+          Session::flash('class', 'danger');
+          return redirect()->intended(url('/slides'));
+        }
+      }
+      public function update(Request $request, $id)
+      {
+
+
+        if ($request->hasFile('image')) {
+          $file = $request->file('image');
+          if ($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="png") {
+            $name = "Slide" . $request->order . "." . $file->getClientOriginalExtension();
+            $path = base_path('images/content/');
+            $file-> move($path, $name);
+            $slide = Slider::find($id);
+            File::delete($path . $slide->image);
+            $slide->image = $name;
+            $slide->description = $request->description;
+            $slide->order = $request->order;
+            $slide->save();
+
+
+            Session::flash('mensaje', '¡Slide actualizado!');
+            Session::flash('class', 'success');
+            return redirect()->intended(url('/slides'));
+          }
+          else{
+            Session::flash('mensaje', 'El archivo no es una imagen valida.');
+            Session::flash('class', 'danger');
+            return redirect()->intended(url('/slides'));
+          }
+
+        }
+        else{
+          $slide = Slider::find($id);
+          $slide->description = $request->description;
+          $slide->order = $request->order;
+          $slide->save();
+          Session::flash('mensaje', '¡Slide actualizado!');
+          Session::flash('class', 'success');
+          return redirect()->intended(url('/slides'));
+        }
+
+
+
+
+
+
+
+
+      }
+
+      public function destroy(Request $request, $id)
+      {
+          $path = base_path('images/content/');
+          $slide =Slider::find($id);
+          File::delete($path . $slide->image);
+          $slide->delete();
+          Session::flash('mensaje', '¡Slide eliminado correctamente!');
+          Session::flash('class', 'success');
+          return redirect()->intended(url('/slides'));
+      }
 }
