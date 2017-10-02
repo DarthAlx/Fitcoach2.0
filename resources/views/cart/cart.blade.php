@@ -107,26 +107,30 @@
     </div>
 <p>&nbsp;</p>
 @if (Cart::content()->count()>0)
-@if (!$tienedescuento)
+
   <div class="col-sm-6">
-    <div class="coupon">
+    @if (!$esresidencial)
+      @if (!$user->direcciones->isEmpty())
 
-							<label class="text-right">
-								cupón
-							</label>
-					</div>
-
+        <h1 class="title" style="margin-top: 0px; line-height: 0.8;">
+          Dirección
+        </h1>
+    @endif
+  @endif
   </div>
 <div class="col-sm-6">
+  @if (!$tienedescuento)
   <div class="coupon">
+
       <form action="{{url('descuento')}}" method="POST">
         {!! csrf_field() !!}
         <input class="" type="text" name="codigo" size="20" value="" placeholder="Aplicar código de descuento" required>
         <button type="submit" class="applyCoupon"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
       </form>
     </div>
+    @endif
 </div>
-@endif
+
 @endif
 <p>&nbsp;</p>
     @if (Cart::content()->count()>0)
