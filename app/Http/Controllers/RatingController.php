@@ -16,7 +16,7 @@ class RatingController extends Controller
     {
       $guardar = new Rating($request->all());
       $guardar->save();
-      Session::flash('mensaje', '!Calificación guardada!');
+      Session::flash('mensaje', '¡Calificación guardada!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/perfil'));
     }

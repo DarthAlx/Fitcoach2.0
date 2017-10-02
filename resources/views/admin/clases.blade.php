@@ -13,7 +13,7 @@
 		<div class="container-bootstrap-fluid">
 			<div class="row">
 				<div class="col-sm-9">
-					<div class="title" style="font-size: 10vw;">Clases</div>
+					<div class="title" style="font-size: 10vw; float: left; line-height: 0.8;">Clases</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="buscador">

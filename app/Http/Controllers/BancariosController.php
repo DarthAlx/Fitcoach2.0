@@ -48,7 +48,7 @@ class BancariosController extends Controller
        $bancario->adicional = $request->adicional;
        $bancario->user_id = Auth::user()->id;
        $bancario->save();
-       Session::flash('mensaje', '!Datos guardados!');
+       Session::flash('mensaje', '¡Datos guardados!');
        Session::flash('class', 'success');
        return redirect()->intended(url('/perfilinstructor'));
      }
@@ -92,7 +92,7 @@ class BancariosController extends Controller
       $bancario->adicional = $request->adicional;
       $bancario->user_id = Auth::user()->id;
       $bancario->save();
-      Session::flash('mensaje', '!Datos actualizados!');
+      Session::flash('mensaje', '¡Datos actualizados!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/perfilinstructor'));
     }

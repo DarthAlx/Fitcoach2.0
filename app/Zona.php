@@ -4,9 +4,10 @@ use Illuminate\Database\Eloquent\Model;
 class Zona extends Model
 {
   protected $table = 'zonas';
-  protected $fillable = ['identificador', 'descripcion','user_id'];
-  public function user()
+  protected $fillable = ['identificador', 'descripcion'];
+  public function particulares()
      {
-       return $this->belongsTo('App\User');
+       return $this->hasMany('App\Particular');
      }
+
 }

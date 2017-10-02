@@ -49,7 +49,7 @@ class DetalleController extends Controller
       $detalles->intereses = $request->intereses;
       $detalles->user_id=Auth::user()->id;
       $detalles->save();
-      Session::flash('mensaje', '!Perfil actualizado!');
+      Session::flash('mensaje', '¡Perfil actualizado!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/perfil'));
     }
@@ -65,7 +65,7 @@ class DetalleController extends Controller
       $detalles->rfc = $request->rfc;
       $detalles->user_id=Auth::user()->id;
       $detalles->save();
-      Session::flash('mensaje', '!Perfil actualizado!');
+      Session::flash('mensaje', '¡Perfil actualizado!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/perfilinstructor'));
     }
@@ -110,7 +110,7 @@ class DetalleController extends Controller
       $detalles->intereses = $request->intereses;
       $detalles->save();
 
-      Session::flash('mensaje', '!Perfil actualizado!');
+      Session::flash('mensaje', '¡Perfil actualizado!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/perfil'));
     }
@@ -126,7 +126,7 @@ class DetalleController extends Controller
       $detalles->rfc = $request->rfc;
       $detalles->save();
 
-      Session::flash('mensaje', '!Perfil actualizado!');
+      Session::flash('mensaje', '¡Perfil actualizado!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/perfilinstructor'));
     }

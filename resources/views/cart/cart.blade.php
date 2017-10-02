@@ -105,21 +105,30 @@
 
 
     </div>
-    @if (Cart::content()->count()>0)
-    @if (!$tienedescuento)
-    <div class="col-sm-12">
-      <form class="form-inline" action="{{url('descuento')}}" method="POST">
+<p>&nbsp;</p>
+@if (Cart::content()->count()>0)
+@if (!$tienedescuento)
+  <div class="col-sm-6">
+    <div class="coupon">
+
+							<label class="text-right">
+								cupón
+							</label>
+					</div>
+
+  </div>
+<div class="col-sm-6">
+  <div class="coupon">
+      <form action="{{url('descuento')}}" method="POST">
         {!! csrf_field() !!}
-        <div class="form-group">
-          <label>Código de descuento</label>
-          <input type="text" name="codigo" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-default">Aplicar</button>
+        <input class="" type="text" name="codigo" size="20" value="" placeholder="Aplicar código de descuento" required>
+        <button type="submit" class="applyCoupon"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
       </form>
     </div>
-    @endif
-    @endif
-    <p>&nbsp;</p>
+</div>
+@endif
+@endif
+<p>&nbsp;</p>
     @if (Cart::content()->count()>0)
     <form action="{{url('cargo')}}" method="POST" id="card-form">
     <div class="col-sm-6">
@@ -141,43 +150,43 @@
                           <div class="form-group row"  id="identificadorNuevolabel">
                             <label class="col-sm-3 control-label" for="card-number">Identificador</label>
                             <div class="col-sm-9">
-                              <input class="form-control" type="text" value="{{ old('identificador') }}" id="identificadorNuevo"  name="identificadordireccion" placeholder="Ej: Casa, Condominio, Oficina ...">
+                              <input class="form-control" type="text" value="{{ old('identificadordireccion') }}" id="identificadordireccion"  name="identificadordireccion" placeholder="Ej: Casa, Condominio, Oficina ...">
                             </div>
                           </div>
                           <div class="form-group row"  id="calleNuevolabel">
                             <label class="col-sm-3 control-label" for="card-holder-name">Calle</label>
                             <div class="col-sm-9 col-md-5">
-                              <input class="form-control" type="text" value="{{ old('calle') }}" id="calleNuevo"  name="calle">
+                              <input class="form-control" type="text" value="{{ old('calle') }}" id="calle"  name="calle">
                             </div>
                             <div class="col-sm-6 col-md-2">
-                              <input class="form-control" type="text" value="{{ old('numero_ext') }}" id="numero_extNuevo"  name="numero_ext" placeholder="# Ext" >
+                              <input class="form-control" type="text" value="{{ old('numero_ext') }}" id="numero_ext"  name="numero_ext" placeholder="# Ext" >
                             </div>
                             <div class="col-sm-6 col-md-2">
-                              <input class="form-control" type="text" value="{{ old('numero_int') }}" id="numero_intNuevo"  name="numero_int" placeholder="# Int">
+                              <input class="form-control" type="text" value="{{ old('numero_int') }}" id="numero_int"  name="numero_int" placeholder="# Int">
                             </div>
                           </div>
                           <div class="form-group row"  id="coloniaNuevolabel">
                             <label class="col-sm-3 control-label" for="card-number">Colonia</label>
                             <div class="col-sm-9">
-                              <input class="form-control" type="text" value="{{ old('colonia') }}" id="coloniaNuevo"  name="colonia" >
+                              <input class="form-control" type="text" value="{{ old('colonia') }}" id="colonia"  name="colonia" >
                             </div>
                           </div>
                           <div class="form-group row"  id="municipio_delNuevolabel">
                             <label class="col-sm-3 control-label" for="card-number">Municipio / Del</label>
                             <div class="col-sm-9">
-                             <input class="form-control" type="text" value="{{ old('municipio_del') }}" id="municipio_delNuevo"  name="municipio_del" >
+                             <input class="form-control" type="text" value="{{ old('municipio_del') }}" id="municipio_del"  name="municipio_del" >
                             </div>
                           </div>
                           <div class="form-group row"  id="cpNuevolabel">
                             <label class="col-sm-3 control-label" for="card-number">Código postal</label>
                             <div class="col-sm-9">
-                             <input class="form-control" type="text" value="{{ old('cp') }}" id="cpNuevo"  name="cp" >
+                             <input class="form-control" type="text" value="{{ old('cp') }}" id="cp"  name="cp" >
                             </div>
                           </div>
                           <div class="form-group row"  id="estadoNuevolabel">
                             <label class="col-sm-3 control-label" for="card-number">Estado</label>
                             <div class="col-sm-9">
-                              <select class="form-control"  name="estado" id="estadoNuevo" >
+                              <select class="form-control" value="{{old('estado')}}" name="estado" id="estado" >
                                 <option value="">Selecciona una opción</option>
                                 <option value="CDMX">CDMX</option>
                                 <option value="Edo. Méx">Edo. Méx</option>
@@ -212,6 +221,10 @@
 
     </div>
     <div class="col-sm-6">
+
+
+
+
 
 
         <div class="form-group" >

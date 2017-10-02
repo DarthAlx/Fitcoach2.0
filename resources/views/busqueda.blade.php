@@ -10,62 +10,34 @@
 				<div class="col-sm-12">
 					<div class="title" style="font-size: 10vw; float: left; line-height: 0.8;">{{$titulo}}</div>
 
+<div class="buscador hidden-xs" style="float: right; position: absolute; right: 0; bottom: 0;">
+	<div class="coupon" style="float:right;">
+		<form action="{{url('busqueda')}}" method="post">
+			{!! csrf_field() !!}
+			<input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
+			<button class="applyCoupon" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+		</form>
+	</div>
+
+</div>
 
 				</div>
-
-			</div>
-<p>&nbsp;</p><p>&nbsp;</p>
-			<div class="row">
-				<div class="col-md-6">
-					<form id="zonaform" action="{{url('clasesdeportivas')}}" method="post">
-						{!! csrf_field() !!}
-						<?php $zonas=App\Zona::all(); ?>
-						<div class="calculateShipping" style="float:left;">
-					<p class="form-row">
-						<select id="zona"  name="zona" class="country_to_state">
-							<option value="todas">Todas las zonas</option>
-							@foreach ($zonas as $zona)
-								<option value="{{$zona->id}}">{{ucfirst($zona->identificador)}}</option>
-							@endforeach
-	  				</select>
-					</p>
-
-				</div>
-
-						<script type="text/javascript">
-						 if (document.getElementById('zona') != null) document.getElementById('zona').value = '{!! $zonarequest !!}';
-						 </script>
-
-						<script type="text/javascript">
-										$(function() {
-												$('#zona').on('change', function() {
-														$( "#zonaform" ).submit();
-												});
-										});
-								</script>
-
-	  			</form>
-				</div>
-				<div class="col-md-6">
+				<div class="col-sm-3 visible-xs">
 					<div class="buscador">
-					  <div class="coupon" style="float:right;">
-					    <form action="{{url('busqueda')}}" method="post">
-					      {!! csrf_field() !!}
-					      <input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
-					      <button class="applyCoupon" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-					    </form>
-					  </div>
+						<div class="coupon" style="float:right;">
+							<form action="{{url('busqueda')}}" method="post">
+								{!! csrf_field() !!}
+								<input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
+								<button class="applyCoupon" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+							</form>
+						</div>
 
 					</div>
 				</div>
 			</div>
 
-<p>&nbsp;</p><p>&nbsp;</p>
-			<div class="row">
-				<div class="col-sm-4 col-sm-offset-8 col-md-3 col-md-offset-9">
+			@include('holders.notificaciones')
 
-				</div>
-			</div>
 
 
 		</div>
@@ -146,12 +118,7 @@
 														<ul class="list-group calendarioinst">
 
 															<?php
-															if ($zonarequest=="todas") {
-																$particulares=App\Particular::where('clase_id', $clase->id)->get();
-															}
-															else {
-																$particulares=App\Particular::where('clase_id', $clase->id)->where('zona_id', $zonarequest)->get();
-															}
+															$particulares=App\Particular::where('clase_id', $clase->id)->get();
 
 															list($año, $mes, $dia) = explode("-", $fechas[$x]);
 															$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
@@ -206,12 +173,7 @@
 
 														<?php
 
-														if ($zonarequest=="todas") {
-															$particulares=App\Particular::where('clase_id', $clase->id)->get();
-														}
-														else {
-															$particulares=App\Particular::where('clase_id', $clase->id)->where('zona_id', $zonarequest)->get();
-														}
+														$particulares=App\Particular::where('clase_id', $clase->id)->get();
 														list($año, $mes, $dia) = explode("-", $fechas[$x]);
 														$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 														?>

@@ -45,11 +45,16 @@ class ParticularController extends Controller
       $guardar = new Particular($request->all());
       if ($request->recurrencia) {
         $guardar->recurrencia=implode(",", $request->recurrencia);
+        $guardar->fecha="";
       }
-      $guardar->fecha = date_create($request->fecha);
+      else {
+        $guardar->fecha = date_create($request->fecha);
+        $guardar->recurrencia="";
+      }
+
       $guardar->user_id = Auth::user()->id;
       $guardar->save();
-      Session::flash('mensaje', '!Horario guardado!');
+      Session::flash('mensaje', '¡Horario guardado!');
       Session::flash('class', 'success');
       return redirect($this->redirectPath());
     }
@@ -87,13 +92,17 @@ class ParticularController extends Controller
     {
       $horario = Particular::find($request->horario_id);
       $horario->clase_id = $request->clase_id;
-      $horario->fecha = $request->fecha;
       $horario->hora = $request->hora;
       if ($request->recurrencia) {
         $horario->recurrencia=implode(",", $request->recurrencia);
+        $horario->fecha ="";
+      }
+      else {
+        $horario->fecha = date_create($request->fecha);
+        $horario->recurrencia="";
       }
       $horario->save();
-      Session::flash('mensaje', '!Horario actualizado!');
+      Session::flash('mensaje', '¡Horario actualizado!');
       Session::flash('class', 'success');
       return redirect($this->redirectPath());
     }
@@ -108,7 +117,7 @@ class ParticularController extends Controller
     {
       $horario = Particular::find($request->horario_id);
       $horario->delete();
-      Session::flash('mensaje', '!Horario eliminado correctamente!');
+      Session::flash('mensaje', '¡Horario eliminado correctamente!');
       Session::flash('class', 'success');
       return redirect($this->redirectPath());
     }

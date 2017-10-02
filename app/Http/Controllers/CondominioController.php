@@ -56,7 +56,7 @@ class CondominioController extends Controller
         $guardar->imagen = $name;
 
         $guardar->save();
-        Session::flash('mensaje', '!Condominio guardado!');
+        Session::flash('mensaje', '¡Condominio guardado!');
         Session::flash('class', 'success');
         return redirect()->intended(url('/condominios'));
       }
@@ -125,7 +125,7 @@ class CondominioController extends Controller
                 $condominio->save();
 
 
-                Session::flash('mensaje', '!Condominio actualizado!');
+                Session::flash('mensaje', '¡Condominio actualizado!');
                 Session::flash('class', 'success');
                 return redirect()->intended(url('/condominios'));
               }
@@ -143,7 +143,7 @@ class CondominioController extends Controller
               $condominio->save();
 
 
-              Session::flash('mensaje', '!Condominio actualizado!');
+              Session::flash('mensaje', '¡Condominio actualizado!');
               Session::flash('class', 'success');
               return redirect()->intended(url('/condominios'));
             }
@@ -163,7 +163,7 @@ class CondominioController extends Controller
       $condominio = Condominio::find($request->condominio_id);
       File::delete($path . $condominio->imagen);
       $condominio->delete();
-      Session::flash('mensaje', '!Condominio eliminado correctamente!');
+      Session::flash('mensaje', '¡Condominio eliminado correctamente!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/condominios'));
     }

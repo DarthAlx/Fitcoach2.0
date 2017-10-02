@@ -66,8 +66,8 @@
           <li class="menuclases"><a href="#">CLASES</a>
 						<ul>
 							<li><a href="{{ url('/clasesdeportivas') }}">Deportivas</a></li>
-							<li><a href="#">Culturales</a></li>
-							<li><a href="#">Eventos</a></li>
+							<li><a href="{{ url('/clasesculturales') }}">Culturales</a></li>
+							<li><a href="{{ url('/eventos') }}">Eventos</a></li>
 					  </ul>
 					</li>
 					@if (Auth::guest())
@@ -96,7 +96,7 @@
 
 
   </div></header>
-  <div id="myNav" class="overlay">
+  <div id="myNav" class="overlay" style="z-index: 9999999999999;">
     <!-- Button to close the overlay navigation -->
     <div class="container-bootstrap">
       <div id="nav-icon0" class="open" onclick="closeNav()">
@@ -115,7 +115,7 @@
       <a href="{{url('/')}}#botones">RESERVAR</a>
       <a href="{{url('residenciales')}}">CONDOMINIOS</a>
 			<a href="#">¿QUIÉNES SOMOS?</a>
-			<a href="#">LEGAL</a>
+			<a href="{{url('legales')}}">LEGAL</a>
 			<a href="#">CONTACTO</a>
     </div>
 
@@ -136,8 +136,8 @@
   			<a href="http://www.instagram.com/fitcoachmx"><i class="fa fa-instagram"></i></a>
   		</div>
   		<ul class="footerMenu clear">
-  			<li><a href="{{ url('/aviso') }}">Aviso de Privacidad</a></li>
-  			<li><a href="{{ url('/terminos') }}">Términos y Condiciones</a></li>
+  			<li><a href="{{ url('/legales') }}?page=privacidad">Aviso de Privacidad</a></li>
+  			<li><a href="{{ url('/legales') }}?page=terminos">Términos y Condiciones</a></li>
   			<li><a href="{{ url('/bolsa-de-trabajo') }}">Bolsa de Trabajo</a></li>
 
   		</ul>
@@ -201,7 +201,7 @@
 							<input  type="password" class="form-control" name="password" placeholder="Contraseña" required>
 							<input type="password" class="form-control" name="password_confirmation" placeholder="Repetir contraseña"  required>
 							<div class="checkbox" style="padding: 10px 0;">
-								<input type="checkbox" name="términos" value="Sí" required> <a href="{{url('/legales')}}?page=terminos" style="text-decoration: none; color: #000;">Acepto términos y condiciones</a>
+								<input type="checkbox" name="términos" value="Sí" required> <a href="{{url('/legales')}}?page=terminos" style="text-decoration: none; color: #000;">Acepto términos y condiciones y</a> <a href="{{url('/legales')}}?page=terminos" style="text-decoration: none; color: #000;">aviso de privacidad.</a>
 							</div>
 
 							<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Registrar</button>

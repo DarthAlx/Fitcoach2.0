@@ -127,11 +127,11 @@
 .selectricItems li:last-child {border-bottom: 0;}
 .selectricItems li.selected {
   color: #fff;
-  background: #5fc7ae;
-  border-bottom: 1px solid #5fc7ae;
+  background: #ed8714;
+  border-bottom: 1px solid #ed8714;
 }
 .selectricItems li:hover {
-  background: #5fc7ae;
+  background: #ed8714;
   color: #fff;
 }
 .selectricItems li.disabled {

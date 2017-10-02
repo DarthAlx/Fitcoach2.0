@@ -13,7 +13,7 @@
 		<div class="container-bootstrap-fluid">
 			<div class="row">
 				<div class="col-sm-9">
-					<div class="title" style="font-size: 10vw;">NOMINA</div>
+					<div class="title" style="font-size: 10vw; float: left; line-height: 0.8;">NOMINA</div>
 				</div>
 
 			</div>
@@ -54,7 +54,28 @@
 								}
 							?>
 							<tr style="cursor: pointer;">
-						      <td>{{$coach->name}}</td>
+						      <td>
+										<?php
+													$numerodecalificaciones=App\Rating::where('user_id', $coach->id)->count();
+													$calificaciones=App\Rating::where('user_id', $coach->id)->get();
+													$promedio=0;
+													if ($numerodecalificaciones!=0&&$calificaciones) {
+														foreach ($calificaciones as $calificacion) {
+															$promedio=$promedio+$calificacion->rate;
+														}
+														$promedio=$promedio/$numerodecalificaciones;
+													}
+													else {
+														$promedio="Sin rating";
+													}
+
+										?>
+
+
+											{{$coach->name}} - {{$promedio}}
+
+
+									</td>
 						      <td>{{$coach->tel}}</td>
 						      <td>{{$fecha}}</td>
 						      <td>${{$pendiente}}</td>
@@ -120,6 +141,18 @@
 
 			      				<div>
 			      					<h4>Pagar a {{Ucfirst($coach->name)}}</h4>
+											@if ($coach->bancarios)
+												<p style="list-group-item">
+													<strong>Banco: </strong> {{ $coach->bancarios->banco}} <br>
+													<strong>Cuenta: </strong> {{ $coach->bancarios->cta}} <br>
+													<strong>CLABE: </strong> {{ $coach->bancarios->clabe}} <br>
+													<strong>Tarjeta: </strong> {{ $coach->bancarios->tarjeta}} <br>
+													<strong>Info. adicional: </strong> {{ $coach->bancarios->adicional}}
+												</p>
+											@else
+												<p>No se han dado de alta detalles bancarios.</p>
+											@endif
+
 			                <form action="{{ url('/pagar') }}" method="post">
 			        					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 												<input type="hidden" name="user_id" value="{{ $coach->id }}">

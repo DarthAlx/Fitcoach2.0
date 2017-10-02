@@ -13,10 +13,11 @@
 		<div class="container-bootstrap-fluid">
 			<div class="row">
 				<div class="col-sm-9">
-					<div class="title" style="font-size: 10vw;">CLASES</div>
+					<div class="title" style="font-size: 10vw; float: left; line-height: 0.8;">CLASES</div>
 				</div>
 
 			</div>
+			<p>&nbsp;</p><p>&nbsp;</p>
 			<div class="row">
 
 				<form action="{{url('clasesvista')}}" method="post">
@@ -70,7 +71,17 @@
 									<td>{{$clase->fecha}} {{$clase->hora}}</td>
 									<td>{{$clase->created_at}}</td>
 						      <td>{{$clase->nombre}}</td>
-						      <td>{{$clase->user->name}}</td>
+						      <td>
+										<?php
+													$coach=App\User::find($clase->coach_id);
+
+										?>
+
+
+											{{$coach->name}}
+
+
+									</td>
 						      <td>{{$clase->status}} {{$clase->metadata}}
 									</td>
 									<td>
@@ -133,9 +144,28 @@
 														<?php $residencial=App\Residencial::find($clase->asociado); ?>
 														<strong>Cupo: </strong> {{$residencial->cupo}}<br>
 													@else
-														<strong>Cliente: </strong> {{$clase->user->name}}<br>
+														<strong>Cliente: </strong> @if ($clase->user){{$clase->user->name}}@else
+															<p>No existe el usuario</p>
+														@endif<br>
 													@endif
-													<strong>Teléfono: </strong> {{$clase->user->tel}}<br>
+													<strong>Teléfono: </strong> @if ($clase->user){{$clase->user->tel}}@else
+														<p>No existe el usuario</p>
+													@endif<br>
+
+													<?php
+																$coach=App\User::find($clase->coach_id);
+																$calificacion=App\Rating::where('orden_id', $clase->id)->first();
+																if ($calificacion) {
+																	$promedio=$calificacion->rate;
+																}
+																else {
+																	$promedio="Sin rating";
+																}
+
+													?>
+
+
+														<strong>Rating: </strong> {{$promedio}}
 				      					</p>
 
 				      				</div>

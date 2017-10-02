@@ -133,7 +133,7 @@
           <div class="list-group">
             @if ($user->ordenes)
               <?php
-              $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orderBy('fecha', 'desc')->get();
+              $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orWhere('status', 'Porrevisar')->orderBy('fecha', 'desc')->get();
               if (!$pasadas->isEmpty()) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($pasadas as $pasada) {
@@ -610,7 +610,7 @@
                          {{ method_field('PUT') }}
                          @if ($horastotales>=24)
                            <p class="text-center"><strong>IMPORTANTE</strong><br>
-Texto de reembolso.<br>
+Si cancelas se te enviará un cupón por el valor de tu clase.<br>
 ¿Estás seguro que deseas continuar?</p>
                            <input type="hidden" name="tipocancelacion" value="24 horas antes">
                          @else

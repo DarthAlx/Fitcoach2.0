@@ -7,20 +7,34 @@
 		<div class="">
 		<div class="container-bootstrap-fluid">
 			<div class="row">
-				<div class="col-sm-9">
-					<div class="title" style="font-size: 8vw;">CONDOMINIOS</div>
+				<div class="col-sm-12">
+					<div class="title" style="font-size: 10vw; float: left; line-height: 0.8;">CONDOMINIOS</div>
+					<div class="buscador hidden-xs" style="float: right; position: absolute; right: 0; bottom: 0;">
+					  <div class="footerSubscribe">
+					    <form action="{{url('buscarresidencial')}}" method="post">
+					      {!! csrf_field() !!}
+					      <input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
+					      <button class="btnSubscribe" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+					    </form>
+					  </div>
+
+					</div>
 				</div>
-				<div class="col-sm-3">
+				<div class="col-sm-3 visible-xs">
 					<div class="buscador">
 						<div class="footerSubscribe">
-			  			<form>
-			  				<input class="" type="text" name="" value="" placeholder="Buscar...">
+			  			<form action="{{url('buscarresidencial')}}" method="post">
+								{!! csrf_field() !!}
+			  				<input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
 								<button class="btnSubscribe" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
 			  			</form>
 			  		</div>
+
 					</div>
 				</div>
+
 			</div>
+			@include('holders.notificaciones')
 		</div>
 		<p>&nbsp;</p>
     <div class="teamItemWrap clear">
@@ -97,7 +111,7 @@
 												<div class="col-sm-2 col-xs-4 separacion">
 													{{$fechasformateadas[$x]}}
 													<ul class="list-group calendarioinst">
-														<?php $residenciales=App\Residencial::all();
+														<?php $residenciales=App\Residencial::where('tipo', 'Residencial')->get();
 														list($año, $mes, $dia) = explode("-", $fechas[$x]);
 														$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 														?>
@@ -145,6 +159,7 @@
   @if ($condominios)
     @foreach ($condominios as $condominio)
       @foreach ($condominio->residenciales as $residencial)
+				@if ($residencial->tipo=="Residencial")
     		<div class="modal fade" id="residencial{{$condominio->id}}{{$residencial->id}}" tabindex="-1" role="dialog">
     		  <div class="modal-dialog" role="document">
     		    <div class="modal-content">
@@ -199,6 +214,7 @@
     		    </div><!-- /.modal-content -->
     		  </div><!-- /.modal-dialog -->
     		</div><!-- /.modal contraseña -->
+				@endif
     	@endforeach
     @endforeach
 

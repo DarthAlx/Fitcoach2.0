@@ -13,10 +13,11 @@
 		<div class="container-bootstrap-fluid">
 			<div class="row">
 				<div class="col-sm-9">
-					<div class="title" style="font-size: 10vw;">VENTAS</div>
+					<div class="title" style="font-size: 10vw; float: left; line-height: 0.8;">VENTAS</div>
 				</div>
 
 			</div>
+			<p>&nbsp;</p><p>&nbsp;</p>
 			<div class="row">
 
 				<form action="{{url('ventas')}}" method="post">

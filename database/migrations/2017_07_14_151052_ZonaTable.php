@@ -14,7 +14,6 @@ class ZonaTable extends Migration
         $table->increments('id');
         $table->string('identificador');
         $table->string('descripcion');
-        $table->integer('user_id');
         $table->timestamps();
       });
     }

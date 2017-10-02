@@ -13,10 +13,11 @@
 		<div class="container-bootstrap-fluid">
 			<div class="row">
 				<div class="col-sm-9">
-					<div class="title" style="font-size: 10vw;">CUPONES</div>
+					<div class="title" style="font-size: 10vw; float: left; line-height: 0.8;">CUPONES</div>
 				</div>
 
 			</div>
+			<p>&nbsp;</p><p>&nbsp;</p>
 			<div class="row">
 				<button type="button" name="button" class="btn btn-default" data-toggle="modal" data-target="#cupon">+ Agregar cupon</button>
 
@@ -112,6 +113,21 @@
 										<input type="number" name="usos" class="form-control" value="{{old('usos')}}" placeholder="Maximos usos" required>
 										<input type="number" name="minimo" class="form-control" value="{{old('minimo')}}" placeholder="Monto minimo" required>
 										<input class="form-control datepicker" type="text" placeholder="Fecha de expiración" value="{{old('expiracion')}}" name="expiracion" required>
+										<select class="form-control" name="tipo">
+											<option value="">Tipo de clase</option>
+											<option value="Deportiva">Deportiva</option>
+											<option value="Cultural">Cultural</option>
+											<option value="Residencial">Residencial</option>
+											<option value="Evento">Evento</option>
+										</select>
+										<?php $usuarios=App\User::where('role', 'usuario')->get(); ?>
+										<select class="form-control" name="user_id">
+											<option value="">Usuario</option>
+											@foreach ($usuarios as $usuario)
+												<option value="{{$usuario->id}}">{{ucfirst($usuario->name)}} - {{$usuario->email}}</option>
+											@endforeach
+										</select>
+										<input type="number" name="maximo" class="form-control" value="{{old('maximo')}}" placeholder="Uso maximo general">
 										<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Crear</button>
 									</form>
 								</div>
@@ -145,20 +161,27 @@
 												<input type="number" name="usos" class="form-control" value="{{$cupon->usos}}" placeholder="Maximos usos" required>
 												<input type="number" name="minimo" class="form-control" value="{{$cupon->minimo}}" placeholder="Monto minimo" required>
 			        					<input class="form-control datepicker" type="text" placeholder="Fecha de expiración" value="{{$cupon->expiracion}}" name="expiracion" required>
-												<select class="form-control" name="tipo">
+												<select class="form-control" name="tipo" id="tipo{{ $cupon->id }}">
 													<option value="">Tipo de clase</option>
 													<option value="Deportiva">Deportiva</option>
 													<option value="Cultural">Cultural</option>
 													<option value="Evento">Evento</option>
-													<option value="residencial">Residencial</option>
+													<option value="Residencial">Residencial</option>
 												</select>
+												<script type="text/javascript">
+												 	if (document.getElementById('tipo{{ $cupon->id }}') != null) document.getElementById('tipo{{ $cupon->id }}').value = '{!! $cupon->tipo !!}';
+												</script>
 												<?php $usuarios=App\User::where('role', 'usuario')->get(); ?>
-												<select class="form-control" name="user_id">
+												<select class="form-control" name="user_id" id="user{{ $cupon->id }}">
 													<option value="">Usuario</option>
 													@foreach ($usuarios as $usuario)
 														<option value="{{$usuario->id}}">{{ucfirst($usuario->name)}} - {{$usuario->email}}</option>
 													@endforeach
 												</select>
+												<script type="text/javascript">
+												 	if (document.getElementById('user{{ $cupon->id }}') != null) document.getElementById('user{{ $cupon->id }}').value = '{!! $cupon->user_id !!}';
+												</script>
+												<input type="number" name="maximo" class="form-control" value="{{$cupon->maximo}}" placeholder="Uso maximo general" required>
 												<p>&nbsp;</p>
 												<p>&nbsp;</p>
 

@@ -43,7 +43,7 @@ class CuponController extends Controller
        $guardar = new Cupon($request->all());
        $guardar->expiracion = date_create($request->expiracion);
        $guardar->save();
-       Session::flash('mensaje', '!Cupón creado!');
+       Session::flash('mensaje', '¡Cupón creado!');
        Session::flash('class', 'success');
        return redirect()->intended(url('/cupones'));
      }
@@ -87,8 +87,9 @@ class CuponController extends Controller
        $cupon->expiracion = date_create($request->expiracion);
        $cupon->user_id = $request->user_id;
        $cupon->tipo = $request->tipo;
+       $cupon->maximo = $request->maximo;
        $cupon->save();
-       Session::flash('mensaje', '!Cupón actualizado!');
+       Session::flash('mensaje', '¡Cupón actualizado!');
        Session::flash('class', 'success');
        return redirect()->intended(url('/cupones'));
      }
@@ -103,7 +104,7 @@ class CuponController extends Controller
      {
        $cupon = Cupon::find($request->cupon_id);
        $cupon->delete();
-       Session::flash('mensaje', '!Cupón eliminado correctamente!');
+       Session::flash('mensaje', '¡Cupón eliminado correctamente!');
        Session::flash('class', 'success');
        return redirect()->intended(url('/cupones'));
      }

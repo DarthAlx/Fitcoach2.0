@@ -237,7 +237,7 @@ p, form{
     height: 100%;
     width: 0;
     position: fixed; /* Stay in place */
-    z-index: 99999999999; /* Sit on top */
+    /* Sit on top */
     right: 0;
     top: 0;
     background-color: #EF7E19; /* Black fallback color */
@@ -480,7 +480,7 @@ width: 100%;
 }
 #loginmodal h4{
     font-family: Gotham1;
-		text-shadow: 1px 1px 2px rgba(213, 134, 40, 1);
+		/*text-shadow: 1px 1px 2px rgba(213, 134, 40, 1);*/
 		color: #000 !important;
 		font-size: 22px;
 }
@@ -572,6 +572,8 @@ color: #D58628 !important;
 	    font-size: 40px;
 	    color: #efeeee;
 			text-align: center;
+			    float: none !important;
+					line-height: 2 !important;
 	}
 	.buscador .footerSubscribe {
     margin-top: 0px !important;
@@ -783,4 +785,13 @@ h2, h4{
 	width: 100%;
 	height: 220px;
 	top: 0;
+}
+.alert ul {
+    list-style-type: none;
+}
+
+.coupon .applyCoupon {
+    bottom: 12px;
+    -webkit-appearance: media-mute-button;
+		    text-indent: 0;
 }

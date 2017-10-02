@@ -55,9 +55,6 @@ class User extends Model implements AuthenticatableContract,
     public function ordenes(){
         return $this->hasMany('App\Orden');
     }
-    public function zona(){
-        return $this->hasMany('App\Zonas_coaches');
-    }
     public function bancarios(){
         return $this->hasOne('App\Bancarios');
     }
@@ -66,9 +63,6 @@ class User extends Model implements AuthenticatableContract,
     }
     public function rate(){
       return $this->hasMany('App\Rating');
-    }
-    public function zonas(){
-        return $this->hasMany('App\Zona');
     }
     public function abonos(){
         return $this->hasMany('App\Abono');

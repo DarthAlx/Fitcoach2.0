@@ -18,8 +18,8 @@ class ParticularTable extends Migration
           $table->string('hora');
           $table->integer('user_id');
           $table->integer('clase_id');
-          $table->string('zonas');
           $table->string('recurrencia');
+          $table->integer('zona_id');
           $table->timestamps();
       });
     }

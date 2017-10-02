@@ -57,7 +57,7 @@ class DireccionController extends Controller
       $guardar = new Direccion($request->all());
       $guardar->user_id = Auth::user()->id;
       $guardar->save();
-      Session::flash('mensaje', '!Dirección guardada!');
+      Session::flash('mensaje', '¡Dirección guardada!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/perfil'));
     }
@@ -103,7 +103,7 @@ class DireccionController extends Controller
       $direccion->cp = $request->cp;
       $direccion->estado = $request->estado;
       $direccion->save();
-      Session::flash('mensaje', '!Dirección actualizada!');
+      Session::flash('mensaje', '¡Dirección actualizada!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/perfil'));
     }
@@ -118,7 +118,7 @@ class DireccionController extends Controller
     {
       $direccion = Direccion::find($request->direccion_id);
       $direccion->delete();
-      Session::flash('mensaje', '!Dirección eliminada correctamente!');
+      Session::flash('mensaje', '¡Dirección eliminada correctamente!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/perfil'));
     }

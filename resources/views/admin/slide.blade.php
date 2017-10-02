@@ -22,7 +22,7 @@
                          <div class="panel-heading" role="tab" id="heading{{ $slide->id }}">
                            <h4 class="panel-title" data-toggle="collapse" data-parent="#slides" href="#collapse{{ $slide->id }}" aria-expanded="false" aria-controls="collapse{{ $slide->id }}">
                              <a role="button">
-                                   Slide {{ Ucfirst($slide->id) }}
+                                   Slide {{ Ucfirst($slide->orden) }}
                              </a>
                            </h4>
                          </div>
@@ -54,7 +54,7 @@
                                         </div>
                                         <div class="form-group">
                  													<div class="col-sm-12 text-right">
-                 														<input class="btn btn-success" type="submit" value="Guardar" style="display: none" id="botonguardar{{ $slide->id }}"><a href="#" class="btn btn-primary"  id="botoneditar{{ $slide->id }}" onclick="habilitar({{ $slide->id }})">Editar</a> &nbsp;
+                 														<input class="btn btn-primary" type="submit" value="Actualizar" style="display: none" id="botonguardar{{ $slide->id }}"><a href="#" class="btn btn-primary"  id="botoneditar{{ $slide->id }}" onclick="habilitar({{ $slide->id }})">Editar</a> &nbsp;
 
                                             <a href="#" class="btn btn-danger" onclick="javascript: document.getElementById('botoneliminar{{ $slide->id }}').click();">Borrar</a>
 

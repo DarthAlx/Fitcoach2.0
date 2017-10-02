@@ -40,12 +40,12 @@ class UserController extends Controller
         $user = User::find(Auth::user()->id);
         $user->password=bcrypt($request->password);
         $user->save();
-        Session::flash('mensaje', '!Contraseña actualizada!');
+        Session::flash('mensaje', '¡Contraseña actualizada!');
         Session::flash('class', 'success');
         return redirect($this->redirectPath());
       }
       else {
-        Session::flash('mensaje', '!Las contraseñas deben coincidir!');
+        Session::flash('mensaje', '¡Las contraseñas deben coincidir!');
         Session::flash('class', 'danger');
         return redirect($this->redirectPath());
       }
@@ -96,12 +96,16 @@ class UserController extends Controller
           $guardar->password=bcrypt($request->password);
           $guardar->save();
           $permisos = new Detalle();
-          if ($request->permisos) {
-            $permisos->permisos=implode(",", $request->permisos);
-            $permisos->user_id=$guardar->id;
-          }
+
+            if ($request->permisos) {
+              $permisos->permisos=implode(",", $request->permisos);
+              $permisos->user_id=$guardar->id;
+            }
+
+
+
           $permisos->save();
-          Session::flash('mensaje', '¡Admin guardado!');
+          Session::flash('mensaje', '¡Usuario guardado!');
           Session::flash('class', 'success');
           return redirect()->intended(url('/admins'));
         }
@@ -166,15 +170,23 @@ class UserController extends Controller
           $guardar->password=bcrypt($request->password);
         }
 
-        $guardar->role="admin";
         $guardar->save();
         $permisos = Detalle::find($guardar->detalles->id);
-        if ($request->permisos) {
-          $permisos->permisos=implode(",", $request->permisos);
-          $permisos->user_id=$guardar->id;
-        }
+
+
+          if ($request->permisos) {
+            $permisos->permisos=implode(",", $request->permisos);
+            $permisos->user_id=$guardar->id;
+          }
+          else {
+            $permisos->permisos=$request->permisos;
+            $permisos->user_id=$guardar->id;
+          }
+
+
+
         $permisos->save();
-        Session::flash('mensaje', '¡Admin actualizado!');
+        Session::flash('mensaje', '¡Usuario actualizado!');
         Session::flash('class', 'success');
         return redirect()->intended(url('/admins'));
       }
@@ -192,10 +204,112 @@ class UserController extends Controller
     {
       $admin = User::find($request->admin_id);
       $admin->delete();
-      Session::flash('mensaje', '!Admin eliminado correctamente!');
+      Session::flash('mensaje', '¡Usuario eliminado correctamente!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/admins'));
     }
+
+
+
+
+
+
+
+
+
+    public function storecoach(Request $request)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+        else {
+          $guardar = new User($request->all());
+          $guardar->role="instructor";
+          $guardar->password=bcrypt($request->password);
+          $guardar->save();
+          $permisos = new Detalle();
+
+            if ($request->clases) {
+              $permisos->clases=implode(",", $request->clases);
+              $permisos->user_id=$guardar->id;
+            }
+
+
+
+
+          $permisos->save();
+          Session::flash('mensaje', '¡Usuario guardado!');
+          Session::flash('class', 'success');
+          return redirect()->intended(url('/coaches-admin'));
+        }
+    }
+public function updatecoach(Request $request)
+    {
+      $validator = $this->validatorUpdate($request->all());
+
+      if ($validator->fails()) {
+          $this->throwValidationException(
+              $request, $validator
+          );
+      }
+      else {
+        $guardar = User::find($request->admin_id);
+        $guardar->name=$request->name;
+        $guardar->email=$request->email;
+        $guardar->dob=$request->dob;
+        $guardar->tel=$request->tel;
+        $guardar->genero=$request->genero;
+        if ($request->password) {
+          $guardar->password=bcrypt($request->password);
+        }
+        $guardar->save();
+        $permisos = Detalle::find($guardar->detalles->id);
+          if ($request->clases) {
+            $permisos->clases=implode(",", $request->clases);
+            $permisos->user_id=$guardar->id;
+          }
+          else {
+            $permisos->clases=$request->clases;
+            $permisos->user_id=$guardar->id;
+          }
+
+
+
+
+
+        $permisos->save();
+        Session::flash('mensaje', '¡Usuario actualizado!');
+        Session::flash('class', 'success');
+        return redirect()->intended(url('/coaches-admin'));
+      }
+    }
+public function destroycoach(Request $request)
+    {
+      $admin = User::find($request->admin_id);
+      $admin->delete();
+      Session::flash('mensaje', '¡Usuario eliminado correctamente!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/coaches-admin'));
+    }
+
+    public function destroycliente(Request $request)
+        {
+          $cliente = User::find($request->user_id);
+          $cliente->delete();
+          Session::flash('mensaje', '¡Usuario eliminado correctamente!');
+          Session::flash('class', 'success');
+          return redirect()->intended(url('/clientes'));
+        }
+
+
+
+
+
+
 
     public function redirectPath()
     {

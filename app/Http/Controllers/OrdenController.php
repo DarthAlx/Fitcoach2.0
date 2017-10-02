@@ -21,6 +21,7 @@ use App\Folio;
 use App\Cupon;
 use App\Cuponera;
 use Mail;
+use Input;
 class OrdenController extends Controller
 {
     /**
@@ -52,11 +53,8 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
         foreach ($request->carrito as $item) {
           $items=explode(",",$item);
           $clase=Particular::find($items[0]);
-          $zonas=$clase->user->zonas;
-          $stringzona="";
-          foreach ($zonas as $zona) {
-            $stringzona=$stringzona . " " . $zona->identificador;
-          }
+          $zona=$clase->zona->identificador;
+
           if ($clase->clase->precio_especial) {
             $precio=$clase->clase->precio_especial;
           }
@@ -64,7 +62,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
             $precio=$clase->clase->precio;
           }
           Cart::add($clase->clase->id,$clase->clase->nombre,1,$precio, ['tipo'=>'particular','fecha' => $items[1],'hora' => $clase->hora, 'coach' => $clase->user_id]);
-          Session::flash('mensaje', 'La clase que vas a reservar es únicamente para las zonas '.$stringzona.'.<br>
+          Session::flash('mensaje', 'La clase que vas a reservar es únicamente para la zona '.$zona.'.<br>
   No habrá cambios o devoluciones si no estas en la zona y no es posible para el coach asistir.');
           Session::flash('class', 'warning');
         }
@@ -135,7 +133,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
       $from= date('Y-m-d', mktime(0,0,0, $month, 1, $year));
       $day = date("d", mktime(0,0,0, $month+1, 0, $year));
       $to = date('Y-m-d', mktime(0,0,0, $month, $day, $year));
-      $clases = Orden::whereBetween('created_at', array($from, $to))->get();
+      $clases = Orden::whereBetween('fecha', array($from, $to))->get();
       return view('admin.clasesvista',['clases'=>$clases,'from'=>$from,'to'=>$to,'status'=>'*']);
     }
 
@@ -146,10 +144,10 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
       $from = date ( 'Y-m-d' , $from_n );
       $to = date ( 'Y-m-d' , $to_n );
       if ($request->status=="*") {
-        $clases = Orden::whereBetween('created_at', array($from, $to))->get();
+        $clases = Orden::whereBetween('fecha', array($from, $to))->get();
       }
       else {
-        $clases = Orden::where('status', $request->status)->whereBetween('created_at', array($from, $to))->get();
+        $clases = Orden::where('status', $request->status)->whereBetween('fecha', array($from, $to))->get();
       }
 
       return view('admin.clasesvista',['clases'=>$clases,'from'=>$request->from,'to'=>$request->to,'status'=>$request->status]);
@@ -197,6 +195,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
             $orden->status="Cancelada";
             $orden->metadata="cupon enviado";
             $orden->save();
+            $this->sendclasscancel($orden->id);
           Session::flash('mensaje', 'Cupón enviado.');
           Session::flash('class', 'success');
         }
@@ -214,6 +213,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
         $orden->status="Cancelada";
         $orden->metadata="abonada a coach";
         $orden->save();
+        $this->sendclasscancel($orden->id);
         Session::flash('mensaje', 'Abono completado.');
         Session::flash('class', 'success');
       }
@@ -221,6 +221,23 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
 
       return redirect()->intended(url('/clasesvista'));
     }
+
+
+
+
+
+
+    public function terminar(Request $request)
+    {
+      $orden = Orden::find($request->revision);
+      $orden->status = 'Porrevisar';
+      $orden->save();
+      Session::flash('mensaje', '¡Orden en revisión!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/perfilinstructor'));
+
+    }
+
 
 
     public function nomina()
@@ -235,6 +252,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
       $fe = strtotime ( $request->fecha )  ;
       $guardar->fecha= date('Y-m-d',$fe);
       $guardar->save();
+
       $coach = User::find($request->user_id);
       $pendiente=0;
       foreach ($coach->abonos as $abono) {
@@ -244,6 +262,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
         foreach ($coach->abonos as $abono) {
           $abono->delete();
         }
+        $this->sendpayment($guardar->id);
         Session::flash('mensaje', 'El pago se realizó con éxito.');
         Session::flash('class', 'success');
         return redirect()->intended(url('/nomina'));
@@ -256,6 +275,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
         $abono->user_id=$coach->id;
         $abono->abono=$pendiente-$request->monto;
         $abono->save();
+        $this->sendpayment($guardar->id);
         Session::flash('mensaje', 'El pago se realizó con éxito.');
         Session::flash('class', 'success');
         return redirect()->intended(url('/nomina'));
@@ -295,7 +315,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
       $orden->status = 'Cancelada';
       $orden->metadata=$request->tipocancelacion;
       $orden->save();
-      Session::flash('mensaje', '!Orden Cancelada!');
+      Session::flash('mensaje', '¡Orden Cancelada!');
       Session::flash('class', 'success');
       return redirect($this->redirectPath());
     }
@@ -481,7 +501,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
           $guardar->status='Proxima';
           $guardar->save();
           if ($producto['metadata']['tipo']=="residencial") {
-            $residencial= Residencial::find($producto['metadata']['id']);
+            $residencial= Residencial::find($producto['metadata']['asociado']);
             $residencial->ocupados++;
             $residencial->save();
           }
@@ -504,22 +524,23 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
 
         Cart::destroy();
         $this->sendinvoice($order->id);
+        //$this->sendclassrequest($order->id);
         return redirect()->intended(url('/completa'));
 
       } catch (\Conekta\ProccessingError $error){
         Session::flash('mensaje', $error->getMessage());
         Session::flash('class', 'danger');
-        return redirect()->intended(url('/carrito'));
+        return redirect()->intended(url('/carrito'))->withInput();
       } catch (\Conekta\ParameterValidationError $error){
 
         Session::flash('mensaje', $error->getMessage());
         Session::flash('class', 'danger');
-        return redirect()->intended(url('/carrito'));
+        return redirect()->intended(url('/carrito'))->withInput();
 
       } catch (\Conekta\Handler $error){
         Session::flash('mensaje', $error->getMessage());
         Session::flash('class', 'danger');
-        return redirect()->intended(url('/carrito'));
+        return redirect()->intended(url('/carrito'))->withInput();
       }
 
 
@@ -561,9 +582,30 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
       $ordenes=Orden::where('order_id', $id)->get();
       $datos=Orden::where('order_id', $id)->first();
       $user=User::find($datos->coach_id);
-        Mail::send('emails.request', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {
+        Mail::send('emails.recibida', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {
             $m->from('alxunscarred@gmail.com', 'FITCOACH México');
             $m->to($user->email, $user->name)->subject('¡Nueva clase agendada!');
+        });
+    }
+
+    public function sendclasscancel($id)
+    {
+      $ordenes=Orden::where('id', $id)->first();
+      $datos=Orden::where('id', $id)->first();
+      $user=User::find($datos->coach_id);
+        Mail::send('emails.calcelada', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {
+            $m->from('alxunscarred@gmail.com', 'FITCOACH México');
+            $m->to($user->email, $user->name)->subject('¡Cancelación de clase!');
+        });
+    }
+    public function sendpayment($id)
+    {
+      $pago=Pago::find($id);
+
+      $user=$pago->user;
+        Mail::send('emails.pago', ['pago'=>$pago,'user'=>$user], function ($m) use ($user) {
+            $m->from('alxunscarred@gmail.com', 'FITCOACH México');
+            $m->to($user->email, $user->name)->subject('¡Nuevo pago!');
         });
     }
 

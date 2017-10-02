@@ -7,20 +7,34 @@
 		<div class="">
 		<div class="container-bootstrap-fluid">
 			<div class="row">
-				<div class="col-sm-9">
-					<div class="title" style="font-size: 10vw;">COACHES</div>
+				<div class="col-sm-12">
+					<div class="title" style="font-size: 10vw; float: left; line-height: 0.8;">COACHES</div>
+					<div class="buscador hidden-xs" style="float: right; position: absolute; right: 0; bottom: 0;">
+					  <div class="footerSubscribe">
+					    <form action="{{url('buscarcoach')}}" method="post">
+					      {!! csrf_field() !!}
+					      <input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
+					      <button class="btnSubscribe" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+					    </form>
+					  </div>
+
+					</div>
 				</div>
-				<div class="col-sm-3">
+				<div class="col-sm-3 visible-xs">
 					<div class="buscador">
 						<div class="footerSubscribe">
-			  			<form>
-			  				<input class="" type="text" name="" value="" placeholder="Buscar...">
+			  			<form action="{{url('buscarcoach')}}" method="post">
+								{!! csrf_field() !!}
+			  				<input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
 								<button class="btnSubscribe" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
 			  			</form>
 			  		</div>
+
 					</div>
 				</div>
+
 			</div>
+			@include('holders.notificaciones')
 		</div>
 		<p>&nbsp;</p>
     <div class="teamItemWrap clear">
@@ -90,7 +104,7 @@
 												$intervalo = intval($interval->format('%R%a días'));
 													?>
 
-													@if ($residencial->ocupados<$residencial->cupo&&$intervalo>=0)
+													@if ($residencial->ocupados<$residencial->cupo&&$intervalo>=0&&$residencial->tipo=="Residencial")
 														<a href="#" class="list-group-item" data-toggle="modal" data-target="#condominio{{$residencial->id}}">
 															<i class="fa fa-building" aria-hidden="true"></i>
 						 									{{strftime("%d %b", strtotime($residencial->fecha))}} | {{ $residencial->hora }} | {{$residencial->condominio->identificador}}
@@ -117,6 +131,7 @@
 		@if ($coach->residenciales)
 
 			@foreach ($coach->residenciales as $residencial)
+				@if ($residencial->tipo=="Residencial")
 				<div class="modal fade" id="condominio{{$residencial->id}}" tabindex="-1" role="dialog">
 				  <div class="modal-dialog" role="document">
 				    <div class="modal-content">
@@ -171,6 +186,7 @@
 				    </div><!-- /.modal-content -->
 				  </div><!-- /.modal-dialog -->
 				</div><!-- /.modal contraseña -->
+				@endif
 			@endforeach
 		@endif
 	@endforeach
@@ -222,12 +238,6 @@
 							<?php $nombre=explode(" ",$coach->name); ?>
 						<h1 class="title">{{ucfirst($nombre[0])}} : {{ucfirst($clase->nombre)}}</h1>
 
-						<p class="gotham3">
-							@foreach ($coach->zonas as $zona)
-								&nbsp; {{$zona->identificador}} &nbsp;
-							@endforeach
-						</p>
-
 							<div id="myCarousel{{$coach->id}}" class="carousel slide hidden-xs" data-wrap="false"><!--6 columnas-->
 								<div class="carousel-inner">
 									@for ($i=0; $i < 5 ; $i++)
@@ -252,6 +262,9 @@
 																	<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}');" style="cursor:pointer;">
 																		<input type="checkbox" id="carrito{{$x}}{{$particular->id}}" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
 																		<input type="hidden" name="tipo" value="Particular">
+																		{{$particular->zona->identificador}}
+
+																	<br>
 																		{{$particular->hora}} <i class="fa fa-square-o pull-right fa{{$x}}{{$particular->id}}" aria-hidden="true"></i>
 																	</li>
 																@endif
@@ -323,6 +336,7 @@
 		 								0 clases seleccionadas.
 									</div>
 								</div>
+								<p>&nbsp;</p>
 								<div class="col-sm-4">
 									<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar" id="reservar" disabled>
 								</div>

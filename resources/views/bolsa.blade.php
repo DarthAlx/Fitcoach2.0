@@ -9,7 +9,12 @@
 				@include('holders.notificaciones')
 				<div class="paddingtop">
                             <h1 class="title">BOLSA DE TRABAJO</h1>
-                            <hr> </div>
+                            <hr>
+														<div class="coupon">
+															<label>Estamos buscando al mejor personal para seguir ofreciendo un servicio de calidad. ¡Queremos una persona como tú!</label>
+														</div>
+
+													 </div>
 												<form method="post" enctype="multipart/form-data" action="{{ url('/bolsa-de-trabajo') }}">
 													<input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">

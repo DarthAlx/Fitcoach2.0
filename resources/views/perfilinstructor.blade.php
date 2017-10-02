@@ -19,20 +19,18 @@
       <hr>
       <div class="claseanterior text-center">
         <h4>PENDIENTE POR PAGAR</h4>
-        @if ($user->ordenes)
+        @if ($user->abonos)
           <?php
-          $pendientes= App\Orden::where('coach_id', $user->id)->where('status', 'Porrevisar')->orderBy('fecha', 'desc')->get();
-          if ($pendientes) {
             $cantidad=0;
-            foreach ($pendientes as $pendiente) {
-              $cantidad=$cantidad+$pendiente->cantidad;
+            foreach ($user->abonos as $pendiente) {
+              $cantidad=$cantidad+$pendiente->abono;
             }
              ?>
 
              <h1>${{$cantidad}}</h1>
-          <?php } else{ ?>
+
+          @else
             <p>No has dado ninguna clase.</p>
-            <?php } ?>
         @endif
       </div>
       <hr>
@@ -72,7 +70,7 @@
         <div class="list-group">
             <?php
             $proximas= App\Orden::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
-            if ($proximas) {
+            if (!$proximas->isEmpty()) {
               date_default_timezone_set('America/Mexico_City');
               foreach ($proximas as $proxima) {
                 $metadata= explode(',',$proxima->metadata);
@@ -114,7 +112,7 @@
                      <i class="fa fa-building" aria-hidden="true"></i>
                    @endif
                   @endif
-                 {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $proxima->hora }}
+                 {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
                  <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                </a>
             <?php } } else{ ?>
@@ -287,6 +285,16 @@
                                        @endforeach
                                      </script>
 
+                        <select class="form-control" name="zona_id"  id="zona{{$particular->id}}" required>
+                          <option value="">Selecciona una zona</option>
+                          <?php $zonas=App\Zona::all(); ?>
+                          @foreach ($zonas as $zona)
+                            <option value="{{ $zona->id }}">{{ ucfirst($zona->identificador) }}</option>
+                          @endforeach
+                        </select>
+                        <script type="text/javascript">
+                          if (document.getElementById('zona{{ $particular->id }}') != null) document.getElementById('zona{{ $particular->id }}').value = '{!! $particular->zona_id !!}';
+                        </script>
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="horario_id" value="{{ $particular->id }}">
                         <div class="text-center">
@@ -323,7 +331,7 @@
                      <option value="{{ $clase->id }}">{{ $clase->nombre }}</option>
                    @endforeach
                  </select>
-                  <input class="form-control datepicker" type="text" placeholder="Fecha (si no es recurrente)" value="{{ old('fecha') }}" name="fecha">
+                  <input class="form-control datepicker" type="text" placeholder="Fecha (si no es recurrente)" name="fecha">
                   <input value="{{ old('hora') }}" class="form-control mitimepicker" type="text" name="hora" required  placeholder="Hora" / >
                   <label>Recurrencia</label>
                   <div class="checkbox">
@@ -335,6 +343,13 @@
                     <label><input type='checkbox' class="recurrentes" name="recurrencia[]"  value="6">S &nbsp;  &nbsp;  </label>
                     <label><input type='checkbox' class="recurrentes" name="recurrencia[]"  value="0">D &nbsp;  &nbsp;  </label>
                   </div>
+                  <select class="form-control" name="zona_id" required>
+                    <option value="">Selecciona una zona</option>
+                    <?php $zonas=App\Zona::all(); ?>
+                    @foreach ($zonas as $zona)
+                      <option value="{{ $zona->id }}">{{ ucfirst($zona->identificador) }}</option>
+                    @endforeach
+                  </select>
                   {!! csrf_field() !!}
                   <button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Guardar</button>
                 </form>
@@ -473,6 +488,21 @@
                        <h2>Teléfono: {{ $proxima->user->tel }}</h2>
                      </div>
                    </div>
+                   <div class="col-sm-12 text-center">
+                     <p>&nbsp;</p>
+
+                       <form class="" action="{{url('/terminar-orden')}}" method="post">
+                         {!! csrf_field() !!}
+                         {{ method_field('PUT') }}
+                          <input type="hidden" name="revision" value="{{$proxima->id}}">
+
+                         <button type="submit" id="botonmandar{{$proxima->id}}" class="btn btn-primary btn-lg" name="button" style="display:none;">¿Mandar a revisión?</button>
+                       </form>
+                       <button class="btn btn-primary btn-lg" id="botonmandar2{{$proxima->id}}" name="button" onclick="javascript: document.getElementById('botonmandar2{{$proxima->id}}').style.display='none'; document.getElementById('botonmandar{{$proxima->id}}').style.display='inline-block'; ">Terminar</button>
+
+
+
+                   </div>
                  </div>
                </div>
 
@@ -530,10 +560,9 @@
                        @endif
                      </div>
                      <div class="gotham2">
-                       <h2>Fecha: {{$proxima->fecha}}</h2>
-                       <h2>Hora: {{$proxima->hora}}</h2>
-                       <h2>Lugar: {{ $direccion->calle }} {{ $direccion->numero_ext }} {{ $direccion->numero_int }}, {{ $direccion->colonia }}, {{ $direccion->municipio_del }}, {{ $direccion->cp }}, {{ $direccion->estado }}.</h2>
-                       <h2>Teléfono: {{ $proxima->user->tel }}</h2>
+                       <h2>Fecha: {{$pasada->fecha}}</h2>
+                       <h2>Hora: {{$pasada->hora}}</h2>
+                       
                      </div>
                    </div>
                  </div>

@@ -1,12 +1,12 @@
 <html>
 		<head>
 				<style type="text/css">
-						body { margin: 18px; }     body, table { font: 12px/18px "Lucida Grande", Arial, Verdana, sans-serif; }     table.border { font: 11px/18px "Lucida Grande", Arial, Verdana, sans-serif; }     table.border { border-right: 1px solid #eee; border-bottom: 1px solid #eee; }     table.border td { border-top: 1px solid #eee; border-left: 1px solid #eee; }     table span { color: #888; }
+						body { margin: 18px; background-color: #ef7e19;}     body, table { font: 12px/18px "Lucida Grande", Arial, Verdana, sans-serif; }     table.border { font: 11px/18px "Lucida Grande", Arial, Verdana, sans-serif; }     table.border { border-right: 1px solid #eee; border-bottom: 1px solid #eee; }     table.border td { border-top: 1px solid #eee; border-left: 1px solid #eee; }     table span { color: #888; }
 				</style>
 				<title>{{$datos->folio}}</title>
 		</head>
-		<body>
-				<table class="invoice" width="100%" cellspacing="0" cellpadding="6">
+		<body bgcolor="#ef7e19">
+				<table class="invoice" bgcolor="#ffffff" width="600px" style="margin: 50px auto;" cellspacing="0" cellpadding="6">
 						<tbody>
 							<tr>
 								<td colspan="2">
@@ -86,7 +86,7 @@
 														<?php $descuento=App\Cuponera::where('orden_id', $orden->order_id)->first(); ?>
 														@if ($descuento)
 															<tr>
-																	<td align="right" style="width: 90%;"><strong>Descuento:</strong></td>
+																	<td align="right" style="width: 90%;"><strong>Descuento ({{$descuento->cupon->descripcion}}):</strong></td>
 																	<td class="text">-${{ $descuento->cupon->monto }}</td>
 															</tr>
 														@endif

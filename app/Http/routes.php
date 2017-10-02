@@ -23,9 +23,98 @@ Route::get('/contacto', function () {
     return view('contacto');
 });
 Route::get('/clasesdeportivas', function () {
-  $clases = App\Clases::where('tipo', 'Deportiva')->get();
-    return view('clasesdeportivas', ['clases'=>$clases]);
+  $clases = App\Clase::where('tipo', 'Deportiva')->get();
+  $zonarequest= 'todas';
+  $titulo="DEPORTIVAS";
+    return view('clases', ['clases'=>$clases,'zonarequest'=>$zonarequest,'titulo'=>$titulo]);
 });
+
+Route::post('/clasesdeportivas', function (Illuminate\Http\Request $request) {
+  $clases = App\Clase::where('tipo', 'Deportiva')->get();
+  $zonarequest= $request->zona;
+  $titulo="DEPORTIVAS";
+
+
+    return view('clases', ['clases'=>$clases,'zonarequest'=>$zonarequest,'titulo'=>$titulo]);
+});
+
+Route::get('/clasesculturales', function () {
+  $clases = App\Clase::where('tipo', 'Cultural')->get();
+  $zonarequest= 'todas';
+  $titulo="CULTURALES";
+    return view('culturales', ['clases'=>$clases,'zonarequest'=>$zonarequest,'titulo'=>$titulo]);
+});
+
+Route::post('/clasesculturales', function (Illuminate\Http\Request $request) {
+  $clases = App\Clase::where('tipo', 'Cultural')->get();
+  $zonarequest= $request->zona;
+  $titulo="CULTURALES";
+
+    return view('culturales', ['clases'=>$clases,'zonarequest'=>$zonarequest,'titulo'=>$titulo]);
+});
+
+Route::get('/eventos', function () {
+  $clases = App\Clase::where('tipo', 'Evento')->get();
+  $zonarequest= 'todas';
+  $titulo="EVENTOS";
+    return view('eventos', ['clases'=>$clases,'zonarequest'=>$zonarequest,'titulo'=>$titulo]);
+});
+
+Route::post('/eventos', function (Illuminate\Http\Request $request) {
+  $clases = App\Clase::where('tipo', 'Evento')->get();
+  $zonarequest= $request->zona;
+  $titulo="EVENTOS";
+
+    return view('eventos', ['clases'=>$clases,'zonarequest'=>$zonarequest,'titulo'=>$titulo]);
+});
+
+Route::get('/busqueda', function () {
+  $clases = App\Clase::where('nombre', 'like', '%%')->get();
+  $titulo="RESULTADOS";
+
+    return view('busqueda', ['clases'=>$clases,'busqueda'=>'','titulo'=>$titulo]);
+});
+Route::post('/busqueda', function (Illuminate\Http\Request $request) {
+  $clases = App\Clase::where('nombre', 'like', '%'.$request->busqueda.'%')->get();
+  $titulo="RESULTADOS";
+  if ($clases->isEmpty()) {
+    Illuminate\Support\Facades\Session::flash('mensaje', 'No hay resultados disponibles.');
+    Illuminate\Support\Facades\Session::flash('class', 'danger');
+  }
+
+    return view('busqueda', ['clases'=>$clases,'busqueda'=>$request->busqueda,'titulo'=>$titulo]);
+});
+
+Route::get('/coaches', function () {
+  $coaches = App\User::where('role', 'instructor')->get();
+    return view('instructores', ['coaches'=>$coaches]);
+});
+
+Route::get('/buscarcoach', function () {
+  $coaches = App\User::where('name', 'like', '%%')->where('role', 'instructor')->get();
+    return view('instructores', ['coaches'=>$coaches]);
+});
+
+Route::post('/buscarcoach', function (Illuminate\Http\Request $request) {
+  $coaches = App\User::where('name', 'like', '%'.$request->busqueda.'%')->where('role', 'instructor')->get();
+    return view('instructores', ['coaches'=>$coaches]);
+});
+
+Route::get('/residenciales', function () {
+  $condominios = App\Condominio::all();
+    return view('condominios', ['condominios'=>$condominios]);
+});
+
+Route::get('/buscarresidencial', function () {
+  $condominios = App\Condominio::where('identificador', 'like', '%%')->get();
+    return view('condominios', ['condominios'=>$condominios]);
+});
+Route::post('/buscarresidencial', function (Illuminate\Http\Request $request) {
+  $condominios = App\Condominio::where('identificador', 'like', '%'.$request->busqueda.'%')->get();
+    return view('condominios', ['condominios'=>$condominios]);
+});
+
+
 Route::get('/legales', function (Illuminate\Http\Request $request) {
     return view('legales', ['request'=>$request]);
 });
@@ -49,7 +138,7 @@ Route::post('/bolsa-de-trabajo', function (Illuminate\Http\Request $request) {
         $m->to('alx.morales@outlook.com', 'FITCOACH México')->subject('Bolsa de trabajo');
     });
     Illuminate\Support\Facades\File::delete($path . $name);
-    Illuminate\Support\Facades\Session::flash('mensaje', '!Mensaje enviado!');
+    Illuminate\Support\Facades\Session::flash('mensaje', '¡Mensaje enviado!');
     Illuminate\Support\Facades\Session::flash('class', 'success');
     return redirect()->intended(url('/bolsa-de-trabajo'));
 });
@@ -66,30 +155,14 @@ Route::post('/contacto', function (Illuminate\Http\Request $request) {
         $m->to('alx.morales@outlook.com', 'FITCOACH México')->subject('Contacto');
     });
 
-    Illuminate\Support\Facades\Session::flash('mensaje', '!Mensaje enviado!');
+    Illuminate\Support\Facades\Session::flash('mensaje', '¡Mensaje enviado!');
     Illuminate\Support\Facades\Session::flash('class', 'success');
     return redirect()->intended(url('/contacto'));
 });
 
 
-Route::get('/coaches', function () {
-  $coaches = App\User::where('role', 'instructor')->get();
-    return view('instructores', ['coaches'=>$coaches]);
-});
-Route::get('/residenciales', function () {
-  $condominios = App\Condominio::all();
-    return view('condominios', ['condominios'=>$condominios]);
-});
-Route::get('/clasesdeportivas', function () {
 
-  $clases = App\Clase::where('tipo', 'Deportiva')->get();
-    return view('clases', ['clases'=>$clases]);
-});
-Route::post('/clasesdeportivas', function (Illuminate\Http\Request $request) {
 
-  $clases = App\Clase::where('tipo', 'Deportiva')->get();
-    return view('clases', ['clases'=>$clases]);
-});
 
 Route::post('carrito', 'OrdenController@cartinst');
 Route::get('/carrito', function () {
@@ -133,9 +206,18 @@ Route::group(['middleware' => 'administradores'], function(){
     $modulos = App\Modulo::all();
       return view('admin.usuarios', ['usuarios'=>$usuarios, 'modulos'=>$modulos]);
   });
+  Route::post('/admins', function (Illuminate\Http\Request $request) {
+    $usuarios = App\User::where('name', 'like', '%'.$request->busqueda.'%')->where('role', 'admin')->get();
+    $modulos = App\Modulo::all();
+      return view('admin.usuarios', ['usuarios'=>$usuarios, 'modulos'=>$modulos]);
+  });
   Route::get('/condominios', function () {
     $condominios = App\Condominio::all();
       return view('admin.condominios', ['condominios'=>$condominios]);
+  });
+  Route::post('/condominios', function (Illuminate\Http\Request $request) {
+    $condominios = App\Condominio::where('identificador', 'like', '%'.$request->busqueda.'%')->get();
+    return view('admin.condominios', ['condominios'=>$condominios]);
   });
   Route::post('agregar-condominio', 'CondominioController@store');
   Route::put('actualizar-condominio', 'CondominioController@update');
@@ -154,6 +236,13 @@ Route::group(['middleware' => 'administradores'], function(){
     $coaches = App\User::where('role', 'instructor')->get();
     $clases = App\Clase::all();
     $condominios = App\Condominio::all();
+      return view('admin.grupos', ['grupos'=>$grupos, 'coaches'=>$coaches, 'clases'=>$clases, 'condominios'=>$condominios]);
+  });
+  Route::post('/grupos', function (Illuminate\Http\Request $request) {
+    $grupos = App\Residencial::all();
+    $coaches = App\User::where('role', 'instructor')->get();
+    $clases = App\Clase::all();
+    $condominios = App\Condominio::where('identificador', 'like', '%'.$request->busqueda.'%')->get();
       return view('admin.residenciales', ['grupos'=>$grupos, 'coaches'=>$coaches, 'clases'=>$clases, 'condominios'=>$condominios]);
   });
   Route::post('agregar-grupo', 'ResidencialController@store');
@@ -170,6 +259,11 @@ Route::group(['middleware' => 'administradores'], function(){
   }
 });
 
+Route::get('/clientes', function () {
+$usuarios = App\User::where('role', 'usuario')->get();
+  return view('admin.clientes', ['usuarios'=>$usuarios]);
+});
+
 Route::post('agregar-slide', 'SliderController@store');
 Route::any('actualizar-slide/{id}', 'SliderController@update');
 Route::any('eliminar-slide/{id}', 'SliderController@destroy');
@@ -177,6 +271,24 @@ Route::any('eliminar-slide/{id}', 'SliderController@destroy');
   Route::post('agregar-admin', 'UserController@storeadmin');
   Route::put('actualizar-admin', 'UserController@updateadmin');
   Route::delete('eliminar-admin', 'UserController@destroyadmin');
+
+  Route::delete('eliminar-cliente', 'UserController@destroycliente');
+
+  Route::get('/coaches-admin', function () {
+    $usuarios = App\User::where('role', 'instructor')->get();
+
+      return view('admin.coaches', ['usuarios'=>$usuarios]);
+  });
+  Route::post('/coaches-admin', function (Illuminate\Http\Request $request) {
+    $usuarios = App\User::where('name', 'like', '%'.$request->busqueda.'%')->where('role', 'instructor')->get();
+
+      return view('admin.coaches', ['usuarios'=>$usuarios]);
+  });
+  Route::post('agregar-coach', 'UserController@storecoach');
+  Route::put('actualizar-coach', 'UserController@updatecoach');
+  Route::delete('eliminar-coach', 'UserController@destroycoach');
+
+
   Route::get('ventas', 'OrdenController@ventas');
   Route::post('ventas', 'OrdenController@ventaspost');
   Route::get('printinvoice/{id}', 'OrdenController@invoice');
@@ -193,6 +305,9 @@ Route::any('eliminar-slide/{id}', 'SliderController@destroy');
   Route::put('comentarios', 'OrdenController@comentarios');
   Route::post('abonar', 'OrdenController@abonar');
   Route::post('cancelar', 'OrdenController@cancelar');
+  Route::get('printlist/{id}', 'ResidencialController@printlist');
+  Route::get('printgroups/{id}', 'ResidencialController@printgroups');
+
 });
 
 
@@ -245,4 +360,5 @@ Route::group(['middleware' => 'instructores'], function(){
 
   Route::post('actualizar-bancarios', 'BancariosController@store');
   Route::put('actualizar-bancarios', 'BancariosController@update');
+  Route::put('terminar-orden', 'OrdenController@terminar');
 });

@@ -21,7 +21,6 @@ class DetalleSeeder extends Seeder
         'tel'=>'5555555',
         'rfc'=>'MOAJ920930LK0',
         'clases'=>'1',
-        'zonas'=>'1',
         'user_id'=>'3'
       ]);
       DB::table('detalles')->insert([
@@ -29,7 +28,6 @@ class DetalleSeeder extends Seeder
         'tel'=>'5555555',
         'rfc'=>'MOAJ920930LK0',
         'clases'=>'1',
-        'zonas'=>'1',
         'user_id'=>'4'
       ]);
       DB::table('detalles')->insert([
