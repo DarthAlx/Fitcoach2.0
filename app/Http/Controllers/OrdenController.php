@@ -417,8 +417,8 @@ class OrdenController extends Controller
           $order=\Conekta\Order::create(array(
             'currency' => 'MXN',
             "customer_info" => array(
-              "name" => $request->name,
-              "email" => $request->email,
+              "name" => ''.$request->name,
+              "email" => ''.$request->email,
               "phone" => "+521".$request->phone
             ), //customer_info
             'line_items' => $productos,
