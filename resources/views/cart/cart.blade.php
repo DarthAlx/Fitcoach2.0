@@ -57,7 +57,12 @@
     											Coach: {{ $coach->name }}<br>
                           @if ($product->options->tipo=="residencial")
                             <?php $residencial=App\Residencial::find($product->id); $esresidencial=true;?>
-                          Dirección: {{$residencial->condominio->direccion}}
+                            @if ($residencial->tipo=="Evento")
+                              Dirección: {{$residencial->direccionevento}}
+                            @else
+                              Dirección: {{$residencial->condominio->direccion}}
+                            @endif
+
                         @else
                           <?php $esresidencial=false; ?>
                           @endif

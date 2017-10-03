@@ -25,6 +25,9 @@ class ResidencialTable extends Migration
           $table->string('ocupados');
           $table->string('tipo');
           $table->string('descripcion');
+          $table->string('nombreevento');
+          $table->string('direccionevento');
+          $table->string('imagenevento');
           $table->timestamps();
       });
     }

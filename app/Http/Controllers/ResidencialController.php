@@ -11,6 +11,8 @@ use App\Orden;
 use App\Condominio;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ResidencialController extends Controller
 {
@@ -44,11 +46,49 @@ class ResidencialController extends Controller
     {
       $guardar = new Residencial($request->all());
       $guardar->ocupados=0;
-      $guardar->save();
-      Session::flash('mensaje', '¡Grupo guardado!');
+
+      if ($guardar->tipo="Evento") {
+        if ($request->hasFile('imagenevento')) {
+        $file = $request->file('imagenevento');
+        if ($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="png") {
+
+
+          $name = $request->nombreevento ."-". time(). "." . $file->getClientOriginalExtension();
+          $path = base_path('uploads/clases/');
+
+          $file-> move($path, $name);
+
+          $guardar->nombreevento=$request->nombreevento;
+          $guardar->direccionevento=$request->direccionevento;
+          $guardar->imagenevento = $name;
+
+          $guardar->save();
+          Session::flash('mensaje', '¡Evento actualizado!');
+
+        }
+        else{
+          Session::flash('mensaje', 'El archivo no es una imagen valida.');
+          Session::flash('class', 'danger');
+          return redirect()->intended(url('/grupos'));
+        }
+
+      }
+      else{
+        Session::flash('mensaje', 'El archivo no es una imagen valida.');
+        Session::flash('class', 'danger');
+        return redirect()->intended(url('/grupos'));
+      }
+
+      }
+      else {
+        $guardar->save();
+        Session::flash('mensaje', '¡Grupo guardado!');
+      }
+
       Session::flash('class', 'success');
       return redirect()->intended(url('/grupos'));
     }
+
 
     /**
      * Display the specified resource.
@@ -92,10 +132,48 @@ class ResidencialController extends Controller
       $grupo->tipo = $request->tipo;
       $grupo->cupo = $request->cupo;
       $grupo->descripcion = $request->descripcion;
-      $grupo->save();
-      Session::flash('mensaje', '¡Grupo actualizado!');
-      Session::flash('class', 'success');
-      return redirect()->intended(url('/grupos'));
+      if ($request->tipo=="Evento") {
+        if ($request->hasFile('imagenevento')) {
+        $file = $request->file('imagenevento');
+        if ($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="png") {
+
+
+          $name = $request->nombreevento ."-". time(). "." . $file->getClientOriginalExtension();
+          $path = base_path('uploads/clases/');
+
+          $file-> move($path, $name);
+
+          $grupo->nombreevento=$request->nombreevento;
+          $grupo->direccionevento=$request->direccionevento;
+          $grupo->imagenevento = $name;
+
+          $grupo->save();
+          Session::flash('mensaje', '¡Evento actualizado!');
+          Session::flash('class', 'success');
+          return redirect()->intended(url('/grupos'));
+        }
+        else{
+          Session::flash('mensaje', 'El archivo no es una imagen valida.');
+          Session::flash('class', 'danger');
+          return redirect()->intended(url('/grupos'));
+        }
+
+      }
+      else{
+        Session::flash('mensaje', 'El archivo no es una imagen valida.');
+        Session::flash('class', 'danger');
+        return redirect()->intended(url('/grupos'));
+      }
+
+      }
+      else {
+        $grupo->save();
+        Session::flash('mensaje', '¡Grupo actualizado!');
+        Session::flash('class', 'success');
+        return redirect()->intended(url('/grupos'));
+      }
+
+
     }
 
     /**

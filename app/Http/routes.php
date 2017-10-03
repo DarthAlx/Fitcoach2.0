@@ -90,6 +90,11 @@ Route::get('/coaches', function () {
     return view('instructores', ['coaches'=>$coaches]);
 });
 
+Route::get('/eventos', function () {
+  $eventos = App\Residencial::where('tipo', 'Evento')->get();
+    return view('eventos', ['eventos'=>$eventos]);
+});
+
 Route::get('/buscarcoach', function () {
   $coaches = App\User::where('name', 'like', '%%')->where('role', 'instructor')->get();
     return view('instructores', ['coaches'=>$coaches]);

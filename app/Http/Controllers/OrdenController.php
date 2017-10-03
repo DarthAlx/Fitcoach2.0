@@ -42,12 +42,19 @@ class OrdenController extends Controller
 
       }
 
-      if ($request->tipo=="Residencial"&&($esresidencial==true||Cart::content()->count()==0)) {
+      if (($request->tipo=="Residencial"||$request->tipo=="Evento")&&($esresidencial==true||Cart::content()->count()==0)) {
         $clase=Residencial::find($request->residencial_id);
-        Cart::add($clase->id,$clase->clase->nombre,1,$clase->precio, ['tipo'=>'residencial','fecha' => $clase->fecha,'hora' => $clase->hora, 'coach' => $clase->user_id]);
-        Session::flash('mensaje', 'La clase que vas a reservar es únicamente para condóminos del residencial '.$clase->condominio->identificador.'. <br>
-No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
-        Session::flash('class', 'warning');
+
+        if ($request->tipo=="Residencial") {
+          Cart::add($clase->id,$clase->clase->nombre,1,$clase->precio, ['tipo'=>'residencial','fecha' => $clase->fecha,'hora' => $clase->hora, 'coach' => $clase->user_id]);
+          Session::flash('mensaje', 'La clase que vas a reservar es únicamente para condóminos del residencial '.$clase->condominio->identificador.'. <br>
+  No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
+          Session::flash('class', 'warning');
+        }
+        if ($request->tipo=="Evento") {
+
+          Cart::add($clase->id,$clase->nombreevento,1,$clase->precio, ['tipo'=>'residencial','fecha' => $clase->fecha,'hora' => $clase->hora, 'coach' => $clase->user_id]);
+        }
       }
       elseif($request->tipo=="Particular"&&$esresidencial==false) {
         foreach ($request->carrito as $item) {
@@ -484,7 +491,13 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
           $guardar->tipo=$producto['metadata']['tipo'];
           if ($producto['metadata']['tipo']=="residencial") {
             $residencial=Residencial::find($producto['metadata']['asociado']);
-            $guardar->direccion=$residencial->condominio->identificador.". ".$residencial->condominio->direccion;
+            if ($residencial->tipo=="Evento") {
+              $guardar->direccion=$residencial->direccionevento;
+            }
+            elseif ($residencial->tipo=="Residencial") {
+              $guardar->direccion=$residencial->condominio->identificador.". ".$residencial->condominio->direccion;
+            }
+
           }else {
             if ($request->direccion==""&&$request->esresidencial!="true") {
               $guardar->direccion=$direccion->id;
@@ -571,7 +584,7 @@ No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
       $ordenes=Orden::where('order_id', $id)->get();
       $datos=Orden::where('order_id', $id)->first();
       $user=User::find($datos->user_id);
-        Mail::send('emails.receipt', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {
+        Mail::send('emails.receiptmail', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {
             $m->from('alxunscarred@gmail.com', 'FITCOACH México');
             $m->to($user->email, $user->name)->subject('¡Orden recibida!');
         });
