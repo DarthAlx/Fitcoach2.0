@@ -41,7 +41,11 @@
 			@if ($coaches)
 				@foreach ($coaches as $coach)
 	        <div class="teamItem">
+						@if($coach->detalles)
 	          <a><img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" alt=""></a>
+					@else
+						<a><img src="{{ url('uploads/avatars') }}/dummy.png" alt=""></a>
+					@endif
 	          <div class="overlay" data-toggle="modal" data-target="#coach{{$coach->id}}">
 	            <div class="teamItemNameWrap">
 								<?php $nombre=explode(" ",$coach->name); ?>
