@@ -48,7 +48,7 @@
         <img src="{{ url('images/clases.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/clases_b.png')}}'" onmouseout="this.src='{{ url('images/clases.png')}}'" alt="">
       </a>
     </div>
-    
+
     <div class="col-sm-4 col-xs-6 modulo" id="clientes" style="display:none;">
       <a href="{{ url('/clientes') }}">
         <img src="{{ url('images/clientes.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/clientes_b.png')}}'" onmouseout="this.src='{{ url('images/clientes.png')}}'" alt="">
@@ -86,13 +86,13 @@
 
 <script type="text/javascript">
   <?php $permisos=explode(",",$user->detalles->permisos); ?>
-
-  @foreach ($permisos as $permiso)
-    document.getElementById("{{$permiso}}").style.display="block";
-  @endforeach
   @if ($user->role=="superadmin")
     $(".modulo").show();
   @endif
+  @foreach ($permisos as $permiso)
+    document.getElementById("{{$permiso}}").style.display="block";
+  @endforeach
+
 </script>
 
 
