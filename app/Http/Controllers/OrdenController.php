@@ -194,7 +194,7 @@ class OrdenController extends Controller
           $user=User::find($cupon->user->id);
 
             Mail::send('emails.cupon', ['cupon'=>$cupon,'user'=>$user], function ($m) use ($user) {
-                $m->from('alxunscarred@gmail.com', 'FITCOACH México');
+                $m->from('noreply@fitcoach.mx', 'FITCOACH México');
                 $m->to($user->email, $user->name)->subject('¡Tu cupón de reembolso!');
             });
 
@@ -537,7 +537,7 @@ class OrdenController extends Controller
 
         Cart::destroy();
         $this->sendinvoice($order->id);
-        //$this->sendclassrequest($order->id);
+        $this->sendclassrequest($order->id);
         return redirect()->intended(url('/completa'));
 
       } catch (\Conekta\ProccessingError $error){
@@ -585,7 +585,7 @@ class OrdenController extends Controller
       $datos=Orden::where('order_id', $id)->first();
       $user=User::find($datos->user_id);
         Mail::send('emails.receiptmail', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {
-            $m->from('alxunscarred@gmail.com', 'FITCOACH México');
+            $m->from('noreply@fitcoach.mx', 'FITCOACH México');
             $m->to($user->email, $user->name)->subject('¡Orden recibida!');
         });
     }
@@ -596,7 +596,7 @@ class OrdenController extends Controller
       $datos=Orden::where('order_id', $id)->first();
       $user=User::find($datos->coach_id);
         Mail::send('emails.recibida', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {
-            $m->from('alxunscarred@gmail.com', 'FITCOACH México');
+            $m->from('noreply@fitcoach.mx', 'FITCOACH México');
             $m->to($user->email, $user->name)->subject('¡Nueva clase agendada!');
         });
     }
@@ -607,7 +607,7 @@ class OrdenController extends Controller
       $datos=Orden::where('id', $id)->first();
       $user=User::find($datos->coach_id);
         Mail::send('emails.calcelada', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {
-            $m->from('alxunscarred@gmail.com', 'FITCOACH México');
+            $m->from('noreply@fitcoach.mx', 'FITCOACH México');
             $m->to($user->email, $user->name)->subject('¡Cancelación de clase!');
         });
     }
@@ -617,7 +617,7 @@ class OrdenController extends Controller
 
       $user=$pago->user;
         Mail::send('emails.pago', ['pago'=>$pago,'user'=>$user], function ($m) use ($user) {
-            $m->from('alxunscarred@gmail.com', 'FITCOACH México');
+            $m->from('noreply@fitcoach.mx', 'FITCOACH México');
             $m->to($user->email, $user->name)->subject('¡Nuevo pago!');
         });
     }
