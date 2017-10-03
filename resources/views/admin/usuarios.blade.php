@@ -97,7 +97,7 @@
 															@foreach ($modulos as $modulo)
 					                       <div class="checkbox">
 					                        <label>
-					                          <input type='checkbox' class="permisos" name="permisos[]"  value="{{$modulo->id}}">{{ ucfirst($modulo->nombre) }}
+					                          <input type='checkbox' class="permisos" name="permisos[]"  value="{{$modulo->nombre}}">{{ ucfirst($modulo->nombre) }}
 					                        </label>
 					                       </div>
 					                    @endforeach
@@ -149,7 +149,7 @@
 		 															@foreach ($modulos as $modulo)
 																		<div class="checkbox">
 																		 <label>
-																			 <input type='checkbox' class="permisos" name="permisos[]" id="check{{$admin->id}}{{$modulo->id}}"  value="{{$modulo->id}}">{{ ucfirst($modulo->nombre) }}
+																			 <input type='checkbox' class="permisos" name="permisos[]" id="check{{$admin->id}}{{$modulo->id}}"  value="{{$modulo->nombre}}">{{ ucfirst($modulo->nombre) }}
 																		 </label>
 																		</div>
 		 					                    @endforeach

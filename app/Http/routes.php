@@ -53,20 +53,6 @@ Route::post('/clasesculturales', function (Illuminate\Http\Request $request) {
     return view('culturales', ['clases'=>$clases,'zonarequest'=>$zonarequest,'titulo'=>$titulo]);
 });
 
-Route::get('/eventos', function () {
-  $clases = App\Clase::where('tipo', 'Evento')->get();
-  $zonarequest= 'todas';
-  $titulo="EVENTOS";
-    return view('eventos', ['clases'=>$clases,'zonarequest'=>$zonarequest,'titulo'=>$titulo]);
-});
-
-Route::post('/eventos', function (Illuminate\Http\Request $request) {
-  $clases = App\Clase::where('tipo', 'Evento')->get();
-  $zonarequest= $request->zona;
-  $titulo="EVENTOS";
-
-    return view('eventos', ['clases'=>$clases,'zonarequest'=>$zonarequest,'titulo'=>$titulo]);
-});
 
 Route::get('/busqueda', function () {
   $clases = App\Clase::where('nombre', 'like', '%%')->get();
@@ -94,7 +80,10 @@ Route::get('/eventos', function () {
   $eventos = App\Residencial::where('tipo', 'Evento')->get();
     return view('eventos', ['eventos'=>$eventos]);
 });
-
+Route::post('/eventos', function (Illuminate\Http\Request $request) {
+  $eventos = App\Residencial::where('tipo', 'Evento')->where('nombreevento', 'like', '%'.$request->busqueda.'%')->get();
+    return view('eventos', ['eventos'=>$eventos]);
+});
 Route::get('/buscarcoach', function () {
   $coaches = App\User::where('name', 'like', '%%')->where('role', 'instructor')->get();
     return view('instructores', ['coaches'=>$coaches]);
@@ -264,6 +253,13 @@ Route::group(['middleware' => 'administradores'], function(){
   }
 });
 
+Route::get('/zonas', function () {
+
+  $zonas = App\Zona::all();
+  return view('admin.zonas', ['zonas'=>$zonas]) ;
+
+});
+
 Route::get('/clientes', function () {
 $usuarios = App\User::where('role', 'usuario')->get();
   return view('admin.clientes', ['usuarios'=>$usuarios]);
@@ -272,6 +268,10 @@ $usuarios = App\User::where('role', 'usuario')->get();
 Route::post('agregar-slide', 'SliderController@store');
 Route::any('actualizar-slide/{id}', 'SliderController@update');
 Route::any('eliminar-slide/{id}', 'SliderController@destroy');
+
+Route::post('agregar-zona', 'ZonaController@store');
+Route::any('actualizar-zona/{id}', 'ZonaController@update');
+Route::any('eliminar-zona/{id}', 'ZonaController@destroy');
 
   Route::post('agregar-admin', 'UserController@storeadmin');
   Route::put('actualizar-admin', 'UserController@updateadmin');

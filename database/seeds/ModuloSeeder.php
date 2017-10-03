@@ -12,7 +12,7 @@ class ModuloSeeder extends Seeder
     public function run()
     {
       DB::table('modulos')->insert([
-        'nombre'=>'usuarios'
+        'nombre'=>'admins'
       ]);
       DB::table('modulos')->insert([
         'nombre'=>'condominios'
@@ -33,7 +33,20 @@ class ModuloSeeder extends Seeder
         'nombre'=>'nomina'
       ]);
       DB::table('modulos')->insert([
-        'nombre'=>'listas'
+        'nombre'=>'clasesvista'
+      ]);
+
+      DB::table('modulos')->insert([
+        'nombre'=>'slides'
+      ]);
+      DB::table('modulos')->insert([
+        'nombre'=>'coaches-admin'
+      ]);
+      DB::table('modulos')->insert([
+        'nombre'=>'cupones'
+      ]);
+      DB::table('modulos')->insert([
+        'nombre'=>'zonas'
       ]);
 
     }

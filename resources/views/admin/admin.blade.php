@@ -15,66 +15,65 @@
       </div>
   </div>
   <div class="row">
-    <div class="col-sm-4 col-xs-6">
+    <div class="col-sm-4 col-xs-6 modulo" id="admins" style="display:none;">
       <a href="{{ url('/admins') }}">
         <img src="{{ url('images/usuarios.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/usuarios_b.png')}}'" onmouseout="this.src='{{ url('images/usuarios.png')}}'" alt="">
       </a>
     </div>
-    <div class="col-sm-4 col-xs-6">
+    <div class="col-sm-4 col-xs-6 modulo" id="coaches-admin" style="display:none;">
       <a href="{{ url('/coaches-admin') }}">
         <img src="{{ url('images/coaches.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/coaches_b.png')}}'" onmouseout="this.src='{{ url('images/coaches.png')}}'" alt="">
       </a>
     </div>
-    <p class="visible-xs">&nbsp;</p>
-    <div class="col-sm-4 col-xs-6">
+
+    <div class="col-sm-4 col-xs-6 modulo" id="condominios" style="display:none;">
       <a href="{{ url('/condominios') }}">
         <img src="{{ url('images/condominios.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/condominios_b.png')}}'" onmouseout="this.src='{{ url('images/condominios.png')}}'" alt="">
       </a>
     </div>
-    <p class="hidden-xs">&nbsp;</p>
-    <div class="col-sm-4 col-xs-6">
+
+    <div class="col-sm-4 col-xs-6 modulo" id="grupos" style="display:none;">
       <a href="{{ url('/grupos') }}">
         <img src="{{ url('images/grupos.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/grupos_b.png')}}'" onmouseout="this.src='{{ url('images/grupos.png')}}'" alt="">
       </a>
     </div>
-    <div class="col-sm-4 col-xs-6">
+    <div class="col-sm-4 col-xs-6 modulo" id="ventas" style="display:none;">
       <a href="{{ url('/ventas') }}">
         <img src="{{ url('images/ventas.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/ventas_b.png')}}'" onmouseout="this.src='{{ url('images/ventas.png')}}'" alt="">
       </a>
     </div>
-    <p class="visible-xs">&nbsp;</p>
-    <div class="col-sm-4 col-xs-6">
+
+    <div class="col-sm-4 col-xs-6 modulo" id="clases" style="display:none;">
       <a href="{{ url('/clases') }}">
         <img src="{{ url('images/clases.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/clases_b.png')}}'" onmouseout="this.src='{{ url('images/clases.png')}}'" alt="">
       </a>
     </div>
-    <p class="hidden-xs">&nbsp;</p>
-    <div class="col-sm-4 col-xs-6">
+    
+    <div class="col-sm-4 col-xs-6 modulo" id="clientes" style="display:none;">
       <a href="{{ url('/clientes') }}">
         <img src="{{ url('images/clientes.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/clientes_b.png')}}'" onmouseout="this.src='{{ url('images/clientes.png')}}'" alt="">
       </a>
     </div>
 
 
-    <div class="col-sm-4 col-xs-6">
+    <div class="col-sm-4 col-xs-6 modulo" id="nomina" style="display:none;">
       <a href="{{ url('/nomina') }}">
         <img src="{{ url('images/nomina.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/nomina_b.png')}}'" onmouseout="this.src='{{ url('images/nomina.png')}}'" alt="">
       </a>
     </div>
-    <p class="visible-xs">&nbsp;</p>
-    <div class="col-sm-4 col-xs-6">
+
+    <div class="col-sm-4 col-xs-6 modulo" id="cupones" style="display:none;">
       <a href="{{ url('/cupones') }}">
         <img src="{{ url('images/cupones.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/cupones_b.png')}}'" onmouseout="this.src='{{ url('images/cupones.png')}}'" alt="">
       </a>
     </div>
-    <p class="hidden-xs">&nbsp;</p>
-    <p class="visible-xs">&nbsp;</p>
-    <div class="col-sm-4 col-xs-6">
+
+    <div class="col-sm-4 col-xs-6 modulo" id="clasesvista" style="display:none;">
       <a href="{{ url('/clasesvista') }}">
         <img src="{{ url('images/rclases.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/rclases_b.png')}}'" onmouseout="this.src='{{ url('images/rclases.png')}}'" alt="">
       </a>
     </div>
-    <div class="col-sm-4 col-xs-6">
+    <div class="col-sm-4 col-xs-6 modulo" id="slides" style="display:none;">
       <a href="{{ url('/slides') }}">
         <img src="{{ url('images/slider.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/slider_b.png')}}'" onmouseout="this.src='{{ url('images/slider.png')}}'" alt="">
       </a>
@@ -84,6 +83,17 @@
 
 
 </div>
+
+<script type="text/javascript">
+  <?php $permisos=explode(",",$user->detalles->permisos); ?>
+
+  @foreach ($permisos as $permiso)
+    document.getElementById("{{$permiso}}").style.display="block";
+  @endforeach
+  @if ($user->role=="superadmin")
+    $(".modulo").show();
+  @endif
+</script>
 
 
 

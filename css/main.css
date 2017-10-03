@@ -795,3 +795,7 @@ h2, h4{
     -webkit-appearance: media-mute-button;
 		    text-indent: 0;
 }
+
+.modulo{
+	margin-bottom: 20px;
+}

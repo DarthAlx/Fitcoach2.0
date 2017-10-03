@@ -12,27 +12,13 @@ class DetalleSeeder extends Seeder
     public function run()
     {
       DB::table('detalles')->insert([
-        'tel'=>'5555555555',
-        'intereses'=>'Yoga',
+        'permisos'=>'',
+        'user_id'=>'1'
+      ]);
+      DB::table('detalles')->insert([
+        'permisos'=>'',
         'user_id'=>'2'
       ]);
-      DB::table('detalles')->insert([
-        'photo'=>'dummy.png',
-        'tel'=>'5555555',
-        'rfc'=>'MOAJ920930LK0',
-        'clases'=>'1',
-        'user_id'=>'3'
-      ]);
-      DB::table('detalles')->insert([
-        'photo'=>'dummy.png',
-        'tel'=>'5555555',
-        'rfc'=>'MOAJ920930LK0',
-        'clases'=>'1',
-        'user_id'=>'4'
-      ]);
-      DB::table('detalles')->insert([
-        'photo'=>'dummy.png',
-        'user_id'=>'4'
-      ]);
+
     }
 }
