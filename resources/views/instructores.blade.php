@@ -41,7 +41,7 @@
 			@if ($coaches)
 				@foreach ($coaches as $coach)
 	        <div class="teamItem">
-						@if($coach->detalles)
+						@if($coach->detalles->photo!="")
 	          <a><img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" alt=""></a>
 					@else
 						<a><img src="{{ url('uploads/avatars') }}/dummy.png" alt=""></a>
