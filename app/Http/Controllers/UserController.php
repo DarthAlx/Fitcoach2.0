@@ -237,7 +237,7 @@ class UserController extends Controller
           $guardar = new User($request->all());
           $guardar->role="instructor";
           $guardar->password=bcrypt($request->password);
-          $guardar->save();
+
           $permisos = new Detalle();
 
           if ($request->hasFile('photo')) {
@@ -273,6 +273,7 @@ class UserController extends Controller
               Session::flash('class', 'danger');
               return redirect()->intended(url('/coaches-admin'))->withInput();
             }
+            $guardar->save();
           $permisos->save();
           Session::flash('mensaje', '¡Usuario guardado!');
           Session::flash('class', 'success');
@@ -298,7 +299,7 @@ public function updatecoach(Request $request)
         if ($request->password) {
           $guardar->password=bcrypt($request->password);
         }
-        $guardar->save();
+
         $permisos = Detalle::find($guardar->detalles->id);
         if ($request->hasFile('photo')) {
         $file = $request->file('photo');
@@ -337,7 +338,7 @@ public function updatecoach(Request $request)
 
 
 
-
+          $guardar->save();
         $permisos->save();
         Session::flash('mensaje', '¡Usuario actualizado!');
         Session::flash('class', 'success');
