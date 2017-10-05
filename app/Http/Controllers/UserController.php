@@ -363,12 +363,12 @@ public function destroycoach(Request $request)
       $residenciales=Residencial::where('user_id', $request->admin_id)->get();
       if ($particulares) {
         foreach ($particular as $particular) {
-          $particular->delete()
+          $particular->delete();
         }
       }
       if ($residenciales) {
         foreach ($residencial as $residencial) {
-          $residencial->delete()
+          $residencial->delete();
         }
       }
 
