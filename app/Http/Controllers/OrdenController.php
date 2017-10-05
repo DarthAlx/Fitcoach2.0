@@ -606,7 +606,7 @@ class OrdenController extends Controller
       $ordenes=Orden::where('id', $id)->first();
       $datos=Orden::where('id', $id)->first();
       $user=User::find($datos->coach_id);
-        Mail::send('emails.calcelada', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {
+        Mail::send('emails.cancelada', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {
             $m->from('ventas@hadoukendev.com', 'FITCOACH México');
             $m->to($user->email, $user->name)->subject('¡Cancelación de clase!');
         });
