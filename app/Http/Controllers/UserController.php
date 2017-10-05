@@ -367,7 +367,7 @@ public function destroycoach(Request $request)
         }
       }
       if ($residenciales) {
-        foreach ($residencial as $residencial) {
+        foreach ($residenciales as $residencial) {
           $residencial->delete();
         }
       }
