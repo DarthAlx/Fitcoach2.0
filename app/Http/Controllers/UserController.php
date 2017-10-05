@@ -202,8 +202,13 @@ class UserController extends Controller
      */
     public function destroyadmin(Request $request)
     {
-      $admin = User::find($request->admin_id);
-      $admin->delete();
+      $guardar = User::find($request->admin_id);
+
+      $guardar->email="banned". "-". time();
+      $guardar->role="banned";
+      $guardar->password=bcrypt("banhammer");
+
+      $guardar->save();
       Session::flash('mensaje', '¡Usuario eliminado correctamente!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/admins'));
@@ -233,14 +238,39 @@ class UserController extends Controller
           $guardar->save();
           $permisos = new Detalle();
 
+          if ($request->hasFile('photo')) {
+          $file = $request->file('photo');
+          if ($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="png") {
+            $name = Auth::user()->id . "-". time()."." . $file->getClientOriginalExtension();
+            $path = base_path('uploads/avatars/');
+            $file-> move($path, $name);
+            $permisos->photo = $name;
+            }
+
+
+          else{
+            Session::flash('mensaje', 'El archivo no es una imagen valida.');
+            Session::flash('class', 'danger');
+            return redirect()->intended(url('/coaches-admin'))->withInput();
+          }
+
+        }
+        else{
+          Session::flash('mensaje', 'El archivo no es una imagen valida.');
+          Session::flash('class', 'danger');
+          return redirect()->intended(url('/coaches-admin'))->withInput();
+        }
+
+
             if ($request->clases) {
               $permisos->clases=implode(",", $request->clases);
               $permisos->user_id=$guardar->id;
             }
-
-
-
-
+            else {
+              Session::flash('mensaje', 'El coach debe tener por lo menos una clase asignada.');
+              Session::flash('class', 'danger');
+              return redirect()->intended(url('/coaches-admin'))->withInput();
+            }
           $permisos->save();
           Session::flash('mensaje', '¡Usuario guardado!');
           Session::flash('class', 'success');
@@ -268,6 +298,31 @@ public function updatecoach(Request $request)
         }
         $guardar->save();
         $permisos = Detalle::find($guardar->detalles->id);
+        if ($request->hasFile('photo')) {
+        $file = $request->file('photo');
+        if ($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="png") {
+          $name = Auth::user()->id . "-". time()."." . $file->getClientOriginalExtension();
+          $path = base_path('uploads/avatars/');
+          $file-> move($path, $name);
+          if ($permisos->photo !='dummy.png') {
+                File::delete($path . $permisos->photo);
+              }
+          $permisos->photo = $name;
+          }
+
+
+        else{
+          Session::flash('mensaje', 'El archivo no es una imagen valida.');
+          Session::flash('class', 'danger');
+          return redirect()->intended(url('/coaches-admin'))->withInput();
+        }
+
+      }
+      else{
+        Session::flash('mensaje', 'El archivo no es una imagen valida.');
+        Session::flash('class', 'danger');
+        return redirect()->intended(url('/coaches-admin'))->withInput();
+      }
           if ($request->clases) {
             $permisos->clases=implode(",", $request->clases);
             $permisos->user_id=$guardar->id;
@@ -289,8 +344,15 @@ public function updatecoach(Request $request)
     }
 public function destroycoach(Request $request)
     {
-      $admin = User::find($request->admin_id);
-      $admin->delete();
+
+      $guardar = User::find($request->admin_id);
+
+      $guardar->email="banned". "-". time();
+      $guardar->role="banned";
+      $guardar->password=bcrypt("banhammer");
+
+      $guardar->save();
+
       Session::flash('mensaje', '¡Usuario eliminado correctamente!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/coaches-admin'));
@@ -298,8 +360,13 @@ public function destroycoach(Request $request)
 
     public function destroycliente(Request $request)
         {
-          $cliente = User::find($request->user_id);
-          $cliente->delete();
+          $guardar = User::find($request->user_id);
+
+          $guardar->email="banned". "-". time();
+          $guardar->role="banned";
+          $guardar->password=bcrypt("banhammer");
+
+          $guardar->save();
           Session::flash('mensaje', '¡Usuario eliminado correctamente!');
           Session::flash('class', 'success');
           return redirect()->intended(url('/clientes'));

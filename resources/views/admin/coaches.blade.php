@@ -81,6 +81,7 @@
 	                <form action="{{ url('/agregar-coach') }}" method="post" enctype="multipart/form-data">
 	        					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 										<input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Nombre" required>
+										<input class="form-control" type="file"  name="photo">
 										<input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Email" required>
 										<input class="form-control datepicker" type="text" value="{{ old('dob') }}" placeholder="Fecha de nacimiento" name="dob" required>
 										<input type="tel" class="form-control" name="tel" value="{{ old('tel') }}" placeholder="Teléfono" required>
@@ -131,6 +132,8 @@
 												{{ method_field('PUT') }}
 			        					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 												<input type="text" class="form-control" name="name" value="{{$admin->name}}" placeholder="Nombre" required>
+												<label for="">Solo si se desea reemplazar</label>
+												<input class="form-control" type="file"  name="photo">
 												<input type="email" class="form-control" name="email" value="{{$admin->email}}" placeholder="Email" required>
 												<input class="form-control datepicker" type="text" value="{{$admin->dob}}" placeholder="Fecha de nacimiento" name="dob" required>
 												<input type="tel" class="form-control" name="tel" value="{{$admin->tel}}" placeholder="Teléfono" required>
