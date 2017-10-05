@@ -10,6 +10,9 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Detalle;
 use Validator;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
