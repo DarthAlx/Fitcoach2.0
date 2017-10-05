@@ -9,6 +9,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Detalle;
+use App\Particular;
+use App\Residencial;
 use Validator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -355,6 +357,21 @@ public function destroycoach(Request $request)
       $guardar->password=bcrypt("banhammer");
 
       $guardar->save();
+
+      $particulares=Particular::->where('user_id', $request->admin_id)->get();
+
+      $residenciales=Residencial::->where('user_id', $request->admin_id)->get();
+      if ($particulares) {
+        foreach ($particular as $particular) {
+          $particular->delete()
+        }
+      }
+      if ($residenciales) {
+        foreach ($residencial as $residencial) {
+          $residencial->delete()
+        }
+      }
+
 
       Session::flash('mensaje', '¡Usuario eliminado correctamente!');
       Session::flash('class', 'success');
