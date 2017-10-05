@@ -246,7 +246,7 @@
 														<option value="cupon">Cupon</option>
 														<option value="abono">Abonar</option>
 													</select>
-													<input type="number" name="abono" class="form-control" placeholder="Abono/Cupón" required>
+													<input type="text" name="abono" class="form-control" placeholder="Abono/Cupón" required>
 													<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Completar</button>
 												</form>
 											</div>

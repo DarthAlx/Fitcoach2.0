@@ -52,6 +52,7 @@
 							<img src="{{ url('images/home.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/home2.png')}}'" onmouseout="this.src='{{ url('images/home.png')}}'" alt="">
 						</a>
 					</div>
+					<p class="visible-xs">&nbsp;</p>
 					<div class="col-sm-3 col-sm-offset-2 text-center">
 						<a href="{{url('residenciales')}}">
 							<img src="{{ url('images/building.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/building2.png')}}'" onmouseout="this.src='{{ url('images/building.png')}}'" alt="">

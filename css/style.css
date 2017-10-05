@@ -615,7 +615,7 @@ span.price span {position: relative;top: -11px;left: -2px; font-size: 14px;}
 .checkoutBtn {float: right;width: 180px;height: 46px;padding: 0;box-shadow: none;background: #D58627; border: 2px solid #D58627;color: #fff;font-size: 12px;font-family: 'Montserrat', sans-serif;text-transform: uppercase;text-align: center;-webkit-transition: background 0.3s ease, border 0.3s ease;-moz-transition: background 0.3s ease, border 0.3s ease;-o-transition: background 0.3s ease, border 0.3s ease;transition: background 0.3s ease, border 0.3s ease; -webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing: border-box;}
 .checkoutBtn:hover {background: #70d3bb;border-color: #70d3bb;}
 
-.calculateShipping {float: right;width: 380px;margin-right: 40px;}
+.calculateShipping {float: right;}
 .calculateShipping label {display: block; line-height: 54px;color: #333333;font-size: 18px;font-family: 'Lato', sans-serif;font-weight: 300;text-transform: uppercase;}
 .calculateShipping .selectricWrapper {width: 100%;}
 .calculateShipping p {width: 100%;float: none;margin-bottom: 20px;}
