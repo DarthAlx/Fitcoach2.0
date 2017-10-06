@@ -12,9 +12,9 @@
 
 				</div>
 			</div>
-			<p>&nbsp;</p><p>&nbsp;</p>
+			<br>
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-md-6 col-xs-6">
 								<form id="zonaform" action="{{url('clasesculturales')}}" method="post">
 									{!! csrf_field() !!}
 									<?php $zonas=App\Zona::all(); ?>
@@ -44,7 +44,7 @@
 
 				  			</form>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-6 col-xs-6">
 								<div class="buscador">
 								  <div class="coupon" style="float:right;">
 								    <form action="{{url('busqueda')}}" method="post">
