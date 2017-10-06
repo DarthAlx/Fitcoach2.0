@@ -1,6 +1,6 @@
 @extends('plantilla')
 @section('pagecontent')
-	<section class="container">
+	<section class="container" style="padding-bottom: 0px;">
 		<div class="topclear">
 	    &nbsp;
 	  </div>
