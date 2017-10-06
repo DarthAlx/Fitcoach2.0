@@ -3,7 +3,7 @@
 	<style type="text/css">
 	.contact #header .headerWrap, .about #header .headerWrap, .home #header .headerWrap {
 		background: transparent !important;
-		border-bottom-color: #fff !important;
+		/*border-bottom-color: #fff !important;*/
 	}
 	.catalog .mainMenu > ul > li a, .contact .mainMenu > ul > li a, .about .mainMenu > ul > li a,  .home .mainMenu > ul > li a {
 		color: #fff !important; opacity: 1 !important; -webkit-transition: opacity 0.3s ease;-moz-transition: opacity 0.3s ease;-o-transition: opacity 0.3s ease;transition: opacity 0.3s ease;

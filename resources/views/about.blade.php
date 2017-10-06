@@ -15,7 +15,7 @@
 
 				<div class="col-sm-12">
 					<div class="singlePostWrap" style="text-align: center;">
-						<h1 style="margin-top:0px;">¿QUIÉNES SOMOS?</h1>
+						
 						<p>Creemos que para tomar tus clases favoritas no necesitas pagar de más ni pasar horas innecesarias en el trafico.</p>
 						<br>
 						<p>Es por eso que queremos revolucionar la industria del wellness llevando las mejores experiencias deportivas, recreativas y sociales a la puerta de tu casa.</p>

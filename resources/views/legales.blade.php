@@ -13,9 +13,9 @@
 		<div class="container-bootstrap-fluid" style="padding-right: 5%; padding-left: 5%;">
 			<div class="row">
 				<div class="col-sm-3">
-					<h4 style="margin-top: 0px;"><strong><a href="#" onclick="legales('terminos');" style="color:#D58628;">Términos & condiciones</a></h5>
+					<h4 style="margin-top: 0px;" class="legalestext"><strong><a href="#" onclick="legales('terminos');" style="color:#D58628;">TÉRMINOS &CONDICIONES</a></h5>
 					<p>&nbsp;</p>
-					<h4 ><strong><a href="#" onclick="legales('privacidad');" style="color:#D58628;">Políticas de Privacidad</a></strong></h4 >
+					<h4  class="legalestext"><strong><a href="#" onclick="legales('privacidad');" style="color:#D58628;">POLÍTICAS DE PRIVACIDAD</a></strong></h4 >
 				</div>
 				<div class="col-sm-9">
 					<div id="privacidad" class="singlePostWrap" style="text-align: justify; display:none;">

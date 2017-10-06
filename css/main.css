@@ -629,6 +629,11 @@ color: #D58628 !important;
 .buscador{
 	text-align: center;
 }
+.legalestext {
+	text-align: center;
+	position: relative;
+	z-index: 999999999999999;
+}
 }
 @media screen and (min-width: 451px) {
 	.topclear{
