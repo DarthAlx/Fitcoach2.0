@@ -565,7 +565,7 @@ color: #D58628 !important;
 }
 @media screen and (max-width: 450px) {
 	.footerMenu li a, .footerMenu li a:visited {
-    font-size: 8px;
+    font-size: 7px;
 	}
 	.title {
 		font-family: Gotham2;
@@ -807,4 +807,8 @@ h2, h4{
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+}
+button.close {
+    z-index: 99999999999999999999999;
+    position: relative;
 }
