@@ -299,6 +299,7 @@ Route::any('eliminar-zona/{id}', 'ZonaController@destroy');
 
   Route::get('ventas', 'OrdenController@ventas');
   Route::post('ventas', 'OrdenController@ventaspost');
+  Route::get('verinvoice/{id}', 'OrdenController@verinvoice');
   Route::get('printinvoice/{id}', 'OrdenController@invoice');
   Route::get('nomina', 'OrdenController@nomina');
   Route::post('pagar', 'OrdenController@pago');

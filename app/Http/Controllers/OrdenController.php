@@ -568,7 +568,13 @@ class OrdenController extends Controller
         $user=User::find($datos->user_id);
         return view('recibo',['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user]);
       }
-
+      public function verinvoice($id)
+      {
+        $ordenes=Orden::where('order_id', $id)->get();
+        $datos=Orden::where('order_id', $id)->first();
+        $user=User::find($datos->user_id);
+        return view('emails.receipt',['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user]);
+      }
       public function invoice($id)
     {
         $ordenes=Orden::where('order_id', $id)->get();

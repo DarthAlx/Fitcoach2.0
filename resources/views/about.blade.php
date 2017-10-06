@@ -15,12 +15,12 @@
 
 				<div class="col-sm-12">
 					<div class="singlePostWrap" style="text-align: center;">
-						
-						<p>Creemos que para tomar tus clases favoritas no necesitas pagar de más ni pasar horas innecesarias en el trafico.</p>
+						<p>&nbsp;</p>
+						<p>Creemos que para tomar tus clases favoritas no necesitas<span class="hidden-xs"><br></span> pagar de más ni pasar horas innecesarias en el trafico.</p>
 						<br>
-						<p>Es por eso que queremos revolucionar la industria del wellness llevando las mejores experiencias deportivas, recreativas y sociales a la puerta de tu casa.</p>
+						<p>Es por eso que queremos revolucionar la industria del <span class="hidden-xs"><br></span>wellness llevando las mejores experiencias deportivas, <span class="hidden-xs"><br></span>recreativas y sociales a la puerta de tu casa.</p>
 						<br>
-						<p>Déjanos acompañarte en cada paso de esta travesía para transformarte en la mejor versión de ti mismo.</p>
+						<p>Déjanos acompañarte en cada paso de esta travesía para <span class="hidden-xs"><br></span>transformarte en la mejor versión de ti mismo.</p>
 						<br>
 						<p>Estamos aquí para sacar lo mejor de tí.</p>
 						<br>
@@ -33,7 +33,5 @@
 				</div>
 			</div>
 		</div>
-		<p>&nbsp;</p>
-
 	</section>
 @endsection

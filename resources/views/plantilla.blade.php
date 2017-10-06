@@ -159,7 +159,7 @@ fbq('track', 'PageView');
   			<a href="http://www.twitter.com/fitcoachmx"><i class="fa fa-twitter"></i></a>
   			<a href="http://www.instagram.com/fitcoachmx"><i class="fa fa-instagram"></i></a>
   		</div>
-  		<ul class="footerMenu clear">
+  		<ul class="footerMenu clear text-center">
   			<li><a href="{{ url('/legales') }}?page=privacidad">Aviso de Privacidad</a></li>
   			<li><a href="{{ url('/legales') }}?page=terminos">Términos y Condiciones</a></li>
   			<li><a href="{{ url('/bolsa-de-trabajo') }}">Bolsa de Trabajo</a></li>
