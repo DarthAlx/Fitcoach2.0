@@ -112,6 +112,9 @@ Route::post('/buscarresidencial', function (Illuminate\Http\Request $request) {
 Route::get('/legales', function (Illuminate\Http\Request $request) {
     return view('legales', ['request'=>$request]);
 });
+Route::get('/quienes-somos', function () {
+    return view('about');
+});
 Route::get('/bolsa-de-trabajo', function () {
     return view('bolsa');
 });

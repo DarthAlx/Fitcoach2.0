@@ -43,11 +43,14 @@
 		<script src="{{asset('js/ckeditor/ckeditor.js')}}"></script>
 
 
-
-
+<!-- Global Site Tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107673883-1"></script>
 <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-
+  gtag('config', 'UA-107673883-1');
 </script>
 
 	</head>
@@ -114,7 +117,7 @@
       <a href="{{url('coaches')}}">COACHES</a>
       <a href="{{url('/')}}#botones">RESERVAR</a>
       <a href="{{url('residenciales')}}">CONDOMINIOS</a>
-			<a href="#">¿QUIÉNES SOMOS?</a>
+			<a href="{{url('quienes-somos')}}">¿QUIÉNES SOMOS?</a>
 			<a href="{{url('legales')}}">LEGAL</a>
 			<a href="#">CONTACTO</a>
     </div>
