@@ -14,6 +14,7 @@ use App\Residencial;
 use Validator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Mail;
 
 class UserController extends Controller
 {
@@ -267,6 +268,7 @@ class UserController extends Controller
 
 
             if ($request->clases) {
+              $guardar->save();
               $permisos->clases=implode(",", $request->clases);
               $permisos->user_id=$guardar->id;
             }
@@ -275,8 +277,13 @@ class UserController extends Controller
               Session::flash('class', 'danger');
               return redirect()->intended(url('/coaches-admin'))->withInput();
             }
-            $guardar->save();
+
           $permisos->save();
+          $datos=$request;
+            Mail::send('emails.usuario', ['datos'=>$datos], function ($m) use ($datos) {
+                $m->from('ventas@hadoukendev.com', 'FITCOACH México');
+                $m->to($datos->email, $datos->name)->subject('¡Accesos FITCOACH!');
+            });
           Session::flash('mensaje', '¡Usuario guardado!');
           Session::flash('class', 'success');
           return redirect()->intended(url('/coaches-admin'));
@@ -377,6 +384,8 @@ public function destroycoach(Request $request)
       Session::flash('class', 'success');
       return redirect()->intended(url('/coaches-admin'));
     }
+
+
 
     public function destroycliente(Request $request)
         {

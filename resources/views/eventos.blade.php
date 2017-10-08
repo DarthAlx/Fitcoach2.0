@@ -88,7 +88,6 @@
     													<p>Cupo: {{$evento->cupo}} personas <br>
 																 Lugares disponibles: {{intval($evento->cupo)-intval($evento->ocupados)}}
 															</p>
-															<p>Audiencia: {{$evento->audiencia}}</p>
 															<p>Descripción: {{$evento->descripcion}}</p>
     												</div>
 

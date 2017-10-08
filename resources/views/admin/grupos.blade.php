@@ -196,16 +196,9 @@
 												<option value="Bebés">Bebés</option>
 										</select>
 										<input type="number" id="cupo" class="form-control" name="cupo" placeholder="Cupo" value="{{ old('cupo') }}" >
-										<select class="form-control"  name="tipo" id="tipo" >
-											<option value="">Selecciona un tipo</option>
-											<option value="Residencial">Clase</option>
-											<option value="Evento">Evento</option>
-										</select>
+
 										<textarea name="descripcion" class="form-control" rows="10">Descripción</textarea>
-										<label for="">Campos para eventos</label>
-										<input type="text" name="nombreevento" class="form-control" value="">
-										<input class="form-control" type="file" name="imagenevento" >
-										<textarea name="direccionevento" class="form-control" rows="10">Descripción</textarea>
+
 
 	        					<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Guardar</button>
 	                </form>
@@ -278,20 +271,9 @@
 												 if (document.getElementById('audiencia{{ $grupo->id }}') != null) document.getElementById('audiencia{{ $grupo->id }}').value = '{!! $grupo->audiencia !!}';
 												 </script>
 												<input type="number" id="cupo" class="form-control" name="cupo" placeholder="Cupo" value="{{ $grupo->cupo }}" >
-												<select class="form-control"  name="tipo" id="tipo{{ $grupo->id }}" >
-													<option value="">Selecciona un tipo</option>
-													<option value="Residencial">Clase</option>
-													<option value="Evento">Evento</option>
-												</select>
-												<script type="text/javascript">
-												 if (document.getElementById('tipo{{ $grupo->id }}') != null) document.getElementById('tipo{{ $grupo->id }}').value = '{!! $grupo->tipo !!}';
-												 </script>
+
 												<textarea name="descripcion" class="form-control" rows="10">{{ $grupo->descripcion }}</textarea>
-												<label for="">Campos para eventos</label>
-												<input type="text" name="nombreevento" class="form-control" value="{{ $grupo->nombreevento }}">
-												(solo si se desea reemplazar)
-												<input class="form-control" type="file" name="imagenevento" >
-												<textarea name="direccionevento" class="form-control" rows="10">{{ $grupo->direccionevento }}</textarea>
+
 												<input type="hidden" name="grupo_id" value="{{ $grupo->id }}">
 												<div class="text-center">
 													<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important; width: 40%; display: inline-block;">Actualizar</button>

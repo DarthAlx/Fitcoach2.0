@@ -51,7 +51,11 @@
 			@if ($usuarios)
 				@foreach ($usuarios as $usuario)
 	        <div class="teamItem">
-	          <a><img src="{{ url('images') }}/usuarios_b.png" class="img-responsive"></a>
+						@if($usuario->detalles->photo!="")
+						 <a><img src="{{ url('uploads/avatars') }}/{{ $usuario->detalles->photo }}" alt=""></a>
+						@else
+						 <a><img src="{{ url('uploads/avatars') }}/dummy.png" alt=""></a>
+						@endif
 	          <div class="overlay" data-toggle="modal" data-target="#admin{{$usuario->id}}">
 	            <div class="teamItemNameWrap">
 	              <a style="text-decoration:none;"><h3>{{ucfirst($usuario->name)}}</h3></a>

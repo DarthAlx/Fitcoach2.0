@@ -47,7 +47,7 @@
 
 	          <a><img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" alt=""></a>
 					@else
-						
+
 						<a><img src="{{ url('uploads/avatars') }}/dummy.png" alt=""></a>
 					@endif
 	          <div class="overlay" data-toggle="modal" data-target="#coach{{$coach->id}}">
@@ -82,7 +82,12 @@
 										<div class="text-center">
 
 													 <div class="profile-userpic">
-														 <img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" class="img-responsive" alt="">
+														 @if($coach->detalles->photo!="")
+								  	          <a><img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" alt=""></a>
+								  					@else
+								  						<a><img src="{{ url('uploads/avatars') }}/dummy.png" alt=""></a>
+														@endif
+														
 													 </div>
 													 <?php $nombre=explode(" ",$coach->name); ?>
 													 <h2>{{ucfirst($nombre[0])}}</h2>

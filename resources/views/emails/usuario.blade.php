@@ -462,7 +462,7 @@
 							<tr>
 								<td>
 									<div class="pull-right">
-										<h2>Bolsa de trabajo</h2>
+										<h2>Bienvenid@ al equipo FITCOACH.</h2>
 									</div>
 								</td>
 								<td>
@@ -476,26 +476,23 @@
 												<tbody>
 														<tr>
 																<td colspan="2"><br />
-																	Tienes una nueva petición en la bolsa de trabajo.
+																	Tus credenciales de ingreso.
 																<hr />
 																</td>
 														</tr>
 														<tr>
 																<td align="left" style="width: 50%;"><strong>Nombre:</strong></td>
-																<td class="text">{{ $datos->nombre}}</td>
+																<td class="text">{{ $datos->name}}</td>
 														</tr>
 														<tr>
 																<td align="left" style="width: 50%;"><strong>Email:</strong></td>
 																<td class="text">{{ $datos->email}}</td>
 														</tr>
 														<tr>
-																<td align="left" style="width: 50%;"><strong>Teléfono:</strong></td>
-																<td class="text">{{ $datos->tel}}</td>
+																<td align="left" style="width: 50%;"><strong>Contraseña:</strong></td>
+																<td class="text">{{ $datos->password}}</td>
 														</tr>
-														<tr>
-																<td align="left" style="width: 50%;"><strong>Mensaje:</strong></td>
-																<td class="text">{{ $datos->msg}}</td>
-														</tr>
+
 
 												</tbody>
 										</table>

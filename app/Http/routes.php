@@ -246,6 +246,15 @@ Route::group(['middleware' => 'administradores'], function(){
   Route::put('actualizar-grupo', 'ResidencialController@update');
   Route::delete('eliminar-grupo', 'ResidencialController@destroy');
 
+  Route::get('/eventos-admin', function () {
+    $eventos = App\Residencial::where('tipo', 'Evento')->get();
+    $coaches = App\User::where('role', 'instructor')->get();
+      return view('admin.eventos', ['eventos'=>$eventos, 'coaches'=>$coaches]);
+  });
+  Route::post('agregar-evento', 'ResidencialController@storeevento');
+  Route::put('actualizar-evento', 'ResidencialController@updateevento');
+  Route::delete('eliminar-evento', 'ResidencialController@destroyevento');
+
   Route::get('/slides', function () {
   if (Auth::guest()){
     return redirect()->intended(url('/entrar'));

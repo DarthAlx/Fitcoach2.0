@@ -124,7 +124,7 @@ class OrdenController extends Controller
 
     public function ventaspost(Request $request)
     {
-      $from_n = strtotime ( $request->form )  ;
+      $from_n = strtotime ( $request->from )  ;
       $to_n = strtotime ( $request->to )  ;
       $from = date ( 'Y-m-d' , $from_n );
       $to = date ( 'Y-m-d' , $to_n );
@@ -146,15 +146,18 @@ class OrdenController extends Controller
 
     public function clasesvistapost(Request $request)
     {
-      $from_n = strtotime ( $request->form )  ;
+      $from_n = strtotime ( $request->from )  ;
       $to_n = strtotime ( $request->to )  ;
       $from = date ( 'Y-m-d' , $from_n );
       $to = date ( 'Y-m-d' , $to_n );
+
       if ($request->status=="*") {
         $clases = Orden::whereBetween('fecha', array($from, $to))->get();
+
       }
       else {
         $clases = Orden::where('status', $request->status)->whereBetween('fecha', array($from, $to))->get();
+
       }
 
       return view('admin.clasesvista',['clases'=>$clases,'from'=>$request->from,'to'=>$request->to,'status'=>$request->status]);
