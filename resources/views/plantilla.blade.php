@@ -206,6 +206,8 @@ fbq('track', 'PageView');
 							<input id="emaillogin1" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Correo electrónico" required>
 							<input id="passlogin1" type="password" class="form-control" name="password" placeholder="Contraseña" required>
 							<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Entrar</button>
+							<small><a href="#" onclick="retrieve();">¿Olvidaste tu contraseña?</a></small>
+
 					</form>
 				</div>
 				<div id="login3" style="display: none;">
@@ -230,6 +232,15 @@ fbq('track', 'PageView');
 
 							<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Registrar</button>
 					</form>
+				</div>
+
+				<div id="retrievepssw" style="display: none;">
+					<h4>Recuperación de contraseña</h4>
+          <form class="row" action="{{ url('/password/email ') }}" method="post">
+    					<input class="form-control" type="email" value="{{ old('email') }}" placeholder="tu@email.com" name="email">
+              {!! csrf_field() !!}
+              <button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Enviar</button>
+          </form>
 				</div>
 
       </div>
@@ -258,6 +269,13 @@ function userExist(){
 				$('#login3').show();
 			}
 	});
+}
+
+function retrieve(){
+	$('#login1').hide();
+	$('#login2').hide();
+	$('#login3').hide();
+	$('#retrievepssw').show();
 }
 		</script>
 
