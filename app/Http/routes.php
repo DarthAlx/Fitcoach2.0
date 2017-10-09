@@ -16,6 +16,9 @@ Route::get('/', function () {
   $sliders = App\Slider::orderBy('order', 'asc')->get();
   return view('inicio', ['sliders'=>$sliders]) ;
 });
+Route::get('/home', function () {
+  return redirect()->intended(url('/'));
+});
 Route::get('/nosotros', function () {
     return view('nosotros');
 });

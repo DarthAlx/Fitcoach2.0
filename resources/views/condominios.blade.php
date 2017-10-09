@@ -176,10 +176,12 @@
     															 <div class="profile-userpic">
     																 <img src="{{ url('uploads/avatars') }}/{{ $residencial->user->detalles->photo }}" class="img-responsive" alt="">
     															 </div>
+																	 <?php $nombre=explode(" ",$residencial->user->name); ?>
+																	 <h2>{{ucfirst($nombre[0])}}</h2>
 
 
     												</div>
-    												<div class="gotham2">
+    												<div class="gotham2 text-center">
     													<p>Hora: {{$residencial->hora}}</p>
     													<p>Lugar: {{$residencial->condominio->identificador}}<br>{{$residencial->condominio->direccion}}</p>
     													<p>Cupo: {{$residencial->cupo}} personas <br>

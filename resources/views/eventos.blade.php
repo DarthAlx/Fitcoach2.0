@@ -79,10 +79,12 @@
     															 <div class="profile-userpic">
     																 <img src="{{ url('uploads/avatars') }}/{{ $evento->user->detalles->photo }}" class="img-responsive" alt="">
     															 </div>
+																	 <?php $nombre=explode(" ",$evento->user->name); ?>
+																	 <h2>{{ucfirst($nombre[0])}}</h2>
 
 
     												</div>
-    												<div class="gotham2">
+    												<div class="gotham2 text-center">
     													<p>Hora: {{$evento->hora}}</p>
     													<p>Lugar: {{$evento->direccionevento}}</p>
     													<p>Cupo: {{$evento->cupo}} personas <br>
