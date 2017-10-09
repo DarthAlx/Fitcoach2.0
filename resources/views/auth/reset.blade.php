@@ -27,7 +27,7 @@
               {!! csrf_field() !!}
     				</p>
             <div class="col-sm-12">
-              <input class="btn btn-primary" type="submit" value="Reestablecer contraseña">
+              <input class="btn btn-success" type="submit" value="Reestablecer contraseña">
 
             </div>
 

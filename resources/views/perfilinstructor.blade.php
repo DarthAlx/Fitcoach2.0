@@ -33,6 +33,87 @@
             <p>No has dado ninguna clase.</p>
         @endif
       </div>
+      <div class="clasesperfil visible-xs">
+        <hr>
+        <div class="text-center">
+          <button type="button" id="btnproximas" class="btn btn-success" style="display:inline-block; width:40%;" onclick="verclases('proximas')">Próximas clases</button>
+          <button type="button" id="btnpasadas" class="btn btn-clases" style="display:inline-block; width:40%;" onclick="verclases('pasadas')">Clases pasadas</button>
+          <script type="text/javascript">
+            function verclases(valor) {
+              if (valor=="proximas") {
+                $('#pasadas').hide();
+                $('#btnpasadas').addClass('btn-clases');$('#btnpasadas').removeClass('btn-success');
+                $('#proximas').show();
+                $('#btnproximas').addClass('btn-success');$('#btnproximas').removeClass('btn-clases');
+              }
+              if (valor=="pasadas") {
+                $('#proximas').hide();
+                $('#btnproximas').addClass('btn-clases');$('#btnproximas').removeClass('btn-success');
+                $('#pasadas').show();
+                $('#btnpasadas').addClass('btn-success');$('#btnpasadas').removeClass('btn-clases');
+              }
+            }
+          </script>
+        </div>
+        <p>&nbsp;</p>
+        <div id="proximas" class="listadeclases">
+          <div class="list-group">
+              <?php
+              $proximas= App\Orden::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
+              if (!$proximas->isEmpty()) {
+                date_default_timezone_set('America/Mexico_City');
+                foreach ($proximas as $proxima) {
+                  $metadata= explode(',',$proxima->metadata);
+
+                  $fecha=date_create($proxima->fecha);
+                  setlocale(LC_TIME, "es-ES");
+                 ?>
+                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
+                   @if($metadata[0]=="particular")
+                     <i class="fa fa-home" aria-hidden="true"></i>
+                   @else
+                     <i class="fa fa-building" aria-hidden="true"></i>
+                   @endif
+                   {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $proxima->hora }}
+                   <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
+                 </a>
+              <?php } } else{ ?>
+                <p>No has tomado ninguna clase.</p>
+                <?php  } ?>
+          </div>
+        </div>
+        <div id="pasadas" class="listadeclases" style="display:none;">
+          <div class="list-group">
+              <?php
+              $pasadas= App\Orden::where('coach_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orWhere('status', 'Porrevisar')->orderBy('fecha', 'desc')->get();
+              if ($pasadas) {
+                date_default_timezone_set('America/Mexico_City');
+                foreach ($pasadas as $pasada) {
+                  $fecha=date_create($pasada->fecha);
+                  setlocale(LC_TIME, "es-ES");
+                 ?>
+                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
+                   @if ($pasada->status=="Cancelada")
+                     <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                   @else
+                     @if($pasada->tipo=="particular")
+                       <i class="fa fa-home" aria-hidden="true"></i>
+                     @else
+                       <i class="fa fa-building" aria-hidden="true"></i>
+                     @endif
+                    @endif
+                   {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
+                   <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
+                 </a>
+              <?php } } else{ ?>
+                <p>No has tomado ninguna clase.</p>
+                <?php  } ?>
+
+
+          </div>
+        </div>
+
+      </div>
       <hr>
       <h4>HORARIOS</h4>
       <button type="button" class="btn" data-toggle="modal" data-target="#horarionuevo"><span>Ver horarios</span> <i class="fa fa-calendar" aria-hidden="true"></i></button>
@@ -43,30 +124,30 @@
       <button type="button" class="btn" data-toggle="modal" data-target="#cambiarcontraseña"><span>Contraseña</span> <i class="fa fa-pencil" aria-hidden="true"></i></button>
 
     </div>
-    <div class="col-md-8">
+    <div class="col-md-8 hidden-xs">
       <hr>
       <div class="text-center">
-        <button type="button" id="btnproximas" class="btn btn-success" style="display:inline-block; width:40%;" onclick="verclases('proximas')">Próximas clases</button>
-        <button type="button" id="btnpasadas" class="btn btn-clases" style="display:inline-block; width:40%;" onclick="verclases('pasadas')">Clases pasadas</button>
+        <button type="button" id="btnproximaslg" class="btn btn-success" style="display:inline-block; width:40%;" onclick="verclaseslg('proximaslg')">Próximas clases</button>
+        <button type="button" id="btnpasadaslg" class="btn btn-clases" style="display:inline-block; width:40%;" onclick="verclaseslg('pasadaslg')">Clases pasadas</button>
         <script type="text/javascript">
-          function verclases(valor) {
-            if (valor=="proximas") {
-              $('#pasadas').hide();
-              $('#btnpasadas').addClass('btn-clases');$('#btnpasadas').removeClass('btn-success');
-              $('#proximas').show();
-              $('#btnproximas').addClass('btn-success');$('#btnproximas').removeClass('btn-clases');
+          function verclaseslg(valor) {
+            if (valor=="proximaslg") {
+              $('#pasadaslg').hide();
+              $('#btnpasadaslg').addClass('btn-clases');$('#btnpasadaslg').removeClass('btn-success');
+              $('#proximaslg').show();
+              $('#btnproximaslg').addClass('btn-success');$('#btnproximaslg').removeClass('btn-clases');
             }
-            if (valor=="pasadas") {
-              $('#proximas').hide();
-              $('#btnproximas').addClass('btn-clases');$('#btnproximas').removeClass('btn-success');
-              $('#pasadas').show();
-              $('#btnpasadas').addClass('btn-success');$('#btnpasadas').removeClass('btn-clases');
+            if (valor=="pasadaslg") {
+              $('#proximaslg').hide();
+              $('#btnproximaslg').addClass('btn-clases');$('#btnproximaslg').removeClass('btn-success');
+              $('#pasadaslg').show();
+              $('#btnpasadaslg').addClass('btn-success');$('#btnpasadaslg').removeClass('btn-clases');
             }
           }
         </script>
       </div>
       <p>&nbsp;</p>
-      <div id="proximas" class="listadeclases">
+      <div id="proximaslg" class="listadeclases">
         <div class="list-group">
             <?php
             $proximas= App\Orden::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
@@ -92,7 +173,7 @@
               <?php  } ?>
         </div>
       </div>
-      <div id="pasadas" class="listadeclases" style="display:none;">
+      <div id="pasadaslg" class="listadeclases" style="display:none;">
         <div class="list-group">
             <?php
             $pasadas= App\Orden::where('coach_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orWhere('status', 'Porrevisar')->orderBy('fecha', 'desc')->get();
@@ -562,7 +643,7 @@
                      <div class="gotham2">
                        <h2>Fecha: {{$pasada->fecha}}</h2>
                        <h2>Hora: {{$pasada->hora}}</h2>
-                       
+
                      </div>
                    </div>
                  </div>

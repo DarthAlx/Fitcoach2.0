@@ -456,7 +456,7 @@
 						<tbody>
 							<tr>
 								<td colspan="2">
-									<img src="{{url('/images/Logo-FITCOACH.png')}}" alt="" class="pull-left" style="width: 20%">
+									
 								</td>
 							</tr>
 							<tr>
