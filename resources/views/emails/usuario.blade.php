@@ -518,7 +518,7 @@
 		<tbody>
 				<tr>
 						<td align="center" valign="middle" class="mcnButtonContent" style="font-family: Arial; font-size: 16px; padding: 15px;">
-								<a class="mcnButton " title="IR A PERFIL" href="https://www.fitcoach.mx/perfil" target="_blank" style="font-weight: bold;letter-spacing: normal;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;">IR A PERFIL</a>
+								<a class="mcnButton " title="IR A PERFIL" href="{{url('/')}}?fromemail=true" target="_blank" style="font-weight: bold;letter-spacing: normal;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;">IR A PERFIL</a>
 						</td>
 				</tr>
 		</tbody>
