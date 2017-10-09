@@ -155,9 +155,9 @@ fbq('track', 'PageView');
   <footer id="footer" class="clear">
 
     <div class="footerSocial clear">
-  			<a href="http://www.facebook.com/fitcoachmx"><i class="fa fa-facebook"></i></a>
-  			<a href="http://www.twitter.com/fitcoachmx"><i class="fa fa-twitter"></i></a>
-  			<a href="http://www.instagram.com/fitcoachmx"><i class="fa fa-instagram"></i></a>
+  			<a href="https://www.facebook.com/fitcoachmx"><i class="fa fa-facebook"></i></a>
+  			<a href="https://www.twitter.com/fitcoachmx"><i class="fa fa-twitter"></i></a>
+  			<a href="https://www.instagram.com/fitcoachmx"><i class="fa fa-instagram"></i></a>
   		</div>
   		<ul class="footerMenu clear text-center">
   			<li><a href="{{ url('/legales') }}?page=privacidad">Aviso de Privacidad</a></li>
