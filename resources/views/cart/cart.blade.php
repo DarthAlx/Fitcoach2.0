@@ -403,7 +403,7 @@
 
     @endif
     <script type="text/javascript">
-    Conekta.setPublishableKey('key_ExsfYxwMz4KMdE5PTfN6B6g');
+    Conekta.setPublishableKey('key_UzGAymZCxzCcaMTrBo8bhLA');
 
   var conektaSuccessResponseHandler = function(token) {
     var $form = $("#card-form");
