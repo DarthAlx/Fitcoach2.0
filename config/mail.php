@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'ventas@hadoukendev.com', 'name' => 'FITCOACH'],
+    'from' => ['address' => 'noreply@fitcoach.mx', 'name' => 'FITCOACH'],
 
     /*
     |--------------------------------------------------------------------------
