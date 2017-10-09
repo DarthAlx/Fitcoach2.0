@@ -46,7 +46,7 @@ class ResidencialController extends Controller
     {
       $guardar = new Residencial($request->all());
       $guardar->ocupados=0;
-      $grupo->tipo = "Residencial";
+      $guardar->tipo = "Residencial";
         $guardar->save();
         Session::flash('mensaje', '¡Grupo guardado!');
 

@@ -29,4 +29,12 @@ class PasswordController extends Controller
     {
         $this->middleware('guest');
     }
+    public function getReset($token = null,$email=null)
+    {
+        if (is_null($token)||is_null($email)) {
+            throw new NotFoundHttpException;
+        }
+
+        return view('auth.reset')->with('token', $token)->with('email',$email);
+    }
 }
