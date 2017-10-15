@@ -524,12 +524,24 @@
 
     <?php
     $proximas= App\Orden::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
-    dd($proximas);
+
     if (!$proximas->isEmpty()) {
       date_default_timezone_set('America/Mexico_City');
       foreach ($proximas as $proxima) {
         $cliente = App\User::find($proxima->user_id);
-        $direccion= App\Direccion::find($proxima->direccion);
+        if ($proxima->tipo=="residencial"){
+          $dire=$proxima->direccion;
+        }
+        else{
+          $direccion= App\Direccion::find($proxima->direccion);
+          $dire=$direccion->calle. " " .
+$direccion->numero_ext. " " .
+$direccion->numero_int. ", " .
+$direccion->colonia. ", " .
+$direccion->municipio_del. ", " .
+$direccion->cp. ", " .
+$direccion->estado;
+        }
         $fecha=date_create($proxima->fecha);
         setlocale(LC_TIME, "es-ES");
 
@@ -566,7 +578,7 @@
                      <div class="gotham2">
                        <h2>Fecha: {{$proxima->fecha}}</h2>
                        <h2>Hora: {{$proxima->hora}}</h2>
-                       <h2>Lugar: {{ $direccion->calle }} {{ $direccion->numero_ext }} {{ $direccion->numero_int }}, {{ $direccion->colonia }}, {{ $direccion->municipio_del }}, {{ $direccion->cp }}, {{ $direccion->estado }}.</h2>
+                       <h2>Lugar: {{ $dire }}</h2>
                        <h2>Teléfono: {{ $proxima->user->tel }}</h2>
                      </div>
                    </div>
