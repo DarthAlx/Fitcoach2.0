@@ -524,6 +524,7 @@
 
     <?php
     $proximas= App\Orden::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
+    dd($proximas);
     if (!$proximas->isEmpty()) {
       date_default_timezone_set('America/Mexico_City');
       foreach ($proximas as $proxima) {
