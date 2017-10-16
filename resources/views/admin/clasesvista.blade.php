@@ -141,8 +141,7 @@
 													<strong>Lugar: </strong> {{$clase->direccion}}<br>
 													<strong>Tipo: </strong> {{$clase->tipo}}<br>
 													@if ($clase->tipo=="residencial")
-														<?php $residencial=App\Residencial::find($clase->asociado); ?>
-														<strong>Cupo: </strong> {{$residencial->cupo}}<br>
+
 													@else
 														<strong>Cliente: </strong> @if ($clase->user){{$clase->user->name}}@else
 															<p>No existe el usuario</p>
