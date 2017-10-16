@@ -87,10 +87,25 @@
 								  					@else
 								  						<a><img src="{{ url('uploads/avatars') }}/dummy.png" alt=""></a>
 														@endif
-														
+
 													 </div>
-													 <?php $nombre=explode(" ",$coach->name); ?>
-													 <h2>{{ucfirst($nombre[0])}}</h2>
+													 <?php
+			 													$numerodecalificaciones=App\Rating::where('user_id', $coach->id)->count();
+			 													$calificaciones=App\Rating::where('user_id', $coach->id)->get();
+			 													$promedio=0;
+			 													if ($numerodecalificaciones!=0&&$calificaciones) {
+			 														foreach ($calificaciones as $calificacion) {
+			 															$promedio=$promedio+$calificacion->rate;
+			 														}
+			 														$promedio=$promedio/$numerodecalificaciones;
+			 													}
+			 													else {
+			 														$promedio="Sin rating";
+			 													}
+
+			 										?>
+
+													 <h2>{{ucfirst($coach->name)}} - {{$promedio}}</h2>
 
 										</div>
 									</div>
@@ -248,8 +263,8 @@
       		<div class="col-md-12">
 						<form action="{{url('carrito')}}" method="post">
 							{!! csrf_field() !!}
-							<?php $nombre=explode(" ",$coach->name); ?>
-						<h1 class="title">{{ucfirst($nombre[0])}} : {{ucfirst($clase->nombre)}}</h1>
+
+						<h1 class="title">{{ucfirst($coach->name)}}</h1>
 
 							<div id="myCarousel{{$coach->id}}" class="carousel slide hidden-xs" data-wrap="false"><!--6 columnas-->
 								<div class="carousel-inner">
@@ -264,7 +279,7 @@
 												<div class="col-sm-2 col-xs-6 separacion">
 													{{$fechasformateadas[$x]}}
 													<ul class="list-group calendarioinst">
-														<?php $particulares=App\Particular::where('user_id', $coach->id)->get();
+														<?php $particulares=App\Particular::where('user_id', $coach->id)->orderBy('hora', 'asc')->get();
 														list($año, $mes, $dia) = explode("-", $fechas[$x]);
 														$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 														?>
@@ -275,6 +290,9 @@
 																	<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}');" style="cursor:pointer;">
 																		<input type="checkbox" id="carrito{{$x}}{{$particular->id}}" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
 																		<input type="hidden" name="tipo" value="Particular">
+																		{{$particular->clase->nombre}}
+
+																	<br>
 																		{{$particular->zona->identificador}}
 
 																	<br>

@@ -98,7 +98,7 @@
 
 												<div class="form-group permitidascont">
                            <label class="control-label">Clases permitidas</label>
-													 <?php $clases = App\Clase::all(); ?>
+													 <?php $clases = App\Clase::orderBy('nombre', 'asc')->get(); ?>
                              @foreach ($clases as $clase)
                                <div class="checkbox">
                                 <label>
@@ -152,7 +152,7 @@
 
 		 												<div class="form-group permitidascont{{ $admin->id }}">
 		                            <label class="control-label">Clases permitidas</label>
-		 													 <?php $clases = App\Clase::all(); ?>
+		 													 <?php $clases = App\Clase::orderBy('nombre', 'asc')->get(); ?>
 		                              @foreach ($clases as $clase)
 		                                <div class="checkbox">
 		                                 <label>

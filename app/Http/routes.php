@@ -26,14 +26,14 @@ Route::get('/contacto', function () {
     return view('contacto');
 });
 Route::get('/clasesdeportivas', function () {
-  $clases = App\Clase::where('tipo', 'Deportiva')->get();
+  $clases = App\Clase::where('tipo', 'Deportiva')->orderBy('nombre', 'asc')->get();
   $zonarequest= 'todas';
   $titulo="DEPORTIVAS";
     return view('clases', ['clases'=>$clases,'zonarequest'=>$zonarequest,'titulo'=>$titulo]);
 });
 
 Route::post('/clasesdeportivas', function (Illuminate\Http\Request $request) {
-  $clases = App\Clase::where('tipo', 'Deportiva')->get();
+  $clases = App\Clase::where('tipo', 'Deportiva')->orderBy('nombre', 'asc')->get();
   $zonarequest= $request->zona;
   $titulo="DEPORTIVAS";
 
@@ -42,14 +42,14 @@ Route::post('/clasesdeportivas', function (Illuminate\Http\Request $request) {
 });
 
 Route::get('/clasesculturales', function () {
-  $clases = App\Clase::where('tipo', 'Cultural')->get();
+  $clases = App\Clase::where('tipo', 'Cultural')->orderBy('nombre', 'asc')->get();
   $zonarequest= 'todas';
   $titulo="CULTURALES";
     return view('culturales', ['clases'=>$clases,'zonarequest'=>$zonarequest,'titulo'=>$titulo]);
 });
 
 Route::post('/clasesculturales', function (Illuminate\Http\Request $request) {
-  $clases = App\Clase::where('tipo', 'Cultural')->get();
+  $clases = App\Clase::where('tipo', 'Cultural')->orderBy('nombre', 'asc')->get();
   $zonarequest= $request->zona;
   $titulo="CULTURALES";
 
@@ -58,13 +58,13 @@ Route::post('/clasesculturales', function (Illuminate\Http\Request $request) {
 
 
 Route::get('/busqueda', function () {
-  $clases = App\Clase::where('nombre', 'like', '%%')->get();
+  $clases = App\Clase::where('nombre', 'like', '%%')->orderBy('nombre', 'asc')->get();
   $titulo="RESULTADOS";
 
     return view('busqueda', ['clases'=>$clases,'busqueda'=>'','titulo'=>$titulo]);
 });
 Route::post('/busqueda', function (Illuminate\Http\Request $request) {
-  $clases = App\Clase::where('nombre', 'like', '%'.$request->busqueda.'%')->get();
+  $clases = App\Clase::where('nombre', 'like', '%'.$request->busqueda.'%')->orderBy('nombre', 'asc')->get();
   $titulo="RESULTADOS";
   if ($clases->isEmpty()) {
     Illuminate\Support\Facades\Session::flash('mensaje', 'No hay resultados disponibles.');
@@ -80,11 +80,11 @@ Route::get('/coaches', function () {
 });
 
 Route::get('/eventos', function () {
-  $eventos = App\Residencial::where('tipo', 'Evento')->get();
+  $eventos = App\Residencial::where('tipo', 'Evento')->orderBy('nombreevento', 'asc')->get();
     return view('eventos', ['eventos'=>$eventos]);
 });
 Route::post('/eventos', function (Illuminate\Http\Request $request) {
-  $eventos = App\Residencial::where('tipo', 'Evento')->where('nombreevento', 'like', '%'.$request->busqueda.'%')->get();
+  $eventos = App\Residencial::where('tipo', 'Evento')->where('nombreevento', 'like', '%'.$request->busqueda.'%')->orderBy('nombreevento', 'asc')->get();
     return view('eventos', ['eventos'=>$eventos]);
 });
 Route::get('/buscarcoach', function () {

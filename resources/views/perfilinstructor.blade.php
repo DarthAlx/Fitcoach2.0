@@ -332,7 +332,42 @@
               <div class="collapse" id="horariosguardados">
                 @if (!$user->particulares->isEmpty())
                   @foreach ($user->particulares as $particular)
-                    <button style="width: 100%" class="btn btn-default" type="button" data-toggle="collapse" data-target="#horario{{$particular->id}}" aria-expanded="false" aria-controls="horario{{$particular->id}}">{{$particular->clase->nombre}} - {{$particular->fecha}} - {{$particular->hora}}</button>
+                    <button style="width: 100%" class="btn btn-default" type="button" data-toggle="collapse" data-target="#horario{{$particular->id}}" aria-expanded="false" aria-controls="horario{{$particular->id}}">
+
+                      <?php
+                                        $recurrencias = explode(",",$particular->recurrencia);
+                                    ?>
+                      {{$particular->clase->nombre}} -
+                      @if ($particular->recurrencia)
+
+                        @if (in_array("0", $recurrencias))
+                          Dom
+                        @endif
+                        @if (in_array("1", $recurrencias))
+                          Lun
+                        @endif
+                        @if (in_array("2", $recurrencias))
+                          Mar
+                        @endif
+                        @if (in_array("3", $recurrencias))
+                          Miér
+                        @endif
+                        @if (in_array("4", $recurrencias))
+                          Jue
+                        @endif
+                        @if (in_array("5", $recurrencias))
+                          Vie
+                        @endif
+                        @if (in_array("6", $recurrencias))
+                          Sab
+                        @endif
+
+                      @else
+                        {{$particular->fecha}}
+                      @endif
+                       - {{$particular->hora}}
+
+                    </button>
                     <div class="collapse" id="horario{{$particular->id}}">
                       <form action="{{ url('/actualizar-horario') }}" method="post">
                         {{ method_field('PUT') }}
@@ -357,9 +392,7 @@
                           <label><input type='checkbox' class="recurrentes" id="check{{$particular->id}}6" name="recurrencia[]"  value="6">S &nbsp;  &nbsp;  </label>
                           <label><input type='checkbox' class="recurrentes" id="check{{$particular->id}}0" name="recurrencia[]"  value="0">D &nbsp;  &nbsp;  </label>
                         </div>
-                        <?php
-                                          $recurrencias = explode(",",$particular->recurrencia);
-                                      ?>
+
                                      <script type="text/javascript">
                                        @foreach ($recurrencias as $recurrencia)
                                          document.getElementById('check{{$particular->id}}{{$recurrencia}}').checked = true;

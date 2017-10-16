@@ -330,11 +330,7 @@ public function updatecoach(Request $request)
         }
 
       }
-      else{
-        Session::flash('mensaje', 'El archivo no es una imagen valida.');
-        Session::flash('class', 'danger');
-        return redirect()->intended(url('/coaches-admin'))->withInput();
-      }
+
           if ($request->clases) {
             $permisos->clases=implode(",", $request->clases);
             $permisos->user_id=$guardar->id;

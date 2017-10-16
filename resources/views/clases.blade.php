@@ -142,10 +142,10 @@
 
 															<?php
 															if ($zonarequest=="todas") {
-																$particulares=App\Particular::where('clase_id', $clase->id)->get();
+																$particulares=App\Particular::where('clase_id', $clase->id)->orderBy('hora', 'asc')->get();
 															}
 															else {
-																$particulares=App\Particular::where('clase_id', $clase->id)->where('zona_id', $zonarequest)->get();
+																$particulares=App\Particular::where('clase_id', $clase->id)->where('zona_id', $zonarequest)->orderBy('hora', 'asc')->get();
 															}
 
 															list($año, $mes, $dia) = explode("-", $fechas[$x]);
@@ -202,10 +202,10 @@
 														<?php
 
 														if ($zonarequest=="todas") {
-															$particulares=App\Particular::where('clase_id', $clase->id)->get();
+															$particulares=App\Particular::where('clase_id', $clase->id)->orderBy('hora', 'asc')->get();
 														}
 														else {
-															$particulares=App\Particular::where('clase_id', $clase->id)->where('zona_id', $zonarequest)->get();
+															$particulares=App\Particular::where('clase_id', $clase->id)->where('zona_id', $zonarequest)->orderBy('hora', 'asc')->get();
 														}
 														list($año, $mes, $dia) = explode("-", $fechas[$x]);
 														$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
