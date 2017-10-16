@@ -298,7 +298,7 @@ $(document).ready(function() {
 });
 $('.mitimepicker').timepicker();
 });
-$('.mitimepicker').timepicker().on('changeTime.timepicker', function(e) {
+$('.mitimepicker').blur(function() {
     var timePicked = $('.mitimepicker').val();
 		var res = timePicked.split(":");
 		var hora = parseInt(res[0]);
