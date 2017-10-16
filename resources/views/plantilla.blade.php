@@ -298,7 +298,15 @@ $(document).ready(function() {
 });
 $('.mitimepicker').timepicker();
 });
-
+$('.mitimepicker').on('change', function(e) {
+    var timePicked = $('.mitimepicker').val();
+		var res = timePicked.split(":");
+		var hora = parseInt(res[0]);
+    if(hora < 10){
+			res[0]="0"+hora;
+		}
+    $('.mitimepicker').val(res[0] + ":" + res[1]);
+});
 
 </script>
 
