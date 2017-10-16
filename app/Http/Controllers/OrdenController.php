@@ -151,9 +151,12 @@ class OrdenController extends Controller
       $from = date ( 'Y-m-d' , $from_n );
       $to = date ( 'Y-m-d' , $to_n );
 
-      if ($request->status=="*") {
+      if (!$request->status) {
         $clases = Orden::whereBetween('fecha', array($from, $to))->get();
 
+      }
+      elseif ($request->status=="*") {
+        $clases = Orden::whereBetween('fecha', array($from, $to))->get();
       }
       else {
         $clases = Orden::where('status', $request->status)->whereBetween('fecha', array($from, $to))->get();
