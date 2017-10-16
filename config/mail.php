@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'noreply@fitcoach.mx', 'name' => 'FITCOACH'],
+    'from' => ['address' => 'fitcoach.notificaciones@gmail.com', 'name' => 'FITCOACH'],
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'username' => 'noreply@fitcoach.mx',
+    'username' => 'fitcoach.notificaciones@gmail.com',
 
     /*
     |--------------------------------------------------------------------------

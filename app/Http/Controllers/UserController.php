@@ -281,7 +281,7 @@ class UserController extends Controller
           $permisos->save();
           $datos=$request;
             Mail::send('emails.usuario', ['datos'=>$datos], function ($m) use ($datos) {
-                $m->from('noreply@fitcoach.mx', 'FITCOACH México');
+                $m->from('fitcoach.notificaciones@gmail.com', 'FITCOACH México');
                 $m->to($datos->email, $datos->name)->subject('¡Accesos FITCOACH!');
             });
           Session::flash('mensaje', '¡Usuario guardado!');
