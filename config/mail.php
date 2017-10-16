@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Mail Driver
@@ -14,9 +12,7 @@ return [
     | Supported: "smtp", "mail", "sendmail", "mailgun", "mandrill", "ses", "log"
     |
     */
-
-    'driver' => 'mail',
-
+    'driver' => env('MAIL_DRIVER', 'smtp'),
     /*
     |--------------------------------------------------------------------------
     | SMTP Host Address
@@ -27,9 +23,8 @@ return [
     | the Mailgun mail service which will provide reliable deliveries.
     |
     */
-
-    'host' => 'smtp.1and1.mx',
-
+    //'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
     /*
     |--------------------------------------------------------------------------
     | SMTP Host Port
@@ -40,9 +35,8 @@ return [
     | stay compatible with the Mailgun e-mail application by default.
     |
     */
-
-    'port' => '587',
-
+    //'port' => env('MAIL_PORT', 587),
+    'port' => env('MAIL_PORT', 465),
     /*
     |--------------------------------------------------------------------------
     | Global "From" Address
@@ -53,9 +47,7 @@ return [
     | used globally for all e-mails that are sent by your application.
     |
     */
-
-    'from' => ['address' => 'fitcoach.notificaciones@gmail.com', 'name' => 'FITCOACH'],
-
+    'from' => ['address' => 'fitcoach.notificaciones@gmail.com', 'name' => 'Alexis'],
     /*
     |--------------------------------------------------------------------------
     | E-Mail Encryption Protocol
@@ -66,9 +58,8 @@ return [
     | transport layer security protocol should provide great security.
     |
     */
-
-    'encryption' => 'ssl',
-
+    //'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
     /*
     |--------------------------------------------------------------------------
     | SMTP Server Username
@@ -79,9 +70,7 @@ return [
     | connection. You may also set the "password" value below this one.
     |
     */
-
-    'username' => 'fitcoach.notificaciones@gmail.com',
-
+    'username' => env('MAIL_USERNAME'),
     /*
     |--------------------------------------------------------------------------
     | SMTP Server Password
@@ -92,9 +81,7 @@ return [
     | connection so that the application will be able to send messages.
     |
     */
-
-    'password' => 'Noreply2016*',
-
+    'password' => env('MAIL_PASSWORD'),
     /*
     |--------------------------------------------------------------------------
     | Sendmail System Path
@@ -105,9 +92,7 @@ return [
     | been provided here, which will work well on most of your systems.
     |
     */
-
     'sendmail' => '/usr/sbin/sendmail -bs',
-
     /*
     |--------------------------------------------------------------------------
     | Mail "Pretend"
@@ -118,7 +103,5 @@ return [
     | you may inspect the message. This is great for local development.
     |
     */
-
-    'pretend' => false,
-
+    'pretend' => env('MAIL_PRETEND', false),
 ];
