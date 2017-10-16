@@ -300,11 +300,15 @@ $('.mitimepicker').timepicker();
 });
 $('.mitimepicker').blur(function() {
     var timePicked = $('.mitimepicker').val();
+		alert(timePicked);
 		var res = timePicked.split(":");
+		alert(res);
 		var hora = parseInt(res[0]);
+		alert(hora);
     if(hora < 10){
 			res[0]="0"+hora;
 		}
+		alert(res[0] + res[1]);
     $('.mitimepicker').val(res[0] + ":" + res[1]);
 });
 
