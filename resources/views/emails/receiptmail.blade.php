@@ -520,6 +520,9 @@
 																									<td style="width: 20%;">${{$orden->cantidad}}</td>
 																							</tr>
 																							@endforeach
+																							<?php $iva=$grantotal*0.16;
+																							$subtotal=$grantotal-$iva;
+																							?>
 																					</tbody>
 																			</table>
 																			<table width="100%" class="textb" border="0" cellspacing="0" cellpadding="6">
@@ -538,7 +541,11 @@
 																							@endif
 																							<tr>
 																									<td align="right" style="width: 90%;"><strong>Subtotal:</strong></td>
-																									<td class="text">${{ $grantotal }}</td>
+																									<td class="text">${{ $subtotal }}</td>
+																							</tr>
+																							<tr>
+																									<td align="right" style="width: 90%;"><strong>IVA:</strong></td>
+																									<td class="text">${{ $iva }}</td>
 																							</tr>
 																							<tr>
 																									<td align="right" style="width: 90%;"><strong>Importe total:</strong></td>
