@@ -21,6 +21,7 @@ class DetalleTable extends Migration
         $table->string('rfc');
         $table->string('clases');
         $table->integer('user_id');
+        $table->string('rating')->default('Sin rating');
         $table->timestamps();
     });
     }

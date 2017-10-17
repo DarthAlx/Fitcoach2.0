@@ -16,6 +16,21 @@ class RatingController extends Controller
     {
       $guardar = new Rating($request->all());
       $guardar->save();
+      $numerodecalificaciones=App\Rating::where('user_id', $guardar->user_id)->count();
+      $calificaciones=App\Rating::where('user_id', $guardar->user_id)->get();
+      $promedio=0;
+      if ($numerodecalificaciones!=0&&$calificaciones) {
+        foreach ($calificaciones as $calificacion) {
+          $promedio=$promedio+$calificacion->rate;
+        }
+        $promedio=$promedio/$numerodecalificaciones;
+      }
+      else {
+        $promedio="Sin rating";
+      }
+      $detalles=App\Detalle::where('user_id', $guardar->user_id)->first();
+      $detalles->rating=$promedio;
+      $detalles->save;
       Session::flash('mensaje', '¡Calificación guardada!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/perfil'));

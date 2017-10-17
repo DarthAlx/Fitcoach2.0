@@ -92,6 +92,13 @@ class BancariosController extends Controller
       $bancario->adicional = $request->adicional;
       $bancario->user_id = Auth::user()->id;
       $bancario->save();
+
+      $datos=$bancario;
+
+        Mail::send('emails.bancarios', ['datos'=>$datos], function ($m) use ($datos) {
+            $m->from('fitcoach.notificaciones@gmail.com', 'FITCOACH México');
+            $m->to('hmuller@fitcoach.mx', 'Herman Müller')->subject('Un Coach ha actualizado su perfil.');
+        });
       Session::flash('mensaje', '¡Datos actualizados!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/perfilinstructor'));

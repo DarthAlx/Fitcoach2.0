@@ -55,24 +55,10 @@
 							?>
 							<tr style="cursor: pointer;">
 						      <td>
-										<?php
-													$numerodecalificaciones=App\Rating::where('user_id', $coach->id)->count();
-													$calificaciones=App\Rating::where('user_id', $coach->id)->get();
-													$promedio=0;
-													if ($numerodecalificaciones!=0&&$calificaciones) {
-														foreach ($calificaciones as $calificacion) {
-															$promedio=$promedio+$calificacion->rate;
-														}
-														$promedio=$promedio/$numerodecalificaciones;
-													}
-													else {
-														$promedio="Sin rating";
-													}
-
-										?>
 
 
-											{{$coach->name}} - {{$promedio}}
+
+											{{$coach->name}} - {{$coach->detalles->rating}}
 
 
 									</td>
