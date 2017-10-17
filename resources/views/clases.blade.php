@@ -126,7 +126,7 @@
 
 
 
-								<div id="myCarousel1{{$clase->id}}" class="carousel slide hidden-xs" data-wrap="false">
+								<div id="myCarouselgrande{{$clase->id}}" class="carousel slide hidden-xs" data-wrap="false">
 				        <div class="carousel-inner">
 									@for ($i=0; $i < 5 ; $i++)
 										@if ($i==0)
@@ -178,9 +178,9 @@
 				        </div>
 
 
-				        <a class="left carousel-control" href="#myCarousel1{{$clase->id}}" data-slide="prev"><em class="fa fa-2x fa-chevron-left" aria-hidden="true" style="color: #000;"></em>
+				        <a class="left carousel-control" href="#myCarouselgrande{{$clase->id}}" data-slide="prev"><em class="fa fa-2x fa-chevron-left" aria-hidden="true" style="color: #000;"></em>
 				        </a>
-				        <a class="right carousel-control" href="#myCarousel1{{$clase->id}}" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
+				        <a class="right carousel-control" href="#myCarouselgrande{{$clase->id}}" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
 				        </a>
 							</div>
 
