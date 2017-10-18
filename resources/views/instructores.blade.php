@@ -13,7 +13,7 @@
 					  <div class="coupon">
 					    <form action="{{url('buscarcoach')}}" method="post">
 					      {!! csrf_field() !!}
-					      <input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
+					      <input class="" type="text" name="busqueda" onblur="fbq('track', 'Search');" value="" placeholder="Buscar...">
 					      <button class="applyCoupon" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
 					    </form>
 					  </div>
@@ -25,7 +25,7 @@
 						<div class="coupon">
 			  			<form action="{{url('buscarcoach')}}" method="post">
 								{!! csrf_field() !!}
-			  				<input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
+			  				<input class="" type="text" name="busqueda" onblur="fbq('track', 'Search');" value="" placeholder="Buscar...">
 								<button class="applyCoupon" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
 			  			</form>
 			  		</div>
@@ -273,7 +273,7 @@
 															<?php $existe=App\Orden::where('coach_id', $particular->user_id)->where('fecha', $fechas[$x])->where('hora', $particular->hora)->first(); ?>
 															@if (!$existe)
 																@if ($particular->fecha==$fechas[$x]||in_array($dia_n, explode(",",$particular->recurrencia)))
-																	<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}');" style="cursor:pointer;">
+																	<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}','{{$coach->id}}');" style="cursor:pointer;">
 																		<input type="checkbox" id="carrito{{$x}}{{$particular->id}}" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
 																		<input type="hidden" name="tipo" value="Particular">
 																		{{$particular->clase->nombre}}
@@ -321,7 +321,7 @@
 														<?php $existe=App\Orden::where('coach_id', $particular->user_id)->where('fecha', $fechas[$x])->where('hora', $particular->hora)->first(); ?>
 														@if (!$existe)
 															@if ($particular->fecha==$fechas[$x]||in_array($dia_n, explode(",",$particular->recurrencia)))
-																<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}');" style="cursor:pointer;">
+																<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}','{{$coach->id}}');" style="cursor:pointer;">
 																	<input type="checkbox" id="carrito{{$x}}{{$particular->id}}" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
 																	<input type="hidden" name="tipo" value="Particular">
 																	{{$particular->hora}} <i class="fa fa-square-o pull-right fa{{$x}}{{$particular->id}}" aria-hidden="true"></i>
@@ -355,7 +355,7 @@
 								</div>
 								<p>&nbsp;</p>
 								<div class="col-sm-4">
-									<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar" id="reservar" disabled>
+									<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar" id="reservar{{$coach->id}}" disabled>
 								</div>
 							</div>
 
@@ -377,7 +377,7 @@
 
 	<script type="text/javascript">
 	clasesseleccionadas=0;
-		function agregaracarrito(valor){
+		function agregaracarrito(valor, valor2){
 			if (document.getElementById('carrito'+valor).checked) {
 				document.getElementById('carrito'+valor).checked = false;
 				$('#carrito'+valor).removeClass('seleccionada');
@@ -390,7 +390,7 @@
 				$('#cantidad').val(clasesseleccionadas);
 				$('#clasesseleccionadas').html(clasesseleccionadas+" clases seleccionadas.");
 				if (clasesseleccionadas<=0) {
-					$('#reservar').prop( "disabled", true );
+					$('#reservar'+valor2).prop( "disabled", true );
 				}
 			}
 			else {
@@ -401,7 +401,7 @@
 				clasesseleccionadas++;
 				$('#cantidad').val(clasesseleccionadas);
 				$('#clasesseleccionadas').html(clasesseleccionadas+" clases seleccionadas.");
-				$('#reservar').prop( "disabled", false );
+				$('#reservar'+valor2).prop( "disabled", false );
 			}
 		}
 	</script>

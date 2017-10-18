@@ -29,7 +29,7 @@
                                 <textarea class="form-control" name="msg" rows="6" placeholder="Mensaje"></textarea>
                             </div>
                             <div class="text-center col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <button type="submit" value="SEND" id="catwebformbutton" class="btn btn-lg btn-success">ENVIAR</button>
+                                <button type="submit" value="SEND" id="catwebformbutton" class="btn btn-lg btn-success" onclick="fbq('track', 'Lead');">ENVIAR</button>
                             </div>
 
                         </form>

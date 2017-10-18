@@ -49,7 +49,7 @@
 								  <div class="coupon" style="float:right;">
 								    <form action="{{url('busqueda')}}" method="post">
 								      {!! csrf_field() !!}
-								      <input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
+								      <input class="" type="text" name="busqueda" onblur="fbq('track', 'Search');" value="" placeholder="Buscar...">
 								      <button class="applyCoupon" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
 								    </form>
 								  </div>

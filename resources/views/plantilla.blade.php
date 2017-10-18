@@ -231,7 +231,7 @@ fbq('track', 'ViewContent');
 								<input type="checkbox" name="términos" value="Sí" required> <a href="{{url('/legales')}}?page=terminos" style="text-decoration: none; color: #000;">Acepto términos y condiciones y</a> <a href="{{url('/legales')}}?page=terminos" style="text-decoration: none; color: #000;">aviso de privacidad.</a>
 							</div>
 
-							<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Registrar</button>
+							<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;" onclick="fbq('track', 'CompleteRegistration');">Registrar</button>
 					</form>
 				</div>
 
