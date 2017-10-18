@@ -79,14 +79,6 @@ class OrdenController extends Controller
         Session::flash('class', 'danger');
 
       }
-      ?>
-      <script type="text/javascript">
-        fbq('track', 'AddToCart');
-        alert("track");
-      </script>
-
-
-      <?php
       $items=Cart::content();
       return redirect()->intended(url('/carrito'));
     }
