@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Bancarios;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-
+use Mail;
 class BancariosController extends Controller
 {
     /**
