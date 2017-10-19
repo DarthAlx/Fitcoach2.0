@@ -476,7 +476,7 @@
 
           				<div>
           					<h4>Editar tarjeta</h4>
-                    <form action="{{ url('/actualizar-tarjeta') }}" method="post">
+                    <form action="{{ url('/actualizar-tarjeta') }}"  onsubmit"fbq('track', 'AddPaymentInfo');" method="post">
 
                       {{ method_field('PUT') }}
 
@@ -522,7 +522,7 @@
                          <input class="form-control" type="text" value="{{ Ucfirst($tarjeta->nombre) }}" placeholder="Nombre del titular" name="nombre" required>
                          <input type="hidden" value="{{ $tarjeta->id }}" name="tarjeta_id">
                          <div class="text-center">
-                           <button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important; width: 40%; display: inline-block;" onclick="fbq('track', 'AddPaymentInfo');">Actualizar</button>
+                           <button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important; width: 40%; display: inline-block;">Actualizar</button>
                            <a href="#" class="btn btn-success" style="color: #fff !important; background-color: #d9534f !important; border-color: #d9534f !important; width: 40%; display: inline-block;" onclick="javascript: document.getElementById('botoneliminart{{ $tarjeta->id }}').click();">Borrar</a>
                          </div>
 

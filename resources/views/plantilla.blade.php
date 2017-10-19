@@ -213,7 +213,7 @@ fbq('track', 'ViewContent');
 				</div>
 				<div id="login3" style="display: none;">
 					<h4>Registrar una nueva cuenta</h4>
-					<form id="loginform" class="form-horizontal" role="form" action="{{ url('/registro') }}" method="post">
+					<form id="loginform" class="form-horizontal" onsubmit="fbq('track', 'CompleteRegistration');" role="form" action="{{ url('/registro') }}" method="post">
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 							<input id="emaillogin2" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Correo electrónico" required>
 							<input type="email" class="form-control" name="email_confirmation" value="{{ old('email_confirmation') }}" placeholder="Confirmar correo electrónico" required>
@@ -231,7 +231,7 @@ fbq('track', 'ViewContent');
 								<input type="checkbox" name="términos" value="Sí" required> <a href="{{url('/legales')}}?page=terminos" style="text-decoration: none; color: #000;">Acepto términos y condiciones y</a> <a href="{{url('/legales')}}?page=terminos" style="text-decoration: none; color: #000;">aviso de privacidad.</a>
 							</div>
 
-							<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;" onclick="fbq('track', 'CompleteRegistration');">Registrar</button>
+							<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Registrar</button>
 					</form>
 				</div>
 

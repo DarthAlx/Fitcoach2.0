@@ -49,10 +49,10 @@
 				<div class="col-md-6 col-xs-6">
 					<div class="buscador">
 					  <div class="coupon" style="float:right;">
-					    <form action="{{url('busqueda')}}" method="post">
+					    <form action="{{url('busqueda')}}" onsubmit="fbq('track', 'Search');" method="post">
 					      {!! csrf_field() !!}
-					      <input class="" type="text" name="busqueda" onblur="fbq('track', 'Search');" value="" placeholder="Buscar...">
-					      <button class="applyCoupon" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+					      <input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
+					       <button class="applyCoupon" type="submit"><i class="fa fa-search" aria-hidden="true" onblur="fbq('track', 'Search');"></i></button>
 					    </form>
 					  </div>
 
@@ -119,7 +119,7 @@
 
 	        <div class="row">
 	      		<div class="col-md-12">
-							<form action="{{url('carrito')}}" method="post">
+							<form action="{{url('carrito')}}" onsubmit="fbq('track', 'AddToCart');" method="post">
 								{!! csrf_field() !!}
 
 							<h1 class="title">{{ucfirst($clase->nombre)}} </h1>

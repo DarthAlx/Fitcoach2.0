@@ -403,7 +403,7 @@
 
     @endif
     <script type="text/javascript">
-    fbq('track', 'InitiateCheckout');
+
     Conekta.setPublishableKey('key_UzGAymZCxzCcaMTrBo8bhLA');
 
   var conektaSuccessResponseHandler = function(token) {
@@ -422,7 +422,7 @@
   //jQuery para que genere el token después de dar click en submit
   $(function () {
     $("#card-form").submit(function(event) {
-      fbq('track', 'Purchase', {value: '{{Cart::total()}}', currency: 'MXN'});
+      fbq('track', 'InitiateCheckout');
       var $form = $(this);
       // Previene hacer submit más de una vez
       $form.find("button").prop("disabled", true);

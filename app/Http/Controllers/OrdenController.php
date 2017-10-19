@@ -544,6 +544,7 @@ class OrdenController extends Controller
         Cart::destroy();
         $this->sendinvoice($order->id);
         $this->sendclassrequest($order->id);
+        Session::flash('total', $order->amount);
         return redirect()->intended(url('/completa'));
 
       } catch (\Conekta\ProccessingError $error){

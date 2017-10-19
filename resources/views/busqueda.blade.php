@@ -12,10 +12,10 @@
 
 <div class="buscador hidden-xs" style="float: right; position: absolute; right: 0; bottom: 0;">
 	<div class="coupon" style="float:right;">
-		<form action="{{url('busqueda')}}" method="post">
+		<form action="{{url('busqueda')}}" onsubmit="fbq('track', 'Search');" method="post">
 			{!! csrf_field() !!}
-			<input class="" type="text" name="busqueda" onblur="fbq('track', 'Search');" value="" placeholder="Buscar...">
-			<button class="applyCoupon" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+			<input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
+			 <button class="applyCoupon" type="submit"><i class="fa fa-search" aria-hidden="true" onblur="fbq('track', 'Search');"></i></button>
 		</form>
 	</div>
 
@@ -25,10 +25,10 @@
 				<div class="col-sm-3 visible-xs">
 					<div class="buscador">
 						<div class="coupon" style="float:right;">
-							<form action="{{url('busqueda')}}" method="post">
+							<form action="{{url('busqueda')}}" onsubmit="fbq('track', 'Search');" method="post">
 								{!! csrf_field() !!}
-								<input class="" type="text" name="busqueda" onblur="fbq('track', 'Search');" value="" placeholder="Buscar...">
-								<button class="applyCoupon" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+								<input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
+								 <button class="applyCoupon" type="submit"><i class="fa fa-search" aria-hidden="true" onblur="fbq('track', 'Search');"></i></button>
 							</form>
 						</div>
 

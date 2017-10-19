@@ -11,10 +11,10 @@
 					<div class="title" style="font-size: 10vw; float: left; line-height: 0.8;">COACHES</div>
 					<div class="buscador hidden-xs" style="float: right; position: absolute; right: 0; bottom: 0;">
 					  <div class="coupon">
-					    <form action="{{url('buscarcoach')}}" method="post">
+					    <form action="{{url('buscarcoach')}}" onsubmit="fbq('track', 'Search');" method="post">
 					      {!! csrf_field() !!}
-					      <input class="" type="text" name="busqueda" onblur="fbq('track', 'Search');" value="" placeholder="Buscar...">
-					      <button class="applyCoupon" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+					      <input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
+					       <button class="applyCoupon" type="submit"><i class="fa fa-search" aria-hidden="true" onblur="fbq('track', 'Search');"></i></button>
 					    </form>
 					  </div>
 
@@ -23,10 +23,10 @@
 				<div class="col-sm-3 visible-xs">
 					<div class="buscador">
 						<div class="coupon">
-			  			<form action="{{url('buscarcoach')}}" method="post">
+			  			<form action="{{url('buscarcoach')}}" onsubmit="fbq('track', 'Search');" method="post">
 								{!! csrf_field() !!}
-			  				<input class="" type="text" name="busqueda" onblur="fbq('track', 'Search');" value="" placeholder="Buscar...">
-								<button class="applyCoupon" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+			  				<input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
+								 <button class="applyCoupon" type="submit"><i class="fa fa-search" aria-hidden="true" onblur="fbq('track', 'Search');"></i></button>
 			  			</form>
 			  		</div>
 
@@ -180,7 +180,7 @@
 
 														</div>
 														<!--img src="{{ url('uploads/condominios') }}/{{ $residencial->condominio->imagen }}" class="img-responsive"-->
-														<form action="{{url('carrito')}}" method="post">
+														<form action="{{url('carrito')}}"  onsubmit="fbq('track', 'AddToCart');" method="post">
 															{!! csrf_field() !!}
 															<input type="hidden" name="residencial_id" value="{{$residencial->id}}">
 															<input type="hidden" name="tipo" value="Residencial">
@@ -247,7 +247,7 @@
 
         <div class="row">
       		<div class="col-md-12">
-						<form action="{{url('carrito')}}" method="post">
+						<form action="{{url('carrito')}}"  onsubmit="fbq('track', 'AddToCart');" method="post">
 							{!! csrf_field() !!}
 
 						<h1 class="title">{{ucfirst($coach->name)}}</h1>
