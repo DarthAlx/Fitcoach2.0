@@ -101,7 +101,7 @@ class ParticularController extends Controller
         $horario->fecha = date_create($request->fecha);
         $horario->recurrencia="";
       }
-      $horario->hora = $request->zona_id;
+      $horario->zona_id = $request->zona_id;
       $horario->save();
       Session::flash('mensaje', '¡Horario actualizado!');
       Session::flash('class', 'success');
