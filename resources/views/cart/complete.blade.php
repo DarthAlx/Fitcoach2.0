@@ -10,7 +10,7 @@
       </div>
   </div>
   <script type="text/javascript">
-    fbq('track', 'Purchase', {value: '{!! Illuminate\Support\Facades\Session::get('total') !!}', currency: 'MXN'});
+    fbq('track', 'Purchase', {value: '{!! Session::get('total') !!}', currency: 'MXN'});
   </script>
 </section>
 @endsection

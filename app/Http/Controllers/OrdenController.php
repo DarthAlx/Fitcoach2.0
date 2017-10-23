@@ -566,7 +566,13 @@ class OrdenController extends Controller
 
 
       }
-
+      public function probarcomplete(){
+              Session::flash('total', "500.00");
+              return view('cart.complete');
+            }
+            public function complete(){
+              return view('cart.complete');
+            }
 
       public function receipt($id)
       {
