@@ -462,7 +462,7 @@
 																<tr>
 																	<td>
 																		<div class="pull-right">
-																			<h2>Nueva clase programada</h2>
+																			<h2>Clase cancelada</h2>
 																		</div>
 																	</td>
 																	<td align="right">
@@ -505,13 +505,13 @@
 																							</tr>
 																							<?php $grantotal=0; ?>
 																							@foreach ($ordenes as $orden)
-																								<?php $tipo=explode(',',$orden->metadata);
+																								<?php
 																											$grantotal=$grantotal+intval($orden->cantidad);
 																								?>
 																							<tr class="text">
 																									<td style="width: 10%;">1</td>
 																									<td style="width: 30%;">{{$orden->nombre}}</td>
-																									<td style="width: 30%;">Clase {{$tipo[0]}}</td>
+																									<td style="width: 30%;">Clase {{$orden->tipo}}</td>
 																									<td style="width: 30%;">{{$orden->user->name}}</td>
 
 																							</tr>

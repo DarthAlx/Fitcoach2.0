@@ -622,7 +622,7 @@ class OrdenController extends Controller
 
     public function sendclasscancel($id)
     {
-      $ordenes=Orden::where('id', $id)->first();
+      $ordenes=Orden::where('id', $id)->get();
       $datos=Orden::where('id', $id)->first();
       $user=User::find($datos->coach_id);
         Mail::send('emails.cancelada', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {

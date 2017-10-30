@@ -56,7 +56,7 @@
 						</tr>
 						<?php $grantotal=0; ?>
 						@foreach ($ordenes as $orden)
-							<?php $tipo=explode(',',$orden->metadata);
+							<?php 
 										$grantotal=$grantotal+intval($orden->cantidad);
 							?>
 							<tr>
@@ -67,7 +67,7 @@
 									{{$orden->nombre}}
 								</td>
 								<td class="col-xs-4">
-									Clase {{$tipo[0]}}
+									Clase $orden->tipo
 								</td>
 								<td class="col-xs-2">
 									{{ substr("$orden->cantidad", 0, -2) }}.{{substr("$orden->cantidad", -2) }}
