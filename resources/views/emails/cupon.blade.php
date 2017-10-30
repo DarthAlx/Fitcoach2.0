@@ -456,7 +456,7 @@
 						<tbody>
 							<tr>
 								<td colspan="2">
-									
+
 								</td>
 							</tr>
 							<tr>
@@ -481,15 +481,15 @@
 																</td>
 														</tr>
 														<tr>
-																<td align="left" style="width: 90%;"><strong>Nombre:</strong></td>
+																<td align="left" style="width: 50%;"><strong>Nombre:</strong></td>
 																<td class="text">{{ $user->name}}</td>
 														</tr>
 														<tr>
-																<td align="left" style="width: 90%;"><strong>Código de canje:</strong></td>
+																<td align="left" style="width: 50%;"><strong>Código de canje:</strong></td>
 																<td class="text">{{ $cupon->codigo}}</td>
 														</tr>
 														<tr>
-																<td align="left" style="width: 90%;"><strong>Monto de cupón:</strong></td>
+																<td align="left" style="width: 50%;"><strong>Monto de cupón:</strong></td>
 																<td class="text">{{ $cupon->monto}}</td>
 														</tr>
 

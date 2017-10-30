@@ -208,7 +208,7 @@ class OrdenController extends Controller
             $orden->status="Cancelada";
             $orden->metadata="cupon enviado";
             $orden->save();
-            //$this->sendclasscancel($orden->id);
+            $this->sendclasscancel($orden->id);
           Session::flash('mensaje', 'Cupón enviado.');
           Session::flash('class', 'success');
         }
@@ -622,10 +622,9 @@ class OrdenController extends Controller
 
     public function sendclasscancel($id)
     {
-      $ordenes=Orden::where('id', $id)->get();
-      $datos=Orden::where('id', $id)->first();
+      $orden=Orden::where('id', $id)->first();
       $user=User::find($datos->coach_id);
-        Mail::send('emails.cancelada', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {
+        Mail::send('emails.cancelada', ['orden'=>$orden,'user'=>$user], function ($m) use ($user) {
             $m->from('fitcoach.notificaciones@gmail.com', 'FITCOACH México');
             $m->to($user->email, $user->name)->subject('¡Cancelación de clase!');
         });
