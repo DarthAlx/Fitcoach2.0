@@ -623,7 +623,7 @@ class OrdenController extends Controller
     public function sendclasscancel($id)
     {
       $orden=Orden::where('id', $id)->first();
-      $user=User::find($datos->coach_id);
+      $user=User::find($orden->coach_id);
         Mail::send('emails.cancelada', ['orden'=>$orden,'user'=>$user], function ($m) use ($user) {
             $m->from('fitcoach.notificaciones@gmail.com', 'FITCOACH México');
             $m->to($user->email, $user->name)->subject('¡Cancelación de clase!');
