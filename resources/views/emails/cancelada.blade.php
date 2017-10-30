@@ -498,10 +498,10 @@
 																					<tbody>
 																							<tr>
 																									<td style="width: 10%;"><span>Cant.</span></td>
-																									<td style="width: 30%;"><span>Artículo</span></td>
-																									<td style="width: 30%;"><span>Descripción</span></td>
-																									<td style="width: 30%;"><span>Clientes</span></td>
-																									<td style="width: 30%;"><span>Fecha</span></td>
+																									<td style="width: 20%;"><span>Artículo</span></td>
+																									<td style="width: 20%;"><span>Descripción</span></td>
+																									<td style="width: 20%;"><span>Clientes</span></td>
+																									<td style="width: 20%;"><span>Fecha</span></td>
 
 
 																							</tr>
@@ -509,10 +509,10 @@
 
 																							<tr class="text">
 																									<td style="width: 10%;">1</td>
-																									<td style="width: 30%;">{{$orden->nombre}}</td>
-																									<td style="width: 30%;">Clase {{$orden->tipo}}</td>
-																									<td style="width: 30%;">{{$orden->user->name}}</td>
-																									<td style="width: 30%;">{{$orden->fecha}} {{$orden->hora}}</td>
+																									<td style="width: 20%;">{{$orden->nombre}}</td>
+																									<td style="width: 20%;">Clase {{$orden->tipo}}</td>
+																									<td style="width: 20%;">{{$orden->user->name}}</td>
+																									<td style="width: 20%;">{{$orden->fecha}} {{$orden->hora}}</td>
 
 																							</tr>
 
