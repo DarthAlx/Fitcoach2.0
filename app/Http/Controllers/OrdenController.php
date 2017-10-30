@@ -208,7 +208,7 @@ class OrdenController extends Controller
             $orden->status="Cancelada";
             $orden->metadata="cupon enviado";
             $orden->save();
-            $this->sendclasscancel($orden->id);
+            //$this->sendclasscancel($orden->id);
           Session::flash('mensaje', 'Cupón enviado.');
           Session::flash('class', 'success');
         }
