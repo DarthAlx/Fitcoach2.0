@@ -456,7 +456,7 @@
 						<tbody>
 							<tr>
 								<td colspan="2">
-									
+
 								</td>
 							</tr>
 							<tr>
@@ -481,19 +481,19 @@
 																</td>
 														</tr>
 														<tr>
-																<td align="left" style="width: 90%;"><strong>Nombre:</strong></td>
+																<td align="left" style="width: 50%;"><strong>Nombre:</strong></td>
 																<td class="text">{{ $datos->nombre}}</td>
 														</tr>
 														<tr>
-																<td align="left" style="width: 90%;"><strong>Email:</strong></td>
+																<td align="left" style="width: 50%;"><strong>Email:</strong></td>
 																<td class="text">{{ $datos->email}}</td>
 														</tr>
 														<tr>
-																<td align="left" style="width: 90%;"><strong>Teléfono:</strong></td>
+																<td align="left" style="width: 50%;"><strong>Teléfono:</strong></td>
 																<td class="text">{{ $datos->tel}}</td>
 														</tr>
 														<tr>
-																<td align="left" style="width: 90%;"><strong>Mensaje:</strong></td>
+																<td align="left" style="width: 50%;"><strong>Mensaje:</strong></td>
 																<td class="text">{{ $datos->msg}}</td>
 														</tr>
 

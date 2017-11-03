@@ -89,24 +89,24 @@
 														<?php $descuento=App\Cuponera::where('orden_id', $orden->order_id)->first(); ?>
 														@if ($descuento)
 															<tr>
-																	<td align="right" style="width: 90%;"><strong>Descuento:</strong></td>
+																	<td align="right" style="width: 50%;"><strong>Descuento:</strong></td>
 																	<td class="text">-${{ $descuento->cupon->monto }}</td>
 															</tr>
 														@endif
 														<tr>
-																<td align="right" style="width: 90%;"><strong>Subtotal:</strong></td>
+																<td align="right" style="width: 50%;"><strong>Subtotal:</strong></td>
 																<td class="text">${{ $subtotal }}</td>
 														</tr>
 														<tr>
-																<td align="right" style="width: 90%;"><strong>IVA:</strong></td>
+																<td align="right" style="width: 50%;"><strong>IVA:</strong></td>
 																<td class="text">${{ $iva }}</td>
 														</tr>
 														<tr>
-																<td align="right" style="width: 90%;"><strong>Importe total:</strong></td>
+																<td align="right" style="width: 50%;"><strong>Importe total:</strong></td>
 																<td class="text">${{ $grantotal }}</td>
 														</tr>
 														<tr>
-																<td align="right" style="width: 90%;"><strong>Pagado:</strong></td>
+																<td align="right" style="width: 50%;"><strong>Pagado:</strong></td>
 																<td class="text">${{ $grantotal }}</td>
 														</tr>
 

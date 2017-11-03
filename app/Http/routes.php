@@ -135,7 +135,7 @@ Route::post('/bolsa-de-trabajo', function (Illuminate\Http\Request $request) {
 
         $m->from($datos[0]->email, $datos[0]->nombre);
         $m->attach(url('/uploads/temp/'.$datos[1]), ['as' => $datos[1]]);
-        $m->to('alx.morales@outlook.com', 'FITCOACH México')->subject('Bolsa de trabajo');
+        $m->to('hmuller@fitcoach.mx', 'FITCOACH México')->subject('Bolsa de trabajo');
     });
     Illuminate\Support\Facades\File::delete($path . $name);
     Illuminate\Support\Facades\Session::flash('mensaje', '¡Mensaje enviado!');
@@ -152,7 +152,7 @@ Route::post('/contacto', function (Illuminate\Http\Request $request) {
 
     Mail::send('emails.contacto', ['datos'=>$datos], function ($m) use ($datos) {
         $m->from($datos->email, $datos->nombre);
-        $m->to('alx.morales@outlook.com', 'FITCOACH México')->subject('Contacto');
+        $m->to('hmuller@fitcoach.mx', 'FITCOACH México')->subject('Contacto');
     });
 
     Illuminate\Support\Facades\Session::flash('mensaje', '¡Mensaje enviado!');
