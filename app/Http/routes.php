@@ -193,7 +193,7 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 Route::post('traerdireccion', 'DireccionController@traerdireccion');
 
-
+Route::put('actualizar-contraseña', 'UserController@updatePassword');
 
 // Zonas seguras
 Route::group(['middleware' => 'administradores'], function(){
@@ -339,7 +339,7 @@ Route::group(['middleware' => 'usuarios'], function(){
   });
   Route::post('actualizar-perfil', 'DetalleController@store');
   Route::put('actualizar-perfil', 'DetalleController@update');
-  Route::put('actualizar-contraseña', 'UserController@updatePassword');
+
 
   Route::post('agregar-direccion', 'DireccionController@store');
   Route::put('actualizar-direccion', 'DireccionController@update');
@@ -373,7 +373,7 @@ Route::group(['middleware' => 'instructores'], function(){
   });
   Route::post('actualizar-perfil', 'DetalleController@storeinst');
   Route::put('actualizar-perfil', 'DetalleController@updateinst');
-  Route::put('actualizar-contraseña', 'UserController@updatePassword');
+
   Route::post('agregar-horario', 'ParticularController@store');
   Route::put('actualizar-horario', 'ParticularController@update');
   Route::delete('eliminar-horario', 'ParticularController@destroy');
