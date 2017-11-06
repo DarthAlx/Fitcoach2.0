@@ -54,7 +54,7 @@ class SliderController extends Controller
         if ($request->hasFile('image')) {
           $file = $request->file('image');
           if ($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="png") {
-            $name = "Slide" . $request->order . "." . $file->getClientOriginalExtension();
+            $name = "Slide" . time() . "." . $file->getClientOriginalExtension();
             $path = base_path('images/content/');
             $file-> move($path, $name);
             $slide = Slider::find($id);
