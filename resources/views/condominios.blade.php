@@ -74,7 +74,7 @@
 							date_default_timezone_set('America/Mexico_City');
 
 							for ($i=0; $i < 30 ; $i++) {
-								$nuevafecha = strtotime ( '+'.$i+1.'day' , strtotime ( $fecha ) ) ;
+								$nuevafecha = strtotime ( '+'.($i+1).'day' , strtotime ( $fecha ) ) ;
 								$nuevafecha = date ( 'Y-m-d' , $nuevafecha );
 								$format=date("d", strtotime($nuevafecha));
 								$numdias=date("w", strtotime($nuevafecha));
