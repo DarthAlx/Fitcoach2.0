@@ -151,7 +151,7 @@
 
 			      				<div>
 			      					<h4>Editar cupon</h4>
-											<?php $usos=App\Cuponera::where('cupon_id', $cupon->id)->whereNotNull('orden_id')->count(); ?>
+											<?php $usos=App\Cuponera::where('cupon_id', $cupon->id)->where('orden_id','<>', '')->count(); ?>
 											<p>Usos: {{$usos}}</p>
 			                <form action="{{ url('/actualizar-cupon') }}" method="post">
 												{{ method_field('PUT') }}
