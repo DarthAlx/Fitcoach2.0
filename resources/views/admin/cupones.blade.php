@@ -120,7 +120,7 @@
 											<option value="Residencial">Residencial</option>
 											<option value="Evento">Evento</option>
 										</select>
-										<?php $usuarios=App\User::where('role', 'usuario')->get(); ?>
+										<?php $usuarios=App\User::where('role', 'usuario')->orderBy('name', 'asc')->get(); ?>
 										<select class="form-control" name="user_id">
 											<option value="">Usuario</option>
 											@foreach ($usuarios as $usuario)
@@ -151,6 +151,8 @@
 
 			      				<div>
 			      					<h4>Editar cupon</h4>
+											<?php $usos=App\Cuponera::where('cupon_id', $cupon->id)->whereNotNull('orden_id')->count(); ?>
+											<p>Usos: {{$usos}}</p>
 			                <form action="{{ url('/actualizar-cupon') }}" method="post">
 												{{ method_field('PUT') }}
 			        					<input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -171,7 +173,7 @@
 												<script type="text/javascript">
 												 	if (document.getElementById('tipo{{ $cupon->id }}') != null) document.getElementById('tipo{{ $cupon->id }}').value = '{!! $cupon->tipo !!}';
 												</script>
-												<?php $usuarios=App\User::where('role', 'usuario')->get(); ?>
+												<?php $usuarios=App\User::where('role', 'usuario')->orderBy('name', 'asc')->get(); ?>
 												<select class="form-control" name="user_id" id="user{{ $cupon->id }}">
 													<option value="">Usuario</option>
 													@foreach ($usuarios as $usuario)

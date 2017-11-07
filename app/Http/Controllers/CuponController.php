@@ -82,6 +82,7 @@ class CuponController extends Controller
        $cupon = Cupon::find($request->cupon_id);
        $cupon->descripcion = $request->descripcion;
        $cupon->codigo = $request->codigo;
+       $cupon->monto = $request->monto;
        $cupon->usos = $request->usos;
        $cupon->minimo = $request->minimo;
        $cupon->expiracion = date_create($request->expiracion);

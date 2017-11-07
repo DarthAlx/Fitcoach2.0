@@ -114,7 +114,7 @@
     </div>
 <p>&nbsp;</p>
 @if (Cart::content()->count()>0)
-
+<div class="row">
   <div class="col-sm-6">
     @if (!$esresidencial)
       @if (!$user->direcciones->isEmpty())
@@ -137,12 +137,13 @@
     </div>
     @endif
 </div>
-
+</div>
 @endif
 <p>&nbsp;</p>
     @if (Cart::content()->count()>0)
     <form action="{{url('cargo')}}" method="POST" id="card-form">
-    <div class="col-sm-6">
+    <div class="row">
+      <div class="col-sm-6">
       @if (!$esresidencial)
                         @if (!$user->direcciones->isEmpty())
                           <div class="form-group row">
@@ -308,6 +309,8 @@
           </div>
         </div>
     </div>
+    </div>
+
     </form>
 @endif <!--carritovacio-->
     @if (!$user->direcciones->isEmpty())
