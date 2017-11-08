@@ -45,8 +45,8 @@ class CuponeraController extends Controller
     {
         $cupon= Cupon::where('codigo', $request->codigo)->first();
         if ($cupon) {
-          $usos= Cuponera::where('cupon_id', $cupon->id)->where('user_id', Auth::user()->id)->whereNotNull('orden_id')->count();
-          $usogeneral= Cuponera::where('cupon_id', $cupon->id)->whereNotNull('orden_id')->count();
+          $usos= Cuponera::where('cupon_id', $cupon->id)->where('user_id', Auth::user()->id)->where('orden_id','<>', '')->count();
+          $usogeneral= Cuponera::where('cupon_id', $cupon->id)->where('orden_id','<>', '')->count();
           $total=Cart::total();
           date_default_timezone_set('America/Mexico_City');
           setlocale(LC_TIME, "es-ES");
