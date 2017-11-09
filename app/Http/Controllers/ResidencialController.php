@@ -161,7 +161,7 @@ public function storeevento(Request $request)
     if ($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="png") {
 
 
-      $name = $request->nombreevento ."-". time(). "." . $file->getClientOriginalExtension();
+      $name = "Evento-". time(). "." . $file->getClientOriginalExtension();
       $path = base_path('uploads/clases/');
 
       $file-> move($path, $name);
@@ -207,7 +207,7 @@ public function updateevento(Request $request)
     if ($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="png") {
 
 
-      $name = $request->nombreevento ."-". time(). "." . $file->getClientOriginalExtension();
+      $name = "Evento-". time(). "." . $file->getClientOriginalExtension();
       $path = base_path('uploads/clases/');
 
       $file-> move($path, $name);
