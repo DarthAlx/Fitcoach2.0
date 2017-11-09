@@ -72,7 +72,7 @@
     										<div class="row">
     											<div class="col-md-8 col-sm-12 sidebar">
     												<div class="row">
-															<div class="col-sm-4	">
+															<div class="col-sm-4	hidden-xs hidden-sm">
 																<img src="{{ url('uploads/clases') }}/{{ $evento->imagenevento }}" alt="{{$evento->nombreevento}}" class="img-responsive hidden-xs">
 															</div>
 															<div class="col-sm-8">
@@ -85,7 +85,7 @@
 
     												</div>
 														</div>
-														<div class="col-md-4 col-sm-12 sidebar">
+														<div class="col-md-4 col-sm-12 sidebar hidden-xs hidden-sm">
 	    												<div class="title pull-right">
 	    													${{$evento->precio}}
 	    												</div>
@@ -128,7 +128,24 @@
 														</div>
 
 
+														<div class="col-xs-12 sidebar visible-xs visible-sm">
+															<div class="title pull-right">
+																${{$evento->precio}}
+															</div>
 
+															<form action="{{url('carrito')}}" method="post">
+																{!! csrf_field() !!}
+																<input type="hidden" name="residencial_id" value="{{$evento->id}}">
+																<input type="hidden" name="tipo" value="Evento">
+																<div class="row">
+																	<div class="col-sm-8 col-sm-offset-4">
+																			<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
+																	</div>
+																</div>
+															</form>
+
+
+														</div>
 
 
     										</div>
