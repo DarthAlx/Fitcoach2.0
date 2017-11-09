@@ -76,7 +76,7 @@
 																<img src="{{ url('uploads/clases') }}/{{ $evento->imagenevento }}" alt="{{$evento->nombreevento}}" class="img-responsive hidden-xs">
 															</div>
 															<div class="col-sm-8">
-																<div class="title">
+																<div class="title" style="    line-height: 1;">
 																		{{$evento->nombreevento}}
 
 																</div>
