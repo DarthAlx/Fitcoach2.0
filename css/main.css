@@ -817,3 +817,14 @@ button.close {
     z-index: 99999999999999999999999;
     position: relative;
 }
+
+.gotham2.textoevento {
+    font-size: 25px;
+}
+
+.gotham2.textoevento span {
+    color: #D08840;
+}
+.gotham2.textoevento .menor{
+    font-size: 18px;
+}

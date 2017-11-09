@@ -71,51 +71,62 @@
     									<div class="container-bootstrap" style="width: 100%;">
     										<div class="row">
     											<div class="col-sm-8 sidebar">
-    												<div class="text-center">
-															<img src="{{ url('uploads/clases') }}/{{ $evento->imagenevento }}" alt="{{$evento->nombreevento}}" style="max-width:200px;float-left;">
-    																<div class="title">
-    																		{{$evento->nombreevento}}
+    												<div class="row">
+															<div class="col-sm-4	">
+																<img src="{{ url('uploads/clases') }}/{{ $evento->imagenevento }}" alt="{{$evento->nombreevento}}" class="img-responsive">
+															</div>
+															<div class="col-sm-8">
+																<div class="title">
+																		{{$evento->nombreevento}}
 
-    																</div>
-    															 <div class="profile-userpic">
-    																 <img src="{{ url('uploads/avatars') }}/{{ $evento->user->detalles->photo }}" class="img-responsive" alt="">
-    															 </div>
-																	 <?php $nombre=explode(" ",$evento->user->name); ?>
-																	 <h2>{{ucfirst($nombre[0])}}</h2>
-
-
-    												</div>
-    												<div class="gotham2 text-center">
-															<p><span>Fecha:</span> {{$evento->fecha}}</p>
-    													<p><span>Hora:</span> {{$evento->hora}}</p>
-
-    													<p>
-																 <span>Disponibilidad:</span> {{intval($evento->cupo)-intval($evento->ocupados)}} personas
-															</p>
-
-															<p><span>Ubicación:</span><br> {{$evento->direccionevento}}</p>
-
-    												</div>
-
-    											</div>
-    											<div class="col-sm-4 sidebar">
-    												<div class="title pull-right">
-    													${{$evento->precio}}
-    												</div>
-
-    												<form action="{{url('carrito')}}" method="post">
-    													{!! csrf_field() !!}
-    													<input type="hidden" name="residencial_id" value="{{$evento->id}}">
-															<input type="hidden" name="tipo" value="Evento">
-															<div class="row">
-																<div class="col-sm-8 col-sm-offset-4">
-																		<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
 																</div>
 															</div>
-    												</form>
 
-														<p><span>Descripción:</span> <br>{{$evento->descripcion}}</p>
-    											</div>
+
+    												</div>
+														</div>
+														<div class="col-sm-4 sidebar">
+	    												<div class="title pull-right">
+	    													${{$evento->precio}}
+	    												</div>
+
+	    												<form action="{{url('carrito')}}" method="post">
+	    													{!! csrf_field() !!}
+	    													<input type="hidden" name="residencial_id" value="{{$evento->id}}">
+																<input type="hidden" name="tipo" value="Evento">
+																<div class="row">
+																	<div class="col-sm-8 col-sm-offset-4">
+																			<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
+																	</div>
+																</div>
+	    												</form>
+
+
+	    											</div>
+													</div>
+													<div class="row">
+
+														<div class="col-sm-8 sidebar">
+															<div class="gotham2 textoevento">
+																<p><span>Fecha:</span> {{$evento->fecha}}</p>
+	    													<p><span>Hora:</span> {{$evento->hora}}</p>
+
+	    													<p>
+																	 <span>Disponibilidad:</span> {{intval($evento->cupo)-intval($evento->ocupados)}} personas
+																</p>
+
+																<p><span>Ubicación:</span><br> <span class="menor">{{$evento->direccionevento}}</span></p>
+
+	    												</div>
+														</div>
+														<div class="col-sm-4 sidebar">
+															<p class="gotham2 textoevento"><span>Descripción:</span> <br><span class="menor">{{$evento->descripcion}}</span></p>
+														</div>
+
+
+
+
+
     										</div>
 
     									</div>
