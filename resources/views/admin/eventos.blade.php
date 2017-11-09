@@ -152,8 +152,8 @@
 
 											<input type="number" id="cupo" class="form-control" name="cupo" placeholder="Cupo" value="{{ $evento->cupo }}" required>
 
-											<textarea name="direccionevento" class="form-control" rows="10" placeholder="Dirección" required>{{ $evento->direccionevento }}</textarea>
-											<textarea name="descripcion" class="form-control" rows="10" placeholder="Descripción" required>{{ $evento->descripcion }}</textarea>
+											<textarea name="direccionevento" class="form-control" rows="10" placeholder="Dirección" required>{!! $evento->direccionevento !!}</textarea>
+											<textarea name="descripcion" class="form-control" rows="10" placeholder="Descripción" required>{!! $evento->descripcion !!}</textarea>
 											<input type="hidden" name="evento_id" value="{{ $evento->id }}" required>
 											<div class="text-center">
 												<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important; width: 40%; display: inline-block;">Actualizar</button>

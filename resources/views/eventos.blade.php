@@ -117,13 +117,13 @@
 																</p>
 																<p>&nbsp;</p>
 
-																<p><span>Ubicación:</span><br> <span class="menor">{{$evento->direccionevento}}</span></p>
+																<p><span>Ubicación:</span><br> <span class="menor">{!!$evento->direccionevento!!}</span></p>
 
 	    												</div>
 														</div>
 														<div class="col-sm-4 sidebar">
 															<div class="gotham2 textoevento">
-																<p><span>Descripción:</span> <br><span class="menor">{{$evento->descripcion}}</span></p>
+																<p><span>Descripción:</span> <br><span class="menor">{!!$evento->descripcion!!}</span></p>
 															</div>
 														</div>
 
