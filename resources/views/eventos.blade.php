@@ -104,9 +104,10 @@
 
 	    											</div>
 													</div>
+													<p>&nbsp;</p>
 													<div class="row">
 
-														<div class="col-sm-8 sidebar">
+														<div class="col-sm-8 sidebar" style="    border-right: 1px solid #ccc;">
 															<div class="gotham2 textoevento">
 																<p><span>Fecha:</span> {{$evento->fecha}}</p>
 	    													<p><span>Hora:</span> {{$evento->hora}}</p>
@@ -114,13 +115,16 @@
 	    													<p>
 																	 <span>Disponibilidad:</span> {{intval($evento->cupo)-intval($evento->ocupados)}} personas
 																</p>
+																<p>&nbsp;</p>
 
 																<p><span>Ubicación:</span><br> <span class="menor">{{$evento->direccionevento}}</span></p>
 
 	    												</div>
 														</div>
 														<div class="col-sm-4 sidebar">
-															<p class="gotham2 textoevento"><span>Descripción:</span> <br><span class="menor">{{$evento->descripcion}}</span></p>
+															<div class="gotham2 textoevento">
+																<p><span>Descripción:</span> <br><span class="menor">{{$evento->descripcion}}</span></p>
+															</div>
 														</div>
 
 
