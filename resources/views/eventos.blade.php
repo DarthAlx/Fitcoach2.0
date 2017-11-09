@@ -72,6 +72,7 @@
     										<div class="row">
     											<div class="col-sm-8 sidebar">
     												<div class="text-center">
+															<img src="{{ url('uploads/clases') }}/{{ $evento->imagenevento }}" alt="{{$evento->nombreevento}}" style="max-width:200px;float-left;">
     																<div class="title">
     																		{{$evento->nombreevento}}
 
@@ -85,12 +86,15 @@
 
     												</div>
     												<div class="gotham2 text-center">
-    													<p>Hora: {{$evento->hora}}</p>
-    													<p>Lugar: {{$evento->direccionevento}}</p>
-    													<p>Cupo: {{$evento->cupo}} personas <br>
-																 Lugares disponibles: {{intval($evento->cupo)-intval($evento->ocupados)}}
+															<p><span>Fecha:</span> {{$evento->fecha}}</p>
+    													<p><span>Hora:</span> {{$evento->hora}}</p>
+
+    													<p>
+																 <span>Disponibilidad:</span> {{intval($evento->cupo)-intval($evento->ocupados)}} personas
 															</p>
-															<p>Descripción: {{$evento->descripcion}}</p>
+
+															<p><span>Ubicación:</span><br> {{$evento->direccionevento}}</p>
+
     												</div>
 
     											</div>
@@ -109,6 +113,8 @@
 																</div>
 															</div>
     												</form>
+
+														<p><span>Descripción:</span> <br>{{$evento->descripcion}}</p>
     											</div>
     										</div>
 
