@@ -70,10 +70,10 @@
     		              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
     									<div class="container-bootstrap" style="width: 100%;">
     										<div class="row">
-    											<div class="col-sm-8 sidebar">
+    											<div class="col-md-8 col-sm-12 sidebar">
     												<div class="row">
 															<div class="col-sm-4	">
-																<img src="{{ url('uploads/clases') }}/{{ $evento->imagenevento }}" alt="{{$evento->nombreevento}}" class="img-responsive">
+																<img src="{{ url('uploads/clases') }}/{{ $evento->imagenevento }}" alt="{{$evento->nombreevento}}" class="img-responsive hidden-xs">
 															</div>
 															<div class="col-sm-8">
 																<div class="title">
@@ -85,7 +85,7 @@
 
     												</div>
 														</div>
-														<div class="col-sm-4 sidebar">
+														<div class="col-md-4 col-sm-12 sidebar">
 	    												<div class="title pull-right">
 	    													${{$evento->precio}}
 	    												</div>
