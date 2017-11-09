@@ -75,7 +75,7 @@ Route::post('/busqueda', function (Illuminate\Http\Request $request) {
 });
 
 Route::get('/coaches', function () {
-  $coaches = App\User::where('role', 'instructor')->get();
+  $coaches = App\User::where('role', 'instructor')->where('name','<>','FITCOACH')->get();
     return view('instructores', ['coaches'=>$coaches]);
 });
 
