@@ -329,6 +329,7 @@ Route::any('eliminar-zona/{id}', 'ZonaController@destroy');
   Route::post('abonar', 'OrdenController@abonar');
   Route::post('cancelar', 'OrdenController@cancelar');
   Route::get('printlist/{id}', 'ResidencialController@printlist');
+  Route::get('printeventlist/{id}', 'ResidencialController@printlistevent');
   Route::get('printgroups/{id}', 'ResidencialController@printgroups');
 
 });

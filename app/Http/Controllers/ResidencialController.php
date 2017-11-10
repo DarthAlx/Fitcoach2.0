@@ -143,6 +143,16 @@ class ResidencialController extends Controller
     return $pdf->stream('group.pdf');
 }
 
+public function printlistevent($id)
+{
+  $ordenes=Orden::where('asociado', $id)->get();
+  $evento=Residencial::find($id);
+  $view =  \View::make('emails.listevent', ['ordenes'=>$ordenes,'evento'=>$evento])->render();
+  $pdf = \App::make('dompdf.wrapper');
+  $pdf->loadHTML($view);
+  return $pdf->stream('list.pdf');
+}
+
 
 
 
