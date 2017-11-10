@@ -124,13 +124,13 @@
 																</p>
 																<p>&nbsp;</p>
 
-																<p><span>Ubicación:</span><br> <span class="menor">{!!$evento->direccionevento!!}</span></p>
+																<p style="line-height: 1;"><span>Ubicación:</span><br> <span class="menor">{!!$evento->direccionevento!!}</span></p>
 
 	    												</div>
 														</div>
 														<div class="col-sm-4 sidebar">
 															<div class="gotham2 textoevento">
-																<p><span>Descripción:</span> <br><span class="menor">{!!$evento->descripcion!!}</span></p>
+																<p style="line-height: 1;"><span>Descripción:</span> <br><span class="menor">{!!$evento->descripcion!!}</span></p>
 															</div>
 														</div>
 

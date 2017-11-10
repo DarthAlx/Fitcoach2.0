@@ -12,6 +12,7 @@ use Cart;
 use App\Cupon;
 use App\Cuponera;
 use App\Particular;
+use App\Residencial;
 
 class CuponeraController extends Controller
 {
