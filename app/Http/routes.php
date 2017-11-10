@@ -236,7 +236,7 @@ Route::group(['middleware' => 'administradores'], function(){
     $coaches = App\User::where('role', 'instructor')->get();
     $clases = App\Clase::all();
     $condominios = App\Condominio::all();
-    $eventos = App\Residencial::where('tipo', 'Evento');
+    $eventos = App\Residencial::where('tipo', 'Evento')->get();
       return view('admin.grupos', ['grupos'=>$grupos, 'coaches'=>$coaches, 'clases'=>$clases, 'condominios'=>$condominios, 'eventos'=>$eventos]);
   });
   Route::post('/grupos', function (Illuminate\Http\Request $request) {
@@ -244,7 +244,8 @@ Route::group(['middleware' => 'administradores'], function(){
     $coaches = App\User::where('role', 'instructor')->get();
     $clases = App\Clase::all();
     $condominios = App\Condominio::where('identificador', 'like', '%'.$request->busqueda.'%')->get();
-      return view('admin.residenciales', ['grupos'=>$grupos, 'coaches'=>$coaches, 'clases'=>$clases, 'condominios'=>$condominios]);
+    $eventos = App\Residencial::where('tipo', 'Evento')->get();
+      return view('admin.residenciales', ['grupos'=>$grupos, 'coaches'=>$coaches, 'clases'=>$clases, 'condominios'=>$condominios, 'eventos'=>$eventos]);
   });
   Route::post('agregar-grupo', 'ResidencialController@store');
   Route::put('actualizar-grupo', 'ResidencialController@update');
