@@ -361,34 +361,34 @@
 												</div>
 												<div class="col-sm-8">
 													<h5>Detalles</h5>
-													<?php $proxima=App\Residencial::find($evento->id); ?>
+
 
 													<div class="adv-table table-responsive">
 												  <table class="display table table-bordered table-striped table-hover" id="dynamic-table">
 												  <thead>
 												  <tr>
 												      <th>Fecha</th>
-												      <th>Clase</th>
-												      <th>Coach</th>
+												      <th>Cupo</th>
+												      <th>Ocupados</th>
 												      <th></th>
 
 												  </tr>
 												  </thead>
 												  <tbody>
-														@if ($proxima)
-													<tr style="cursor: pointer;">
-																			      <td>{{$proxima->fecha }} {{$proxima->hora }}</td>
-																			      <td>{{$proxima->clase->nombre }}</td>
-																			      <td>{{$proxima->user->name }}</td>
-																						<td>
-																							<a href="{{url('/printlist')}}/{{$proxima->id}}" target="_blank" style="margin: 5px;"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
 
-																							
+													<tr style="cursor: pointer;">
+																			      <td>{{$evento->fecha }} {{$evento->hora }}</td>
+																			      <td>{{$evento->cupo}}</td>
+																			      <td>{{$evento->ocupados}}</td>
+																						<td>
+																							<a href="{{url('/printlist')}}/{{$evento->id}}" target="_blank" style="margin: 5px;"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+
+
 
 
 																						</td>
 																			  </tr>
-																			@endif
+
 													</tbody>
 																  <tfoot>
 																  <tr>
