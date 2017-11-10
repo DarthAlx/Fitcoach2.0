@@ -381,7 +381,7 @@
 																			      <td>{{$evento->cupo}}</td>
 																			      <td>{{$evento->ocupados}}</td>
 																						<td>
-																							<a href="{{url('/printlist')}}/{{$evento->id}}" target="_blank" style="margin: 5px;"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+																							<a href="{{url('/printeventlist')}}/{{$evento->id}}" target="_blank" style="margin: 5px;"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
 
 
 

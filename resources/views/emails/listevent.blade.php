@@ -36,7 +36,7 @@
 												<strong>Detalles del evento:</strong> <br>
 
 												Fecha:{{$evento->fecha}} {{$evento->hora}}<br>
-												Lugar: {{$evento->direccionevento}}<br>
+												Lugar: {!!$evento->direccionevento!!}<br>
 												Cupo: {{$evento->cupo}} personas <br>
 													 Lugares disponibles: {{intval($evento->cupo)-intval($evento->ocupados)}}<br>
 											</p>
