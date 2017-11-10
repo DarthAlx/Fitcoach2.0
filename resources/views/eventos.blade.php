@@ -94,7 +94,7 @@
 														</div>
 														<div class="col-md-4 col-sm-12 sidebar hidden-xs hidden-sm">
 	    												<div class="title pull-right" style="    line-height: 1;">
-	    													${{$evento->precio}}
+	    													${{$evento->precio}}<br>
 	    												</div>
 
 	    												<form action="{{url('carrito')}}" method="post">
