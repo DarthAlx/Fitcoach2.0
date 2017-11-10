@@ -67,15 +67,22 @@
     		  <div class="modal-dialog" role="document">
     		    <div class="modal-content">
     		      <div class="modal-body  evento">
-    		              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
+								<div class="container-bootstrap">
+									<div class="row">
+										<div class="col-md-12">
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
+										</div>
+									</div>
+								</div>
+
     									<div class="container-bootstrap" style="width: 100%;">
     										<div class="row">
     											<div class="col-md-8 col-sm-12 sidebar">
     												<div class="row">
-															<div class="col-sm-4	hidden-xs hidden-sm">
+															<div class="col-sm-3	hidden-xs hidden-sm">
 																<img src="{{ url('uploads/clases') }}/{{ $evento->imagenevento }}" alt="{{$evento->nombreevento}}" class="img-responsive hidden-xs">
 															</div>
-															<div class="col-sm-8">
+															<div class="col-sm-9">
 																<div class="title" style="    line-height: 1;">
 																		{{$evento->nombreevento}}
 

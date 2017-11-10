@@ -60,7 +60,7 @@
                           @if ($product->options->tipo=="residencial")
                             <?php $residencial=App\Residencial::find($product->id); $esresidencial=true;?>
                             @if ($residencial->tipo=="Evento")
-                              Dirección: {{$residencial->direccionevento}}
+                              Dirección: {!!$residencial->direccionevento!!}
                             @else
                               Dirección: {{$residencial->condominio->direccion}}
                             @endif

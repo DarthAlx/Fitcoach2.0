@@ -57,6 +57,45 @@
     </div>
   </div>
 	</section>
+
+
+
+
+	<section class="container">
+		<div class="topclear">
+	    &nbsp;
+	  </div>
+
+		<div class="">
+		<div class="container-bootstrap-fluid">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="title" style="font-size: 10vw; float: left; line-height: 0.8;">EVENTOS</div>
+				</div>
+
+			</div>
+		</div>
+		<p>&nbsp;</p>
+    <div class="teamItemWrap clear">
+			@if ($eventos)
+				@foreach ($eventos as $evento)
+	        <div class="teamItem">
+	          <a><img src="{{ url('uploads/clases') }}/{{$evento->imagenevento}}" class="img-responsive"></a>
+	          <div class="overlay" data-toggle="modal" data-target="#evento{{$evento->id}}">
+	            <div class="teamItemNameWrap">
+	              <a style="text-decoration:none;"><h3>{{ucfirst($evento->nombreevento)}}</h3></a>
+	            </div>
+	            <!--p>Formativa</p-->
+	          </div>
+	        </div>
+	      @endforeach
+			@endif
+    </div>
+  </div>
+	</section>
+
+
+
 @endsection
 
 @section('modals')
@@ -290,6 +329,93 @@
 						</div>
 					</div><!-- /.modal-content -->
 				</div><!-- /.modal-dialog -->
+			</div><!-- /.modal detalles user -->
+		@endforeach
+	@endif
+
+
+
+
+
+
+
+	@if ($eventos)
+		@foreach ($eventos as $evento)
+			<div class="modal fade" id="evento{{$evento->id}}" tabindex="-1" role="dialog">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+
+			      <div class="modal-body">
+
+			              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
+
+			      				<div>
+
+			      					<h4>{{$evento->nombreevento}}</h4>
+											<p>&nbsp;</p>
+											<div class="row">
+												<div class="col-sm-4">
+															<div class="list-group-item" style="cursor: pointer;">
+																<a href="{{url('/printgroups')}}/{{$evento->id}}" target="_blank">Calendario</a>
+															</div>
+												</div>
+												<div class="col-sm-8">
+													<h5>Detalles</h5>
+													<?php $proxima=App\Residencial::find($evento->id); ?>
+
+													<div class="adv-table table-responsive">
+												  <table class="display table table-bordered table-striped table-hover" id="dynamic-table">
+												  <thead>
+												  <tr>
+												      <th>Fecha</th>
+												      <th>Clase</th>
+												      <th>Coach</th>
+												      <th></th>
+
+												  </tr>
+												  </thead>
+												  <tbody>
+														@if ($proxima)
+													<tr style="cursor: pointer;">
+																			      <td>{{$proxima->fecha }} {{$proxima->hora }}</td>
+																			      <td>{{$proxima->clase->nombre }}</td>
+																			      <td>{{$proxima->user->name }}</td>
+																						<td>
+																							<a href="{{url('/printlist')}}/{{$proxima->id}}" target="_blank" style="margin: 5px;"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+																							<a data-toggle="modal" data-target="#grupo{{$proxima->id}}" style="margin: 5px;"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+																							<a href="#"  onclick="javascript: document.getElementById('botoneliminar{{ $proxima->id }}').click();" style="margin: 5px;"><i class="fa fa-close" aria-hidden="true"></i></a>
+																					<form style="display: none;" action="{{ url('/eliminar-grupo') }}" method="post">
+										                        {!! csrf_field() !!}
+										                        {{ method_field('DELETE') }}
+										                        <input type="hidden" name="grupo_id" value="{{ $proxima->id }}">
+										                        <input type="submit" id="botoneliminar{{ $proxima->id }}">
+										                      </form>
+
+																						</td>
+																			  </tr>
+																			@endif
+													</tbody>
+																  <tfoot>
+																  <tr>
+																		<th>Fecha</th>
+															      <th>Clase</th>
+															      <th>Coach</th>
+															      <th></th>
+																  </tr>
+																  </tfoot>
+																  </table>
+													</div>
+
+
+
+												</div>
+											</div>
+
+
+			      				</div>
+			      </div>
+			    </div><!-- /.modal-content -->
+			  </div><!-- /.modal-dialog -->
 			</div><!-- /.modal detalles user -->
 		@endforeach
 	@endif

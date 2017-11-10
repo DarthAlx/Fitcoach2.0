@@ -236,7 +236,8 @@ Route::group(['middleware' => 'administradores'], function(){
     $coaches = App\User::where('role', 'instructor')->get();
     $clases = App\Clase::all();
     $condominios = App\Condominio::all();
-      return view('admin.grupos', ['grupos'=>$grupos, 'coaches'=>$coaches, 'clases'=>$clases, 'condominios'=>$condominios]);
+    $eventos = App\Residencial::where('tipo', 'Evento');
+      return view('admin.grupos', ['grupos'=>$grupos, 'coaches'=>$coaches, 'clases'=>$clases, 'condominios'=>$condominios, 'eventos'=>$eventos]);
   });
   Route::post('/grupos', function (Illuminate\Http\Request $request) {
     $grupos = App\Residencial::all();
