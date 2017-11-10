@@ -145,7 +145,7 @@ class CuponeraController extends Controller
             return redirect()->intended(url('/carrito'));
           }
           else {
-            Session::flash('mensaje', 'Este cupón ya fue aplicado.');
+            Session::flash('mensaje', 'Este cupón no se puede aplicar.');
             Session::flash('class', 'danger');
             return redirect()->intended(url('/carrito'));
           }
