@@ -67,7 +67,7 @@
     		  <div class="modal-dialog" role="document">
     		    <div class="modal-content">
     		      <div class="modal-body  evento">
-								<div class="container-bootstrap">
+								<div class="">
 									<div class="row">
 										<div class="col-md-12">
 											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
