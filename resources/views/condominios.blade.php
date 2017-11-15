@@ -182,9 +182,9 @@
 					</div>
 
 
-					<a class="left carousel-control" href="#myCarousel{{$condominio->id}}" data-slide="prev"><em class="fa fa-2x fa-chevron-left" aria-hidden="true" style="color: #000;"></em>
+					<a class="left carousel-control" href="#myCarouselmini{{$condominio->id}}" data-slide="prev"><em class="fa fa-2x fa-chevron-left" aria-hidden="true" style="color: #000;"></em>
 					</a>
-					<a class="right carousel-control" href="#myCarousel{{$condominio->id}}" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
+					<a class="right carousel-control" href="#myCarouselmini{{$condominio->id}}" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
 					</a>
 					</div>
 			</div>
