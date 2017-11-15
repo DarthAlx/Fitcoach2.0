@@ -94,11 +94,12 @@
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
 
 								<?php
+								setlocale(LC_TIME, "es-MX");
+								date_default_timezone_set('America/Mexico_City');
 								$fecha = date('Y-m-d');
 								$fechas=array();
 								$fechasformateadas=array();
-								setlocale(LC_TIME, "es-MX");
-								date_default_timezone_set('America/Mexico_City');
+
 
 								for ($i=0; $i < 30 ; $i++) {
 									$nuevafecha = strtotime ( '+'.($i+1).'day' , strtotime ( $fecha ) ) ;
