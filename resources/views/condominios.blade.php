@@ -8,7 +8,7 @@
 		<div class="container-bootstrap-fluid">
 			<div class="row">
 				<div class="col-sm-12">
-					<div class="title" style="font-size: 10vw; float: left; line-height: 0.8;">CONDOMINIOS</div>
+					<div class="title" style="font-size: 10vw; float: left; line-height: 0.8;">CONDOMINIOS {{date('Y-m-d')}}</div>
 					<div class="buscador hidden-xs" style="float: right; position: absolute; right: 0; bottom: 0;">
 					  <div class="coupon">
 					    <form action="{{url('buscarresidencial')}}" onsubmit="fbq('track', 'Search');" method="post">
@@ -98,7 +98,7 @@
 
 
 
-							<div id="myCarousel{{$condominio->id}}" class="carousel slide"  data-wrap="false">
+							<div id="myCarousel{{$condominio->id}}" class="carousel slide hidden-xs"  data-wrap="false">
 			        <div class="carousel-inner">
 								@for ($i=0; $i < 5 ; $i++)
 									@if ($i==0)
@@ -141,6 +141,54 @@
 			        </a>
 			        </div>
         	</div>
+
+
+
+					<div id="myCarouselmini{{$condominio->id}}" class="carousel slide visible-xs"  data-wrap="false">
+					<div class="carousel-inner">
+						@for ($i=0; $i < 15 ; $i++)
+							@if ($i==0)
+								<div class="item active">
+							@else
+								<div class="item">
+							@endif
+								<div class="row-fluid">
+									@for ($x=$i*2; $x < ($i+1)*2 ; $x++)
+										<div class="col-sm-2 col-xs-4 separacion">
+											{{$fechasformateadas[$x]}}
+											<ul class="list-group calendarioinst">
+												<?php $residenciales=App\Residencial::where('tipo', 'Residencial')->get();
+												list($año, $mes, $dia) = explode("-", $fechas[$x]);
+												$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
+												?>
+												@foreach ($residenciales as $residencial)
+													@if ($residencial->ocupados<$residencial->cupo)
+														@if ($residencial->fecha==$fechas[$x])
+															<?php $nombre=explode(" ",$residencial->user->name); ?>
+															<li class="list-group-item text-center"  data-toggle="modal" data-target="#residencial{{$condominio->id}}{{$residencial->id}}" style="cursor:pointer;">
+																<input type="checkbox" id="carrito{{$x}}{{$residencial->id}}" name="carrito[]" value="{{$residencial->id}},{{$fechas[$x]}}" style="display:none">
+																{{$residencial->clase->nombre}}<br>{{ucfirst($nombre[0])}}<br>{{$residencial->hora}}
+															</li>
+														@endif
+													@endif
+												@endforeach
+											</ul>
+										</div>
+									@endfor
+								</div>
+							</div>
+						@endfor
+					</div>
+
+
+					<a class="left carousel-control" href="#myCarousel{{$condominio->id}}" data-slide="prev"><em class="fa fa-2x fa-chevron-left" aria-hidden="true" style="color: #000;"></em>
+					</a>
+					<a class="right carousel-control" href="#myCarousel{{$condominio->id}}" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
+					</a>
+					</div>
+			</div>
+
+
 
         </div>
       </div>

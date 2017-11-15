@@ -183,7 +183,7 @@
 				        <a class="right carousel-control" href="#myCarouselgrande{{$clase->id}}" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
 				        </a>
 							</div>
-
+</div>
 
 							<div id="myCarousel{{$clase->id}}" class="carousel slide visible-xs" data-wrap="false">
 							<div class="carousel-inner">
@@ -263,7 +263,7 @@
 	      </div>
 
 							</div>
-
+</div>
 						</div><!-- /.modal-content -->
 					</div><!-- /.modal-dialog -->
 				</div><!-- /.modal detalles user -->
