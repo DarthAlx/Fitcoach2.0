@@ -95,7 +95,7 @@
 
 								<?php
 								setlocale(LC_TIME, "es-MX");
-								date_default_timezone_set('America/Monterrey');
+								date_default_timezone_set('UTC-6');
 								$fecha = date('Y-m-d');
 								$fechas=array();
 								$fechasformateadas=array();
