@@ -8,7 +8,7 @@
 		<div class="container-bootstrap-fluid">
 			<div class="row">
 				<div class="col-sm-12">
-					<div class="title" style="font-size: 10vw; float: left; line-height: 0.8;">CONDOMINIOS {{date_default_timezone_get() }}</div>
+					<div class="title" style="font-size: 10vw; float: left; line-height: 0.8;">CONDOMINIOS</div>
 					<div class="buscador hidden-xs" style="float: right; position: absolute; right: 0; bottom: 0;">
 					  <div class="coupon">
 					    <form action="{{url('buscarresidencial')}}" onsubmit="fbq('track', 'Search');" method="post">
