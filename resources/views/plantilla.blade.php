@@ -226,7 +226,7 @@ fbq('track', 'ViewContent');
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 							<input id="emaillogin2" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Correo electrónico" required>
 							<input type="email" class="form-control" name="email_confirmation" value="{{ old('email_confirmation') }}" placeholder="Confirmar correo electrónico" required>
-							<input type="text" class="form-control" value="{{ old('name') }}" name="name" placeholder="Nombre" required>
+							<input type="text" class="form-control" value="{{ old('name') }}" name="name" placeholder="Nombre completo" required>
 							<input type="text" class="form-control datepicker" value="{{ old('dob') }}" name="dob" placeholder="Fecha de nacimiento" required>
 							<select class="form-control" name="genero" value="{{ old('genero') }}" required>
 								<option value="">Genero</option>
