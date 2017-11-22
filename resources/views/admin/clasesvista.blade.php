@@ -62,9 +62,44 @@
 			  </tr>
 			  </thead>
 			  <tbody>
-
+<?php $array=array(); ?>
 					@if ($clases)
 						@foreach ($clases as $clase)
+							@if ($clase->tipo=="residencial")
+								@if (in_array($clase->nombre,$array))
+									<!--clase ya mostrada, no se hace nada-->
+								@else
+									<tr style="cursor: pointer;">
+								      <td>{{$clase->folio}}</td>
+											<td>{{$clase->order_id}}</td>
+											<td>{{$clase->fecha}} {{$clase->hora}}</td>
+											<td>{{$clase->created_at}}</td>
+								      <td>{{$clase->nombre}}</td>
+								      <td>
+												<?php
+															$coach=App\User::find($clase->coach_id);
+
+												?>
+
+		
+													{{$coach->name}}
+
+
+											</td>
+								      <td>{{$clase->status}} {{$clase->metadata}}
+											</td>
+											<td>
+												<button type="button" class="btn btn-default" name="button" data-toggle="modal" data-target="#clase{{$clase->id}}">Clase</button>
+												@if($clase->status!="Completa"&&$clase->metadata!="cupon enviado"&&$clase->metadata!="abonada a coach")
+													<button type="button" class="btn btn-primary" name="button" data-toggle="modal" data-target="#completar{{$clase->id}}">Completar</button>
+													<button type="button" class="btn btn-danger" name="button" data-toggle="modal" data-target="#cancelar{{$clase->id}}">Cancelar</button>
+												@endif
+											</td>
+								  </tr>
+									<?php $array[]=$clase->nombre; ?>
+								@endif
+							@endif
+						@else
 							<tr style="cursor: pointer;">
 						      <td>{{$clase->folio}}</td>
 									<td>{{$clase->order_id}}</td>
