@@ -227,7 +227,7 @@ fbq('track', 'ViewContent');
 							<input id="emaillogin2" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Correo electrónico" required>
 							<input type="email" class="form-control" name="email_confirmation" value="{{ old('email_confirmation') }}" placeholder="Confirmar correo electrónico" required>
 							<input type="text" class="form-control" value="{{ old('name') }}" name="name" placeholder="Nombre completo" required>
-							<input type="text" class="form-control datepicker" value="{{ old('dob') }}" name="dob" placeholder="Fecha de nacimiento" required>
+							<input type="text" class="form-control datepicker" value="{{ old('dob') }}" name="dob" placeholder="Fecha de nacimiento aaaa-mm-dd" required>
 							<select class="form-control" name="genero" value="{{ old('genero') }}" required>
 								<option value="">Genero</option>
 								<option value="Masculino">Masculino</option>

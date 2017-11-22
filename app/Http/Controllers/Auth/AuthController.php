@@ -71,7 +71,6 @@ class AuthController extends Controller
                 $request, $validator
             );
         }
-        $request->name=ucfirst($request->name);
 
         Auth::login($this->create($request->all()));
         return redirect($this->redirectPath());
@@ -87,7 +86,7 @@ class AuthController extends Controller
     {
 
         return User::create([
-            'name' => $data['name'],
+            'name' => ucfirst($data['name']),
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'dob' => $data['dob'],
