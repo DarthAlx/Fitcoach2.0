@@ -67,6 +67,7 @@
 						@foreach ($clases as $clase)
 							@if ($clase->tipo=="residencial")
 								@if (in_array($clase->nombre,$array))
+
 									<!--clase ya mostrada, no se hace nada-->
 								@else
 									<tr style="cursor: pointer;">
@@ -81,7 +82,7 @@
 
 												?>
 
-		
+
 													{{$coach->name}}
 
 
@@ -98,7 +99,7 @@
 								  </tr>
 									<?php $array[]=$clase->nombre; ?>
 								@endif
-							@endif
+
 						@else
 							<tr style="cursor: pointer;">
 						      <td>{{$clase->folio}}</td>
@@ -127,6 +128,7 @@
 										@endif
 									</td>
 						  </tr>
+							@endif
 						@endforeach
 					@endif
 
