@@ -111,7 +111,7 @@
 
 
                   $fecha=date_create($proxima->fecha);
-                  setlocale(LC_ALL, "");
+
                  ?>
                  <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
                    @if($proxima->tipo=="particular")
@@ -119,6 +119,7 @@
                    @else
                      <i class="fa fa-building" aria-hidden="true"></i>
                    @endif
+                   <?php setlocale(LC_TIME, "es_MX"); ?>
                    {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $proxima->hora }}
                    <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                  </a>
