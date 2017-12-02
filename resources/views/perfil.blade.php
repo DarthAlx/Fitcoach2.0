@@ -648,7 +648,7 @@ Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio 
 
 
     <?php
-    $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orWhere('status', 'Porrevisar')->orderBy('fecha', 'desc')->get();
+    $pasadas= App\Orden::where('user_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('fecha', 'desc')->get();
     if (!$pasadas->isEmpty()) {
       date_default_timezone_set('America/Mexico_City');
       foreach ($pasadas as $pasada) {
@@ -687,7 +687,7 @@ Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio 
                    </div>
                    <div class="col-sm-8">
                      <div class="title ">
-                       @if ($pasada->status=="Completa")
+                       @if ($pasada->status=="Completa"||$pasada->status=="Porrevisar")
                          Completa
                        @endif
                        @if ($pasada->status=="Cancelada")

@@ -85,7 +85,7 @@
         <div id="pasadas" class="listadeclases" style="display:none;">
           <div class="list-group">
               <?php
-              $pasadas= App\Orden::where('coach_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orWhere('status', 'Porrevisar')->orderBy('fecha', 'desc')->get();
+              $pasadas= App\Orden::where('coach_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('fecha', 'desc')->get();
               if ($pasadas) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($pasadas as $pasada) {
@@ -176,7 +176,7 @@
       <div id="pasadaslg" class="listadeclases" style="display:none;">
         <div class="list-group">
             <?php
-            $pasadas= App\Orden::where('coach_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orWhere('status', 'Porrevisar')->orderBy('fecha', 'desc')->get();
+            $pasadas= App\Orden::where('coach_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('fecha', 'desc')->get();
             if ($pasadas) {
               date_default_timezone_set('America/Mexico_City');
               foreach ($pasadas as $pasada) {
@@ -647,7 +647,7 @@ $direccion->estado;
 
 
     <?php
-    $pasadas= App\Orden::where('coach_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orWhere('status', 'Porrevisar')->orderBy('fecha', 'desc')->get();
+    $pasadas= App\Orden::where('coach_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('fecha', 'desc')->get();
     if (!$pasadas->isEmpty()) {
       date_default_timezone_set('America/Mexico_City');
       foreach ($pasadas as $pasada) {
