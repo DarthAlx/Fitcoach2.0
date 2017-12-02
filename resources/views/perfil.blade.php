@@ -134,7 +134,11 @@
           <div class="list-group">
             @if ($user->ordenes)
               <?php
-              $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orWhere('status', 'Porrevisar')->orderBy('fecha', 'desc')->get();
+              $pasadas= App\Orden::where('user_id', $user->id)->where(function ($query) {
+                $query->where('status', 'Completa')
+                      ->orWhere('status', 'Cancelada')
+                      ->orWhere('status', 'Porrevisar');
+            })->orderBy('fecha', 'desc')->get();
               if (!$pasadas->isEmpty()) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($pasadas as $pasada) {
