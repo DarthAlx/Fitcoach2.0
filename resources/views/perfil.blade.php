@@ -153,6 +153,7 @@
                        <i class="fa fa-building" aria-hidden="true"></i>
                      @endif
                     @endif
+                    <?php setlocale(LC_TIME, "es_MX"); ?>
                    {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
                    <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                  </a>
@@ -221,6 +222,7 @@
                  @else
                    <i class="fa fa-building" aria-hidden="true"></i>
                  @endif
+                 <?php setlocale(LC_TIME, "es_MX"); ?>
                  {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $proxima->hora }}
                  <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                </a>
@@ -253,6 +255,7 @@
                      <i class="fa fa-building" aria-hidden="true"></i>
                    @endif
                   @endif
+                  <?php setlocale(LC_TIME, "es_MX"); ?>
                  {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
                  <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                </a>
