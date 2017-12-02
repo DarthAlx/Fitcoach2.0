@@ -145,7 +145,7 @@
                  ?>
                  <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
                    @if ($pasada->status=="Cancelada")
-                     <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                     x<i class="fa fa-times-circle-o" aria-hidden="true"></i>
                    @else
                      @if($pasada->tipo=="particular")
                        <i class="fa fa-home" aria-hidden="true"></i>
