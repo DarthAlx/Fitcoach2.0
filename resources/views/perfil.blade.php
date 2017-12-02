@@ -31,7 +31,7 @@
         <h4>CLASE ANTERIOR</h4>
         @if ($user->ordenes)
           <?php
-          $ultima= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Porrevisar')->orderBy('fecha', 'desc')->first();
+          $ultima= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orderBy('fecha', 'desc')->first();
           if ($ultima) {
             $coachu= App\User::find($ultima->coach_id);
             $nombre=explode(" ",$coachu->name);
@@ -599,7 +599,7 @@
                      <div class="gotham2">
                        <h2>Fecha: {{$proxima->fecha}}</h2>
                        <h2>Hora: {{$proxima->hora}}</h2>
-                       <h2>Lugar: {{$dire}}</h2>
+                       <h2>Lugar: {!!$dire!!}</h2>
                      </div>
                    </div>
                    <div class="col-sm-12 text-center">

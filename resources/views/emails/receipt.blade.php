@@ -69,7 +69,7 @@
 														<tr class="text">
 																<td style="width: 10%;">1</td>
 																<td style="width: 30%;">{{$orden->nombre}}</td>
-																<td style="width: 30%;">Clase $orden->tipo</td>
+																<td style="width: 30%;">Clase {{$orden->tipo}}</td>
 																<td style="width: 10%;">${{$orden->cantidad}}</td>
 																<td style="width: 20%;">${{$orden->cantidad}}</td>
 														</tr>
