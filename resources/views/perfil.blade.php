@@ -154,7 +154,7 @@
                      @endif
                     @endif
                     <?php setlocale(LC_TIME, "es_MX"); ?>
-                   xxx{{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
+                   {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
                    <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                  </a>
               <?php } } else{ ?>
@@ -237,7 +237,7 @@
         <div class="list-group">
           @if ($user->ordenes)
             <?php
-            $pasadas= App\Orden::where('user_id', $user->id)->where('status', 'Completa')->orWhere('status', 'Cancelada')->orderBy('fecha', 'desc')->get();
+            $pasadas= App\Orden::where('user_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('fecha', 'desc')->get();
             if (!$pasadas->isEmpty()) {
               date_default_timezone_set('America/Mexico_City');
               foreach ($pasadas as $pasada) {
