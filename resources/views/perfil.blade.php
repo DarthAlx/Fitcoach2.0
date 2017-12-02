@@ -111,7 +111,7 @@
 
 
                   $fecha=date_create($proxima->fecha);
-                  setlocale(LC_TIME, "es-ES");
+                  setlocale(LC_ALL, "");
                  ?>
                  <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
                    @if($proxima->tipo=="particular")
