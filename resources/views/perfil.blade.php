@@ -145,7 +145,7 @@
                  ?>
                  <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
                    @if ($pasada->status=="Cancelada")
-                     x<i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                     <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                    @else
                      @if($pasada->tipo=="particular")
                        <i class="fa fa-home" aria-hidden="true"></i>
@@ -154,7 +154,7 @@
                      @endif
                     @endif
                     <?php setlocale(LC_TIME, "es_MX"); ?>
-                   {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
+                   xxx{{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
                    <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                  </a>
               <?php } } else{ ?>
