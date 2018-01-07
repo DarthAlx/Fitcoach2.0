@@ -88,7 +88,7 @@
 									<input class="form-control" type="file" name="imagenevento"  required>
 
 									<input class="form-control datepicker" type="text" value="{{ old('fecha') }}" placeholder="Fecha" name="fecha" required >
-									<input id="horarioNuevo" value="{{ old('hora') }}" class="form-control mitimepicker" placeholder="Hora" type="text" name="hora" required />
+									<input id="horarioNuevo" value="{{ old('hora') }}" class="form-control xmitimepicker" placeholder="Hora" type="text" name="hora" required />
 									<select class="form-control"  name="user_id" id="coachNuevo"  required>
 										 <option value="">Selecciona un coach</option>
 										 @foreach ($coaches as $coach)
@@ -136,7 +136,7 @@
 											(solo si se desea reemplazar)
 											<input class="form-control" type="file" name="imagenevento" >
 											<input class="form-control datepicker" type="text" value="{{ $evento->fecha }}" placeholder="Fecha" name="fecha" required>
-											<input id="horarioNuevo" value="{{ $evento->hora }}" class="form-control mitimepicker" placeholder="Hora" type="text" name="hora" required/>
+											<input id="horarioNuevo" value="{{ $evento->hora }}" class="form-control xmitimepicker" placeholder="Hora" type="text" name="hora" required/>
 											<select class="form-control"  name="user_id" id="user_id{{ $evento->id }}" required>
 												 <option value="">Selecciona un coach</option>
 												 @foreach ($coaches as $coach)

@@ -381,7 +381,7 @@
                          if (document.getElementById('clase{{ $particular->id }}') != null) document.getElementById('clase{{ $particular->id }}').value = '{!! $particular->clase_id !!}';
                        </script>
                         <input class="form-control datepicker" type="text" placeholder="Fecha (si no es recurrente)" value="{{ $particular->fecha }}" name="fecha">
-                        <input value="{{ $particular->hora }}" class="form-control mitimepicker" type="text" name="hora" required  placeholder="Hora" / >
+                        <input value="{{ $particular->hora }}" class="form-control xmitimepicker" type="text" name="hora" required  placeholder="Hora" / >
                         <label>Recurrencia</label>
                         <div class="checkbox">
                           <label><input type='checkbox' class="recurrentes" id="check{{$particular->id}}1" name="recurrencia[]"  value="1">L &nbsp;  &nbsp;  </label>
@@ -446,7 +446,7 @@
                    @endforeach
                  </select>
                   <input class="form-control datepicker" type="text" placeholder="Fecha (si no es recurrente)" name="fecha">
-                  <input value="{{ old('hora') }}" class="form-control mitimepicker" type="text" name="hora" required  placeholder="Hora" / >
+                  <input value="{{ old('hora') }}" class="form-control xmitimepicker" type="text" name="hora" required  placeholder="Hora" / >
                   <label>Recurrencia</label>
                   <div class="checkbox">
                     <label><input type='checkbox' class="recurrentes" name="recurrencia[]"  value="1">L &nbsp;  &nbsp;  </label>

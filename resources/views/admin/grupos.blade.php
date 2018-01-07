@@ -206,7 +206,7 @@
 	                <form action="{{ url('/agregar-grupo') }}" method="post" enctype="multipart/form-data">
 	        					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 										<input class="form-control datepicker" type="text" value="{{ old('fecha') }}" placeholder="Fecha" name="fecha" required >
-										<input id="horarioNuevo" value="{{ old('hora') }}" class="form-control mitimepicker" placeholder="Hora" type="text" name="hora" required />
+										<input id="horarioNuevo" value="{{ old('hora') }}" class="form-control xmitimepicker" placeholder="Hora" type="text" name="hora" required />
 										<select class="form-control"  name="user_id" id="coachNuevo" >
                        <option value="">Selecciona un coach</option>
                        @foreach ($coaches as $coach)
@@ -269,7 +269,7 @@
 												 if (document.getElementById('tipo{{ $grupo->id }}') != null) document.getElementById('tipo{{ $grupo->id }}').value = '{!! $grupo->tipo !!}';
 												</script>
 												<input class="form-control datepicker" type="text" value="{{ $grupo->fecha }}" placeholder="Fecha" name="fecha" required>
-												<input id="horarioNuevo" value="{{ $grupo->hora }}" class="form-control mitimepicker" placeholder="Hora" type="text" name="hora" required/>
+												<input id="horarioNuevo" value="{{ $grupo->hora }}" class="form-control xmitimepicker" placeholder="Hora" type="text" name="hora" required/>
 												<select class="form-control"  name="user_id" id="user_id{{ $grupo->id }}" >
 													 <option value="">Selecciona un coach</option>
 													 @foreach ($coaches as $coach)
