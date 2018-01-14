@@ -377,7 +377,7 @@
 
 	<script type="text/javascript">
 	clasesseleccionadas=0;
-		function agregaracarrito(valor, valor2){
+		function agregaracarrito(valor, valor2, valor3){
 			if (document.getElementById('carrito'+valor).checked) {
 				document.getElementById('carrito'+valor).checked = false;
 				$('#carrito'+valor).removeClass('seleccionada');
