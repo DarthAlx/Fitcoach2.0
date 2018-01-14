@@ -345,7 +345,7 @@
 			        </div><!--2 columnas fin-->
 
 
-							<input type="hidden" name="cantidad" id="cantidad{{$clase->id}}">
+							<input type="hidden" name="cantidad" id="cantidad{{$coach->id}}">
 							<p>&nbsp;</p>
 							<div class="row">
 								<div class="col-sm-8">
@@ -387,7 +387,7 @@
 					clasesseleccionadas--;
 				}
 
-				$('#cantidad'+valor3).val(clasesseleccionadas);
+				$('#cantidad'+valor2).val(clasesseleccionadas);
 				$('#clasesseleccionadas'+valor3).html(clasesseleccionadas+" clases seleccionadas.");
 				if (clasesseleccionadas<=0) {
 					$('#reservar'+valor2+valor3).prop( "disabled", true );
@@ -399,7 +399,7 @@
 				$('.fa'+valor).removeClass('fa-square-o');
 				$('.fa'+valor).addClass('fa-square');
 				clasesseleccionadas++;
-				$('#cantidad'+valor).val(clasesseleccionadas);
+				$('#cantidad'+valor2).val(clasesseleccionadas);
 				$('#clasesseleccionadas'+valor3).html(clasesseleccionadas+" clases seleccionadas.");
 				$('#reservar'+valor2+valor3).prop( "disabled", false );
 			}
