@@ -216,7 +216,7 @@
     		              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
     									<div class="container-bootstrap" style="width: 100%;">
     										<div class="row">
-    											<div class="col-sm-4 sidebar">
+    											<div class="col-sm-8 sidebar">
     												<div class="text-center">
     																<div class="title">
     																		{{$residencial->clase->nombre}}
@@ -230,18 +230,10 @@
 
 
     												</div>
-    												<div class="gotham2 text-center">
-    													<p>Hora: {{$residencial->hora}}</p>
-    													<p>Lugar: {{$residencial->condominio->identificador}}<br>{{$residencial->condominio->direccion}}</p>
-    													<p>Cupo: {{$residencial->cupo}} personas <br>
-																 Lugares disponibles: {{intval($residencial->cupo)-intval($residencial->ocupados)}}
-															</p>
-															<p>Audiencia: {{$residencial->audiencia}}</p>
-
-    												</div>
+    												
 
     											</div>
-    											<div class="col-sm-8 sidebar  hidden-xs hidden-sm">
+    											<div class="col-md-4">
     												<div class="title pull-right">
     													${{$residencial->precio}}
     												</div>
@@ -256,6 +248,19 @@
 																</div>
 															</div>
     												</form>
+    											</div>
+    											</div>
+    											<div class="row">
+    											<div class="col-sm-8 sidebar  hidden-xs hidden-sm">
+    												<div class="gotham2 text-center">
+    													<p>Hora: {{$residencial->hora}}</p>
+    													<p>Lugar: {{$residencial->condominio->identificador}}<br>{{$residencial->condominio->direccion}}</p>
+    													<p>Cupo: {{$residencial->cupo}} personas <br>
+																 Lugares disponibles: {{intval($residencial->cupo)-intval($residencial->ocupados)}}
+															</p>
+															<p>Audiencia: {{$residencial->audiencia}}</p>
+
+    												</div>
     											</div>
     											<div class="col-sm-4 sidebar">
 															<div class="gotham2 textoevento">
