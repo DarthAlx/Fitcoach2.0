@@ -258,20 +258,20 @@
     												</form>
     											</div>
     											<div class="col-sm-4 sidebar">
-															<div class="gotham2 textoevento">
-																<p style="line-height: 1;"><span>Descripción:</span> <br><span class="menor">{!!$evento->descripcion!!}</span></p>
+															<div class="gotham2 textoresidencial">
+																<p style="line-height: 1;"><span>Descripción:</span> <br><span class="menor">{!!$residencial->descripcion!!}</span></p>
 															</div>
 														</div>
 
 														<div class="col-xs-12 sidebar visible-xs visible-sm">
 															<div class="title pull-right">
-																${{$evento->precio}}
+																${{$residencial->precio}}
 															</div>
 
 															<form action="{{url('carrito')}}" method="post">
 																{!! csrf_field() !!}
-																<input type="hidden" name="residencial_id" value="{{$evento->id}}">
-																<input type="hidden" name="tipo" value="Evento">
+																<input type="hidden" name="residencial_id" value="{{$residencial->id}}">
+																<input type="hidden" name="tipo" value="residencial">
 																<div class="row">
 																	<div class="col-sm-8 col-sm-offset-4">
 																			<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
