@@ -50,7 +50,7 @@
 
 						<a><img src="{{ url('uploads/avatars') }}/dummy.png" alt=""></a>
 					@endif
-	          <div class="overlay" data-toggle="modal" data-target="#coach{{$coach->id}}">
+	          <div class="overlay" data-toggle="modal" data-target="#coach{{$coach->id}}" onclick="acero();">
 	            <div class="teamItemNameWrap">
 								<?php $nombre=explode(" ",$coach->name); ?>
 	              <a style="text-decoration:none;"><h3>{{ucfirst($nombre[0])}}</h3></a>
@@ -404,5 +404,8 @@
 				$('#reservar'+valor2+valor3).prop( "disabled", false );
 			}
 		}
+		function acero(){
+				clasesseleccionadas=0;
+			}
 	</script>
 @endsection

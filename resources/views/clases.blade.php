@@ -70,7 +70,7 @@
 				@foreach ($clases as $clase)
 	        <div class="teamItem">
 	          <a><img src="{{ url('uploads/clases') }}/{{ $clase->imagen }}" class="img-responsive"></a>
-	          <div class="overlay" data-toggle="modal" data-target="#calendario{{$clase->id}}">
+	          <div class="overlay" data-toggle="modal" data-target="#calendario{{$clase->id}}" onclick="acero();">
 	            <div class="teamItemNameWrap">
 	              <a style="text-decoration:none;"><h3>{{ucfirst($clase->nombre)}}</h3></a>
 	            </div>
@@ -298,6 +298,10 @@
 					$('#clasesseleccionadas'+valor3).html(clasesseleccionadas+" clases seleccionadas.");
 					$('#reservar'+valor2+valor3).prop( "disabled", false );
 				}
+			}
+
+			function acero(){
+				clasesseleccionadas=0;
 			}
 		</script>
 @endsection
