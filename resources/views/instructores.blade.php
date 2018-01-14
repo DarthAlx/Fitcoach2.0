@@ -273,7 +273,7 @@
 															<?php $existe=App\Orden::where('coach_id', $particular->user_id)->where('fecha', $fechas[$x])->where('hora', $particular->hora)->first(); ?>
 															@if (!$existe)
 																@if ($particular->fecha==$fechas[$x]||in_array($dia_n, explode(",",$particular->recurrencia)))
-																	<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}','{{$coach->id}}');" style="cursor:pointer;">
+																	<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}','{{$coach->id}}','{{$clase->id}}');" style="cursor:pointer;">
 																		<input type="checkbox" id="carrito{{$x}}{{$particular->id}}" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
 																		<input type="hidden" name="tipo" value="Particular">
 																		{{$particular->clase->nombre}}
@@ -321,7 +321,7 @@
 														<?php $existe=App\Orden::where('coach_id', $particular->user_id)->where('fecha', $fechas[$x])->where('hora', $particular->hora)->first(); ?>
 														@if (!$existe)
 															@if ($particular->fecha==$fechas[$x]||in_array($dia_n, explode(",",$particular->recurrencia)))
-																<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}mini','{{$coach->id}}');" style="cursor:pointer;">
+																<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}mini','{{$coach->id}}','{{$clase->id}}');" style="cursor:pointer;">
 																	<input type="checkbox" id="carrito{{$x}}{{$particular->id}}mini" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
 																	<input type="hidden" name="tipo" value="Particular">
 																	{{$particular->hora}} <i class="fa fa-square-o pull-right fa{{$x}}{{$particular->id}}" aria-hidden="true"></i>
@@ -345,17 +345,17 @@
 			        </div><!--2 columnas fin-->
 
 
-							<input type="hidden" name="cantidad" id="cantidad">
+							<input type="hidden" name="cantidad" id="cantidad{{$clase->id}}">
 							<p>&nbsp;</p>
 							<div class="row">
 								<div class="col-sm-8">
-									<div id="clasesseleccionadas" class="title text-center">
+									<div id="clasesseleccionadas{{$clase->id}}" class="title text-center">
 		 								0 clases seleccionadas.
 									</div>
 								</div>
 								<p>&nbsp;</p>
 								<div class="col-sm-4">
-									<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar" id="reservar{{$coach->id}}" disabled>
+									<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar" id="reservar{{$coach->id}}{{$clase->id}}" disabled>
 								</div>
 							</div>
 
@@ -387,10 +387,10 @@
 					clasesseleccionadas--;
 				}
 
-				$('#cantidad').val(clasesseleccionadas);
-				$('#clasesseleccionadas').html(clasesseleccionadas+" clases seleccionadas.");
+				$('#cantidad'+valor3).val(clasesseleccionadas);
+				$('#clasesseleccionadas'+valor3).html(clasesseleccionadas+" clases seleccionadas.");
 				if (clasesseleccionadas<=0) {
-					$('#reservar'+valor2).prop( "disabled", true );
+					$('#reservar'+valor2+valor3).prop( "disabled", true );
 				}
 			}
 			else {
@@ -399,9 +399,9 @@
 				$('.fa'+valor).removeClass('fa-square-o');
 				$('.fa'+valor).addClass('fa-square');
 				clasesseleccionadas++;
-				$('#cantidad').val(clasesseleccionadas);
-				$('#clasesseleccionadas').html(clasesseleccionadas+" clases seleccionadas.");
-				$('#reservar'+valor2).prop( "disabled", false );
+				$('#cantidad'+valor).val(clasesseleccionadas);
+				$('#clasesseleccionadas'+valor3).html(clasesseleccionadas+" clases seleccionadas.");
+				$('#reservar'+valor2+valor3).prop( "disabled", false );
 			}
 		}
 	</script>
