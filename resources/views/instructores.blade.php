@@ -50,7 +50,7 @@
 
 						<a><img src="{{ url('uploads/avatars') }}/dummy.png" alt=""></a>
 					@endif
-	          <div class="overlay" data-toggle="modal" data-target="#coach{{$coach->id}}" onclick="acero();">
+	          <div class="overlay" data-toggle="modal" data-target="#coach{{$coach->id}}">
 	            <div class="teamItemNameWrap">
 								<?php $nombre=explode(" ",$coach->name); ?>
 	              <a style="text-decoration:none;"><h3>{{ucfirst($nombre[0])}}</h3></a>
@@ -100,7 +100,7 @@
 									<div class="col-sm-6">
 										<h1 class="gotham2">Particulares</h1>
 										@if ($coach->particulares)
-											<a href="#" class="list-group-item" data-toggle="modal" data-target="#calendario{{$coach->id}}">Ver calendario</a>
+											<a href="#" class="list-group-item" data-toggle="modal" data-target="#calendario{{$coach->id}}" onclick="acero();">Ver calendario</a>
 										@else
 											Este coach no tiene horarios disponibles.
 										@endif
@@ -313,7 +313,7 @@
 											<div class="col-xs-6 separacion">
 												{{$fechasformateadas[$x]}}
 												<ul class="list-group calendarioinst">
-													<?php $particulares=App\Particular::where('user_id', $coach->id)->get();
+													<?php $particulares=App\Particular::where('user_id', $coach->id)->orderBy('hora','asc')->get();
 													list($año, $mes, $dia) = explode("-", $fechas[$x]);
 													$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 													?>

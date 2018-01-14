@@ -16,8 +16,8 @@ class RatingController extends Controller
     {
       $guardar = new Rating($request->all());
       $guardar->save();
-      $numerodecalificaciones=App\Rating::where('user_id', $guardar->user_id)->count();
-      $calificaciones=App\Rating::where('user_id', $guardar->user_id)->get();
+      $numerodecalificaciones=Rating::where('user_id', $guardar->user_id)->count();
+      $calificaciones=Rating::where('user_id', $guardar->user_id)->get();
       $promedio=0;
       if ($numerodecalificaciones!=0&&$calificaciones) {
         foreach ($calificaciones as $calificacion) {
