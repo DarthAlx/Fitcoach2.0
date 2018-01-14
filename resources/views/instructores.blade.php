@@ -349,7 +349,7 @@
 							<p>&nbsp;</p>
 							<div class="row">
 								<div class="col-sm-8">
-									<div id="clasesseleccionadas{{$clase->id}}" class="title text-center">
+									<div id="clasesseleccionadas{{$clase->id}}" class="clasesseleccionadas title text-center">
 		 								0 clases seleccionadas.
 									</div>
 								</div>
@@ -406,6 +406,7 @@
 		}
 		function acero(){
 				clasesseleccionadas=0;
+				$('.clasesseleccionadas').html("0 clases seleccionadas.");
 			}
 	</script>
 @endsection
