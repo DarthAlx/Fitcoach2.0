@@ -158,7 +158,7 @@
 																	@if ($particular->fecha==$fechas[$x]||in_array($dia_n, explode(",",$particular->recurrencia)))
 	                                  <?php $nombre=explode(" ",$particular->user->name); ?>
 																		<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}','{{$particular->clase->id}}','{{$clase->id}}');" style="cursor:pointer;">
-																			<input type="checkbox" id="carrito{{$x}}{{$particular->id}}" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
+																			<input type="checkbox" class="carritocheck" id="carrito{{$x}}{{$particular->id}}" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
 																			<input type="hidden" name="tipo" value="Particular">
 																			{{$particular->user->name}}<br>
 
@@ -217,7 +217,7 @@
 																@if ($particular->fecha==$fechas[$x]||in_array($dia_n, explode(",",$particular->recurrencia)))
 																	<?php $nombre=explode(" ",$particular->user->name); ?>
 																	<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}mini','{{$particular->clase->id}}','{{$clase->id}}');" style="cursor:pointer;">
-																		<input type="checkbox" id="carrito{{$x}}{{$particular->id}}mini" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
+																		<input type="checkbox" class="carritocheck" id="carrito{{$x}}{{$particular->id}}mini" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
 																		<input type="hidden" name="tipo" value="Particular">
 																		{{$particular->user->name}}<br>
 
@@ -306,6 +306,7 @@
 				$('.faselect').removeClass('fa-square');
 				$('.faselect').removeClass('fa-square-o');
 				$('.faselect').addClass('fa-square-o');
+				document.getElementsByClassName('carritocheck').checked = false;
 			}
 		</script>
 @endsection
