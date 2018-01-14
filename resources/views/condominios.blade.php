@@ -155,7 +155,7 @@
 							@endif
 								<div class="row-fluid">
 									@for ($x=$i*2; $x < ($i+1)*2 ; $x++)
-										<div class="col-sm-2 col-xs-4 separacion">
+										<div class="col-xs-6 separacion">
 											{{$fechasformateadas[$x]}}
 											<ul class="list-group calendarioinst">
 												<?php $residenciales=App\Residencial::where('tipo', 'Residencial')->get();
@@ -252,7 +252,7 @@
     											</div>
     											<div class="row">
     											<div class="col-sm-8 sidebar  ">
-    												<div class="gotham2 ">
+    												<div class="gotham2 text-center">
     													<p>Hora: {{$residencial->hora}}</p>
     													<p>Lugar: {{$residencial->condominio->identificador}}<br>{{$residencial->condominio->direccion}}</p>
     													<p>Cupo: {{$residencial->cupo}} personas <br>
