@@ -252,7 +252,7 @@
     											</div>
     											<div class="row">
     											<div class="col-sm-8 sidebar  ">
-    												<div class="gotham2 text-center">
+    												<div class="gotham2 ">
     													<p>Hora: {{$residencial->hora}}</p>
     													<p>Lugar: {{$residencial->condominio->identificador}}<br>{{$residencial->condominio->direccion}}</p>
     													<p>Cupo: {{$residencial->cupo}} personas <br>
