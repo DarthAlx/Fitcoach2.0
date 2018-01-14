@@ -258,7 +258,7 @@
     												</form>
     											</div>
     											<div class="col-sm-4 sidebar">
-															<div class="gotham2 textoresidencial">
+															<div class="gotham2 textoevento">
 																<p style="line-height: 1;"><span>Descripción:</span> <br><span class="menor">{!!$residencial->descripcion!!}</span></p>
 															</div>
 														</div>
