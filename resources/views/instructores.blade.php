@@ -321,8 +321,8 @@
 														<?php $existe=App\Orden::where('coach_id', $particular->user_id)->where('fecha', $fechas[$x])->where('hora', $particular->hora)->first(); ?>
 														@if (!$existe)
 															@if ($particular->fecha==$fechas[$x]||in_array($dia_n, explode(",",$particular->recurrencia)))
-																<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}','{{$coach->id}}');" style="cursor:pointer;">
-																	<input type="checkbox" id="carrito{{$x}}{{$particular->id}}" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
+																<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}mini','{{$coach->id}}');" style="cursor:pointer;">
+																	<input type="checkbox" id="carrito{{$x}}{{$particular->id}}mini" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
 																	<input type="hidden" name="tipo" value="Particular">
 																	{{$particular->hora}} <i class="fa fa-square-o pull-right fa{{$x}}{{$particular->id}}" aria-hidden="true"></i>
 																</li>

@@ -216,8 +216,8 @@
 															@if (!$existe)
 																@if ($particular->fecha==$fechas[$x]||in_array($dia_n, explode(",",$particular->recurrencia)))
 																	<?php $nombre=explode(" ",$particular->user->name); ?>
-																	<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}','{{$particular->clase->id}}');" style="cursor:pointer;">
-																		<input type="checkbox" id="carrito{{$x}}{{$particular->id}}" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
+																	<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}mini','{{$particular->clase->id}}');" style="cursor:pointer;">
+																		<input type="checkbox" id="carrito{{$x}}{{$particular->id}}mini" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
 																		<input type="hidden" name="tipo" value="Particular">
 																		{{$particular->user->name}}<br>
 
