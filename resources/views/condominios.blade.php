@@ -233,7 +233,7 @@
     												
 
     											</div>
-    											<div class="col-md-4">
+    											<div class="col-md-4 hidden-xs hidden-sm">
     												<div class="title pull-right">
     													${{$residencial->precio}}
     												</div>
@@ -251,7 +251,7 @@
     											</div>
     											</div>
     											<div class="row">
-    											<div class="col-sm-8 sidebar  hidden-xs hidden-sm">
+    											<div class="col-sm-8 sidebar  ">
     												<div class="gotham2 text-center">
     													<p>Hora: {{$residencial->hora}}</p>
     													<p>Lugar: {{$residencial->condominio->identificador}}<br>{{$residencial->condominio->direccion}}</p>
