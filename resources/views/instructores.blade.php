@@ -282,7 +282,7 @@
 																		{{$particular->zona->identificador}}
 
 																	<br>
-																		{{$particular->hora}} <i class="fa fa-square-o pull-right fa{{$x}}{{$particular->id}}" aria-hidden="true"></i>
+																		{{$particular->hora}} <i class="fa fa-square-o faselect pull-right fa{{$x}}{{$particular->id}}" aria-hidden="true"></i>
 																	</li>
 																@endif
 															@endif
@@ -324,7 +324,7 @@
 																<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}mini','{{$coach->id}}','{{$clase->id}}');" style="cursor:pointer;">
 																	<input type="checkbox" id="carrito{{$x}}{{$particular->id}}mini" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
 																	<input type="hidden" name="tipo" value="Particular">
-																	{{$particular->hora}} <i class="fa fa-square-o pull-right fa{{$x}}{{$particular->id}}mini" aria-hidden="true"></i>
+																	{{$particular->hora}} <i class="fa fa-square-o faselect pull-right fa{{$x}}{{$particular->id}}mini" aria-hidden="true"></i>
 																</li>
 															@endif
 														@endif
@@ -407,6 +407,9 @@
 		function acero(){
 				clasesseleccionadas=0;
 				$('.clasesseleccionadas').html("0 clases seleccionadas.");
+				$('.faselect').removeClass('fa-square');
+				$('.faselect').removeClass('fa-square-o');
+				$('.faselect').addClass('fa-square-o');
 			}
 	</script>
 @endsection
