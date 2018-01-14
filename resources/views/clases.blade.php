@@ -224,7 +224,7 @@
 																			{{$particular->zona->identificador}}
 
 																		<br>
-																		{{$particular->hora}} <i class="fa fa-square-o pull-right fa{{$x}}{{$particular->id}}" aria-hidden="true"></i>
+																		{{$particular->hora}} <i class="fa fa-square-o pull-right fa{{$x}}{{$particular->id}}mini" aria-hidden="true"></i>
 																	</li>
 																@endif
 															@endif
