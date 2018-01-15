@@ -243,7 +243,7 @@
     													<input type="hidden" name="residencial_id" value="{{$residencial->id}}">
 															{!! csrf_field() !!}
 																<input type="hidden" name="residencial_id" value="{{$residencial->id}}">
-																<input type="hidden" name="tipo" value="residencial">
+																<input type="hidden" name="tipo" value="Residencial">
 																<div class="row">
 																	<div class="col-sm-8 col-sm-offset-4">
 																			<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
@@ -278,7 +278,7 @@
 															<form action="{{url('carrito')}}" method="post">
 																{!! csrf_field() !!}
 																<input type="hidden" name="residencial_id" value="{{$residencial->id}}">
-																<input type="hidden" name="tipo" value="residencial">
+																<input type="hidden" name="tipo" value="Residencial">
 																<div class="row">
 																	<div class="col-sm-8 col-sm-offset-4">
 																			<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
