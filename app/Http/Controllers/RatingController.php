@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Rating;
+use App\Detalle;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 class RatingController extends Controller
