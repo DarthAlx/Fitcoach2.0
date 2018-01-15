@@ -29,7 +29,7 @@ class RatingController extends Controller
       else {
         $promedio="Sin rating";
       }
-      $detalles=App\Detalle::where('user_id', $guardar->user_id)->first();
+      $detalles=Detalle::where('user_id', $guardar->user_id)->first();
       $detalles->rating=$promedio;
       $detalles->save;
       Session::flash('mensaje', '¡Calificación guardada!');
