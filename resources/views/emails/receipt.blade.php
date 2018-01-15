@@ -99,7 +99,7 @@
 														</tr>
 														<tr>
 																<td align="right" style="width: 50%;"><strong>IVA:</strong></td>
-																<td class="text">${{ $iva }}</td>
+																<td class="text">${{ round($iva, 2) }}</td>
 														</tr>
 														<tr>
 																<td align="right" style="width: 50%;"><strong>Importe total:</strong></td>
