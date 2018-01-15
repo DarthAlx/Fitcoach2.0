@@ -95,7 +95,7 @@
 														@endif
 														<tr>
 																<td align="right" style="width: 50%;"><strong>Subtotal:</strong></td>
-																<td class="text">${{ $subtotal }}</td>
+																<td class="text">${{ round($subtotal, 2) }}</td>
 														</tr>
 														<tr>
 																<td align="right" style="width: 50%;"><strong>IVA:</strong></td>
