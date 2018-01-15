@@ -157,15 +157,15 @@
 																@if (!$existe)
 																	@if ($particular->fecha==$fechas[$x]||in_array($dia_n, explode(",",$particular->recurrencia)))
 	                                  <?php $nombre=explode(" ",$particular->user->name); ?>
-																		<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}{{i}}','{{$particular->clase->id}}','{{$clase->id}}');" style="cursor:pointer;">
-																			<input type="checkbox" class="carritocheck" id="carrito{{$x}}{{$particular->id}}{{i}}" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
+																		<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}{{$i}}','{{$particular->clase->id}}','{{$clase->id}}');" style="cursor:pointer;">
+																			<input type="checkbox" class="carritocheck" id="carrito{{$x}}{{$particular->id}}{{$i}}" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
 																			<input type="hidden" name="tipo" value="Particular">
 																			{{$particular->user->name}}<br>
 
 																				{{$particular->zona->identificador}}
 
 																			<br>
-																			{{$particular->hora}} <i class="fa fa-square-o faselect pull-right fa{{$x}}{{$particular->id}}{{i}}" aria-hidden="true"></i>
+																			{{$particular->hora}} <i class="fa fa-square-o faselect pull-right fa{{$x}}{{$particular->id}}{{$i}}" aria-hidden="true"></i>
 																		</li>
 																	@endif
 																@endif
@@ -216,15 +216,15 @@
 															@if (!$existe)
 																@if ($particular->fecha==$fechas[$x]||in_array($dia_n, explode(",",$particular->recurrencia)))
 																	<?php $nombre=explode(" ",$particular->user->name); ?>
-																	<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}{{i}}mini','{{$particular->clase->id}}','{{$clase->id}}');" style="cursor:pointer;">
-																		<input type="checkbox" class="carritocheck" id="carrito{{$x}}{{$particular->id}}{{i}}mini" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
+																	<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}{{$i}}mini','{{$particular->clase->id}}','{{$clase->id}}');" style="cursor:pointer;">
+																		<input type="checkbox" class="carritocheck" id="carrito{{$x}}{{$particular->id}}{{$i}}mini" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
 																		<input type="hidden" name="tipo" value="Particular">
 																		{{$particular->user->name}}<br>
 
 																			{{$particular->zona->identificador}}
 
 																		<br>
-																		{{$particular->hora}} <i class="fa fa-square-o faselect pull-right fa{{$x}}{{$particular->id}}{{i}}mini" aria-hidden="true"></i>
+																		{{$particular->hora}} <i class="fa fa-square-o faselect pull-right fa{{$x}}{{$particular->id}}{{$i}}mini" aria-hidden="true"></i>
 																	</li>
 																@endif
 															@endif
