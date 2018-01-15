@@ -67,7 +67,7 @@
 									{{$orden->nombre}}
 								</td>
 								<td class="col-xs-4">
-									Clase $orden->tipo
+									Clase {{$orden->tipo}}
 								</td>
 								<td class="col-xs-2">
 									{{ substr("$orden->cantidad", 0, -2) }}.{{substr("$orden->cantidad", -2) }}

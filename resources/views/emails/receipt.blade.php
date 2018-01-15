@@ -74,7 +74,7 @@
 																<td style="width: 20%;">${{$orden->cantidad}}</td>
 														</tr>
 														@endforeach
-														<?php $iva=$grantotal*0.16;
+														<?php $iva=($grantotal/1.16)*0.16;
 														$subtotal=$grantotal-$iva;
 														?>
 												</tbody>

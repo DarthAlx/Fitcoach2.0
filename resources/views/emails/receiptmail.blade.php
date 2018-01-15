@@ -515,12 +515,12 @@
 																							<tr class="text">
 																									<td style="width: 10%;">1</td>
 																									<td style="width: 30%;">{{$orden->nombre}}</td>
-																									<td style="width: 30%;">Clase $orden->tipo</td>
+																									<td style="width: 30%;">Clase {{$orden->tipo}}</td>
 																									<td style="width: 10%;">${{$orden->cantidad}}</td>
 																									<td style="width: 20%;">${{$orden->cantidad}}</td>
 																							</tr>
 																							@endforeach
-																							<?php $iva=$grantotal*0.16;
+																							<?php $iva=($grantotal/1.16)*0.16;
 																							$subtotal=$grantotal-$iva;
 																							?>
 																					</tbody>
