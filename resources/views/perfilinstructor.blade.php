@@ -58,16 +58,25 @@
         <p>&nbsp;</p>
         <div id="proximas" class="listadeclases">
           <div class="list-group">
-              <?php
+              <?php $array=array();
               $proximas= App\Orden::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
               if (!$proximas->isEmpty()) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($proximas as $proxima) {
+
+
                   $metadata= explode(',',$proxima->metadata);
 
                   $fecha=date_create($proxima->fecha);
                   setlocale(LC_TIME, "es-ES");
                  ?>
+
+                  @if ($proxima->tipo=="residencial")
+                  @if (in_array($proxima->nombre,$array))
+
+                  <!--clase ya mostrada, no se hace nada-->
+                  @else
+
                  <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
                    @if($metadata[0]=="particular")
                      <i class="fa fa-home" aria-hidden="true"></i>
@@ -77,6 +86,20 @@
                    {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $proxima->hora }}
                    <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                  </a>
+                 <?php $array[]=$proxima->nombre; ?>
+                  @endif
+                @else
+                <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
+                   @if($metadata[0]=="particular")
+                     <i class="fa fa-home" aria-hidden="true"></i>
+                   @else
+                     <i class="fa fa-building" aria-hidden="true"></i>
+                   @endif
+                   {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $proxima->hora }}
+                   <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
+                 </a>
+                 @endif
+
               <?php } } else{ ?>
                 <p>No has tomado ninguna clase.</p>
                 <?php  } ?>
@@ -84,7 +107,7 @@
         </div>
         <div id="pasadas" class="listadeclases" style="display:none;">
           <div class="list-group">
-              <?php
+              <?php  $array=array();
               $pasadas= App\Orden::where('coach_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('fecha', 'desc')->get();
               if ($pasadas) {
                 date_default_timezone_set('America/Mexico_City');
@@ -92,6 +115,12 @@
                   $fecha=date_create($pasada->fecha);
                   setlocale(LC_TIME, "es-ES");
                  ?>
+
+                 @if ($pasada->tipo=="residencial")
+                  @if (in_array($pasada->nombre,$array))
+
+                  <!--clase ya mostrada, no se hace nada-->
+                  @else
                  <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
                    @if ($pasada->status=="Cancelada")
                      <i class="fa fa-times-circle-o" aria-hidden="true"></i>
@@ -105,6 +134,24 @@
                    {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
                    <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                  </a>
+
+                 <?php $array[]=$pasada->nombre; ?>
+                  @endif
+                @else
+                <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
+                   @if ($pasada->status=="Cancelada")
+                     <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                   @else
+                     @if($pasada->tipo=="particular")
+                       <i class="fa fa-home" aria-hidden="true"></i>
+                     @else
+                       <i class="fa fa-building" aria-hidden="true"></i>
+                     @endif
+                    @endif
+                   {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
+                   <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
+                 </a>
+                 @endif
               <?php } } else{ ?>
                 <p>No has tomado ninguna clase.</p>
                 <?php  } ?>
@@ -149,7 +196,7 @@
       <p>&nbsp;</p>
       <div id="proximaslg" class="listadeclases">
         <div class="list-group">
-            <?php
+            <?php $array=array();
             $proximas= App\Orden::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
             if (!$proximas->isEmpty()) {
               date_default_timezone_set('America/Mexico_City');
@@ -159,15 +206,35 @@
                 $fecha=date_create($proxima->fecha);
                 setlocale(LC_TIME, "es-ES");
                ?>
-               <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
-                 @if($metadata[0]=="particular")
-                   <i class="fa fa-home" aria-hidden="true"></i>
-                 @else
-                   <i class="fa fa-building" aria-hidden="true"></i>
+                
+@if ($proxima->tipo=="residencial")
+                  @if (in_array($proxima->nombre,$array))
+
+                  <!--clase ya mostrada, no se hace nada-->
+                  @else
+
+                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
+                   @if($metadata[0]=="particular")
+                     <i class="fa fa-home" aria-hidden="true"></i>
+                   @else
+                     <i class="fa fa-building" aria-hidden="true"></i>
+                   @endif
+                   {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $proxima->hora }}
+                   <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
+                 </a>
+                 <?php $array[]=$proxima->nombre; ?>
+                  @endif
+                @else
+                <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
+                   @if($metadata[0]=="particular")
+                     <i class="fa fa-home" aria-hidden="true"></i>
+                   @else
+                     <i class="fa fa-building" aria-hidden="true"></i>
+                   @endif
+                   {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $proxima->hora }}
+                   <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
+                 </a>
                  @endif
-                 {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $proxima->hora }}
-                 <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
-               </a>
             <?php } } else{ ?>
               <p>No has tomado ninguna clase.</p>
               <?php  } ?>
@@ -175,7 +242,7 @@
       </div>
       <div id="pasadaslg" class="listadeclases" style="display:none;">
         <div class="list-group">
-            <?php
+            <?php $array=array();
             $pasadas= App\Orden::where('coach_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('fecha', 'desc')->get();
             if ($pasadas) {
               date_default_timezone_set('America/Mexico_City');
@@ -183,19 +250,43 @@
                 $fecha=date_create($pasada->fecha);
                 setlocale(LC_TIME, "es-ES");
                ?>
-               <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
-                 @if ($pasada->status=="Cancelada")
-                   <i class="fa fa-times-circle-o" aria-hidden="true"></i>
-                 @else
-                   @if($pasada->tipo=="particular")
-                     <i class="fa fa-home" aria-hidden="true"></i>
+              
+@if ($pasada->tipo=="residencial")
+                  @if (in_array($pasada->nombre,$array))
+
+                  <!--clase ya mostrada, no se hace nada-->
+                  @else
+                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
+                   @if ($pasada->status=="Cancelada")
+                     <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                    @else
-                     <i class="fa fa-building" aria-hidden="true"></i>
-                   @endif
+                     @if($pasada->tipo=="particular")
+                       <i class="fa fa-home" aria-hidden="true"></i>
+                     @else
+                       <i class="fa fa-building" aria-hidden="true"></i>
+                     @endif
+                    @endif
+                   {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
+                   <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
+                 </a>
+
+                 <?php $array[]=$pasada->nombre; ?>
                   @endif
-                 {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
-                 <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
-               </a>
+                @else
+                <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
+                   @if ($pasada->status=="Cancelada")
+                     <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                   @else
+                     @if($pasada->tipo=="particular")
+                       <i class="fa fa-home" aria-hidden="true"></i>
+                     @else
+                       <i class="fa fa-building" aria-hidden="true"></i>
+                     @endif
+                    @endif
+                   {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
+                   <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
+                 </a>
+                 @endif
             <?php } } else{ ?>
               <p>No has tomado ninguna clase.</p>
               <?php  } ?>
@@ -599,8 +690,21 @@ $direccion->estado;
                    <div class="col-sm-4 sidebar">
                      <div class="text-center">
                             <h1>{{$proxima->nombre}}</h1>
-                            <?php $nombre=explode(" ",$cliente->name); ?>
-                            <h2>{{ucfirst($nombre[0])}}</h2>
+                            <?php $nombre=explode(" ",$cliente->name); 
+                            if ($proxima->tipo=="residencial") {
+                              $clientesporclase=App\Orden::where('nombre', $proxima->nombre)->where('fecha', $proxima->fecha)->orderBy('nombre', 'asc')->get();
+                            
+                              foreach ($clientesporclase as $clienteporclase) {
+                                echo $clienteporclase->user->name."<br>";
+                              }
+                            }else{
+                              ?>
+                              <h2>{{ucfirst($nombre[0])}}</h2>
+                              <?php
+                            }
+                            
+                            ?>
+                          
 
                      </div>
                    </div>
@@ -669,8 +773,16 @@ $direccion->estado;
                    <div class="col-sm-4 sidebar">
                      <div class="text-center">
                             <h1>{{$pasada->nombre}}</h1>
-                            <?php $nombre=explode(" ",$cliente->name); ?>
-                            <h2>{{ucfirst($nombre[0])}}</h2>
+                            <?php $nombre=explode(" ",$cliente->name); 
+                            if ($pasada->tipo=="residencial") {
+                             
+                            }else{
+                              ?>
+                              <h2>{{ucfirst($nombre[0])}}</h2>
+                              <?php
+                            }
+                            
+                            ?>
 
                      </div>
                    </div>

@@ -702,12 +702,12 @@ Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio 
                    <div class="col-sm-12 text-center">
                      <p>&nbsp;</p>
                      @if ($pasada->status=="Completa")
-                       <form class="" action="{{url('/calificar-orden')}}" method="post">
+                       <!--form class="" action="{{url('/calificar-orden')}}" method="post">
                          {!! csrf_field() !!}
                          <input type="hidden" name="calificacion" value="">
                          <input type="hidden" name="orden_id" value="{{$pasada->id}}">
                          <button type="submit" class="btn btn-primary btn-lg" name="button">Calificar</button>
-                       </form>
+                       </form-->
                      @endif
 
 

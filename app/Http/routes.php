@@ -75,7 +75,27 @@ Route::post('/busqueda', function (Illuminate\Http\Request $request) {
 });
 
 Route::get('/coaches', function () {
-  $coaches = App\User::where('role', 'instructor')->where('name','<>','FITCOACH')->get();
+  //$coaches = App\User::where('role', 'instructor')->where('name','<>','FITCOACH')->get();
+
+$coaches = App\User::where('role', 'instructor')->where('name','<>','FITCOACH')->join('detalles', 'users.id', '=', 'detalles.user_id')->orderBy('detalles.rating', 'desc')->get();
+  
+/*
+
+  $coaches = App\User::where('role', 'instructor')->where('name','<>','FITCOACH')->whereHas('detalles', function ($query) {
+      $query->where('rating', '<>', 0);
+  })->orderBy('detalles.rating', 'desc')->get();
+  dd($coaches);
+  $detalles=App\Detalle::orderBy('rating', 'desc')->get();
+  $coaches2= new App\User();
+  $cont=0;
+  foreach ($detalles as $detalle) {
+    if ($detalle->user->role=="instructor"&&$detalle->user->name!="FITCOACH") {
+      $coaches2[$cont]=$detalle->user();
+    }
+    $cont++;
+  }
+  dd($coaches2);*/
+
     return view('instructores', ['coaches'=>$coaches]);
 });
 

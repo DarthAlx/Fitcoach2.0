@@ -61,9 +61,15 @@
 			  </tr>
 			  </thead>
 			  <tbody>
+			  	<?php $array=array(); ?>
 
 					@if ($ventas)
 						@foreach ($ventas as $venta)
+						@if ($venta->tipo=="residencial")
+								@if (in_array($venta->nombre,$array))
+
+									<!--clase ya mostrada, no se hace nada-->
+								@else
 							<tr style="cursor: pointer;">
 									<td>{{$venta->folio}}</td>
 						      <td>{{$venta->order_id}}</td>
@@ -73,6 +79,19 @@
 						      <td>{{$venta->cantidad}}</td>
 									<td><a href="{{url('/printinvoice')}}/{{$venta->order_id}}" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a></td>
 						  </tr>
+						  <?php $array[]=$venta->nombre; ?>
+								@endif
+					@else
+							<tr style="cursor: pointer;">
+									<td>{{$venta->folio}}</td>
+						      <td>{{$venta->order_id}}</td>
+						      <td>{{$venta->fecha}} {{$venta->hora}}</td>
+									<td>{{$venta->created_at}}</td>
+						      <td>{{$venta->user->name}}</td>
+						      <td>{{$venta->cantidad}}</td>
+									<td><a href="{{url('/printinvoice')}}/{{$venta->order_id}}" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a></td>
+						  </tr>
+					@endif
 						@endforeach
 					@else
 						<tr style="cursor: pointer;">
