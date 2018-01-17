@@ -90,7 +90,7 @@
 													 </div>
 
 
-													 <h2>{{ucfirst($coach->name)}} - @if($coach->rating==0)Sin rating@else{{$coach->rating}}@endif <i class="fa fa-star" aria-hidden="true"></i></h2>
+													 <h2>{{ucfirst($coach->name)}} - {{$coach->rating}} <i class="fa fa-star" aria-hidden="true"></i></h2>
 
 										</div>
 									</div>
