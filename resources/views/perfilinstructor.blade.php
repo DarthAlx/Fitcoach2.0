@@ -72,7 +72,7 @@
                  ?>
 
                   @if ($proxima->tipo=="residencial")
-                  @if (in_array($proxima->nombre,$array))
+                  @if (in_array($proxima->nombre.$proxima->fecha.$proxima->hora,$array))
 
                   <!--clase ya mostrada, no se hace nada-->
                   @else
@@ -117,7 +117,7 @@
                  ?>
 
                  @if ($pasada->tipo=="residencial")
-                  @if (in_array($pasada->nombre,$array))
+                  @if (in_array($pasada->nombre.$pasada->fecha.$pasada->hora,$array))
 
                   <!--clase ya mostrada, no se hace nada-->
                   @else
@@ -208,7 +208,7 @@
                ?>
                 
 @if ($proxima->tipo=="residencial")
-                  @if (in_array($proxima->nombre,$array))
+                  @if (in_array($proxima->nombre.$proxima->fecha.$proxima->hora,$array))
 
                   <!--clase ya mostrada, no se hace nada-->
                   @else
@@ -252,7 +252,7 @@
                ?>
               
 @if ($pasada->tipo=="residencial")
-                  @if (in_array($pasada->nombre,$array))
+                  @if (in_array($pasada->nombre.$pasada->fecha.$pasada->hora,$array))
 
                   <!--clase ya mostrada, no se hace nada-->
                   @else
