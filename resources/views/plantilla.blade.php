@@ -166,7 +166,7 @@ fbq('track', 'ViewContent');
 
     <div class="footerSocial clear">
   			<a href="https://www.facebook.com/fitcoachmx"><i class="fa fa-facebook"></i></a>
-  			<a href="https://www.twitter.com/fitcoachmx"><i class="fa fa-twitter"></i></a>
+
   			<a href="https://www.instagram.com/fitcoachmx"><i class="fa fa-instagram"></i></a>
   		</div>
   		<ul class="footerMenu clear text-center">
