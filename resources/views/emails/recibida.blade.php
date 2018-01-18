@@ -468,7 +468,7 @@
 																	<td align="right">
 																		<div class="pull-right">
 																			<p style="float: right;">
-																				<strong>Fecha:</strong> {{date("Y-m-d")}}}<br>
+																				<strong>Fecha:</strong> {{date("Y-m-d")}}<br>
 
 																			</p>
 																		</div>

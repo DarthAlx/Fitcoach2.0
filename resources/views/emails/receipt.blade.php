@@ -106,8 +106,8 @@
 																<td class="text">${{ $grantotal }}</td>
 														</tr>
 														<tr>
-																<td align="right" style="width: 50%;"><strong>Pagado:</strong></td>
-																<td class="text">${{ $grantotal }}</td>
+																<td align="right" style="width: 50%;"><strong>Total pagado:</strong></td>
+																<td class="text">${{ $grantotal-$descuento->cupon->monto }}</td>
 														</tr>
 
 												</tbody>
