@@ -584,7 +584,7 @@
 																					<tbody>
 																							<tr>
 																									<td>
-																										<p class="text-left">(Comprobante simplificado de operación con Público en General de acuerdo al Art. 29A FRACCIONES I Y III del Cod. Fis. de la Fed. Vigente para 2014) <br></p>
+																										<p class="text-left">Comprobante simplificado de operación con Público en General. <br></p>
 																										<p class="text-center">ESTE DOCUMENTO NO ES VÁLIDO PARA EFECTOS FISCALES <br></p>
 																										<p class="text-center">Gracias por tu preferencia.</p>
 																									</td>
