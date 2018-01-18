@@ -66,7 +66,7 @@
 					@if ($ventas)
 						@foreach ($ventas as $venta)
 						@if ($venta->tipo=="residencial")
-								@if (in_array($venta->nombre$venta->fecha$venta->hora,$array))
+								@if (in_array(''.$venta->nombre.$venta->fecha.$venta->hora,$array))
 
 									<!--clase ya mostrada, no se hace nada-->
 								@else
