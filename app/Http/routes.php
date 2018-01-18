@@ -100,7 +100,7 @@ $coaches = App\User::where('role', 'instructor')->where('name','<>','FITCOACH')-
 });
 
 Route::get('/eventos', function () {
-  $eventos = App\Residencial::where('tipo', 'Evento')->orderBy('fecha', 'desc')->get();
+  $eventos = App\Residencial::where('tipo', 'Evento')->orderBy('fecha', 'asc')->get();
     return view('eventos', ['eventos'=>$eventos]);
 });
 Route::post('/eventos', function (Illuminate\Http\Request $request) {
