@@ -520,8 +520,21 @@
 																									<td style="width: 20%;">${{$orden->cantidad}}</td>
 																							</tr>
 																							@endforeach
-																							<?php $iva=($grantotal/1.16)*0.16;
+																							<?php 
+																						$descuento=App\Cuponera::where('orden_id', $orden->order_id)->first(); 
+																						if ($descuento){
+																							$grantotal=$grantotal-$descuento->cupon->monto;
+																							$iva=($grantotal/1.16)*0.16;
 																							$subtotal=$grantotal-$iva;
+																						}
+																						else{
+																							$iva=($grantotal/1.16)*0.16;
+																							$subtotal=$grantotal-$iva;
+																						}
+	
+																							
+
+
 																							?>
 																					</tbody>
 																			</table>
@@ -532,7 +545,7 @@
 																									<hr />
 																									</td>
 																							</tr>
-																							<?php $descuento=App\Cuponera::where('orden_id', $orden->order_id)->first(); ?>
+																							
 																							@if ($descuento)
 																								<tr>
 																										<td align="right" style="width: 50%;"><strong>Descuento ({{$descuento->cupon->descripcion}}):</strong></td>
@@ -541,6 +554,7 @@
 																							@endif
 																							<tr>
 																									<td align="right" style="width: 50%;"><strong>Subtotal:</strong></td>
+
 																									<td class="text">${{ round($subtotal, 2) }}</td>
 																							</tr>
 																							<tr>
