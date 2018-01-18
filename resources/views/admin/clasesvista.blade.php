@@ -97,7 +97,7 @@
 												@endif
 											</td>
 								  </tr>
-									<?php $array[]=$clase->nombre; ?>
+									<?php $array[]=$clase->nombre.$clase->fecha.$clase->hora; ?>
 								@endif
 
 						@else

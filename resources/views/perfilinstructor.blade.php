@@ -86,7 +86,7 @@
                    {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $proxima->hora }}
                    <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                  </a>
-                 <?php $array[]=$proxima->nombre; ?>
+                 <?php $array[]=$proxima->nombre.$proxima->fecha.$proxima->hora; ?>
                   @endif
                 @else
                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
@@ -135,7 +135,7 @@
                    <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                  </a>
 
-                 <?php $array[]=$pasada->nombre; ?>
+                 <?php $array[]=$pasada->nombre.$pasada->fecha.$pasada->hora; ?>
                   @endif
                 @else
                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
@@ -222,7 +222,7 @@
                    {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $proxima->hora }}
                    <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                  </a>
-                 <?php $array[]=$proxima->nombre; ?>
+                 <?php $array[]=$proxima->nombre.$proxima->fecha.$proxima->hora; ?>
                   @endif
                 @else
                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
@@ -270,7 +270,7 @@
                    <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                  </a>
 
-                 <?php $array[]=$pasada->nombre; ?>
+                 <?php $array[]=$pasada->nombre.$pasada->fecha.$pasada->hora; ?>
                   @endif
                 @else
                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">

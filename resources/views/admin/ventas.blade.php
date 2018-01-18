@@ -79,7 +79,7 @@
 						      <td>{{$venta->cantidad}}</td>
 									<td><a href="{{url('/printinvoice')}}/{{$venta->order_id}}" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a></td>
 						  </tr>
-						  <?php $array[]=$venta->nombre; ?>
+						  <?php $array[]=$venta->nombre.$venta->fecha.$venta->hora; ?>
 								@endif
 					@else
 							<tr style="cursor: pointer;">
