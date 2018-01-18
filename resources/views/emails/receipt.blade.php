@@ -103,7 +103,11 @@
 														</tr>
 														<tr>
 																<td align="right" style="width: 50%;"><strong>Importe total:</strong></td>
+																@if ($descuento)
+																<td class="text">${{ $grantotal-$descuento->cupon->monto }}</td>
+																@else
 																<td class="text">${{ $grantotal }}</td>
+																@endif
 														</tr>
 														<tr>
 																<td align="right" style="width: 50%;"><strong>Total pagado:</strong></td>
