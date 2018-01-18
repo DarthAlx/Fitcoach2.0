@@ -257,7 +257,7 @@
     												<div class="gotham2 text-center">
     													<p>Hora: {{$residencial->hora}}</p>
     													<p>Lugar: {{$residencial->condominio->identificador}}<br>{{$residencial->condominio->direccion}}</p>
-    													<p>Cupo: {{$residencial->cupo}} personas <br>
+    													<p>
 																 Lugares disponibles: {{intval($residencial->cupo)-intval($residencial->ocupados)}}
 															</p>
 															<p>Audiencia: {{$residencial->audiencia}}</p>
@@ -265,7 +265,7 @@
     												</div>
     											</div>
     											<div class="col-sm-4 sidebar">
-															<div class="gotham2 textoevento">
+															<div class="gotham2 textoevento text-center">
 																<p style="line-height: 1;"><span>Descripción:</span> <br><span class="menor">{!!$residencial->descripcion!!}</span></p>
 															</div>
 														</div>
