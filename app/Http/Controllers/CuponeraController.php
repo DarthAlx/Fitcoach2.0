@@ -89,7 +89,7 @@ class CuponeraController extends Controller
                     $guardar->cupon_id=$cupon->id;
                     $guardar->user_id=Auth::user()->id;
                     $guardar->save();
-                    Cart::add("Desc",$cupon->descripcion,1,-$cupon->monto, ['id'=>$guardar->id]);
+                    Cart::add("Desc",$cupon->descripcion,1,-$cupon->monto, ['id'=>$cupon->id]);
                     Session::flash('mensaje', '¡Descuento aplicado!');
                     Session::flash('class', 'success');
                   }
