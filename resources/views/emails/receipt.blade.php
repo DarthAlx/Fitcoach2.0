@@ -89,7 +89,7 @@
 														<?php $descuento=App\Cuponera::where('orden_id', $orden->order_id)->first(); ?>
 														@if ($descuento)
 															<tr>
-																	<td align="right" style="width: 50%;"><strong>Descuento:</strong></td>
+																	<td align="right" style="width: 50%;"><strong>Descuento ({{$descuento->cupon->descripcion}}):</strong></td>
 																	<td class="text">-${{ $descuento->cupon->monto }}</td>
 															</tr>
 														@endif
