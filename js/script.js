@@ -54,7 +54,7 @@ $(document).ready(function(){
 		var homeSlide = $('.homeBxSlider').bxSlider({
 			mode:"fade",
 			auto:true,
-			speed:2000,
+			speed:5000,
 			pause:4000,
 			onSliderLoad: function(){
 				$('.homeBxSlider').addClass("ready");
