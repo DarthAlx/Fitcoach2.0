@@ -70,6 +70,7 @@
 @section('modals')
 	@if ($coaches)
 		@foreach ($coaches as $coach)
+		<?php $coach=App\User::find($coach->id); ?>
 			<div class="modal fade" id="coach{{$coach->id}}" tabindex="-1" role="dialog">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
@@ -141,6 +142,7 @@
 
 @if ($coaches)
 	@foreach ($coaches as $coach)
+	<?php $coach=App\User::find($coach->id); ?>
 		@if ($coach->residenciales)
 
 			@foreach ($coach->residenciales as $residencial)
@@ -212,6 +214,7 @@
 
 	@if ($coaches)
 		@foreach ($coaches as $coach)
+		<?php $coach=App\User::find($coach->id); ?>
 			<div class="modal fade" id="calendario{{$coach->id}}" tabindex="-1" role="dialog">
 				<div class="modal-dialog calendario" role="document">
 					<div class="modal-content">
