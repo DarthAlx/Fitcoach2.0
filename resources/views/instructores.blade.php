@@ -42,9 +42,9 @@
 
 				@foreach ($coaches as $coach)
 	        <div class="teamItem">
-						@if($coach->photo!="")
+						@if($coach->detalles->photo!="")
 
-	          <a><img src="{{ url('uploads/avatars') }}/{{ $coach->photo }}" alt=""></a>
+	          <a><img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" alt=""></a>
 					@else
 
 						<a><img src="{{ url('uploads/avatars') }}/dummy.png" alt=""></a>
@@ -81,8 +81,8 @@
 										<div class="text-center">
 
 													 <div class="profile-userpic">
-														 @if($coach->photo!="")
-								  	          <a><img src="{{ url('uploads/avatars') }}/{{ $coach->photo }}" alt=""></a>
+														 @if($coach->detalles->photo!="")
+								  	          <a><img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" alt=""></a>
 								  					@else
 								  						<a><img src="{{ url('uploads/avatars') }}/dummy.png" alt=""></a>
 														@endif
@@ -90,7 +90,7 @@
 													 </div>
 
 
-													 <h2>{{ucfirst($coach->name)}} - {{$coach->rating}} <i class="fa fa-star" aria-hidden="true"></i></h2>
+													 <h2>{{ucfirst($coach->name)}} - {{$coach->detalles->rating}} <i class="fa fa-star" aria-hidden="true"></i></h2>
 
 										</div>
 									</div>
@@ -159,7 +159,7 @@
 
 																		</div>
 																	 <div class="profile-userpic">
-																		 <img src="{{ url('uploads/avatars') }}/{{ $coach->photo }}" class="img-responsive" alt="">
+																		 <img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" class="img-responsive" alt="">
 																	 </div>
 																	 <?php $nombre=explode(" ",$coach->name); ?>
 																	 <h2>{{ucfirst($nombre[0])}}</h2>
@@ -219,7 +219,7 @@
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
 
 							<?php
-							$clase=App\Clase::find($coach->clases);
+							$clase=App\Clase::find($coach->detalles->clases);
 							setlocale(LC_TIME, "es-MX");
 							date_default_timezone_set('America/Mexico_City');
 							$fecha = date('Y-m-d');
