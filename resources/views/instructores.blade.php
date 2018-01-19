@@ -82,7 +82,7 @@
 										<div class="text-center">
 
 													 <div class="profile-userpic">
-														 @if($coach->photo!="")
+														 @if($coach->detalles->photo!="")
 								  	          <a><img src="{{ url('uploads/avatars') }}/{{ $coach->photo }}" alt=""></a>
 								  					@else
 								  						<a><img src="{{ url('uploads/avatars') }}/dummy.png" alt=""></a>
@@ -161,7 +161,7 @@
 
 																		</div>
 																	 <div class="profile-userpic">
-																		 <img src="{{ url('uploads/avatars') }}/{{ $coach->photo }}" class="img-responsive" alt="">
+																		 <img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" class="img-responsive" alt="">
 																	 </div>
 																	 <?php $nombre=explode(" ",$coach->name); ?>
 																	 <h2>{{ucfirst($nombre[0])}}</h2>
@@ -222,7 +222,7 @@
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
 
 							<?php
-							$clase=App\Clase::find($coach->clases);
+							$clase=App\Clase::find($coach->detalles->clases);
 							setlocale(LC_TIME, "es-MX");
 							date_default_timezone_set('America/Mexico_City');
 							$fecha = date('Y-m-d');
