@@ -110,9 +110,10 @@
 											@foreach ($coach->residenciales as $residencial)
 												<?php
 												date_default_timezone_set('America/Mexico_City');
+												setlocale(LC_TIME, "es-ES");
 				                $fecha=new DateTime($residencial->fecha);
 												$hoy=new DateTime("now");
-				                setlocale(LC_TIME, "es-ES");
+				                
 												$interval = date_diff($hoy, $fecha);
 												$intervalo = intval($interval->format('%R%a días'));
 													?>
