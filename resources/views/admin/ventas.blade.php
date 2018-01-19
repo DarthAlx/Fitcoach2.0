@@ -39,7 +39,16 @@
 						@if ($ventas)
 							<?php $total =0; ?>
 							@foreach ($ventas as $venta)
-								<?php $total = $total + $venta->cantidad; ?>
+							<?php
+							$descuento=App\Cuponera::where('orden_id', $venta->order_id)->first();
+
+							if ($descuento){
+								$total=$total + ($venta->cantidad-$descuento->cupon->monto);
+							}
+							else{
+								$total = $total + $venta->cantidad;
+							}
+								  ?>
 							@endforeach
 						@endif
 						<h1 class=" title pull-right">TOTAL:  <span>${{$total}}</span></h1>
@@ -66,6 +75,7 @@
 
 					@if ($ventas)
 						@foreach ($ventas as $venta)
+						<?php $descuento=App\Cuponera::where('orden_id', $venta->order_id)->first();  ?>
 
 						<tr style="cursor: pointer;">
 									<td>{{$venta->folio}}</td>
@@ -73,7 +83,7 @@
 						      <td>{{$venta->fecha}} {{$venta->hora}}</td>
 									<td>{{$venta->created_at}}</td>
 						      <td>{{$venta->user->name}}</td>
-						      <td>{{$venta->cantidad}}</td>
+						      <td>@if($descuento){{$venta->cantidad-$descuento->cupon->monto}}@else{{$venta->cantidad}}@endif</td>
 									<td><a href="{{url('/printinvoice')}}/{{$venta->order_id}}" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a></td>
 						  </tr>
 
