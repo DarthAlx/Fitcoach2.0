@@ -30,8 +30,11 @@ class RatingController extends Controller
         $promedio="Sin rating";
       }
       $detalles=Detalle::where('user_id', $guardar->user_id)->first();
+      $user=User::find($guardar->user_id);
       $detalles->rating=$promedio;
+      $user->rating=$promedio;
       $detalles->save();
+      $user->save();
       Session::flash('mensaje', '¡Calificación guardada!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/perfil'));
