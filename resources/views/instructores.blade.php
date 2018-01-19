@@ -84,7 +84,7 @@
 
 													 <div class="profile-userpic">
 														 @if($coach->detalles->photo!="")
-								  	          <a><img src="{{ url('uploads/avatars') }}/{{ $coach->photo }}" alt=""></a>
+								  	          <a><img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" alt=""></a>
 								  					@else
 								  						<a><img src="{{ url('uploads/avatars') }}/dummy.png" alt=""></a>
 														@endif
@@ -92,7 +92,7 @@
 													 </div>
 
 
-													 <h2>{{ucfirst($coach->name)}} - {{$coach->rating}} <i class="fa fa-star" aria-hidden="true"></i></h2>
+													 <h2>{{ucfirst($coach->name)}} - {{$coach->detalles->rating}} <i class="fa fa-star" aria-hidden="true"></i></h2>
 
 										</div>
 									</div>
