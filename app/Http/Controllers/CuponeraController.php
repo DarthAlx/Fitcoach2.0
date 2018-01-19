@@ -110,7 +110,7 @@ class CuponeraController extends Controller
 
               }
               else {
-                Session::flash('mensaje', 'Descuento solo valido en clases de tipo '.$guardar->tipo);
+                Session::flash('mensaje', 'Descuento solo valido en clases de tipo '.$cupon->tipo);
                 Session::flash('class', 'danger');
               }
 
