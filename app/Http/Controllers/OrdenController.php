@@ -181,8 +181,18 @@ class OrdenController extends Controller
     public function abonar(Request $request)
     {
       $orden = Orden::find($request->orden_id);
+      if ($orden->tipo=='residencial') {
+        $ordenes=Orden::where('nombre',$orden->nombre)->where('fecha',$orden->fecha)->where('hora',$orden->hora)->get();
+        foreach ($ordenes as $ordenr) {
+          $ordenr->status = 'Completa';
+          $ordenr->save();
+        }
+      }
+      else{
       $orden->status="Completa";
       $orden->save();
+      }
+      
       $abono = new Abono($request->all());
       $abono->save();
       Session::flash('mensaje', 'Abono completado.');
@@ -197,17 +207,35 @@ class OrdenController extends Controller
       if ($request->tipocancelacion=="cupon") {
         $cupon=Cupon::where('codigo', $request->abono)->first();
         if ($cupon) {
-          $user=User::find($cupon->user->id);
-
-            Mail::send('emails.cupon', ['cupon'=>$cupon,'user'=>$user], function ($m) use ($user) {
-                $m->from('fitcoach.notificaciones@gmail.com', 'FITCOACH México');
-                $m->to($user->email, $user->name)->subject('¡Tu cupón de reembolso!');
-            });
+          
 
             $orden = Orden::find($request->orden_id);
-            $orden->status="Cancelada";
-            $orden->metadata="cupon enviado";
-            $orden->save();
+            if ($orden->tipo=='residencial') {
+              $ordenes=Orden::where('nombre',$orden->nombre)->where('fecha',$orden->fecha)->where('hora',$orden->hora)->get();
+              foreach ($ordenes as $ordenr) {
+                $user=User::find($ordenr->user_id);
+
+                Mail::send('emails.cupon', ['cupon'=>$cupon,'user'=>$user], function ($m) use ($user) {
+                    $m->from('fitcoach.notificaciones@gmail.com', 'FITCOACH México');
+                    $m->to($user->email, $user->name)->subject('¡Tu cupón de reembolso!');
+                });
+                $ordenr->status = 'Cancelada';
+                $ordenr->metadata="cupon enviado";
+                $ordenr->save();
+              }
+            }
+            else{
+              $user=User::find($cupon->user->id);
+
+              Mail::send('emails.cupon', ['cupon'=>$cupon,'user'=>$user], function ($m) use ($user) {
+                  $m->from('fitcoach.notificaciones@gmail.com', 'FITCOACH México');
+                  $m->to($user->email, $user->name)->subject('¡Tu cupón de reembolso!');
+              });
+              $orden->status="Cancelada";
+              $orden->metadata="cupon enviado";
+              $orden->save();
+            }
+
             $this->sendclasscancel($orden->id);
           Session::flash('mensaje', 'Cupón enviado.');
           Session::flash('class', 'success');
@@ -223,9 +251,20 @@ class OrdenController extends Controller
         $abono = new Abono($request->all());
         $abono->save();
         $orden = Orden::find($request->orden_id);
-        $orden->status="Cancelada";
-        $orden->metadata="abonada a coach";
-        $orden->save();
+        if ($orden->tipo=='residencial') {
+          $ordenes=Orden::where('nombre',$orden->nombre)->where('fecha',$orden->fecha)->where('hora',$orden->hora)->get();
+          foreach ($ordenes as $ordenr) {
+            $ordenr->status="Cancelada";
+            $ordenr->metadata="abonada a coach";
+            $ordenr->save();
+          }
+        }
+        else{
+          $orden->status="Cancelada";
+          $orden->metadata="abonada a coach";
+          $orden->save();
+        }
+        
         $this->sendclasscancel($orden->id);
         Session::flash('mensaje', 'Abono completado.');
         Session::flash('class', 'success');
@@ -243,8 +282,17 @@ class OrdenController extends Controller
     public function terminar(Request $request)
     {
       $orden = Orden::find($request->revision);
-      $orden->status = 'Porrevisar';
-      $orden->save();
+      if ($orden->tipo=='residencial') {
+        $ordenes=Orden::where('nombre',$orden->nombre)->where('fecha',$orden->fecha)->where('hora',$orden->hora)->get();
+        foreach ($ordenes as $ordenr) {
+          $ordenr->status = 'Porrevisar';
+          $ordenr->save();
+        }
+      }
+      else{
+        $orden->status = 'Porrevisar';
+        $orden->save();
+      }
       Session::flash('mensaje', '¡Orden en revisión!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/perfilinstructor'));
