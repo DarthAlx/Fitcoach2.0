@@ -75,9 +75,9 @@ Route::post('/busqueda', function (Illuminate\Http\Request $request) {
 });
 
 Route::get('/coaches', function () {
-  //$coaches = App\User::where('role', 'instructor')->where('name','<>','FITCOACH')->get();
+  $coaches = App\User::where('role', 'instructor')->where('name','<>','FITCOACH')->get();
 
-$coaches = App\User::where('role', 'instructor')->where('name','<>','FITCOACH')->join('detalles', 'users.id', '=', 'detalles.user_id')->orderBy('detalles.rating', 'desc')->get();
+//$coaches = App\User::where('role', 'instructor')->where('name','<>','FITCOACH')->join('detalles', 'users.id', '=', 'detalles.user_id')->orderBy('detalles.rating', 'desc')->get();
   
 /*
 
