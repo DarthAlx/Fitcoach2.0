@@ -47,6 +47,7 @@
 							foreach ($totales as $total) {
 								$grantotal=$grantotal+$total->cantidad;
 							}
+							echo $grantotal;
 							if (in_array($venta->folio,$array)){
 								}else{
 							
