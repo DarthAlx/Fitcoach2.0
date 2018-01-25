@@ -79,7 +79,7 @@
 								$totales=App\Orden::where('folio', $venta->folio)->get();
 								$grantotal=0;
 								foreach ($totales as $total) {
-									$grantotal=$grantotal+$total;
+									$grantotal=$grantotal+$total->cantidad;
 								}
 						?>
 						@if (in_array($clase->folio,$array))
