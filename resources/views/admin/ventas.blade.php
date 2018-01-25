@@ -77,7 +77,7 @@
 						@foreach ($ventas as $venta)
 						<?php $descuento=App\Cuponera::where('orden_id', $venta->order_id)->first();  
 								$totales=App\Orden::where('folio', $venta->folio)->get();
-								$gantotal=0;
+								$grantotal=0;
 								foreach ($totales as $total) {
 									$grantotal=$grantotal+$total;
 								}
@@ -93,7 +93,7 @@
 						      <td>{{$venta->fecha}} {{$venta->hora}}</td>
 									<td>{{$venta->created_at}}</td>
 						      <td>{{$venta->user->name}}</td>
-						      <td>@if($descuento){{$gantotal-$descuento->cupon->monto}}@else{{$gantotal}}@endif</td>
+						      <td>@if($descuento){{$grntotal-$descuento->cupon->monto}}@else{{$grantotal}}@endif</td>
 									<td><a href="{{url('/printinvoice')}}/{{$venta->order_id}}" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a></td>
 						  </tr>
 
