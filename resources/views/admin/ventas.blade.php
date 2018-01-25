@@ -47,7 +47,7 @@
 							foreach ($totales as $total) {
 								$grantotal=$grantotal+$total->cantidad;
 							}
-							echo $grantotal;
+							
 							if (in_array($venta->folio,$array)){
 								}else{
 							
@@ -55,7 +55,7 @@
 
 							if ($descuento){
 								$sumatotal=$sumatotal + ($grantotal-$descuento->cupon->monto);
-								echo $sumatotal;
+								echo $grantotal."-".$descuento->cupon->monto."=". $sumatotal;
 							}
 							else{
 								$sumatotal = $sumatotal + $grantotal;
