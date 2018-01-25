@@ -37,11 +37,11 @@
 				<div class="col-sm-12">
 					<h1 class=" title pull-left">CLASES:  <span>{{count($ventas)}}</span></h1>
 						@if ($ventas)
-							<?php $sumatotal =0; $array=array(); ?>
+							<?php  $array=array(); ?>
 							@foreach ($ventas as $venta)
 							<?php
 
-
+							$sumatotal =0;
 							$totales=App\Orden::where('folio', $venta->folio)->get();
 							$grantotal=0;
 							foreach ($totales as $total) {
