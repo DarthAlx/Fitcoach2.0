@@ -55,6 +55,7 @@
 
 							if ($descuento){
 								$sumatotal=$sumatotal + ($grantotal-$descuento->cupon->monto);
+								echo $sumatotal;
 							}
 							else{
 								$sumatotal = $sumatotal + $grantotal;
