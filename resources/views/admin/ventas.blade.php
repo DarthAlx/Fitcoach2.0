@@ -37,21 +37,35 @@
 				<div class="col-sm-12">
 					<h1 class=" title pull-left">CLASES:  <span>{{count($ventas)}}</span></h1>
 						@if ($ventas)
-							<?php $total =0; ?>
+							<?php $sumatotal =0; $array=array(); ?>
 							@foreach ($ventas as $venta)
 							<?php
+
+
+							$totales=App\Orden::where('folio', $venta->folio)->get();
+							$grantotal=0;
+							foreach ($totales as $total) {
+								$grantotal=$grantotal+$total->cantidad;
+							}
+							if (in_array($venta->folio,$array)){
+								}else{
+							
 							$descuento=App\Cuponera::where('orden_id', $venta->order_id)->first();
 
 							if ($descuento){
-								$total=$total + ($venta->cantidad-$descuento->cupon->monto);
+								$sumatotal=$sumatotal + ($grantotal-$descuento->cupon->monto);
 							}
 							else{
-								$total = $total + $venta->cantidad;
+								$sumatotal = $sumatotal + $grantotal;
 							}
+							
+
+							}
+							
 								  ?>
 							@endforeach
 						@endif
-						<h1 class=" title pull-right">TOTAL:  <span>${{$total}}</span></h1>
+						<h1 class=" title pull-right">TOTAL:  <span>${{$sumatotal}}</span></h1>
 				</div>
 			</div>
 
