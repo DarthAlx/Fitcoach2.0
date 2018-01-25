@@ -82,7 +82,7 @@
 									$grantotal=$grantotal+$total->cantidad;
 								}
 						?>
-						@if (in_array($clase->folio,$array))
+						@if (in_array($venta->folio,$array))
 
 									<!--clase ya mostrada, no se hace nada-->
 								@else
