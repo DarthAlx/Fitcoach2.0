@@ -93,7 +93,7 @@
 						      <td>{{$venta->fecha}} {{$venta->hora}}</td>
 									<td>{{$venta->created_at}}</td>
 						      <td>{{$venta->user->name}}</td>
-						      <td>@if($descuento){{$grntotal-$descuento->cupon->monto}}@else{{$grantotal}}@endif</td>
+						      <td>@if($descuento){{$grantotal-$descuento->cupon->monto}}@else{{$grantotal}}@endif</td>
 									<td><a href="{{url('/printinvoice')}}/{{$venta->order_id}}" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a></td>
 						  </tr>
 
