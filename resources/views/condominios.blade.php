@@ -112,7 +112,7 @@
 												<div class="col-sm-2 col-xs-4 separacion">
 													{{$fechasformateadas[$x]}}
 													<ul class="list-group calendarioinst">
-														<?php $residenciales=App\Residencial::where('tipo', 'Residencial')->get();
+														<?php $residenciales=App\Residencial::where('tipo', 'Residencial')->orderBy('hora', 'asc')->get();
 														list($año, $mes, $dia) = explode("-", $fechas[$x]);
 														$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 														?>

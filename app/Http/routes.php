@@ -189,6 +189,7 @@ Route::get('/carrito', function () {
   $items=Cart::content();
   return view('cart.cart',['items'=>$items]);
 });
+  Route::get('removefromcart/{rowId}', 'OrdenController@destroy');
 Route::post('descuento', 'CuponeraController@store');
 
 
@@ -373,7 +374,7 @@ Route::group(['middleware' => 'usuarios'], function(){
   Route::delete('eliminar-tarjeta', 'TarjetaController@destroy');
 
   Route::put('cancelar-orden', 'OrdenController@update');
-  Route::get('removefromcart/{rowId}', 'OrdenController@destroy');
+
 
   Route::post('cargartarjeta', 'OrdenController@cargartarjeta');
 
