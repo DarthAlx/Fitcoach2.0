@@ -373,7 +373,7 @@ Route::group(['middleware' => 'usuarios'], function(){
   Route::delete('eliminar-tarjeta', 'TarjetaController@destroy');
 
   Route::put('cancelar-orden', 'OrdenController@update');
-  Route::get('removefromcart/{id}', 'OrdenController@destroy');
+  Route::get('removefromcart/{rowId}', 'OrdenController@destroy');
 
   Route::post('cargartarjeta', 'OrdenController@cargartarjeta');
 
