@@ -17,6 +17,9 @@ class Cuponera extends Migration
         $table->integer('cupon_id');
         $table->integer('user_id');
         $table->string('orden_id');
+        $table->string('descripcion');
+        $table->string('codigo');
+        $table->string('monto');
         $table->timestamps();
     });
     }

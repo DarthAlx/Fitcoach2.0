@@ -54,7 +54,7 @@
 							$descuento=App\Cuponera::where('orden_id', $venta->order_id)->first();
 
 							if ($descuento){
-								$sumatotal=$sumatotal + ($grantotal-$descuento->cupon->monto);
+								$sumatotal=$sumatotal + ($grantotal-$descuento->monto);
 								
 							}
 							else{
@@ -110,7 +110,7 @@
 						      <td>{{$venta->fecha}} {{$venta->hora}}</td>
 									<td>{{$venta->created_at}}</td>
 						      <td>{{$venta->user->name}}</td>
-						      <td>@if($descuento){{$grantotal-$descuento->cupon->monto}}@else{{$grantotal}}@endif</td>
+						      <td>@if($descuento){{$grantotal-$descuento->monto}}@else{{$grantotal}}@endif</td>
 									<td><a href="{{url('/printinvoice')}}/{{$venta->order_id}}" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a></td>
 						  </tr>
 

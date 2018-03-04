@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cuponera extends Model
 {
   protected $table = 'cuponera';
-  protected $fillable = ['cupon_id', 'user_id', 'orden_id'];
+  protected $fillable = ['cupon_id', 'user_id', 'orden_id','descripcion', 'codigo', 'monto'];
   public function cupon(){
       return $this->belongsTo('App\Cupon');
   }

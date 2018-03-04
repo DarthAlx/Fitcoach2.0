@@ -88,6 +88,9 @@ class CuponeraController extends Controller
                     $guardar = new Cuponera();
                     $guardar->cupon_id=$cupon->id;
                     $guardar->user_id=Auth::user()->id;
+                    $guardar->descripcion=$cupon->descripcion;
+                    $guardar->codigo=$cupon->codigo;
+                    $guardar->monto=$cupon->monto;
                     $guardar->save();
                     Cart::add("Desc",$cupon->descripcion,1,-$cupon->monto, ['id'=>$guardar->id]);
                     Session::flash('mensaje', '¡Descuento aplicado!');
@@ -102,6 +105,9 @@ class CuponeraController extends Controller
                   $guardar = new Cuponera();
                   $guardar->cupon_id=$cupon->id;
                   $guardar->user_id=Auth::user()->id;
+                  $guardar->descripcion=$cupon->descripcion;
+                    $guardar->codigo=$cupon->codigo;
+                    $guardar->monto=$cupon->monto;
                   $guardar->save();
                   Cart::add("Desc",$cupon->descripcion,1,-$cupon->monto, ['id'=>$guardar->id]);
                   Session::flash('mensaje', '¡Descuento aplicado!');
@@ -121,6 +127,9 @@ class CuponeraController extends Controller
                   $guardar = new Cuponera();
                   $guardar->cupon_id=$cupon->id;
                   $guardar->user_id=Auth::user()->id;
+                  $guardar->descripcion=$cupon->descripcion;
+                    $guardar->codigo=$cupon->codigo;
+                    $guardar->monto=$cupon->monto;
                   $guardar->save();
                   Cart::add("Desc",$cupon->descripcion,1,-$cupon->monto, ['id'=>$guardar->id]);
                   Session::flash('mensaje', '¡Descuento aplicado!');
@@ -135,6 +144,9 @@ class CuponeraController extends Controller
                 $guardar = new Cuponera();
                 $guardar->cupon_id=$cupon->id;
                 $guardar->user_id=Auth::user()->id;
+                $guardar->descripcion=$cupon->descripcion;
+                    $guardar->codigo=$cupon->codigo;
+                    $guardar->monto=$cupon->monto;
                 $guardar->save();
                 Cart::add("Desc",$cupon->descripcion,1,-$cupon->monto, ['id'=>$guardar->id]);
                 Session::flash('mensaje', '¡Descuento aplicado!');
