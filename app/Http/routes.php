@@ -55,6 +55,10 @@ Route::post('/clasesculturales', function (Illuminate\Http\Request $request) {
 
     return view('culturales', ['clases'=>$clases,'zonarequest'=>$zonarequest,'titulo'=>$titulo]);
 });
+Route::get('/comprar-clases', function () {
+    return view('comprar-paquetes');
+});
+
 
 
 Route::get('/busqueda', function () {

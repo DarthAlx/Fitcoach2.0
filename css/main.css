@@ -829,3 +829,81 @@ button.close {
     font-size: 15px;
 		color: #000000;
 }
+
+
+.paquete {
+    width: 168px;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: .8%;
+    border: solid 1px #ecebeb;
+    padding-top: 1.5em;
+    padding-bottom: 2em;
+    overflow: hidden;
+    position: relative;
+        cursor: pointer;
+            padding-top: 0;
+    padding-bottom: 26px;
+}
+.easecorta {
+    -webkittransition: .3s ease;
+    -moz-transition: .3s ease;
+    transition: .3s ease;
+}
+.info-paquete {
+    position: relative;
+    z-index: 10;
+}
+.gotham3 {
+    font-family: gotham3;
+}
+.color_gris2 {
+    color: #9d9999;
+}
+.super_small {
+    font-size: 10px;
+}
+.paquete{
+  text-align: center;
+}
+.paquete .blue-cap {
+    opacity: 1;
+    top: 100%;
+    -webkittransition: .2s ease;
+    -moz-transition: .2s ease;
+    transition: .2s ease;
+    pointer-events: none;
+}
+.blue-cap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #EF7E19;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    padding: 0 3px;
+}
+.circulo {
+    font-size: 100px;
+    margin-bottom: 20px;
+}
+.info-paquete>* {
+    -webkittransition: .2s ease;
+    -moz-transition: .2s ease;
+    transition: .2s ease;
+
+}
+.info-paquete {
+    position: relative;
+    z-index: 10;
+}
+.paquete:hover .info-paquete>* {
+    color: #fff!important;
+}
+.color_gris3 {
+    color: #bababa;
+}
+.paquete:hover .blue-cap {
+    top: 0; 
+}
