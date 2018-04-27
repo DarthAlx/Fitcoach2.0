@@ -14,10 +14,14 @@ class CreatePaquetesTable extends Migration
     {
         Schema::create('paquetes', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('paquete');
+            $table->string('precio');
+            $table->string('num_clases');
+            $table->string('dias');
+            $table->string('tipo');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *

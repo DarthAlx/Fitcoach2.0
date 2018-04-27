@@ -9,7 +9,9 @@
         "laravel/framework": "5.1.*",
         "conekta/conekta-php": "3.3.0",
         "gloudemans/shoppingcart": "^2.3",
-        "openpay/sdk": "dev-master"
+        "openpay/sdk": "dev-master",
+        "zgabievi/promocodes": "0.5.1",
+        "trexology/promocodes": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

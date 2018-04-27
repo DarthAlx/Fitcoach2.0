@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce3bb2b94cac2249533359c52ad00b10",
+    "content-hash": "b9daee5ab63f9a8dc8b0d669a4903949",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -952,7 +952,7 @@
                 }
             ],
             "description": "This is a client implementing the payment services for Openpay at openpay.mx",
-            "time": "2018-03-16 01:49:45"
+            "time": "2018-03-16T01:49:45+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -2064,6 +2064,50 @@
             "time": "2017-08-27T08:38:33+00:00"
         },
         {
+            "name": "trexology/promocodes",
+            "version": "1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Trexology/Promocodes.git",
+                "reference": "4846f3813ceba18e6a43eebd0e8cb437d7f467f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Trexology/Promocodes/zipball/4846f3813ceba18e6a43eebd0e8cb437d7f467f6",
+                "reference": "4846f3813ceba18e6a43eebd0e8cb437d7f467f6",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Trexology\\Promocodes\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "trexology"
+                }
+            ],
+            "description": "Promotional Codes Generator for Laravel 5.1",
+            "homepage": "https://github.com/trexology/promocodes",
+            "keywords": [
+                "coupon code",
+                "discount code",
+                "laravel",
+                "php",
+                "promo code"
+            ],
+            "time": "2016-08-18T03:26:15+00:00"
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v1.1.1",
             "source": {
@@ -2108,6 +2152,51 @@
                 "environment"
             ],
             "time": "2015-05-30T15:59:26+00:00"
+        },
+        {
+            "name": "zgabievi/promocodes",
+            "version": "0.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zgabievi/laravel-promocodes.git",
+                "reference": "983723269557ce0f8095e8a16d681e9bedc5d54b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zgabievi/laravel-promocodes/zipball/983723269557ce0f8095e8a16d681e9bedc5d54b",
+                "reference": "983723269557ce0f8095e8a16d681e9bedc5d54b",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Gabievi\\Promocodes\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "zgabievi",
+                    "email": "zura.gabievi@gmail.com"
+                }
+            ],
+            "description": "Promotional Codes Generator for Laravel 5",
+            "homepage": "https://github.com/zgabievi/promocodes",
+            "keywords": [
+                "coupon code",
+                "discount code",
+                "laravel",
+                "php",
+                "promo code"
+            ],
+            "time": "2017-06-22T19:03:47+00:00"
         }
     ],
     "packages-dev": [

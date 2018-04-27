@@ -14,16 +14,14 @@
       $esresidencial=true;?>
 
     <div class="col-sm-12">
-      @include('holders.notificaciones')
       <div class="cart-header">
-        @if (Cart::content()->count()>0)
           @foreach ($items as $product)
             @if ($product->id=="Desc")
               <?php $descuento=$product; $tienedescuento=true; break; ?>
             @else
               <?php $tienedescuento=false; ?>
             @endif
-          @endforeach
+          
 
           <h1 class="title">
             @if ($tienedescuento)
@@ -34,9 +32,7 @@
           <div class="text-center">
             <i class="fa fa-chevron-down" aria-hidden="true" data-toggle="collapse" data-target="#carrito" aria-expanded="false" aria-controls="carrito"></i>
           </div>
-        @else
-          <h1 class="title">Tu carrito está vacio.</h1>
-        @endif
+
 
       </div>
 

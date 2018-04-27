@@ -12,12 +12,16 @@ class CreateReservacionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reservacions', function (Blueprint $table) {
+        Schema::create('reservaciones', function (Blueprint $table) {
             $table->increments('id');
+            $table->bigInteger('horario_id');
+            $table->bigInteger('user_id');
+            $table->string('tipo');
+            $table->longText('direccion');
+            $table->string('aforo');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -25,6 +29,6 @@ class CreateReservacionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('reservacions');
+        Schema::drop('reservaciones');
     }
 }

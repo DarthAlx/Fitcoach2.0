@@ -16,23 +16,17 @@ class OrdenTable extends Migration
           $table->increments('id');
           $table->string('order_id');
           $table->integer('user_id');
-          $table->integer('coach_id');
-          $table->integer('asociado');
-          $table->string('tipo');
-          $table->string('direccion');
-          $table->string('nombre');
+          $table->integer('coach_id');  
           $table->string('folio');
-          $table->date('fecha');
-          $table->string('hora');
           $table->string('cantidad');
+          $table->string('impuestos');
+          $table->string('descuento');
           $table->string('metadata');
           $table->string('status');
-          $table->string('estado');
           $table->string('comentarios');
           $table->timestamps();
       });
     }
-
     /**
      * Reverse the migrations.
      *

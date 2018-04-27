@@ -11,6 +11,12 @@
 |
 */
 // Rutas publicas
+
+Route::get('/promo', function () {
+  dd(Promocodes::generate(5));
+
+});
+
 Route::get('mail/{id}', 'OrdenController@create');
 Route::get('/', function () {
   $sliders = App\Slider::orderBy('order', 'asc')->get();
@@ -56,7 +62,8 @@ Route::post('/clasesculturales', function (Illuminate\Http\Request $request) {
     return view('culturales', ['clases'=>$clases,'zonarequest'=>$zonarequest,'titulo'=>$titulo]);
 });
 Route::get('/comprar-clases', function () {
-    return view('comprar-paquetes');
+  $paquetes=App\Paquete::all();
+    return view('comprar-paquetes',['paquetes'=>$paquetes]);
 });
 
 

@@ -20,30 +20,28 @@
 	<section class="paquetes">
 		<div class="container-bootstrap">
 			<div class="row">
+				@foreach($paquetes as $paquete)
 				<div class="col-md-2">
-					<div class="paquete">
+					<div class="paquete" onclick="location.href='{{url('/comprar-paquete')}}/{{$paquete->id}}'" style="cursor:pointer;">
 						<div class="blue-cap"></div>
 						<div class="info-paquete">
 							<div class="circulo gotham2">
-								1
+								{{$paquete->num_clases}}
 							</div>
 							<div class="color_gris2 gotham3 uppercase super_small">
 								CLASE
 							</div>
 							<div class="precios gotham3 medium">
-									$300 MXN
+									${{$paquete->precio}} MXN
 							</div>
 							<div class="color_gris3 gotham3 v_small">
-								Expira: 30 días
+								Expira: {{$paquete->dias}} días
 							</div>
 							
 						</div>
-							<form action="{{url('/comprar-paquete')}}/1">
-								<input type="hidden" name="paquete" value="1">
-							</form>
 					</div>
 				</div>
-				
+				@endforeach
 			</div>
 		</div>
 	</section>

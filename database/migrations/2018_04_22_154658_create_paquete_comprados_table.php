@@ -14,10 +14,14 @@ class CreatePaqueteCompradosTable extends Migration
     {
         Schema::create('paquete_comprados', function (Blueprint $table) {
             $table->increments('id');
+            $table->bigInteger('user_id');
+            $table->integer('clases');
+            $table->string('tipo');
+            $table->date('fecha');
+            $table->date('expiracion');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *
