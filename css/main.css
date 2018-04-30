@@ -645,6 +645,9 @@ color: #D58628 !important;
 	    color: #efeeee;
 
 	}
+  .cart-header .title {
+    font-size: 40px;
+  }
 	.teamItemNameWrap h3 {
 	    font-size: 20px;
 	}

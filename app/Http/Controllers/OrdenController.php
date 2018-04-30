@@ -20,8 +20,11 @@ use App\Direccion;
 use App\Folio;
 use App\Cupon;
 use App\Cuponera;
+use App\Paquete;
 use Mail;
 use Input;
+use Openpay;
+
 class OrdenController extends Controller
 {
     /**
@@ -403,7 +406,107 @@ class OrdenController extends Controller
 
     public function cargo(Request $request)
     {
+      require 'vendor/autoload.php';
+      $user=User::find(Auth::user()->id);
+      $paquete=Paquete::find($request->paquete);
+      
+      header('Content-Type: text/html; charset=utf-8');
+      $openpay = Openpay::getInstance('mada0wigbpnzcmsbtxoa', 'sk_e0b51d10bbc343d780bac55f832c6257');
+      Openpay::setProductionMode(false);
+          $customer = array(
+           'name' => $user->name,
+           'last_name' => "",
+           'phone_number' => $user->tel,
+           'email' => $user->email
+            );
+            $total=$paquete->precio;
+          //pago con tarjeta
+
+            try {          
+            $chargeData = array(
+            'method' => 'card',
+            'source_id' => $request->token_id,
+            'amount' => $total,
+            'currency' => 'MXN',
+            'description' => $paquete->paquete,
+            'order_id' => "2225",
+            'device_session_id' => $_POST["deviceIdHiddenFieldName"],
+            'customer' => $customer);
+
+          
+          
+
+        $charge = $openpay->charges->create($chargeData);
+
+        dd($charge);
+        $orderID= $charge->order_id;
+        $ID= $charge->id;
+        $Descripcion= $charge->description;
+        $Monto= $charge->amount;
+        $Autorizacion= $charge->authorization;
+        $Fechadeoperacion= $charge->operation_date;
+       
+        $Status= $charge->status;
+        $Metodo= $charge->card->brand;
+        
+          header("Location:   https://susrefacciones.worldsecuresystems.com/retorno?Origen=OpenPay&Opid=$ID&orderID=$orderID&CartID=$CartID&Metodo=$Metodo&Monto=$Monto&Autorizacion=$Autorizacion&Fechadeoperacion=$Fechadeoperacion&Status=$Status&Nombre=$nombre&Apellidos=$apellidos&Email=$email&Direccion=$direccion&Colonia=$colonia&Ciudad=$ciudad&Estado=$estado&Pais=$pais&Cp=$cp&Notasdeenvio=$notasdeenvio&Telefono=$telefono&RFC=$rfc&Razonsocial=$razonsocial&Direccion_f=$direccion_f&Colonia_f=$colonia_f&Ciudad_f=$ciudad_f&Estado_f=$estado_f&Pais_f=$pais_f&Cp_f=$cp_f&Condiciones=$Condiciones&Meses=$Meses");
+        
+      
+
+
+
+
+
+
+
+
+
+    }
+
+//ERRORES
+    catch (OpenpayApiTransactionError $e) {
+       $Motivo='ERROR de transacción: ' . $e->getMessage();
+       header("Location:      http://www.susrefacciones.com/pago-en-linea/pago-fallo?Motivo=$Motivo");
+
+    } catch (OpenpayApiRequestError $e) {
+      $Motivo='ERROR en la petición: ' . $e->getMessage();
+      header("Location:     http://www.susrefacciones.com/pago-en-linea/pago-fallo?Motivo=$Motivo");
+
+    } catch (OpenpayApiConnectionError $e) {
+      $Motivo='ERROR en la conexión: ' . $e->getMessage();
+      header("Location:     http://www.susrefacciones.com/pago-en-linea/pago-fallo?Motivo=$Motivo");
+
+    } catch (OpenpayApiAuthError $e) {
+      $Motivo='ERROR en la autenticación de la API: ' . $e->getMessage();
+      header("Location:     http://www.susrefacciones.com/pago-en-linea/pago-fallo?Motivo=$Motivo");
+
+    } catch (OpenpayApiError $e) {
+      $Motivo='ERROR de API: ' . $e->getMessage();
+      header("Location:     http://www.susrefacciones.com/pago-en-linea/pago-fallo?Motivo=$Motivo");
+
+    } catch (Exception $e) {
+      $Motivo='ERROR en el script: ' . $e->getMessage();
+      header("Location:     http://www.susrefacciones.com/pago-en-linea/pago-fallo?Motivo=$Motivo");
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       \Conekta\Conekta::setApiKey("key_WEAWMZsySp6ai1FaB9dd2A");
+
       $items=Cart::content();
       foreach ($items as $product){
         if ($product->id=="Desc"){

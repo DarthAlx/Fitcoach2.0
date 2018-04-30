@@ -66,6 +66,11 @@ Route::get('/comprar-clases', function () {
     return view('comprar-paquetes',['paquetes'=>$paquetes]);
 });
 
+Route::get('/comprar-paquete/{id}', function ($id) {
+  $paquete=App\Paquete::find($id);
+    return view('cart.cart',['paquete'=>$paquete]);
+});
+
 
 
 Route::get('/busqueda', function () {

@@ -24,7 +24,8 @@
 		<link rel="stylesheet" type="text/css" href="{{ url('css/main.css') }}" media="screen" />
 		<link href="{{ url('css/select2.min.css') }}" rel="stylesheet" />
 		<script type="text/javascript" src="{{ url('js/jquery-1.10.2.min.js') }}"></script>
-		<script type="text/javascript" src="https://conektaapi.s3.amazonaws.com/v0.3.2/js/conekta.js"></script>
+		<script type="text/javascript" src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
+		<script type='text/javascript' src="https://openpay.s3.amazonaws.com/openpay-data.v1.min.js"></script>
 		<script type="text/javascript" src="{{ url('js/vendor/bootstrap.js') }}"></script>
 		<script type="text/javascript" src="{{ url('js/jquery.selectric.min.js') }}"></script>
 		<script type="text/javascript" src="{{ url('js/jquery.bxslider.min.js') }}"></script>
@@ -43,7 +44,7 @@
 		<script src="{{asset('js/ckeditor/ckeditor.js')}}"></script>
 
 
-<!-- Global Site Tag (gtag.js) - Google Analytics -->
+<!-- Global Site Tag (gtag.js) - Google Analytics
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107673883-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -53,7 +54,7 @@
   gtag('config', 'UA-107673883-1');
 </script>
 
-<!-- Facebook Pixel Code -->
+<Facebook Pixel Code
 <script>
 !function(f,b,e,v,n,t,s)
 {
@@ -73,7 +74,7 @@ fbq('track', 'ViewContent');
 <noscript>
 <img height="1" width="1" src="https://www.facebook.com/tr?id=141416126593810&ev=PageView&noscript=1"/>
 </noscript>
-<!-- End Facebook Pixel Code -->
+<End Facebook Pixel Code -->
 
 
 <script type="text/javascript">

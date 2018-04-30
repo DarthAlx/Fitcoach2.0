@@ -10,119 +10,52 @@
           <h1 class="gotham2 text-center" style="padding: 15vh 0;">¡Inicia sesión o registrate con nosotros! <br><br><br> <button type="button" data-toggle="modal" data-target="#loginmodal" class="btn btn-success" style="width: 65%; margin: 0 auto;">Entrar</button></h1>
       </div>
     @else
-      <?php $user=App\User::find(Auth::user()->id);
-      $esresidencial=true;?>
+      <?php $user=App\User::find(Auth::user()->id);?>
 
     <div class="col-sm-12">
       <div class="cart-header">
-          @foreach ($items as $product)
-            @if ($product->id=="Desc")
-              <?php $descuento=$product; $tienedescuento=true; break; ?>
-            @else
-              <?php $tienedescuento=false; ?>
-            @endif
-          
-
-          <h1 class="title">
-            @if ($tienedescuento)
-            {{Cart::content()->count()-1}}
-            @else
-            {{Cart::content()->count()}}
-            @endif  Clases <strong class="pull-right">${{Cart::total()}}</strong></h1>
-          <div class="text-center">
-            <i class="fa fa-chevron-down" aria-hidden="true" data-toggle="collapse" data-target="#carrito" aria-expanded="false" aria-controls="carrito"></i>
+        <div class="row">
+          <div class="col-md-6">
+            <h1 class="title"><strong>{{$paquete->num_clases}}</strong> CLASES {{$paquete->tipo}}</h1>
           </div>
-
-
-      </div>
-
-      <div class="collapse" id="carrito">
-        <div class="">
-          <div class="panel-body">
-
-							@foreach ($items as $product)
-                @if ($product->id!="Desc")
-                  <div class="row">
-
-    								<div class="col-xs-4">
-    									<h4 class="product-name"><strong>{{ $product->name }}</strong></h4>
-
-    										<h4><small>
-    											Fecha: {{ $product->options->fecha }}<br>
-
-    											Horario: {{ $product->options->hora }}<br>
-    											<?php $coach=App\User::find($product->options->coach); ?>
-    											Coach: {{ $coach->name }}<br>
-                          @if ($product->options->tipo=="residencial")
-                            <?php $residencial=App\Residencial::find($product->id); $esresidencial=true;?>
-                            @if ($residencial->tipo=="Evento")
-                              Dirección: {!!$residencial->direccionevento!!}
-                            @else
-                              Dirección: {{$residencial->condominio->direccion}}
-                            @endif
-
-                        @else
-                          <?php $esresidencial=false; ?>
-                          @endif
-    										</small></h4>
-    								</div>
-    								<div class="col-xs-8">
-    									<div class="col-xs-10 text-right gotham2">
-    										<h6><strong>${{ $product->price}} <span class="text-muted"></span></strong></h6>
-    									</div>
-    									<div class="col-xs-2">
-    										<a href="{{url('removefromcart')}}/{{$product->rowId}}" class="btn btn-link btn-xs">
-    											<i class="fa fa-trash fa-lg" aria-hidden="true"></i> </span>
-    										</a>
-    									</div>
-    								</div>
-    							</div>
-                @endif
-
-
-							<hr>
-
-							@endforeach
-              @if (Cart::content()->count()>0)
-              @if ($tienedescuento)
-                <div class="row">
-                <div class="col-xs-4">
-                  <h4 class="product-name"><strong>{{ $descuento->name }}</strong></h4>
-                </div>
-                <div class="col-xs-8">
-                  <div class="col-xs-10 text-right gotham2">
-                    <h6><strong>{{ $descuento->price}} <span class="text-muted"></span></strong></h6>
-                  </div>
-                </div>
-                </div>
-              @endif
-                @endif
-							<hr>
-
-						</div>
+          <div class="col-md-6">
+            <h1 class="title"><strong>${{$paquete->precio}}</strong> Expiran en {{$paquete->dias}} días</h1>
+          </div>
         </div>
       </div>
+      <?php $descuento = Cookie::get('descuentofc'); ?>
+      @if($descuento)
+        <div class="collapse in" id="carrito">
+          <div class="">
+            <div class="panel-body">
+                  
+
+                    <div class="row">
+                      <div class="col-xs-4">
+                        <h4 class="product-name"><strong>{{ $descuento }}</strong></h4>
+                      </div>
+                      <div class="col-xs-8">
+                        <div class="col-xs-10 text-right gotham2">
+                          <h6><strong>{{ $descuento}} <span class="text-muted"></span></strong></h6>
+                        </div>
+                      </div>
+                    </div>
+                  
 
 
 
+  							<hr>
 
+  						</div>
+          </div>
+        </div>
+      @endif
 
     </div>
 <p>&nbsp;</p>
-@if (Cart::content()->count()>0)
+@if(!$descuento)
 <div class="row">
-  <div class="col-sm-6">
-    @if (!$esresidencial)
-      @if (!$user->direcciones->isEmpty())
-
-        <h1 class="title" style="margin-top: 0px; line-height: 0.8;">
-          Dirección
-        </h1>
-    @endif
-  @endif
-  </div>
-<div class="col-sm-6">
-  @if (!$tienedescuento)
+<div class="col-sm-6 col-sm-offset-3">
   <div class="coupon">
 
       <form action="{{url('descuento')}}" method="POST">
@@ -131,104 +64,17 @@
         <button type="submit" class="applyCoupon"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
       </form>
     </div>
-    @endif
 </div>
 </div>
 @endif
 <p>&nbsp;</p>
-    @if (Cart::content()->count()>0)
-    <form action="{{url('cargo')}}" method="POST" id="card-form">
+
+    <form action="{{url('cargo')}}" method="POST" id="payment-form">
+      {!! csrf_field() !!}
+      <input type="hidden" value="{{$paquete->id}}" name="paquete" />
+      <input type="hidden" id="token_id" name="token_id" />
     <div class="row">
-      <div class="col-sm-6">
-      @if (!$esresidencial)
-                        @if (!$user->direcciones->isEmpty())
-                          <div class="form-group row">
-                            <label class="col-sm-3 control-label" for="card-number">Direcciónes guardadas</label>
-                            <div class="col-sm-9">
-                              <select class="form-control" id="direccion" name="direccion">
-                                <option value="">Agregar dirección</option>
-                                @foreach ($user->direcciones as $direccion)
-                                  <option value="{{$direccion->id}}">{{$direccion->identificador}}</option>
-                                @endforeach
-                              </select>
-                            </div>
-                          </div>
-
-                        @endif
-                          <div class="form-group row"  id="identificadorNuevolabel">
-                            <label class="col-sm-3 control-label" for="card-number">Identificador</label>
-                            <div class="col-sm-9">
-                              <input class="form-control" type="text" value="{{ old('identificadordireccion') }}" id="identificadordireccion"  name="identificadordireccion" placeholder="Ej: Casa, Condominio, Oficina ...">
-                            </div>
-                          </div>
-                          <div class="form-group row"  id="calleNuevolabel">
-                            <label class="col-sm-3 control-label" for="card-holder-name">Calle</label>
-                            <div class="col-sm-9 col-md-5">
-                              <input class="form-control" type="text" value="{{ old('calle') }}" id="calle"  name="calle">
-                            </div>
-                            <div class="col-sm-6 col-md-2">
-                              <input class="form-control" type="text" value="{{ old('numero_ext') }}" id="numero_ext"  name="numero_ext" placeholder="# Ext" >
-                            </div>
-                            <div class="col-sm-6 col-md-2">
-                              <input class="form-control" type="text" value="{{ old('numero_int') }}" id="numero_int"  name="numero_int" placeholder="# Int">
-                            </div>
-                          </div>
-                          <div class="form-group row"  id="coloniaNuevolabel">
-                            <label class="col-sm-3 control-label" for="card-number">Colonia</label>
-                            <div class="col-sm-9">
-                              <input class="form-control" type="text" value="{{ old('colonia') }}" id="colonia"  name="colonia" >
-                            </div>
-                          </div>
-                          <div class="form-group row"  id="municipio_delNuevolabel">
-                            <label class="col-sm-3 control-label" for="card-number">Municipio / Del</label>
-                            <div class="col-sm-9">
-                             <input class="form-control" type="text" value="{{ old('municipio_del') }}" id="municipio_del"  name="municipio_del" >
-                            </div>
-                          </div>
-                          <div class="form-group row"  id="cpNuevolabel">
-                            <label class="col-sm-3 control-label" for="card-number">Código postal</label>
-                            <div class="col-sm-9">
-                             <input class="form-control" type="text" value="{{ old('cp') }}" id="cp"  name="cp" >
-                            </div>
-                          </div>
-                          <div class="form-group row"  id="estadoNuevolabel">
-                            <label class="col-sm-3 control-label" for="card-number">Estado</label>
-                            <div class="col-sm-9">
-                              <select class="form-control" value="{{old('estado')}}" name="estado" id="estado" >
-                                <option value="">Selecciona una opción</option>
-                                <option value="CDMX">CDMX</option>
-                                <option value="Edo. Méx">Edo. Méx</option>
-                              </select>
-                            </div>
-                          </div>
-                          <input type="hidden" name="esresidencial" value="false">
-                        @else
-                          <input type="hidden" name="esresidencial" value="true">
-                        @endif <!--esresidencial-->
-
-                          <input id="tokencsrf" type="hidden" name="_token" value="{{ csrf_token() }}">
-                          <div id="postdireccion">
-
-                          </div>
-                          <script type="text/javascript">
-                          function postDireccion(){
-                          	postdireccion = $('#direccion').val();
-                          	_token= $('#tokencsrf').val();
-                          	$.post("{{url('/traerdireccion')}}", {
-                          	postdireccion : postdireccion,
-                          	_token : _token
-                          	}, function(data) {
-                          		 document.getElementById('postdireccion').innerHTML = data;
-                          	});
-                          }
-
-                          $( "#direccion" ).change(function() {
-                            postDireccion();
-                          });
-                          		</script>
-
-    </div>
-    <div class="col-sm-6">
+    <div class="col-sm-6 col-sm-offset-3">
 
 
 
@@ -259,21 +105,21 @@
 
             <div class="col-xs-12">
 
-                <input class="form-control" id="numtarjeta"  name="numero" placeholder="Número de tarjeta" autocomplete="off"  data-conekta="card[number]" type="text" > </div>
+                <input class="form-control" id="numtarjeta"  name="numero" placeholder="Número de tarjeta" autocomplete="off" data-openpay-card="card_number" type="text" > </div>
         </div>
         <div class="form-group row">
           <div id="tarjeta2label">
             <div class="col-sm-5 col-xs-12">
-                <input class="form-control" id="nombretitular"  name="nombre" placeholder="Nombre del titular" autocomplete="off" data-conekta="card[name]"  type="text" > </div>
+                <input class="form-control" id="nombretitular"  name="nombre" placeholder="Nombre del titular" autocomplete="off" data-openpay-card="holder_name"  type="text" > </div>
             <div class="col-sm-2 col-xs-3">
-                <input class="form-control" id="mm" placeholder="MM" name="mes" data-conekta="card[exp_month]" type="text" > </div>
+                <input class="form-control" id="mm" placeholder="MM" name="mes" data-openpay-card="expiration_month" type="text" > </div>
             <div class="col-sm-2 col-xs-3">
-                <input class="form-control" id="aa" placeholder="AA" name="año"  data-conekta="card[exp_year]" type="text" > </div>
+                <input class="form-control" id="aa" placeholder="AA" name="año" data-openpay-card="expiration_year" type="text" > </div>
           </div>
 <label class="col-sm-3 control-label" for="card-number" id="cvvlabel" style="display:none;">Código de seguridad:</label>
             <div class="col-sm-3 col-xs-6">
                 <div class="input-group">
-                    <input class="form-control" id="cvv" placeholder="CVV" autocomplete="off"  data-conekta="card[cvc]" type="text" > <span class="input-group-btn"> <button type="button" class="form-control" data-toggle="popover" data-container="body" data-placement="top" data-content="Código de seguridad de 3 dígitos ubicado normalmente en la parte trasera de su tarjeta. Las tarjetas American Express tienen un código de 4 dígitos ubicado en el frente.">?</button> </span>
+                    <input class="form-control" id="cvv" placeholder="CVV" autocomplete="off" data-openpay-card="cvv2" type="text" > <span class="input-group-btn"> <button type="button" class="form-control" data-toggle="popover" data-container="body" data-placement="top" data-content="Código de seguridad de 3 dígitos ubicado normalmente en la parte trasera de su tarjeta. Las tarjetas American Express tienen un código de 4 dígitos ubicado en el frente.">?</button> </span>
 									</div>
             </div>
         </div>
@@ -301,14 +147,17 @@
 
         <div class="form-group">
           <div class="col-sm-12 text-right">
-            <button class="btn btn-success" type="submit"  id="botonguardarNuevo">Pagar</button>
+            <a id="pay-button" class="btn btn-success" type="submit">Pagar</a>
+
+            <button id="boton" type="submit" style="display:none"></button>
+                       
           </div>
         </div>
     </div>
     </div>
 
     </form>
-@endif <!--carritovacio-->
+
     @if (!$user->direcciones->isEmpty())
       <script type="text/javascript">
         $('#direccion').change(function(){
@@ -404,33 +253,6 @@
 
     @endif
     <script type="text/javascript">
-
-    Conekta.setPublishableKey('key_UzGAymZCxzCcaMTrBo8bhLA');
-
-  var conektaSuccessResponseHandler = function(token) {
-    var $form = $("#card-form");
-    //Inserta el token_id en la forma para que se envíe al servidor
-    $form.append($('<input type="hidden" name="tokencard" id="conektaTokenId">').val(token.id));
-    $form.get(0).submit(); //Hace submit
-  };
-  var conektaErrorResponseHandler = function(response) {
-    var $form = $("#card-form");
-    $("#cart-errors").show();
-    $(".card-errors").text(response.message_to_purchaser);
-    $form.find("button").prop("disabled", false);
-  };
-
-  //jQuery para que genere el token después de dar click en submit
-  $(function () {
-    $("#card-form").submit(function(event) {
-      fbq('track', 'InitiateCheckout');
-      var $form = $(this);
-      // Previene hacer submit más de una vez
-      $form.find("button").prop("disabled", true);
-      Conekta.token.create($form, conektaSuccessResponseHandler, conektaErrorResponseHandler);
-      return false;
-    });
-  });
     $(document).ready(function() {
         $('[data-toggle="popover"]').popover();
     });
@@ -444,6 +266,39 @@
             $("#identificador").attr("", false);
            }
         });
+
+
+
+
+    //api openpay
+$(document).ready(function() {
+OpenPay.setId('mada0wigbpnzcmsbtxoa');
+    OpenPay.setApiKey('pk_d8b3ad255fcd4395a567ec0b6e52f72b');
+    OpenPay.setSandboxMode(true);
+    //Se genera el id de dispositivo
+    var deviceSessionId = OpenPay.deviceData.setup("payment-form", "deviceIdHiddenFieldName");
+
+    $('#pay-button').on('click', function(event) {
+        event.preventDefault();
+        $("#pay-button").prop( "disabled", true);
+        OpenPay.token.extractFormAndCreate('payment-form', sucess_callbak, error_callbak);
+    });
+
+    var sucess_callbak = function(response) {
+      var token_id = response.data.id;
+      $('#token_id').val(token_id);
+
+         $('#boton').click();
+
+    };
+
+    var error_callbak = function(response) {
+        var desc = response.data.description != undefined ? response.data.description : response.message;
+        alert("ERROR [" + response.status + "] " + desc);
+        $("#pay-button").prop("disabled", false);
+    };
+});
+//termina api openpay
     </script>
   @endif
 
