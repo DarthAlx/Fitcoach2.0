@@ -13,6 +13,7 @@ use App\Cupon;
 use App\Cuponera;
 use App\Particular;
 use App\Residencial;
+use Cookie;
 
 class CuponeraController extends Controller
 {
@@ -48,7 +49,7 @@ class CuponeraController extends Controller
         if ($cupon) {
           $usos= Cuponera::where('cupon_id', $cupon->id)->where('user_id', Auth::user()->id)->where('orden_id','<>', '')->count();
           $usogeneral= Cuponera::where('cupon_id', $cupon->id)->where('orden_id','<>', '')->count();
-          $total=Cart::total();
+          //$total=Cart::total();
           date_default_timezone_set('America/Mexico_City');
           setlocale(LC_TIME, "es-ES");
           $datetime2 = date_create($cupon->expiracion."0:00");
@@ -58,18 +59,6 @@ class CuponeraController extends Controller
           $horas=intval($interval->format("%R%h"));
           $horastotales=$dias+$horas;
 
-          $items=Cart::content();
-          $tipo="";
-          foreach ($items as $product) {
-            if ($product->options->tipo=="particular") {
-              $clase=Particular::find($product->id);
-              $tipo=$clase->clase->tipo;
-            }
-            if ($product->options->tipo=="residencial") {
-              $clase=Residencial::find($product->id);
-              $tipo=$clase->tipo;
-            }
-          }
 
           if ($cupon->maximo==0) {
             $maximo=999999;
@@ -79,9 +68,8 @@ class CuponeraController extends Controller
           }
 
 
-          if($maximo>$usogeneral&&$cupon->usos>$usos&&$horastotales>0&&$cupon->minimo<=intval($total)){
-            if ($cupon->tipo!="") {
-              if($cupon->tipo==$tipo){
+          if($maximo>$usogeneral&&$cupon->usos>$usos&&$horastotales>0){
+
 
                 if ($cupon->user_id!="") {
                   if ($cupon->user_id==Auth::user()->id) {
@@ -92,7 +80,10 @@ class CuponeraController extends Controller
                     $guardar->codigo=$cupon->codigo;
                     $guardar->monto=$cupon->monto;
                     $guardar->save();
-                    Cart::add("Desc",$cupon->descripcion,1,-$cupon->monto, ['id'=>$guardar->id]);
+                    
+                    $descuentofc = Cookie::queue(Cookie::make('descuentofc', $guardar->id, 30));
+            
+                    //Cart::add("Desc",$cupon->descripcion,1,-$cupon->monto, ['id'=>$guardar->id]);
                     Session::flash('mensaje', '¡Descuento aplicado!');
                     Session::flash('class', 'success');
                   }
@@ -109,57 +100,20 @@ class CuponeraController extends Controller
                     $guardar->codigo=$cupon->codigo;
                     $guardar->monto=$cupon->monto;
                   $guardar->save();
-                  Cart::add("Desc",$cupon->descripcion,1,-$cupon->monto, ['id'=>$guardar->id]);
+                  $descuentofc = Cookie::queue(Cookie::make('descuentofc', $guardar->id, 30));
+
+                  //Cart::add("Desc",$cupon->descripcion,1,-$cupon->monto, ['id'=>$guardar->id]);
                   Session::flash('mensaje', '¡Descuento aplicado!');
                   Session::flash('class', 'success');
                 }
 
-              }
-              else {
-                Session::flash('mensaje', 'Descuento solo valido en clases de tipo '.$cupon->tipo);
-                Session::flash('class', 'danger');
-              }
 
-            }
-            else {
-              if ($cupon->user_id!="") {
-                if ($cupon->user_id==Auth::user()->id) {
-                  $guardar = new Cuponera();
-                  $guardar->cupon_id=$cupon->id;
-                  $guardar->user_id=Auth::user()->id;
-                  $guardar->descripcion=$cupon->descripcion;
-                    $guardar->codigo=$cupon->codigo;
-                    $guardar->monto=$cupon->monto;
-                  $guardar->save();
-                  Cart::add("Desc",$cupon->descripcion,1,-$cupon->monto, ['id'=>$guardar->id]);
-                  Session::flash('mensaje', '¡Descuento aplicado!');
-                  Session::flash('class', 'success');
-                }
-                else {
-                  Session::flash('mensaje', 'Este cupón no se puede aplicar.');
-                  Session::flash('class', 'danger');
-                }
-              }
-              else {
-                $guardar = new Cuponera();
-                $guardar->cupon_id=$cupon->id;
-                $guardar->user_id=Auth::user()->id;
-                $guardar->descripcion=$cupon->descripcion;
-                    $guardar->codigo=$cupon->codigo;
-                    $guardar->monto=$cupon->monto;
-                $guardar->save();
-                Cart::add("Desc",$cupon->descripcion,1,-$cupon->monto, ['id'=>$guardar->id]);
-                Session::flash('mensaje', '¡Descuento aplicado!');
-                Session::flash('class', 'success');
-              }
-            }
-
-            return redirect()->intended(url('/carrito'));
+            return back();
           }
           else {
             Session::flash('mensaje', 'Este cupón no se puede aplicar.');
             Session::flash('class', 'danger');
-            return redirect()->intended(url('/carrito'));
+            return back()->withInput();
           }
         }
 

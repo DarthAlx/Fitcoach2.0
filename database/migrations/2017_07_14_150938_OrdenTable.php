@@ -15,15 +15,14 @@ class OrdenTable extends Migration
       Schema::create('ordenes', function (Blueprint $table) {
           $table->increments('id');
           $table->string('order_id');
-          $table->integer('user_id');
-          $table->integer('coach_id');  
+          $table->bigInteger('user_id'); 
           $table->string('folio');
           $table->string('cantidad');
-          $table->string('impuestos');
+          $table->string('impuestos')->nullable(true);
           $table->string('descuento');
-          $table->string('metadata');
+          $table->string('metadata')->nullable(true);
           $table->string('status');
-          $table->string('comentarios');
+          $table->string('comentarios')->nullable(true);
           $table->timestamps();
       });
     }

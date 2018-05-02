@@ -21,9 +21,11 @@ use App\Folio;
 use App\Cupon;
 use App\Cuponera;
 use App\Paquete;
+use App\PaqueteComprado;
 use Mail;
 use Input;
 use Openpay;
+use Cookie;
 
 class OrdenController extends Controller
 {
@@ -420,16 +422,28 @@ class OrdenController extends Controller
            'email' => $user->email
             );
             $total=$paquete->precio;
+            $descuento = Cookie::get('descuentofc'); 
+            
+            if($descuento){
+              $cuponera =  Cuponera::find($descuento);
+              $total=$total-$cuponera->monto;
+              $desc=$cuponera->monto;
+            }
+            else{
+              $desc=0;
+            }
           //pago con tarjeta
 
-            try {          
+            try {       
+            $folio=Folio::first();
+
             $chargeData = array(
             'method' => 'card',
             'source_id' => $request->token_id,
             'amount' => $total,
             'currency' => 'MXN',
-            'description' => $paquete->paquete,
-            'order_id' => "2225",
+            'description' => "Paquete ".$paquete->paquete,
+            'order_id' => $folio->folio,
             'device_session_id' => $_POST["deviceIdHiddenFieldName"],
             'customer' => $customer);
 
@@ -438,18 +452,74 @@ class OrdenController extends Controller
 
         $charge = $openpay->charges->create($chargeData);
 
-        dd($charge);
-        $orderID= $charge->order_id;
-        $ID= $charge->id;
-        $Descripcion= $charge->description;
-        $Monto= $charge->amount;
-        $Autorizacion= $charge->authorization;
-        $Fechadeoperacion= $charge->operation_date;
-       
-        $Status= $charge->status;
-        $Metodo= $charge->card->brand;
+        if ($request->tarjeta==""&&$request->identificadortarjeta) {
+          $tarjeta = new Tarjeta();
+          $tarjeta->identificador = $request->identificadortarjeta;
+          $tarjeta->num= $request->numero;
+          $tarjeta->nombre = $request->nombre;
+          $tarjeta->mes = $request->mes;
+          $tarjeta->año = $request->año;
+          $tarjeta->user_id = Auth::user()->id;
+          $tarjeta->save();
+        }
+
         
-          header("Location:   https://susrefacciones.worldsecuresystems.com/retorno?Origen=OpenPay&Opid=$ID&orderID=$orderID&CartID=$CartID&Metodo=$Metodo&Monto=$Monto&Autorizacion=$Autorizacion&Fechadeoperacion=$Fechadeoperacion&Status=$Status&Nombre=$nombre&Apellidos=$apellidos&Email=$email&Direccion=$direccion&Colonia=$colonia&Ciudad=$ciudad&Estado=$estado&Pais=$pais&Cp=$cp&Notasdeenvio=$notasdeenvio&Telefono=$telefono&RFC=$rfc&Razonsocial=$razonsocial&Direccion_f=$direccion_f&Colonia_f=$colonia_f&Ciudad_f=$ciudad_f&Estado_f=$estado_f&Pais_f=$pais_f&Cp_f=$cp_f&Condiciones=$Condiciones&Meses=$Meses");
+
+          $guardar = new Orden();
+          $guardar->order_id=$charge->id;
+          $guardar->folio="W".$folio->folio;
+          $guardar->user_id=Auth::user()->id;
+          
+         
+          $guardar->cantidad=$total;
+          $guardar->descuento=$desc;
+          $guardar->status='Pagada';
+          $guardar->save();
+
+
+          $paquetecomprado = new PaqueteComprado();
+          $paquetecomprado->user_id=Auth::user()->id;
+          $paquetecomprado->orden_id=$guardar->id;
+          $paquetecomprado->clases=$paquete->num_clases;
+          $paquetecomprado->tipo=$paquete->tipo;
+          $paquetecomprado->fecha=date("Y-m-d");
+
+          $fecha = date('Y-m-d');
+          $nuevafecha = strtotime ( '+'.$paquete->dias.' day' , strtotime ( $fecha ) ) ;
+          $expiracion = date ( 'Y-m-d' , $nuevafecha );
+          $paquetecomprado->expiracion=$expiracion;
+          $paquetecomprado->save();
+
+
+
+
+
+
+
+        
+
+          if($descuento){
+            $cuponera->orden_id=$guardar->id;
+            $cuponera->save();
+          }
+
+
+        
+
+
+        $folio->folio++;
+        $folio->save();
+
+        $this->sendinvoice($guardar->id);
+        //$this->sendclassrequest($order->id);
+        //Session::flash('total', $order->amount);
+        return redirect()->intended(url('/completa'));
+
+
+
+
+
+        
         
       
 
@@ -466,257 +536,43 @@ class OrdenController extends Controller
 //ERRORES
     catch (OpenpayApiTransactionError $e) {
        $Motivo='ERROR de transacción: ' . $e->getMessage();
-       header("Location:      http://www.susrefacciones.com/pago-en-linea/pago-fallo?Motivo=$Motivo");
+       Session::flash('mensaje', $Motivo);
+        Session::flash('class', 'danger');
+        return back();
 
     } catch (OpenpayApiRequestError $e) {
       $Motivo='ERROR en la petición: ' . $e->getMessage();
-      header("Location:     http://www.susrefacciones.com/pago-en-linea/pago-fallo?Motivo=$Motivo");
+      Session::flash('mensaje', $Motivo);
+        Session::flash('class', 'danger');
+        return back();
 
     } catch (OpenpayApiConnectionError $e) {
       $Motivo='ERROR en la conexión: ' . $e->getMessage();
-      header("Location:     http://www.susrefacciones.com/pago-en-linea/pago-fallo?Motivo=$Motivo");
+      Session::flash('mensaje', $Motivo);
+        Session::flash('class', 'danger');
+        return back();
 
     } catch (OpenpayApiAuthError $e) {
       $Motivo='ERROR en la autenticación de la API: ' . $e->getMessage();
-      header("Location:     http://www.susrefacciones.com/pago-en-linea/pago-fallo?Motivo=$Motivo");
+      Session::flash('mensaje', $Motivo);
+        Session::flash('class', 'danger');
+        return back();
 
     } catch (OpenpayApiError $e) {
       $Motivo='ERROR de API: ' . $e->getMessage();
-      header("Location:     http://www.susrefacciones.com/pago-en-linea/pago-fallo?Motivo=$Motivo");
+      Session::flash('mensaje', $Motivo);
+        Session::flash('class', 'danger');
+        return back();
 
     } catch (Exception $e) {
       $Motivo='ERROR en el script: ' . $e->getMessage();
-      header("Location:     http://www.susrefacciones.com/pago-en-linea/pago-fallo?Motivo=$Motivo");
+      Session::flash('mensaje', $Motivo);
+        Session::flash('class', 'danger');
+        return back();
     }
 
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      \Conekta\Conekta::setApiKey("key_WEAWMZsySp6ai1FaB9dd2A");
-
-      $items=Cart::content();
-      foreach ($items as $product){
-        if ($product->id=="Desc"){
-          $descuento=$product; $tienedescuento=true; break;
-        }else{
-          $tienedescuento=false;
-        }
-      }
-
-
-
-
-      foreach ($items as $product) {
-
-
-        $precio = $product->price*100;
-
-        if ($product->options->tipo=="particular") {
-          $productos[]=array(
-            'name' => $product->name,
-            'unit_price' => $precio,
-            'quantity' => 1,
-            'metadata' => array(
-              'tipo' => 'particular',
-              'asociado' => $product->id,
-              'id' => $product->id,
-              'coach' => $product->options->coach,
-              'fecha' => $product->options->fecha,
-              'hora' => $product->options->hora
-            )
-          );
-        }
-        if ($product->options->tipo=="residencial") {
-          $esresidencial=true;
-          $productos[]=array(
-            'name' => $product->name,
-            'unit_price' => $precio,
-            'quantity' => 1,
-            'metadata' => array(
-              'tipo' => 'residencial',
-              'id' => $product->id,
-              'asociado' => $product->id,
-              'coach' => $product->options->coach,
-              'fecha' => $product->options->fecha,
-              'hora' => $product->options->hora
-            )
-          );
-        }
-
-        if ($product->id=="Desc"){
-          $descuentos[]=array(
-            'code'   => $product->name,
-            'amount' => $precio*-1,
-            'type'   => 'coupon'
-          );
-        }
-
-
-      }
-
-
-
-      try{
-        if ($tienedescuento) {
-          $order=\Conekta\Order::create(array(
-            'currency' => 'MXN',
-            "customer_info" => array(
-              "name" => ''.$request->name,
-              "email" => ''.$request->email,
-              "phone" => "+521".$request->phone
-            ), //customer_info
-            'line_items' => $productos,
-            'discount_lines' => $descuentos,
-            'charges' => array(
-              array(
-                'payment_method' => array(
-                  'type' => 'card',
-                  "token_id" => $request->tokencard
-                )
-              )
-            )
-          ));
-        }
-        else {
-          $order=\Conekta\Order::create(array(
-            'currency' => 'MXN',
-            "customer_info" => array(
-              "name" => $request->name,
-              "email" => $request->email,
-              "phone" => "+521".$request->phone
-            ), //customer_info
-            'line_items' => $productos,
-            'charges' => array(
-              array(
-                'payment_method' => array(
-                  'type' => 'card',
-                  "token_id" => $request->tokencard
-                )
-              )
-            )
-          ));
-        }
-
-
-
-        if ($request->tarjeta==""&&$request->identificadortarjeta) {
-          $tarjeta = new Tarjeta();
-          $tarjeta->identificador = $request->identificadortarjeta;
-          $tarjeta->num= $request->numero;
-          $tarjeta->nombre = $request->nombre;
-          $tarjeta->mes = $request->mes;
-          $tarjeta->año = $request->año;
-          $tarjeta->user_id = Auth::user()->id;
-          $tarjeta->save();
-        }
-
-        if ($request->direccion==""&&$request->esresidencial!="true") {
-          $direccion = new Direccion();
-          $direccion->identificador=$request->identificadordireccion;
-          $direccion->calle=$request->calle;
-          $direccion->numero_ext=$request->numero_ext;
-          $direccion->numero_int=$request->numero_int;
-          $direccion->colonia=$request->colonia;
-          $direccion->municipio_del=$request->municipio_del;
-          $direccion->cp=$request->cp;
-          $direccion->estado=$request->estado;
-          $direccion->user_id = Auth::user()->id;
-          $direccion->save();
-        }
-        $folio=Folio::first();
-        foreach ($productos as $producto) {
-
-          $guardar = new Orden();
-          $guardar->order_id=$order->id;
-          $guardar->folio="W".$folio->folio;
-          $guardar->user_id=Auth::user()->id;
-          $guardar->coach_id=$producto['metadata']['coach'];
-          $guardar->asociado=$producto['metadata']['asociado'];
-          $guardar->tipo=$producto['metadata']['tipo'];
-          if ($producto['metadata']['tipo']=="residencial") {
-            $residencial=Residencial::find($producto['metadata']['asociado']);
-            if ($residencial->tipo=="Evento") {
-              $guardar->direccion=$residencial->direccionevento;
-            }
-            elseif ($residencial->tipo=="Residencial") {
-              $guardar->direccion=$residencial->condominio->identificador.". ".$residencial->condominio->direccion;
-            }
-
-          }else {
-            if ($request->direccion==""&&$request->esresidencial!="true") {
-              $guardar->direccion=$direccion->id;
-            }
-            else {
-              $guardar->direccion=$request->direccion;
-            }
-
-          }
-          $guardar->nombre=$producto['name'];
-          $guardar->fecha=$producto['metadata']['fecha'];
-          $guardar->hora=$producto['metadata']['hora'];
-          $guardar->cantidad=$producto['unit_price']/100;
-          $guardar->status='Proxima';
-          $guardar->save();
-          if ($producto['metadata']['tipo']=="residencial") {
-            $residencial= Residencial::find($producto['metadata']['asociado']);
-            $residencial->ocupados++;
-            $residencial->save();
-          }
-
-        }
-
-        foreach ($items as $product) {
-          if ($product->id=="Desc"){
-            $cupon=Cuponera::find($product->options->id);
-            $cupon->orden_id=$order->id;
-            $cupon->save();
-          }
-
-
-        }
-
-
-        $folio->folio++;
-        $folio->save();
-
-        Cart::destroy();
-        $this->sendinvoice($order->id);
-        $this->sendclassrequest($order->id);
-        Session::flash('total', $order->amount);
-        return redirect()->intended(url('/completa'));
-
-      } catch (\Conekta\ProccessingError $error){
-        Session::flash('mensaje', $error->getMessage());
-        Session::flash('class', 'danger');
-        return redirect()->intended(url('/carrito'))->withInput();
-      } catch (\Conekta\ParameterValidationError $error){
-
-        Session::flash('mensaje', $error->getMessage());
-        Session::flash('class', 'danger');
-        return redirect()->intended(url('/carrito'))->withInput();
-
-      } catch (\Conekta\Handler $error){
-        Session::flash('mensaje', $error->getMessage());
-        Session::flash('class', 'danger');
-        return redirect()->intended(url('/carrito'))->withInput();
-      }
-
-
-
-      }
       public function probarcomplete(){
               Session::flash('total', "500.00");
               return view('cart.complete');
@@ -751,10 +607,9 @@ class OrdenController extends Controller
     }
     public function sendinvoice($id)
     {
-      $ordenes=Orden::where('order_id', $id)->get();
-      $datos=Orden::where('order_id', $id)->first();
-      $user=User::find($datos->user_id);
-        Mail::send('emails.receiptmail', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {
+      $orden=Orden::find($id);
+      $user=$orden->user;
+        Mail::send('emails.receiptmail', ['orden'=>$orden], function ($m) use ($user) {
             $m->from('fitcoach.notificaciones@gmail.com', 'FITCOACH México');
             $m->to($user->email, $user->name)->subject('¡Orden recibida!');
         });

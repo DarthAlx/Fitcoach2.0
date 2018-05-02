@@ -87,7 +87,6 @@ class CuponController extends Controller
        $cupon->minimo = $request->minimo;
        $cupon->expiracion = date_create($request->expiracion);
        $cupon->user_id = $request->user_id;
-       $cupon->tipo = $request->tipo;
        $cupon->maximo = $request->maximo;
        $cupon->save();
        Session::flash('mensaje', '¡Cupón actualizado!');

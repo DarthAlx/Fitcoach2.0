@@ -468,8 +468,8 @@
 																	<td align="right">
 																		<div class="pull-right">
 																			<p style="float: right;">
-																				<strong>Fecha:</strong> {{$datos->fecha}}<br>
-																				<strong>Folio:</strong> {{$datos->folio}}
+																				<strong>Fecha:</strong> {{date("Y-m-d")}}<br>
+																				<strong>Folio:</strong> {{$orden->folio}}
 																			</p>
 																		</div>
 																	</td>
@@ -485,7 +485,7 @@
 																				<p>
 																					<strong>Cliente:</strong> <br>
 
-																					{{$user->name}}
+																					{{$orden->user->name}}
 																				</p>
 																			</td>
 																			<td align="right"> </td>
@@ -507,23 +507,23 @@
 																									<td style="width: 10%;"><span>Precio unitario</span></td>
 																									<td style="width: 20%;"><span>Total</span></td>
 																							</tr>
-																							<?php $grantotal=0; ?>
-																							@foreach ($ordenes as $orden)
+																							
+																							
 																								<?php 
-																											$grantotal=$grantotal+intval($orden->cantidad);
+																											$grantotal=intval($orden->cantidad);
 																								?>
 																							<tr class="text">
 																									<td style="width: 10%;">1</td>
 																									<td style="width: 30%;">{{$orden->nombre}}</td>
-																									<td style="width: 30%;">Clase {{$orden->tipo}}</td>
+																									<td style="width: 30%;">Paquete con {{$orden->paquete->clases}} {{$orden->paquete->tipo}}</td>
 																									<td style="width: 10%;">${{$orden->cantidad}}</td>
 																									<td style="width: 20%;">${{$orden->cantidad}}</td>
 																							</tr>
-																							@endforeach
+																							
 																							<?php 
-																						$descuento=App\Cuponera::where('orden_id', $orden->order_id)->first(); 
-																						if ($descuento){
-																							$grantotal=$grantotal-$descuento->monto;
+																						$descuento=$orden->descuento; 
+																						if ($descuento>0){
+																							$grantotal=$grantotal-$descuento;
 																							$iva=($grantotal/1.16)*0.16;
 																							$subtotal=$grantotal-$iva;
 																						}
@@ -546,10 +546,10 @@
 																									</td>
 																							</tr>
 																							
-																							@if ($descuento)
+																							@if ($descuento>0)
 																								<tr>
-																										<td align="right" style="width: 50%;"><strong>Descuento ({{$descuento->descripcion}}):</strong></td>
-																										<td class="text">-${{ $descuento->monto }}</td>
+																										<td align="right" style="width: 50%;"><strong>Descuento ({{$orden->cupon->descripcion}}):</strong></td>
+																										<td class="text">-${{ $orden->cupon->monto }}</td>
 																								</tr>
 																							@endif
 																							<tr>

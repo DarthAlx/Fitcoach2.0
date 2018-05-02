@@ -15,6 +15,6 @@ class Cuponera extends Model
       return $this->hasOne('App\User');
   }
   public function orden(){
-      return $this->hasOne('App\Orden');
+      return $this->belongsTo('App\Orden');
   }
 }

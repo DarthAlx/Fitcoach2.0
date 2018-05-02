@@ -4,6 +4,11 @@
   <div class="topclear">
 	    &nbsp;
 	  </div>
+    <div class="row">
+        <div class="col-sm-12">
+          @include('holders.notificaciones')
+        </div>
+    </div>
   <div class="modal-body row">
     @if (Auth::guest())
       <div class="col-sm-12">
@@ -23,7 +28,9 @@
           </div>
         </div>
       </div>
-      <?php $descuento = Cookie::get('descuentofc'); ?>
+      <?php $descuento = Cookie::get('descuentofc'); 
+            $cuponera = App\Cuponera::find($descuento);
+      ?>
       @if($descuento)
         <div class="collapse in" id="carrito">
           <div class="">
@@ -32,11 +39,11 @@
 
                     <div class="row">
                       <div class="col-xs-4">
-                        <h4 class="product-name"><strong>{{ $descuento }}</strong></h4>
+                        <h4 class="product-name"><strong>{{ $cuponera->descripcion }}</strong></h4>
                       </div>
                       <div class="col-xs-8">
                         <div class="col-xs-10 text-right gotham2">
-                          <h6><strong>{{ $descuento}} <span class="text-muted"></span></strong></h6>
+                          <h6><strong>- ${{ $cuponera->monto }} <span class="text-muted"></span></strong></h6>
                         </div>
                       </div>
                     </div>

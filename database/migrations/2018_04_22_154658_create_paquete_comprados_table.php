@@ -12,9 +12,10 @@ class CreatePaqueteCompradosTable extends Migration
      */
     public function up()
     {
-        Schema::create('paquete_comprados', function (Blueprint $table) {
+        Schema::create('paquetescomprados', function (Blueprint $table) {
             $table->increments('id');
             $table->bigInteger('user_id');
+            $table->bigInteger('orden_id'); 
             $table->integer('clases');
             $table->string('tipo');
             $table->date('fecha');
@@ -29,6 +30,6 @@ class CreatePaqueteCompradosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('paquete_comprados');
+        Schema::drop('paquetescomprados');
     }
 }
