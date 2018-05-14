@@ -62,8 +62,9 @@ Route::post('/clasesculturales', function (Illuminate\Http\Request $request) {
     return view('culturales', ['clases'=>$clases,'zonarequest'=>$zonarequest,'titulo'=>$titulo]);
 });
 Route::get('/comprar-clases', function () {
-  $paquetes=App\Paquete::all();
-    return view('comprar-paquetes',['paquetes'=>$paquetes]);
+  $particulares=App\Paquete::where('tipo', 'Particulares')->get();
+  $residenciales=App\Paquete::where('tipo', 'Residenciales')->get();
+    return view('comprar-paquetes',['particulares'=>$particulares,'residenciales'=>$residenciales]);
 });
 
 Route::get('/comprar-paquete/{id}', function ($id) {
