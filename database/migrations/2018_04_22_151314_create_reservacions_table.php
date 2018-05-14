@@ -16,9 +16,11 @@ class CreateReservacionsTable extends Migration
             $table->increments('id');
             $table->bigInteger('horario_id');
             $table->bigInteger('user_id');
+            $table->bigInteger('coach_id');
             $table->string('tipo');
             $table->longText('direccion');
             $table->string('aforo');
+            $table->string('status');
             $table->timestamps();
         });
     }

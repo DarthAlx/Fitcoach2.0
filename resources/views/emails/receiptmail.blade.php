@@ -514,8 +514,8 @@
 																								?>
 																							<tr class="text">
 																									<td style="width: 10%;">1</td>
-																									<td style="width: 30%;">{{$orden->nombre}}</td>
-																									<td style="width: 30%;">Paquete con {{$orden->paquete->clases}} {{$orden->paquete->tipo}}</td>
+																									<td style="width: 30%;">{{$orden->paquete->paquete}}</td>
+																									<td style="width: 30%;">Paquete con {{$orden->paquete->clases}} clases {{$orden->paquete->tipo}}</td>
 																									<td style="width: 10%;">${{$orden->cantidad}}</td>
 																									<td style="width: 20%;">${{$orden->cantidad}}</td>
 																							</tr>

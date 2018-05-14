@@ -17,6 +17,7 @@ class CreatePaqueteCompradosTable extends Migration
             $table->bigInteger('user_id');
             $table->bigInteger('orden_id'); 
             $table->integer('clases');
+            $table->integer('disponibles');
             $table->string('tipo');
             $table->date('fecha');
             $table->date('expiracion');

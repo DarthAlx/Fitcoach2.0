@@ -59,7 +59,7 @@
         <div id="proximas" class="listadeclases">
           <div class="list-group">
               <?php $array=array();
-              $proximas= App\Orden::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
+              $proximas= App\Reservacion::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
               if (!$proximas->isEmpty()) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($proximas as $proxima) {
