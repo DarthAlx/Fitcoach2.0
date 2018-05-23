@@ -36,8 +36,9 @@
       <div class="clasesperfil visible-xs">
         <hr>
         <div class="text-center">
-          <button type="button" id="btnproximas" class="btn btn-success" style="display:inline-block; width:40%;" onclick="verclases('proximas')">Próximas clases</button>
-          <button type="button" id="btnpasadas" class="btn btn-clases" style="display:inline-block; width:40%;" onclick="verclases('pasadas')">Clases pasadas</button>
+          <button type="button" id="btnproximas" class="btn btn-success" style="display:inline-block; width:25%;" onclick="verclases('proximas')">Próximas clases</button>
+          <button type="button" id="btnpasadas" class="btn btn-clases" style="display:inline-block; width:25%;" onclick="verclases('pasadas')">Clases pasadas</button>
+          <button type="button" id="btnhistorial" class="btn btn-clases" style="display:inline-block; width:25%;" onclick="verclases('historial')">Historial de clases</button>
           <script type="text/javascript">
             function verclases(valor) {
               if (valor=="proximas") {
@@ -52,6 +53,14 @@
                 $('#pasadas').show();
                 $('#btnpasadas').addClass('btn-success');$('#btnpasadas').removeClass('btn-clases');
               }
+              if (valor=="historial") {
+                $('#proximas').hide();
+                $('#pasadas').hide();
+                $('#btnproximas').addClass('btn-clases');$('#btnproximas').removeClass('btn-success');
+                $('#btnpasadas').addClass('btn-clases');$('#btnpasadas').removeClass('btn-success');
+                $('#pasadas').show();
+                $('#btnhistorial').addClass('btn-success');$('#btnhistorial').removeClass('btn-clases');
+              }
             }
           </script>
         </div>
@@ -59,7 +68,7 @@
         <div id="proximas" class="listadeclases">
           <div class="list-group">
               <?php $array=array();
-              $proximas= App\Reservacion::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
+              $proximas= App\Reservacion::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('created_at', 'asc')->get();
               if (!$proximas->isEmpty()) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($proximas as $proxima) {
@@ -108,7 +117,8 @@
         <div id="pasadas" class="listadeclases" style="display:none;">
           <div class="list-group">
               <?php  $array=array();
-              $pasadas= App\Orden::where('coach_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('fecha', 'desc')->get();
+
+              $pasadas= App\Reservacion::where('coach_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('created_at', 'desc')->get();
               if ($pasadas) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($pasadas as $pasada) {
@@ -174,22 +184,35 @@
     <div class="col-md-8 hidden-xs">
       <hr>
       <div class="text-center">
-        <button type="button" id="btnproximaslg" class="btn btn-success" style="display:inline-block; width:40%;" onclick="verclaseslg('proximaslg')">Próximas clases</button>
-        <button type="button" id="btnpasadaslg" class="btn btn-clases" style="display:inline-block; width:40%;" onclick="verclaseslg('pasadaslg')">Clases pasadas</button>
+        <button type="button" id="btnproximaslg" class="btn btn-success" style="display:inline-block; width:30%;" onclick="verclaseslg('proximaslg')">Próximas Clases</button>
+        <button type="button" id="btnpasadaslg" class="btn btn-clases" style="display:inline-block; width:30%;" onclick="verclaseslg('pasadaslg')">Clases Pasadas</button>
+        <button type="button" id="btnhistoriallg" class="btn btn-clases" style="display:inline-block; width:30%;" onclick="verclaseslg('historiallg')">Historial de Clases</button>
         <script type="text/javascript">
           function verclaseslg(valor) {
             if (valor=="proximaslg") {
               $('#pasadaslg').hide();
               $('#btnpasadaslg').addClass('btn-clases');$('#btnpasadaslg').removeClass('btn-success');
+              $('#historiallg').hide();
+              $('#btnhistoriallg').addClass('btn-clases');$('#btnhistoriallg').removeClass('btn-success');
               $('#proximaslg').show();
               $('#btnproximaslg').addClass('btn-success');$('#btnproximaslg').removeClass('btn-clases');
             }
             if (valor=="pasadaslg") {
               $('#proximaslg').hide();
               $('#btnproximaslg').addClass('btn-clases');$('#btnproximaslg').removeClass('btn-success');
+              $('#historiallg').hide();
+              $('#btnhistoriallg').addClass('btn-clases');$('#btnhistoriallg').removeClass('btn-success');
               $('#pasadaslg').show();
               $('#btnpasadaslg').addClass('btn-success');$('#btnpasadaslg').removeClass('btn-clases');
             }
+            if (valor=="historiallg") {
+                $('#proximaslg').hide();
+                $('#pasadaslg').hide();
+                $('#btnproximaslg').addClass('btn-clases'); $('#btnproximaslg').removeClass('btn-success');
+                $('#btnpasadaslg').addClass('btn-clases'); $('#btnpasadaslg').removeClass('btn-success');
+                $('#btnhistoriallg').addClass('btn-success');$('#btnhistoriallg').removeClass('btn-clases');
+                $('#historiallg').show();
+              }
           }
         </script>
       </div>
@@ -197,7 +220,7 @@
       <div id="proximaslg" class="listadeclases">
         <div class="list-group">
             <?php $array=array();
-            $proximas= App\Orden::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
+            $proximas= App\Reservacion::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('created_at', 'asc')->get();
             if (!$proximas->isEmpty()) {
               date_default_timezone_set('America/Mexico_City');
               foreach ($proximas as $proxima) {
@@ -243,7 +266,7 @@
       <div id="pasadaslg" class="listadeclases" style="display:none;">
         <div class="list-group">
             <?php $array=array();
-            $pasadas= App\Orden::where('coach_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('fecha', 'desc')->get();
+            $pasadas= App\Reservacion::where('coach_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('created_at', 'desc')->get();
             if ($pasadas) {
               date_default_timezone_set('America/Mexico_City');
               foreach ($pasadas as $pasada) {
@@ -414,15 +437,18 @@
 <div class="modal fade" id="horarionuevo" tabindex="-1" role="dialog">
   <?php $permitidas = explode(",",$user->detalles->clases);
 
-        $clases = App\Clase::whereIn('id', $permitidas)->get(); ?>
+        $clases = App\Clase::whereIn('id', $permitidas)->get(); 
+        $particulares = App\Reservacion::where('coach_id',$user->id)->get();
+        ?>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
               <button type="button" style="width: 100%" class="list-group-item" name="button" data-toggle="collapse" data-target="#horariosguardados" aria-expanded="false" aria-controls="horariosguardados">Tus horarios</button>
               <div class="collapse" id="horariosguardados">
-                @if (!$user->particulares->isEmpty())
-                  @foreach ($user->particulares as $particular)
+
+                @if (!$particulares->isEmpty())
+                  @foreach ($particulares as $particular)
                     <button style="width: 100%" class="btn btn-default" type="button" data-toggle="collapse" data-target="#horario{{$particular->id}}" aria-expanded="false" aria-controls="horario{{$particular->id}}">
 
                       <?php
@@ -471,6 +497,7 @@
                        <script type="text/javascript">
                          if (document.getElementById('clase{{ $particular->id }}') != null) document.getElementById('clase{{ $particular->id }}').value = '{!! $particular->clase_id !!}';
                        </script>
+
                         <input class="form-control datepicker" type="text" placeholder="Fecha (si no es recurrente)" value="{{ $particular->fecha }}" name="fecha">
                         <input value="{{ $particular->hora }}" class="form-control xmitimepicker" type="text" name="hora" required  placeholder="Hora" / >
                         <label>Recurrencia</label>
@@ -647,7 +674,8 @@
 
 
     <?php
-    $proximas= App\Orden::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
+    $proximas= App\Reservacion::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('created_at', 'asc')->get();
+
 
     if (!$proximas->isEmpty()) {
       date_default_timezone_set('America/Mexico_City');
@@ -751,7 +779,9 @@ $direccion->estado;
 
 
     <?php
-    $pasadas= App\Orden::where('coach_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('fecha', 'desc')->get();
+
+$pasadas= App\Reservacion::where('coach_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('created_at', 'desc')->get();
+
     if (!$pasadas->isEmpty()) {
       date_default_timezone_set('America/Mexico_City');
       foreach ($pasadas as $pasada) {

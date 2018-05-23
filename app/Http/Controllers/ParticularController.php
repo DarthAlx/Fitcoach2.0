@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Particular;
+use App\Horario;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -42,7 +43,7 @@ class ParticularController extends Controller
      */
     public function store(Request $request)
     {
-      $guardar = new Particular($request->all());
+      $guardar = new Horario($request->all());
       if ($request->recurrencia) {
         $guardar->recurrencia=implode(",", $request->recurrencia);
         $guardar->fecha="";
@@ -105,7 +106,7 @@ class ParticularController extends Controller
       $horario->save();
       Session::flash('mensaje', '¡Horario actualizado!');
       Session::flash('class', 'success');
-      return redirect($this->redirectPath());
+      return redirect(url()->previous());
     }
 
     /**

@@ -73,4 +73,7 @@ class User extends Model implements AuthenticatableContract,
        public function paquetes(){
       return $this->hasMany('App\PaqueteComprado');
     }
+    public function reservaciones(){
+        return $this->hasMany('App\Reservacion');
+    }
 }
