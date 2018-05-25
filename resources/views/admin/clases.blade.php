@@ -78,8 +78,7 @@
 	                   </select>
 										<input class="form-control" id="imagenNuevo" type="file" name="imagen" required>
 										<textarea id="precioNuevo" class="form-control" name="descripcion" placeholder="Descripcion" required>{{ old('descripcion') }}</textarea>
-										<input id="precioNuevo" class="form-control" type="text" placeholder="Precio" value="{{ old('precio') }}" name="precio" required>
-										<input id="precio_especialNuevo" class="form-control" type="text" placeholder="Precio especial" value="{{ old('precio_especial') }}" name="precio_especial">
+										
 	        					<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Guardar</button>
 	                </form>
 	      				</div>
@@ -114,8 +113,7 @@
                        	</script>
 												<input class="form-control" type="file" id="imagen{{ $clase->id }}" name="imagen">
 												<textarea id="descripcion{{ $clase->id }}" class="form-control" name="descripcion" required>{{ $clase->descripcion }}</textarea>
-												<input id="precio{{ $clase->id }}" class="form-control" type="text" value="{{ $clase->precio }}" name="precio" required>
-												<input id="precio_especial{{ $clase->id }}" class="form-control" type="text" value="{{ $clase->precio_especial }}" name="precio_especial">
+												
 												<input type="hidden" name="clase_id" value="{{ $clase->id }}">
 												<div class="text-center">
                           <button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important; width: 40%; display: inline-block;">Actualizar</button>

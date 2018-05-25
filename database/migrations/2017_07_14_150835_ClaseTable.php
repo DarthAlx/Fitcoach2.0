@@ -18,8 +18,6 @@ class ClaseTable extends Migration
         $table->string('tipo');
         $table->string('descripcion');
         $table->string('imagen');
-        $table->string('precio');
-        $table->string('precio_especial');
         $table->timestamps();
       });
     }
