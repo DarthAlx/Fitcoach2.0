@@ -62,8 +62,8 @@ Route::post('/clasesculturales', function (Illuminate\Http\Request $request) {
     return view('culturales', ['clases'=>$clases,'zonarequest'=>$zonarequest,'titulo'=>$titulo]);
 });
 Route::get('/comprar-clases', function () {
-  $particulares=App\Paquete::where('tipo', 'Particulares')->get();
-  $residenciales=App\Paquete::where('tipo', 'Residenciales')->get();
+  $particulares=App\Paquete::where('tipo', 'A domicilio')->get();
+  $residenciales=App\Paquete::where('tipo', 'En condominio')->get();
     return view('comprar-paquetes',['particulares'=>$particulares,'residenciales'=>$residenciales]);
 });
 
@@ -204,7 +204,7 @@ Route::post('/contacto', function (Illuminate\Http\Request $request) {
 Route::post('carrito', 'OrdenController@cartinst');
 Route::get('/carrito', function () {
   $items=Cart::content();
-  return view('cart.cart',['items'=>$items]);
+  return view('cart.reservar',['items'=>$items]);
 });
   Route::get('removefromcart/{rowId}', 'OrdenController@destroy');
 Route::post('descuento', 'CuponeraController@store');

@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Orden;
 use App\Pago;
 use App\Particular;
+use App\Horario;
 use App\Residencial;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -61,10 +62,10 @@ class OrdenController extends Controller
           Cart::add($clase->id,$clase->nombreevento,1,$clase->precio, ['tipo'=>'residencial','fecha' => $clase->fecha,'hora' => $clase->hora, 'coach' => $clase->user_id]);
         }
       }
-      elseif($request->tipo=="Particular"&&$esresidencial==false) {
+      elseif($request->tipo=="A domicilio"&&$esresidencial==false) {
         foreach ($request->carrito as $item) {
           $items=explode(",",$item);
-          $clase=Particular::find($items[0]);
+          $clase=Horario::find($items[0]);
           $zona=$clase->zona->identificador;
 
           if ($clase->clase->precio_especial) {
@@ -73,7 +74,7 @@ class OrdenController extends Controller
           else {
             $precio=$clase->clase->precio;
           }
-          Cart::add($clase->clase->id,$clase->clase->nombre,1,$precio, ['tipo'=>'particular','fecha' => $items[1],'hora' => $clase->hora, 'coach' => $clase->user_id]);
+          Cart::add($clase->clase->id,$clase->clase->nombre,1,0, ['tipo'=>'particular','fecha' => $items[1],'hora' => $clase->hora, 'coach' => $clase->user_id]);
           Session::flash('mensaje', 'La clase que vas a reservar es únicamente para la zona '.$zona.'.<br>
   No habrá cambios o devoluciones si no estas en la zona y no es posible para el coach asistir.');
           Session::flash('class', 'warning');
@@ -572,6 +573,118 @@ class OrdenController extends Controller
     }
 
   }
+
+
+
+public function reservar(Request $request)
+    {
+      
+      $items=Cart::content();
+
+      foreach ($items as $product) {
+        $precio = $product->price*100;
+        if ($product->options->tipo=="particular") {
+          $productos[]=array(
+            'name' => $product->name,
+            'unit_price' => $precio,
+            'quantity' => 1,
+            'metadata' => array(
+              'tipo' => 'particular',
+              'asociado' => $product->id,
+              'id' => $product->id,
+              'coach' => $product->options->coach,
+              'fecha' => $product->options->fecha,
+              'hora' => $product->options->hora
+            )
+          );
+        }
+        if ($product->options->tipo=="residencial") {
+          $esresidencial=true;
+          $productos[]=array(
+            'name' => $product->name,
+            'unit_price' => $precio,
+            'quantity' => 1,
+            'metadata' => array(
+              'tipo' => 'residencial',
+              'id' => $product->id,
+              'asociado' => $product->id,
+              'coach' => $product->options->coach,
+              'fecha' => $product->options->fecha,
+              'hora' => $product->options->hora
+            )
+          );
+        }
+
+      }
+     
+
+
+        if ($request->direccion==""&&$request->esresidencial!="true") {
+          $direccion = new Direccion();
+          $direccion->identificador=$request->identificadordireccion;
+          $direccion->calle=$request->calle;
+          $direccion->numero_ext=$request->numero_ext;
+          $direccion->numero_int=$request->numero_int;
+          $direccion->colonia=$request->colonia;
+          $direccion->municipio_del=$request->municipio_del;
+          $direccion->cp=$request->cp;
+          $direccion->estado=$request->estado;
+          $direccion->user_id = Auth::user()->id;
+          $direccion->save();
+        }
+       
+        foreach ($productos as $producto) {
+          $guardar = new Orden();
+          $guardar->order_id=$order->id;
+          $guardar->folio="W".$folio->folio;
+          $guardar->user_id=Auth::user()->id;
+          $guardar->coach_id=$producto['metadata']['coach'];
+          $guardar->asociado=$producto['metadata']['asociado'];
+          $guardar->tipo=$producto['metadata']['tipo'];
+          if ($producto['metadata']['tipo']=="residencial") {
+            $residencial=Residencial::find($producto['metadata']['asociado']);
+            if ($residencial->tipo=="Evento") {
+              $guardar->direccion=$residencial->direccionevento;
+            }
+            elseif ($residencial->tipo=="Residencial") {
+              $guardar->direccion=$residencial->condominio->identificador.". ".$residencial->condominio->direccion;
+            }
+          }else {
+            if ($request->direccion==""&&$request->esresidencial!="true") {
+              $guardar->direccion=$direccion->id;
+            }
+            else {
+              $guardar->direccion=$request->direccion;
+            }
+          }
+          $guardar->nombre=$producto['name'];
+          $guardar->fecha=$producto['metadata']['fecha'];
+          $guardar->hora=$producto['metadata']['hora'];
+          $guardar->cantidad=$producto['unit_price']/100;
+          $guardar->status='Proxima';
+          $guardar->save();
+          if ($producto['metadata']['tipo']=="residencial") {
+            $residencial= Residencial::find($producto['metadata']['asociado']);
+            $residencial->ocupados++;
+            $residencial->save();
+          }
+        }
+
+        $folio->folio++;
+        $folio->save();
+        Cart::destroy();
+        $this->sendinvoice($order->id);
+        $this->sendclassrequest($order->id);
+        Session::flash('total', $order->amount);
+        return redirect()->intended(url('/completa'));
+      
+
+      }
+
+
+
+
+
 
       public function probarcomplete(){
               Session::flash('total', "500.00");

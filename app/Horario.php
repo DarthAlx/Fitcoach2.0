@@ -22,4 +22,10 @@ class Horario extends Model
 	public function reservaciones(){
 		return $this->hasMany('App\Reservacion');
 	}
+	public function user(){
+       	return $this->belongsTo('App\User');
+    }
+    public function zona(){
+    return $this->belongsTo('App\Zona');
+  }
 }

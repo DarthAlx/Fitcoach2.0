@@ -46,8 +46,8 @@ class User extends Model implements AuthenticatableContract,
     public function tarjetas(){
         return $this->hasMany('App\Tarjeta');
     }
-    public function particulares(){
-        return $this->hasMany('App\Particular');
+    public function horarios(){
+        return $this->hasMany('App\Horario');
     }
     public function residenciales(){
         return $this->hasMany('App\Residencial');

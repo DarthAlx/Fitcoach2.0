@@ -159,7 +159,7 @@
 	                                  <?php $nombre=explode(" ",$particular->user->name); ?>
 																		<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}{{$i}}','{{$particular->clase->id}}','{{$clase->id}}');" style="cursor:pointer;">
 																			<input type="checkbox" class="carritocheck" id="carrito{{$x}}{{$particular->id}}{{$i}}" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
-																			<input type="hidden" name="tipo" value="Particular">
+																			<input type="hidden" name="tipo" value="A domicilio">
 																			{{$particular->user->name}}<br>
 
 																				{{$particular->zona->identificador}}
@@ -218,7 +218,7 @@
 																	<?php $nombre=explode(" ",$particular->user->name); ?>
 																	<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}{{$i}}mini','{{$particular->clase->id}}','{{$clase->id}}');" style="cursor:pointer;">
 																		<input type="checkbox" class="carritocheck" id="carrito{{$x}}{{$particular->id}}{{$i}}mini" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
-																		<input type="hidden" name="tipo" value="Particular">
+																		<input type="hidden" name="tipo" value="A domicilio">
 																		{{$particular->user->name}}<br>
 
 																			{{$particular->zona->identificador}}
