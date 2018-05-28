@@ -15,8 +15,7 @@ class ClaseSeeder extends Seeder
           'nombre'=>'Yoga',
           'tipo'=>'Deportiva',
           'descripcion'=>'Clases de yoga y relajación',
-          'imagen' =>'Yoga-1499123339.jpg',
-          'precio' =>'500'
+          'imagen' =>'Yoga-1499123339.jpg'
         ]);
     }
 }

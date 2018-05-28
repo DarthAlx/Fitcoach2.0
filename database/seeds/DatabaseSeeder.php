@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
         $this->call(folio::class);
         $this->call(ModuloSeeder::class);
         $this->call(PaqueteSeeder::class);
+        $this->call(ZonaSeeder::class);
+        $this->call(ClaseSeeder::class);
 
         Model::reguard();
     }

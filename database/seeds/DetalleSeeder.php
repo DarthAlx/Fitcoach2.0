@@ -20,5 +20,10 @@ class DetalleSeeder extends Seeder
         'user_id'=>'2'
       ]);
 
+      DB::table('detalles')->insert([
+        'clases'=>'1',
+        'user_id'=>'3'
+      ]);
+
     }
 }
