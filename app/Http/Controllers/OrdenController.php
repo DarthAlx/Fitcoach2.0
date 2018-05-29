@@ -48,7 +48,7 @@ class OrdenController extends Controller
 
       }
 
-      if (($request->tipo=="Residencial"||$request->tipo=="Evento")&&($esresidencial==true||Cart::content()->count()==0)) {
+      if (($request->tipo=="En condominio"||$request->tipo=="Evento")&&($esresidencial==true||Cart::content()->count()==0)) {
         $clase=Residencial::find($request->residencial_id);
 
         if ($request->tipo=="Residencial") {
@@ -582,11 +582,12 @@ public function reservar(Request $request)
       $items=Cart::content();
 
       foreach ($items as $product) {
-        $precio = $product->price*100;
+
         if ($product->options->tipo=="particular") {
+
           $productos[]=array(
             'name' => $product->name,
-            'unit_price' => $precio,
+            'unit_price' => 0,
             'quantity' => 1,
             'metadata' => array(
               'tipo' => 'particular',
@@ -602,7 +603,7 @@ public function reservar(Request $request)
           $esresidencial=true;
           $productos[]=array(
             'name' => $product->name,
-            'unit_price' => $precio,
+            'unit_price' => 0,
             'quantity' => 1,
             'metadata' => array(
               'tipo' => 'residencial',
@@ -634,13 +635,12 @@ public function reservar(Request $request)
         }
        
         foreach ($productos as $producto) {
-          $guardar = new Orden();
-          $guardar->order_id=$order->id;
-          $guardar->folio="W".$folio->folio;
+          $guardar = new Reservacion();
+          $guardar->horario_id=$producto['metadata']['asociado'];
           $guardar->user_id=Auth::user()->id;
           $guardar->coach_id=$producto['metadata']['coach'];
-          $guardar->asociado=$producto['metadata']['asociado'];
           $guardar->tipo=$producto['metadata']['tipo'];
+
           if ($producto['metadata']['tipo']=="residencial") {
             $residencial=Residencial::find($producto['metadata']['asociado']);
             if ($residencial->tipo=="Evento") {
@@ -657,23 +657,21 @@ public function reservar(Request $request)
               $guardar->direccion=$request->direccion;
             }
           }
-          $guardar->nombre=$producto['name'];
+
           $guardar->fecha=$producto['metadata']['fecha'];
           $guardar->hora=$producto['metadata']['hora'];
-          $guardar->cantidad=$producto['unit_price']/100;
+
           $guardar->status='Proxima';
           $guardar->save();
           if ($producto['metadata']['tipo']=="residencial") {
-            $residencial= Residencial::find($producto['metadata']['asociado']);
+            $residencial= Grupo::find($producto['metadata']['asociado']);
             $residencial->ocupados++;
             $residencial->save();
           }
         }
 
-        $folio->folio++;
-        $folio->save();
         Cart::destroy();
-        $this->sendinvoice($order->id);
+        //$this->sendinvoice($order->id);
         $this->sendclassrequest($order->id);
         Session::flash('total', $order->amount);
         return redirect()->intended(url('/completa'));

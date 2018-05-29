@@ -25,12 +25,8 @@
             @endif
           @endforeach
 
-          <h1 class="title">
-            @if ($tienedescuento)
-            {{Cart::content()->count()-1}}
-            @else
-            {{Cart::content()->count()}}
-            @endif  Clases <strong class="pull-right">${{Cart::total()}}</strong></h1>
+          <h1 class="title text-center">
+            VAS A RESERVAR {{Cart::content()->count()}}  CLASES</h1>
           <div class="text-center">
             <i class="fa fa-chevron-down" aria-hidden="true" data-toggle="collapse" data-target="#carrito" aria-expanded="false" aria-controls="carrito"></i>
           </div>
@@ -125,25 +121,14 @@
     @endif
   @endif
   </div>
-<div class="col-sm-6">
-  @if (!$tienedescuento)
-  <div class="coupon">
 
-      <form action="{{url('descuento')}}" method="POST">
-        {!! csrf_field() !!}
-        <input class="" type="text" name="codigo" size="20" value="" placeholder="Aplicar código de descuento" required>
-        <button type="submit" class="applyCoupon"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-      </form>
-    </div>
-    @endif
-</div>
 </div>
 @endif
 <p>&nbsp;</p>
     @if (Cart::content()->count()>0)
     <form action="{{url('cargo')}}" method="POST" id="card-form">
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-sm-offset-3">
       @if (!$esresidencial)
                         @if (!$user->direcciones->isEmpty())
                           <div class="form-group row">
@@ -205,6 +190,12 @@
                               </select>
                             </div>
                           </div>
+
+                          <div class="form-group">
+                            <div class="col-sm-12 text-right">
+                              <button class="btn btn-success" type="submit"  id="botonguardarNuevo">Reservar</button>
+                            </div>
+                          </div>
                           <input type="hidden" name="esresidencial" value="false">
                         @else
                           <input type="hidden" name="esresidencial" value="true">
@@ -231,83 +222,7 @@
                           		</script>
 
     </div>
-    <div class="col-sm-6">
-
-
-
-
-
-
-        <div class="form-group" >
-          <div class="col-xs-12 text-center">
-            <i class="fa fa-cc-visa fa-2x">&nbsp;</i> <i class="fa fa-cc-mastercard fa-2x">&nbsp;</i> <i class="fa fa-cc-amex fa-2x">&nbsp;</i>
-          </div>
-          <p>&nbsp;</p>
-        </div>
-        @if (!$user->tarjetas->isEmpty())
-          <div class="form-group row">
-            <label class="col-sm-3 control-label" for="card-number">Tarjeta</label>
-            <div class="col-sm-9">
-              <select class="form-control" id="tarjeta" name="tarjeta">
-                <option value="">Nueva tarjeta</option>
-                @foreach ($user->tarjetas as $tarjeta)
-                  <option value="{{$tarjeta->id}}">{{$tarjeta->identificador}}</option>
-                @endforeach
-              </select>
-            </div>
-          </div>
-
-        @endif
-        <div class="form-group row" id="tarjeta1label">
-
-            <div class="col-xs-12">
-
-                <input class="form-control" id="numtarjeta"  name="numero" placeholder="Número de tarjeta" autocomplete="off"  data-conekta="card[number]" type="text" > </div>
-        </div>
-        <div class="form-group row">
-          <div id="tarjeta2label">
-            <div class="col-sm-5 col-xs-12">
-                <input class="form-control" id="nombretitular"  name="nombre" placeholder="Nombre del titular" autocomplete="off" data-conekta="card[name]"  type="text" > </div>
-            <div class="col-sm-2 col-xs-3">
-                <input class="form-control" id="mm" placeholder="MM" name="mes" data-conekta="card[exp_month]" type="text" > </div>
-            <div class="col-sm-2 col-xs-3">
-                <input class="form-control" id="aa" placeholder="AA" name="año"  data-conekta="card[exp_year]" type="text" > </div>
-          </div>
-<label class="col-sm-3 control-label" for="card-number" id="cvvlabel" style="display:none;">Código de seguridad:</label>
-            <div class="col-sm-3 col-xs-6">
-                <div class="input-group">
-                    <input class="form-control" id="cvv" placeholder="CVV" autocomplete="off"  data-conekta="card[cvc]" type="text" > <span class="input-group-btn"> <button type="button" class="form-control" data-toggle="popover" data-container="body" data-placement="top" data-content="Código de seguridad de 3 dígitos ubicado normalmente en la parte trasera de su tarjeta. Las tarjetas American Express tienen un código de 4 dígitos ubicado en el frente.">?</button> </span>
-									</div>
-            </div>
-        </div>
-				<div class="form-group row" id="tarjeta3label">
-            <div class="col-xs-12">
-							<div class="checkbox">
-				        <label>
-				          <input name="guardartarjeta" value="si" type="checkbox" id="guardartarjeta"> Guardar tarjeta
-				        </label>
-				      </div>
-          </div>
-        </div>
-				<div class="form-group row" id="identificadorcont" style="display: none;">
-					<div class="col-xs-12">
-						<label>Identificador:</label>
-					</div>
-            <div class="col-xs-12">
-							<input type="text" name="identificadortarjeta" class="form-control" placeholder="Ej: Crédito, Mi tarjeta, Banco ..." id="identificador">
-          </div>
-        </div>
-				<input type="hidden" name="name" value="{{$user->name}}">
-				<input type="hidden" name="email" value="{{$user->email}}">
-				<input type="hidden" name="phone" value="{{$user->tel}}">
-
-
-        <div class="form-group">
-          <div class="col-sm-12 text-right">
-            <button class="btn btn-success" type="submit"  id="botonguardarNuevo">Pagar</button>
-          </div>
-        </div>
-    </div>
+    
     </div>
 
     </form>
