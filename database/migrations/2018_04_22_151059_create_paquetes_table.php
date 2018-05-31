@@ -16,6 +16,7 @@ class CreatePaquetesTable extends Migration
             $table->increments('id');
             $table->string('paquete');
             $table->string('precio');
+            $table->string('precio_clase');
             $table->string('num_clases');
             $table->string('dias');
             $table->string('tipo');

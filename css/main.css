@@ -847,6 +847,7 @@ button.close {
         cursor: pointer;
             padding-top: 0;
     padding-bottom: 26px;
+        margin-bottom: 20px;
 }
 .easecorta {
     -webkittransition: .3s ease;
@@ -889,7 +890,7 @@ button.close {
 }
 .circulo {
     font-size: 100px;
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
 }
 .info-paquete>* {
     -webkittransition: .2s ease;
@@ -909,4 +910,13 @@ button.close {
 }
 .paquete:hover .blue-cap {
     top: 0; 
+}
+.ppc{
+      font-size: 1rem;
+}
+.medium{
+  font-size: 2rem;
+}
+.super_small{
+  font-size: 2rem;
 }

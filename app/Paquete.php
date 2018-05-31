@@ -8,6 +8,6 @@ class Paquete extends Model
 {
     protected $table = 'paquetes';
 
-  protected $fillable = ['paquete', 'precio', 'num_clases', 'dias', 'tipo'];
+  protected $fillable = ['paquete', 'precio','precio_clase', 'num_clases', 'dias', 'tipo'];
 
 }

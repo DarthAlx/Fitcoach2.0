@@ -34,9 +34,13 @@
 										 PRIMER CLASE
 									</div>
 									<div class="precios gotham3 medium">
-											${{$paquete->precio}} MXN
+											${{$paquete->precio}}
+									</div>
+									<div class="color_gris3 gotham3 v_small ppc">
+										&nbsp;
 									</div>
 									<div class="color_gris3 gotham3 v_small">
+										&nbsp;<br>
 										&nbsp;
 									</div>
 									
@@ -55,9 +59,13 @@
 										CLASE
 									</div>
 									<div class="precios gotham3 medium">
-											${{$paquete->precio}} MXN
+											${{$paquete->precio}}
+									</div>
+									<div class="color_gris3 gotham3 v_small ppc">
+										PRECIO POR CLASE: ${{$paquete->precio_clase}}
 									</div>
 									<div class="color_gris3 gotham3 v_small">
+										&nbsp;<br>
 										Expira: {{$paquete->dias}} días
 									</div>
 									
@@ -84,9 +92,13 @@
 										 PRIMER CLASE
 									</div>
 									<div class="precios gotham3 medium">
-											${{$paquete->precio}} MXN
+											${{$paquete->precio}}
+									</div>
+									<div class="color_gris3 gotham3 v_small ppc">
+										&nbsp;
 									</div>
 									<div class="color_gris3 gotham3 v_small">
+										&nbsp;<br>
 										&nbsp;
 									</div>
 									
@@ -105,9 +117,13 @@
 										CLASE
 									</div>
 									<div class="precios gotham3 medium">
-											${{$paquete->precio}} MXN
+											${{$paquete->precio}}
+									</div>
+									<div class="color_gris3 gotham3 v_small ppc">
+										PRECIO POR CLASE: ${{$paquete->precio_clase}}
 									</div>
 									<div class="color_gris3 gotham3 v_small">
+										&nbsp;<br>
 										Expira: {{$paquete->dias}} días
 									</div>
 									
