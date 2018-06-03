@@ -26,7 +26,7 @@
           @endforeach
 
           <h1 class="title text-center">
-            VAS A RESERVAR {{Cart::content()->count()}}  CLASES</h1>
+            VAS A RESERVAR <span style="color: #D58628; font-weight: bold">{{Cart::content()->count()}}  CLASES</span></h1>
           <div class="text-center">
             <i class="fa fa-chevron-down" aria-hidden="true" data-toggle="collapse" data-target="#carrito" aria-expanded="false" aria-controls="carrito"></i>
           </div>
@@ -68,7 +68,7 @@
     								</div>
     								<div class="col-xs-8">
     									<div class="col-xs-10 text-right gotham2">
-    										<h6><strong>${{ $product->price}} <span class="text-muted"></span></strong></h6>
+    										
     									</div>
     									<div class="col-xs-2">
     										<a href="{{url('removefromcart')}}/{{$product->rowId}}" class="btn btn-link btn-xs">
@@ -126,7 +126,7 @@
 @endif
 <p>&nbsp;</p>
     @if (Cart::content()->count()>0)
-    <form action="{{url('cargo')}}" method="POST" id="card-form">
+    <form action="{{url('reservar')}}" method="POST" id="card-form">
     <div class="row">
       <div class="col-sm-6 col-sm-offset-3">
       @if (!$esresidencial)

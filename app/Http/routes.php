@@ -206,6 +206,7 @@ Route::get('/carrito', function () {
   $items=Cart::content();
   return view('cart.reservar',['items'=>$items]);
 });
+  Route::post('reservar', 'OrdenController@reservar');
   Route::get('removefromcart/{rowId}', 'OrdenController@destroy');
 Route::post('descuento', 'CuponeraController@store');
 
@@ -400,6 +401,7 @@ Route::group(['middleware' => 'usuarios'], function(){
   Route::get('/recibo/{id}', 'OrdenController@receipt');
 
   Route::get('/completa', 'OrdenController@complete');
+  Route::get('/reservada', 'OrdenController@reservada');
 Route::get('/probarcomplete', 'OrdenController@probarcomplete');
 
   Route::post('rate', 'RatingController@store');

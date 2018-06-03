@@ -10,6 +10,7 @@ use App\Orden;
 use App\Pago;
 use App\Particular;
 use App\Horario;
+use App\Reservacion;
 use App\Residencial;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -482,6 +483,7 @@ class OrdenController extends Controller
           $paquetecomprado->user_id=Auth::user()->id;
           $paquetecomprado->orden_id=$guardar->id;
           $paquetecomprado->clases=$paquete->num_clases;
+          $paquetecomprado->disponibles=$paquete->num_clases;
           $paquetecomprado->tipo=$paquete->tipo;
           $paquetecomprado->fecha=date("Y-m-d");
 
@@ -578,6 +580,35 @@ class OrdenController extends Controller
 
 public function reservar(Request $request)
     {
+      $user=User::find(Auth::user()->id);
+      $particulares=PaqueteComprado::where('user_id', $user->id)->where('tipo','A domicilio')->where('disponibles','<>',0)->orderBy('expiracion','asc')->get();
+      $residenciales=PaqueteComprado::where('user_id', $user->id)->where('tipo','En condominio')->where('disponibles','<>',0)->orderBy('expiracion','asc')->get();
+      $partdisp=0;
+      $resdisp=0;
+
+      $partcart=0;
+      $rescart=0;
+
+
+      
+      $today = strtotime(date('Y-m-d'));
+
+      foreach ($particulares as $pd) {
+
+      $expire = strtotime($pd->expiracion);
+        if ($expire >= $today) {
+          $partdisp=$partdisp+$pd->disponibles;
+        }
+      }
+
+      foreach ($residenciales as $rd) {
+
+      $expire = strtotime($rd->expiracion);
+        if ($expire >= $today) {
+          $resdisp=$resdisp+$rd->disponibles;
+        }
+      }
+
       
       $items=Cart::content();
 
@@ -598,6 +629,7 @@ public function reservar(Request $request)
               'hora' => $product->options->hora
             )
           );
+          $partcart++;
         }
         if ($product->options->tipo=="residencial") {
           $esresidencial=true;
@@ -614,10 +646,56 @@ public function reservar(Request $request)
               'hora' => $product->options->hora
             )
           );
+          $rescart++;
         }
 
       }
-     
+
+
+      if ($partdisp<$partcart||$resdisp<$rescart) {
+        Session::flash('mensaje', "No cuentas con suficientes clases disponibles. <a href='".url('/comprar-clases')."'>Ir a comprar</a>");
+        Session::flash('class', 'danger');
+        return redirect()->intended(url('carrito'))->withInput();
+      }
+
+      foreach ($particulares as $pd) {
+
+        $expire = strtotime($pd->expiracion);
+        if ($expire >= $today) {
+          if ($pd->disponibles>=$partcart) {
+            $pd->disponibles=$pd->disponibles-$partcart;
+            $partcart=0;
+            $pd->save();
+            break;
+          }
+          else{
+            $partcart=$partcart-$pd->disponibles;
+            $pd->disponibles=0;
+            $pd->save();
+          }
+        }
+      }
+
+
+      foreach ($residenciales as $rd) {
+
+        $expire = strtotime($rd->expiracion);
+        if ($expire >= $today) {
+          if ($rd->disponibles>=$rescart) {
+            $rd->disponibles=$rd->disponibles-$rescart;
+            $rescart=0;
+            $rd->save();
+            break;
+          }
+          else{
+            $rescart=$rescart-$rd->disponibles;
+            $rd->disponibles=0;
+            $rd->save();
+          }
+        }
+      }
+
+   
 
 
         if ($request->direccion==""&&$request->esresidencial!="true") {
@@ -672,9 +750,9 @@ public function reservar(Request $request)
 
         Cart::destroy();
         //$this->sendinvoice($order->id);
-        $this->sendclassrequest($order->id);
-        Session::flash('total', $order->amount);
-        return redirect()->intended(url('/completa'));
+        //$this->sendclassrequest($order->id);
+        //Session::flash('total', $order->amount);
+        return redirect()->intended(url('/reservada'));
       
 
       }
@@ -685,12 +763,15 @@ public function reservar(Request $request)
 
 
       public function probarcomplete(){
-              Session::flash('total', "500.00");
-              return view('cart.complete');
-            }
-            public function complete(){
-              return view('cart.complete');
-            }
+        Session::flash('total', "500.00");
+        return view('cart.complete');
+      }
+      public function complete(){
+        return view('cart.complete');
+      }
+      public function reservada(){
+        return view('cart.reserva');
+      }
 
       public function receipt($id)
       {
