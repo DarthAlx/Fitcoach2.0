@@ -454,7 +454,7 @@
                       <?php
                                         $recurrencias = explode(",",$particular->recurrencia);
                                     ?>
-                      {{$particular->clase->nombre}} -
+                      {{$particular->nombre}} -
                       @if ($particular->recurrencia)
 
                         @if (in_array("0", $recurrencias))
@@ -754,10 +754,11 @@ $direccion->estado;
                          {!! csrf_field() !!}
                          {{ method_field('PUT') }}
                           <input type="hidden" name="revision" value="{{$proxima->id}}">
+                          <input type="text" id="aforo{{$proxima->id}}" name="aforo" class="form-control" placeholder="Aforo" style="display:none; width: 30%" required><br>
 
                          <button type="submit" id="botonmandar{{$proxima->id}}" class="btn btn-primary btn-lg" name="button" style="display:none;">¿Mandar a revisión?</button>
                        </form>
-                       <button class="btn btn-primary btn-lg" id="botonmandar2{{$proxima->id}}" name="button" onclick="javascript: document.getElementById('botonmandar2{{$proxima->id}}').style.display='none'; document.getElementById('botonmandar{{$proxima->id}}').style.display='inline-block'; ">Terminar</button>
+                       <button class="btn btn-primary btn-lg" id="botonmandar2{{$proxima->id}}" name="button" onclick="javascript: document.getElementById('botonmandar2{{$proxima->id}}').style.display='none'; document.getElementById('botonmandar{{$proxima->id}}').style.display='inline-block'; document.getElementById('aforo{{$proxima->id}}').style.display='inline-block'; ">Terminar</button>
 
 
 

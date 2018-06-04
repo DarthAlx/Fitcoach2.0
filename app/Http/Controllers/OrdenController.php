@@ -288,9 +288,10 @@ class OrdenController extends Controller
 
     public function terminar(Request $request)
     {
-      $orden = Orden::find($request->revision);
+      $orden = Reservacion::find($request->revision);
+      $orden->aforo=$request->aforo;
       if ($orden->tipo=='residencial') {
-        $ordenes=Orden::where('nombre',$orden->nombre)->where('fecha',$orden->fecha)->where('hora',$orden->hora)->get();
+        $ordenes=Reservacion::where('nombre',$orden->nombre)->where('fecha',$orden->fecha)->where('hora',$orden->hora)->get();
         foreach ($ordenes as $ordenr) {
           $ordenr->status = 'Porrevisar';
           $ordenr->save();
@@ -303,7 +304,6 @@ class OrdenController extends Controller
       Session::flash('mensaje', '¡Orden en revisión!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/perfilinstructor'));
-
     }
 
 

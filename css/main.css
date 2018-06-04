@@ -547,7 +547,7 @@ color: #D58628 !important;
     color: #fff;
     font-size: 11px;
     letter-spacing: 1px;
-    text-transform: capitalize;
+
     display: block;
     border: 1;
     border-radius: 40px !important;
@@ -919,4 +919,48 @@ button.close {
 }
 .super_small{
   font-size: 2rem;
+}
+
+.disponibles {
+     width: 100%;
+    height: auto;
+    margin: 15px auto;
+    position: relative;
+
+
+}
+.disponibles p{
+    text-align: center;
+    font-size: 8rem;
+    font-family: Gotham2;
+    line-height: 1;
+}
+.disponibles p.small{
+    text-align: center;
+    font-size: 1.2rem;
+    font-family: Gotham2;
+        line-height: 2;
+
+}
+.disponibles:before {
+  position: absolute;
+  content: "";
+  width: 30px;
+  height: 30px;
+  top: -2px;
+  left: -2px;
+  z-index:-1;
+  border-left: 2px solid #ccc;
+  border-top: 2px solid #ccc;
+}
+.disponibles:after {
+  position: absolute;
+  content: "";
+  width: 30px;
+  height: 30px;
+  right: -2px;
+  bottom: -2px;
+  z-index:-1;
+  border-right: 2px solid #ccc;
+  border-bottom: 2px solid #ccc;
 }

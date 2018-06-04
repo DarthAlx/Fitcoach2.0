@@ -17,6 +17,7 @@ class CreateReservacionsTable extends Migration
             $table->bigInteger('horario_id');
             $table->bigInteger('user_id');
             $table->bigInteger('coach_id');
+            $table->string('nombre');
             $table->string('tipo');
             $table->string('fecha');
             $table->string('hora');
