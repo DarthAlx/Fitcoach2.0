@@ -639,7 +639,7 @@
       date_default_timezone_set('America/Mexico_City');
       foreach ($proximas as $proxima) {
         $coach = App\User::find($proxima->coach_id);
-        if ($proxima->tipo=="residencial"){
+        if ($proxima->tipo=="En condominio"){
           $dire=$proxima->direccion;
         }
         else{
@@ -698,7 +698,7 @@
                          {{ method_field('PUT') }}
                          @if ($horastotales>=24)
                            <p class="text-center"><strong>IMPORTANTE</strong><br>
-Si cancelas se te enviará un cupón por el valor de tu clase.<br>
+Si cancelas se va a restaurar el token de tu clase.<br>
 ¿Estás seguro que deseas continuar?</p>
                            <input type="hidden" name="tipocancelacion" value="24 horas antes">
                          @else

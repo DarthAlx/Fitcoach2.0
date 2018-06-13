@@ -8,7 +8,7 @@ class Reservacion extends Model
 {
     protected $table = 'reservaciones';
 
-	protected $fillable = ['horario_id', 'user_id','coach_id','nombre', 'tipo','fecha','hora', 'direccion', 'aforo', 'status'];
+	protected $fillable = ['horario_id', 'user_id','coach_id','nombre', 'tipo','fecha','hora', 'direccion', 'aforo', 'status','metadata'];
 
 	public function user(){
 		return $this->belongsTo('App\User');

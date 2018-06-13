@@ -93,6 +93,7 @@
 
         <div class="row">
       		<div class="col-md-12">
+      			<form action="{{url('carrito')}}" onsubmit="fbq('track', 'AddToCart');" method="post">
 							{!! csrf_field() !!}
 
 						<h1 class="title">{{ucfirst($condominio->identificador)}} </h1>
@@ -112,7 +113,7 @@
 												<div class="col-sm-2 col-xs-4 separacion">
 													{{$fechasformateadas[$x]}}
 													<ul class="list-group calendarioinst">
-														<?php $residenciales=App\Residencial::where('tipo', 'Residencial')->orderBy('hora', 'asc')->get();
+														<?php $residenciales=App\Grupo::where('tipo', 'En condominio')->orderBy('hora', 'asc')->get();
 														list($año, $mes, $dia) = explode("-", $fechas[$x]);
 														$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 														?>
@@ -120,9 +121,11 @@
 															@if ($residencial->ocupados<$residencial->cupo)
 																@if ($residencial->fecha==$fechas[$x])
                                   <?php $nombre=explode(" ",$residencial->user->name); ?>
-																	<li class="list-group-item text-center"  data-toggle="modal" data-target="#residencial{{$condominio->id}}{{$residencial->id}}" style="cursor:pointer;">
-																		<input type="checkbox" id="carrito{{$x}}{{$residencial->id}}" name="carrito[]" value="{{$residencial->id}},{{$fechas[$x]}}" style="display:none">
+																	<li class="list-group-item text-center"  onclick="agregaracarrito('{{$x}}{{$residencial->id}}{{$i}}','{{$residencial->condominio->id}}','{{$condominio->id}}');" style="cursor:pointer;">
+																		<input type="checkbox" class="carritocheck" id="carrito{{$x}}{{$residencial->id}}{{$i}}" name="carrito[]" value="{{$residencial->id}},{{$fechas[$x]}}" style="display:none">
+																		<input type="hidden" name="tipo" value="En condominio">
 																		{{$residencial->clase->nombre}}<br>{{ucfirst($nombre[0])}}<br>{{$residencial->hora}}
+																		<i class="fa fa-square-o faselect pull-right fa{{$x}}{{$residencial->id}}{{$i}}" aria-hidden="true"></i>
 																	</li>
 																@endif
 															@endif
@@ -158,7 +161,7 @@
 										<div class="col-xs-6 separacion">
 											{{$fechasformateadas[$x]}}
 											<ul class="list-group calendarioinst">
-												<?php $residenciales=App\Residencial::where('tipo', 'Residencial')->get();
+												<?php $residenciales=App\Grupo::where('tipo', 'En condominio')->get();
 												list($año, $mes, $dia) = explode("-", $fechas[$x]);
 												$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 												?>
@@ -166,9 +169,11 @@
 													@if ($residencial->ocupados<$residencial->cupo)
 														@if ($residencial->fecha==$fechas[$x])
 															<?php $nombre=explode(" ",$residencial->user->name); ?>
-															<li class="list-group-item text-center"  data-toggle="modal" data-target="#residencial{{$condominio->id}}{{$residencial->id}}" style="cursor:pointer;">
-																<input type="checkbox" id="carrito{{$x}}{{$residencial->id}}" name="carrito[]" value="{{$residencial->id}},{{$fechas[$x]}}" style="display:none">
+															<li class="list-group-item text-center"  onclick="agregaracarrito('{{$x}}{{$residencial->id}}{{$i}}mini','{{$residencial->condominio->id}}','{{$condominio->id}}');" style="cursor:pointer;">
+																<input type="checkbox" class="carritocheck"  id="carrito{{$x}}{{$residencial->id}}{{$i}}mini" name="carrito[]" value="{{$residencial->id}},{{$fechas[$x]}}" style="display:none">
+																<input type="hidden" name="tipo" value="En condominio">
 																{{$residencial->clase->nombre}}<br>{{ucfirst($nombre[0])}}<br>{{$residencial->hora}}
+																<i class="fa fa-square-o faselect pull-right fa{{$x}}{{$residencial->id}}{{$i}}mini" aria-hidden="true"></i>
 															</li>
 														@endif
 													@endif
@@ -187,6 +192,24 @@
 					<a class="right carousel-control" href="#myCarouselmini{{$condominio->id}}" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
 					</a>
 					</div>
+					<input type="hidden" name="cantidad" id="cantidad{{$condominio->id}}">
+								<p>&nbsp;</p>
+								<div class="row">
+									<div class="col-sm-8">
+										<div id="clasesseleccionadas{{$condominio->id}}" class="clasesseleccionadas title text-center">
+			 								0 clases seleccionadas.
+										</div>
+									</div>
+									<p>&nbsp;</p>
+									<div class="col-sm-4">
+										<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar" id="reservar{{$condominio->id}}{{$condominio->id}}" disabled>
+									</div>
+								</div>
+								</form>
+
+
+
+
 			</div>
 
 
@@ -201,7 +224,44 @@
 			</div><!-- /.modal detalles user -->
 		@endforeach
 	@endif
+<script type="text/javascript">
+		clasesseleccionadas=0;
+			function agregaracarrito(valor, valor2,valor3){
+				if (document.getElementById('carrito'+valor).checked) {
+					document.getElementById('carrito'+valor).checked = false;
+					$('#carrito'+valor).removeClass('seleccionada');
+					$('.fa'+valor).removeClass('fa-square');
+					$('.fa'+valor).addClass('fa-square-o');
+					if (clasesseleccionadas>0) {
+						clasesseleccionadas--;
+					}
+					$('#cantidad'+valor3).val(clasesseleccionadas);
+					$('#clasesseleccionadas'+valor3).html(clasesseleccionadas+" clases seleccionadas.");
+					if (clasesseleccionadas<=0) {
+						$('#reservar'+valor2+valor3).prop( "disabled", true );
+					}
+				}
+				else {
+					document.getElementById('carrito'+valor).checked = true;
+					$('#carrito'+valor).addClass('seleccionada');
+					$('.fa'+valor).removeClass('fa-square-o');
+					$('.fa'+valor).addClass('fa-square');
+					clasesseleccionadas++;
+					$('#cantidad'+valor3).val(clasesseleccionadas);
+					$('#clasesseleccionadas'+valor3).html(clasesseleccionadas+" clases seleccionadas.");
+					$('#reservar'+valor2+valor3).prop( "disabled", false );
+				}
+			}
 
+			function acero(){
+				clasesseleccionadas=0;
+				$('.clasesseleccionadas').html("0 clases seleccionadas.");
+				$('.faselect').removeClass('fa-square');
+				$('.faselect').removeClass('fa-square-o');
+				$('.faselect').addClass('fa-square-o');
+				document.getElementsByClassName('carritocheck').checked = false;
+			}
+		</script>
 
 
 

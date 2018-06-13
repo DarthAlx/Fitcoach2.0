@@ -503,7 +503,7 @@
 
 																							</tr>
 																							<?php $grantotal=0; ?>
-																							@foreach ($ordenes as $orden)
+
 																								<?php 
 																											$grantotal=$grantotal+intval($orden->cantidad);
 																								?>
@@ -514,7 +514,7 @@
 																									<td style="width: 30%;">{{$orden->user->name}}</td>
 
 																							</tr>
-																							@endforeach
+
 																					</tbody>
 																			</table>
 

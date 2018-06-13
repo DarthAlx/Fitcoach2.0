@@ -10,6 +10,7 @@ use App\Orden;
 use App\Pago;
 use App\Particular;
 use App\Horario;
+use App\Grupo;
 use App\Reservacion;
 use App\Residencial;
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +39,7 @@ class OrdenController extends Controller
      */
     public function cartinst(Request $request)
     {
+      //dd($request->all());
       $esresidencial=false;
       if (Cart::content()->count()>0){
       $items=Cart::content();
@@ -50,18 +52,22 @@ class OrdenController extends Controller
       }
 
       if (($request->tipo=="En condominio"||$request->tipo=="Evento")&&($esresidencial==true||Cart::content()->count()==0)) {
-        $clase=Residencial::find($request->residencial_id);
 
-        if ($request->tipo=="Residencial") {
-          Cart::add($clase->id,$clase->clase->nombre,1,$clase->precio, ['tipo'=>'residencial','fecha' => $clase->fecha,'hora' => $clase->hora, 'coach' => $clase->user_id]);
-          Session::flash('mensaje', 'La clase que vas a reservar es únicamente para condóminos del residencial '.$clase->condominio->identificador.'. <br>
+        foreach ($request->carrito as $item) {
+          if ($request->tipo=="En condominio") {
+            $items=explode(",",$item);
+            $clase=Grupo::find($items[0]);
+            Cart::add($clase->id,$clase->clase->nombre,1,0, ['tipo'=>'residencial','fecha' => $items[1],'hora' => $clase->hora, 'coach' => $clase->user_id]);
+            Session::flash('mensaje', 'La clase que vas a reservar es únicamente para condóminos del residencial '.$clase->condominio->identificador.'. <br>
   No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
-          Session::flash('class', 'warning');
-        }
-        if ($request->tipo=="Evento") {
+            Session::flash('class', 'warning');
+          }
+          if ($request->tipo=="Evento") {
 
-          Cart::add($clase->id,$clase->nombreevento,1,$clase->precio, ['tipo'=>'residencial','fecha' => $clase->fecha,'hora' => $clase->hora, 'coach' => $clase->user_id]);
+            Cart::add($clase->id,$clase->nombreevento,1,$clase->precio, ['tipo'=>'residencial','fecha' => $clase->fecha,'hora' => $clase->hora, 'coach' => $clase->user_id]);
+          }
         }
+        
       }
       elseif($request->tipo=="A domicilio"&&$esresidencial==false) {
         foreach ($request->carrito as $item) {
@@ -211,66 +217,38 @@ class OrdenController extends Controller
     {
 
 
-      if ($request->tipocancelacion=="cupon") {
-        $cupon=Cupon::where('codigo', $request->abono)->first();
-        if ($cupon) {
-          
+      if ($request->tipocancelacion=="token") {
 
-            $orden = Orden::find($request->orden_id);
-            if ($orden->tipo=='residencial') {
-              $ordenes=Orden::where('nombre',$orden->nombre)->where('fecha',$orden->fecha)->where('hora',$orden->hora)->get();
-              foreach ($ordenes as $ordenr) {
-                $user=User::find($ordenr->user_id);
+            $orden = Reservacion::find($request->id);
+              $paquete= new PaqueteComprado();
+              $paquete->user_id=$orden->user_id;
+              $paquete->orden_id=$orden->id;
+              $paquete->clases=1;
+              $paquete->disponibles=1;
+              $paquete->tipo=$orden->tipo;
+              $paquete->fecha=$orden->fecha;
+              $fecha = date('Y-m-d');
+              $nuevafecha = strtotime ( '+15 day' , strtotime ( $fecha ) ) ;
+              $paquete->expiracion = date ( 'Y-m-d' , $nuevafecha );
 
-                Mail::send('emails.cupon', ['cupon'=>$cupon,'user'=>$user], function ($m) use ($user) {
-                    $m->from('fitcoach.notificaciones@gmail.com', 'FITCOACH México');
-                    $m->to($user->email, $user->name)->subject('¡Tu cupón de reembolso!');
-                });
-                $ordenr->status = 'Cancelada';
-                $ordenr->metadata="cupon enviado";
-                $ordenr->save();
-              }
-            }
-            else{
-              $user=User::find($cupon->user->id);
-
-              Mail::send('emails.cupon', ['cupon'=>$cupon,'user'=>$user], function ($m) use ($user) {
-                  $m->from('fitcoach.notificaciones@gmail.com', 'FITCOACH México');
-                  $m->to($user->email, $user->name)->subject('¡Tu cupón de reembolso!');
-              });
-              $orden->status="Cancelada";
-              $orden->metadata="cupon enviado";
+              $paquete->save();
+              $orden->status='Cancelada';
+              $orden->metadata="token devuelto";
               $orden->save();
-            }
+
 
             $this->sendclasscancel($orden->id);
-          Session::flash('mensaje', 'Cupón enviado.');
+          Session::flash('mensaje', 'Token devuelto.');
           Session::flash('class', 'success');
-        }
-        else {
-          Session::flash('mensaje', 'No existe el cupón.');
-          Session::flash('class', 'danger');
-        }
-
-
       }
       else {
         $abono = new Abono($request->all());
         $abono->save();
-        $orden = Orden::find($request->orden_id);
-        if ($orden->tipo=='residencial') {
-          $ordenes=Orden::where('nombre',$orden->nombre)->where('fecha',$orden->fecha)->where('hora',$orden->hora)->get();
-          foreach ($ordenes as $ordenr) {
-            $ordenr->status="Cancelada";
-            $ordenr->metadata="abonada a coach";
-            $ordenr->save();
-          }
-        }
-        else{
-          $orden->status="Cancelada";
-          $orden->metadata="abonada a coach";
-          $orden->save();
-        }
+
+        $orden = Reservacion::find($request->id);
+        $orden->status='Cancelada';
+        $orden->metadata="abonada a coach";
+        $orden->save();
         
         $this->sendclasscancel($orden->id);
         Session::flash('mensaje', 'Abono completado.');
@@ -379,7 +357,7 @@ class OrdenController extends Controller
      */
     public function update(Request $request)
     {
-      $orden = Orden::find($request->ordencancelar);
+      $orden = Reservacion::find($request->ordencancelar);
       $orden->status = 'Cancelada';
       $orden->metadata=$request->tipocancelacion;
       $orden->save();
@@ -580,6 +558,7 @@ class OrdenController extends Controller
 
 public function reservar(Request $request)
     {
+      //dd($request->all());
       $user=User::find(Auth::user()->id);
       $particulares=PaqueteComprado::where('user_id', $user->id)->where('tipo','A domicilio')->where('disponibles','<>',0)->orderBy('expiracion','asc')->get();
       $residenciales=PaqueteComprado::where('user_id', $user->id)->where('tipo','En condominio')->where('disponibles','<>',0)->orderBy('expiracion','asc')->get();
@@ -621,7 +600,7 @@ public function reservar(Request $request)
             'unit_price' => 0,
             'quantity' => 1,
             'metadata' => array(
-              'tipo' => 'particular',
+              'tipo' => 'A domicilio',
               'asociado' => $product->id,
               'id' => $product->id,
               'coach' => $product->options->coach,
@@ -638,7 +617,7 @@ public function reservar(Request $request)
             'unit_price' => 0,
             'quantity' => 1,
             'metadata' => array(
-              'tipo' => 'residencial',
+              'tipo' => 'En condominio',
               'id' => $product->id,
               'asociado' => $product->id,
               'coach' => $product->options->coach,
@@ -719,12 +698,14 @@ public function reservar(Request $request)
           $guardar->coach_id=$producto['metadata']['coach'];
           $guardar->tipo=$producto['metadata']['tipo'];
 
-          if ($producto['metadata']['tipo']=="residencial") {
-            $residencial=Residencial::find($producto['metadata']['asociado']);
+
+          if ($producto['metadata']['tipo']=="En condominio") {
+            $residencial=Grupo::find($producto['metadata']['asociado']);
+            $guardar->nombre=$residencial->clase->nombre;
             if ($residencial->tipo=="Evento") {
               $guardar->direccion=$residencial->direccionevento;
             }
-            elseif ($residencial->tipo=="Residencial") {
+            elseif ($residencial->tipo=="En condominio") {
               $guardar->direccion=$residencial->condominio->identificador.". ".$residencial->condominio->direccion;
             }
           }else {
@@ -746,11 +727,12 @@ public function reservar(Request $request)
             $residencial->ocupados++;
             $residencial->save();
           }
+          $this->sendclassrequest($guardar->id);
         }
 
         Cart::destroy();
         //$this->sendinvoice($order->id);
-        //$this->sendclassrequest($order->id);
+        
         //Session::flash('total', $order->amount);
         return redirect()->intended(url('/reservada'));
       
@@ -809,10 +791,9 @@ public function reservar(Request $request)
 
     public function sendclassrequest($id)
     {
-      $ordenes=Orden::where('order_id', $id)->get();
-      $datos=Orden::where('order_id', $id)->first();
-      $user=User::find($datos->coach_id);
-        Mail::send('emails.recibida', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user], function ($m) use ($user) {
+      $orden=Reservacion::find($id);
+      $user=User::find($orden->coach_id);
+        Mail::send('emails.recibida', ['orden'=>$orden,'user'=>$user], function ($m) use ($user) {
             $m->from('fitcoach.notificaciones@gmail.com', 'FITCOACH México');
             $m->to($user->email, $user->name)->subject('¡Nueva clase agendada!');
         });

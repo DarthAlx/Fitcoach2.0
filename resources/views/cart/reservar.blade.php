@@ -54,7 +54,7 @@
     											<?php $coach=App\User::find($product->options->coach); ?>
     											Coach: {{ $coach->name }}<br>
                           @if ($product->options->tipo=="residencial")
-                            <?php $residencial=App\Residencial::find($product->id); $esresidencial=true;?>
+                            <?php $residencial=App\Grupo::find($product->id); $esresidencial=true;?>
                             @if ($residencial->tipo=="Evento")
                               Dirección: {!!$residencial->direccionevento!!}
                             @else
@@ -198,6 +198,11 @@
                           </div>
                           <input type="hidden" name="esresidencial" value="false">
                         @else
+                        <div class="form-group">
+                            <div class="col-sm-12 text-right">
+                              <button class="btn btn-success" type="submit"  id="botonguardarNuevo">Reservar</button>
+                            </div>
+                          </div>
                           <input type="hidden" name="esresidencial" value="true">
                         @endif <!--esresidencial-->
 

@@ -681,7 +681,7 @@
       date_default_timezone_set('America/Mexico_City');
       foreach ($proximas as $proxima) {
         $cliente = App\User::find($proxima->user_id);
-        if ($proxima->tipo=="residencial"){
+        if ($proxima->tipo=="En condominio"){
           $dire=$proxima->direccion;
         }
         else{

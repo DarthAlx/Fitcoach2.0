@@ -37,12 +37,12 @@
 						 </script>
 
 						<script type="text/javascript">
-										$(function() {
-												$('#zona').on('change', function() {
-														$( "#zonaform" ).submit();
-												});
-										});
-								</script>
+							$(function() {
+									$('#zona').on('change', function() {
+											$( "#zonaform" ).submit();
+									});
+							});
+						</script>
 
 	  			</form>
 				</div>

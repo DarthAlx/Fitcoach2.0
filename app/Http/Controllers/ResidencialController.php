@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Residencial;
+use App\Grupo;
+use App\Evento;
 use App\Orden;
 use App\Condominio;
 use Illuminate\Support\Facades\Auth;
@@ -44,11 +45,11 @@ class ResidencialController extends Controller
      */
     public function store(Request $request)
     {
-      $guardar = new Residencial($request->all());
+      $guardar = new Grupo($request->all());
       $guardar->ocupados=0;
-      $guardar->tipo = "Residencial";
-        $guardar->save();
-        Session::flash('mensaje', '¡Grupo guardado!');
+      $guardar->tipo = "En condominio";
+      $guardar->save();
+      Session::flash('mensaje', '¡Grupo guardado!');
 
 
       Session::flash('class', 'success');
@@ -87,7 +88,7 @@ class ResidencialController extends Controller
      */
     public function update(Request $request)
     {
-      $grupo = Residencial::find($request->grupo_id);
+      $grupo = Grupo::find($request->grupo_id);
       $grupo->fecha = $request->fecha;
       $grupo->hora = $request->hora;
       $grupo->user_id = $request->user_id;
@@ -95,7 +96,7 @@ class ResidencialController extends Controller
       $grupo->clase_id = $request->clase_id;
       $grupo->precio = $request->precio;
       $grupo->audiencia = $request->audiencia;
-      $grupo->tipo = "Residencial";
+      $grupo->tipo = "En condominio";
       $grupo->cupo = $request->cupo;
       $grupo->descripcion = $request->descripcion;
 
@@ -116,7 +117,7 @@ class ResidencialController extends Controller
      */
     public function destroy(Request $request)
     {
-      $grupo = Residencial::find($request->grupo_id);
+      $grupo = Grupo::find($request->grupo_id);
       $grupo->delete();
       Session::flash('mensaje', '¡Grupo eliminado correctamente!');
       Session::flash('class', 'success');
@@ -126,7 +127,7 @@ class ResidencialController extends Controller
     public function printlist($id)
   {
       $ordenes=Orden::where('asociado', $id)->get();
-      $residencial=Residencial::find($id);
+      $residencial=Grupo::find($id);
       $condominio=$residencial->condominio;
       $view =  \View::make('emails.list', ['ordenes'=>$ordenes,'residencial'=>$residencial,'condominio'=>$condominio])->render();
       $pdf = \App::make('dompdf.wrapper');
@@ -162,12 +163,11 @@ public function printlistevent($id)
 
 public function storeevento(Request $request)
 {
-  $guardar = new Residencial($request->all());
-  $guardar->ocupados=0;
-  $guardar->tipo="Evento";
+  $evento = new Evento($request->all());
+  
 
-    if ($request->hasFile('imagenevento')) {
-    $file = $request->file('imagenevento');
+    if ($request->hasFile('imagen')) {
+    $file = $request->file('imagen');
     if ($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="png") {
 
 
@@ -175,9 +175,9 @@ public function storeevento(Request $request)
       $path = base_path('uploads/clases/');
 
       $file-> move($path, $name);
-      $guardar->imagenevento = $name;
+      $evento->imagen = $name;
 
-      $guardar->save();
+      $evento->save();
       Session::flash('mensaje', '¡Evento actualizado!');
 
     }
@@ -193,6 +193,11 @@ public function storeevento(Request $request)
     Session::flash('class', 'danger');
     return redirect()->intended(url('/eventos-admin'));
   }
+  $guardar = new Grupo($request->all());
+  $guardar->ocupados=0;
+  $guardar->tipo="Evento";
+  $guardar->evento_id=$guardar->id;
+  $guardar->save();
 
 
 
@@ -201,7 +206,8 @@ public function storeevento(Request $request)
 }
 public function updateevento(Request $request)
 {
-  $grupo = Residencial::find($request->evento_id);
+  $grupo = Grupo::find($request->evento_id);
+
   $grupo->fecha = $request->fecha;
   $grupo->hora = $request->hora;
   $grupo->user_id = $request->user_id;
@@ -210,10 +216,11 @@ public function updateevento(Request $request)
   $grupo->tipo ="Evento";
   $grupo->cupo = $request->cupo;
   $grupo->descripcion=$request->descripcion;
+  $evento=$grupo->evento;
 
 
-    if ($request->hasFile('imagenevento')) {
-    $file = $request->file('imagenevento');
+    if ($request->hasFile('imagen')) {
+    $file = $request->file('imagen');
     if ($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="png") {
 
 
@@ -222,11 +229,11 @@ public function updateevento(Request $request)
 
       $file-> move($path, $name);
       File::delete($path . $grupo->imagenevento);
-      $grupo->nombreevento=$request->nombreevento;
-      $grupo->direccionevento=$request->direccionevento;
-      $grupo->imagenevento = $name;
+      $evento->nombre=$request->nombre;
+      $evento->direccion=$request->direccion;
+      $evento->imagen = $name;
 
-      $grupo->save();
+      $evento->save();
       Session::flash('mensaje', '¡Evento actualizado!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/eventos-admin'));
@@ -239,9 +246,9 @@ public function updateevento(Request $request)
 
   }
   else{
-    $grupo->nombreevento=$request->nombreevento;
-    $grupo->direccionevento=$request->direccionevento;
-    $grupo->save();
+    $evento->nombre=$request->nombre;
+    $evento->direccion=$request->direccion;
+    $evento>save();
     Session::flash('mensaje', '¡Evento actualizado!');
     Session::flash('class', 'success');
     return redirect()->intended(url('/eventos-admin'));
@@ -253,7 +260,11 @@ public function updateevento(Request $request)
 }
 public function destroyevento(Request $request)
 {
-  $grupo = Residencial::find($request->evento_id);
+  $grupo = Grupo::find($request->evento_id);
+  $evento=$grupo->evento;
+  $path = base_path('uploads/clases/');
+  File::delete($path . $evento->imagen);
+  $evento->delete();
   $grupo->delete();
   Session::flash('mensaje', '¡Evento eliminado correctamente!');
   Session::flash('class', 'success');

@@ -50,7 +50,7 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Horario');
     }
     public function residenciales(){
-        return $this->hasMany('App\Residencial');
+        return $this->hasMany('App\Grupo');
     }
     public function ordenes(){
         return $this->hasMany('App\Orden');
@@ -75,5 +75,8 @@ class User extends Model implements AuthenticatableContract,
     }
     public function reservaciones(){
         return $this->hasMany('App\Reservacion');
+    }
+    public function grupo(){
+        return $this->hasOne('App\Grupo');
     }
 }

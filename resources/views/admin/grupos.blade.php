@@ -126,7 +126,7 @@
 												</div>
 												<div class="col-sm-8">
 													<h5>Proximas clases</h5>
-													<?php $proximas=App\Residencial::where('condominio_id', $condominio->id)->get(); ?>
+													<?php $proximas=App\Grupo::where('condominio_id', $condominio->id)->get(); ?>
 
 													<div class="adv-table table-responsive">
 												  <table class="display table table-bordered table-striped table-hover" id="dynamic-table">
@@ -141,6 +141,7 @@
 												  </thead>
 												  <tbody>
 														@foreach ($proximas as $proxima)
+													
 													<tr style="cursor: pointer;">
 																			      <td>{{$proxima->fecha }} {{$proxima->hora }}</td>
 																			      <td>{{$proxima->clase->nombre }}</td>
@@ -225,18 +226,18 @@
 	                       <option value="{{ $clase->id }}">{{ $clase->nombre }}</option>
 	                     @endforeach
 	                   </select>
-										<input type="text" id="precioNuevo" class="form-control" name="precio" placeholder="Precio" value="{{ old('precio') }}" >
+				
 										<select class="form-control"  name="audiencia" id="audiencia" >
 											<option value="">Selecciona una audiencia</option>
-												<option value="Todos">Todos</option>
-												<option value="Adultos">Adultos</option>
-												<option value="Adolescentes">Adolescentes</option>
-												<option value="Niños">Niños</option>
-												<option value="Bebés">Bebés</option>
+											<option value="Todos">Todos</option>
+											<option value="Adultos">Adultos</option>
+											<option value="Adolescentes">Adolescentes</option>
+											<option value="Niños">Niños</option>
+											<option value="Bebés">Bebés</option>
 										</select>
 										<input type="number" id="cupo" class="form-control" name="cupo" placeholder="Cupo" value="{{ old('cupo') }}" >
 
-										<textarea name="descripcion" class="form-control" rows="10">Descripción</textarea>
+										<textarea name="descripcion" class="form-control" placeholder="Descripción" rows="10"></textarea>
 
 
 	        					<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Guardar</button>
@@ -297,7 +298,7 @@
 												 <script type="text/javascript">
 													if (document.getElementById('clase_id{{ $grupo->id }}') != null) document.getElementById('clase_id{{ $grupo->id }}').value = '{!! $grupo->clase_id !!}';
 													</script>
-												<input type="text" id="precioNuevo" class="form-control" name="precio" placeholder="Precio" value="{{ $grupo->precio }}" >
+
 												<select class="form-control"  name="audiencia" id="audiencia{{ $grupo->id }}" >
 													<option value="">Selecciona una audiencia</option>
 														<option value="Todos">Todos</option>
