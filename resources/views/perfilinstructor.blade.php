@@ -87,7 +87,7 @@
                   @else
 
                  <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
-                   @if($metadata[0]=="A domicilio")
+                   @if($proxima->tipo=="A domicilio")
                      <i class="fa fa-home" aria-hidden="true"></i>
                    @else
                      <i class="fa fa-building" aria-hidden="true"></i>
@@ -99,7 +99,7 @@
                   @endif
                 @else
                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
-                   @if($metadata[0]=="A domicilio")
+                   @if($proxima->tipo=="A domicilio")
                      <i class="fa fa-home" aria-hidden="true"></i>
                    @else
                      <i class="fa fa-building" aria-hidden="true"></i>
@@ -237,7 +237,7 @@
                   @else
 
                  <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
-                   @if($metadata[0]=="A domicilio")
+                   @if($proxima->tipo=="A domicilio")
                      <i class="fa fa-home" aria-hidden="true"></i>
                    @else
                      <i class="fa fa-building" aria-hidden="true"></i>
@@ -249,7 +249,7 @@
                   @endif
                 @else
                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
-                   @if($metadata[0]=="A domicilio")
+                   @if($proxima->tipo=="A domicilio")
                      <i class="fa fa-home" aria-hidden="true"></i>
                    @else
                      <i class="fa fa-building" aria-hidden="true"></i>
