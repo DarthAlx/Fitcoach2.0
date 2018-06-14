@@ -153,7 +153,7 @@ class OrdenController extends Controller
       $from= date('Y-m-d', mktime(0,0,0, $month, 1, $year));
       $day = date("d", mktime(0,0,0, $month+1, 0, $year));
       $to = date('Y-m-d', mktime(0,0,0, $month, $day, $year));
-      $clases = Orden::whereBetween('fecha', array($from, $to))->get();
+      $clases = Reservacion::whereBetween('fecha', array($from, $to))->get();
       return view('admin.clasesvista',['clases'=>$clases,'from'=>$from,'to'=>$to,'status'=>'*']);
     }
 
@@ -193,9 +193,9 @@ class OrdenController extends Controller
 
     public function abonar(Request $request)
     {
-      $orden = Orden::find($request->orden_id);
-      if ($orden->tipo=='residencial') {
-        $ordenes=Orden::where('nombre',$orden->nombre)->where('fecha',$orden->fecha)->where('hora',$orden->hora)->get();
+      $orden = Reservacion::find($request->reservacion_id);
+      if ($orden->tipo=='En condominio') {
+        $ordenes=Reservacion::where('nombre',$orden->nombre)->where('fecha',$orden->fecha)->where('hora',$orden->hora)->get();
         foreach ($ordenes as $ordenr) {
           $ordenr->status = 'Completa';
           $ordenr->save();

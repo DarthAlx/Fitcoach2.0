@@ -15,7 +15,7 @@ class AbonoTable extends Migration
       Schema::create('abonos', function (Blueprint $table) {
         $table->increments('id');
         $table->integer('user_id');
-        $table->integer('orden_id');
+        $table->integer('reservacion_id');
         $table->integer('abono');
         $table->timestamps();
     });

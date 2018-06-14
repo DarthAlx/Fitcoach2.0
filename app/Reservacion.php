@@ -19,4 +19,7 @@ class Reservacion extends Model
 	public function rate(){
 	   return $this->hasOne('App\Rating');
 	 }
+	 public function abono(){
+	   return $this->hasOne('App\Abono');
+	 }
 }

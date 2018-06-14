@@ -51,13 +51,13 @@
 			  <table class="display table table-bordered table-striped table-hover" id="dynamic-table">
 			  <thead>
 			  <tr>
-			      <th>Folio #</th>
-						<th>Orden</th>
+			
 						<th>Fecha de clase</th>
-						<th>Orden creada</th>
+
 			      <th>Clase</th>
 			      <th>Coach</th>
 			      <th>Status</th>
+			      <th>Abono</th>
 						<th>Acciones</th>
 			  </tr>
 			  </thead>
@@ -71,10 +71,9 @@
 									<!--clase ya mostrada, no se hace nada-->
 								@else
 									<tr style="cursor: pointer;">
-								      <td>{{$clase->folio}}</td>
-											<td>{{$clase->order_id}}</td>
+								    
 											<td>{{$clase->fecha}} {{$clase->hora}}</td>
-											<td>{{$clase->created_at}}</td>
+
 								      <td>{{$clase->nombre}}</td>
 								      <td>
 												<?php
@@ -87,8 +86,14 @@
 
 
 											</td>
-								      <td>{{$clase->status}} {{$clase->metadata}}
-											</td>
+								      <td>{{$clase->status}} {{$clase->metadata}}</td>
+								      <td>
+								      	@if($clase->abono)
+								      	{{$clase->abono->abono}}
+								      	@else
+								      	0
+								      	@endif
+								      </td>
 											<td>
 												<button type="button" class="btn btn-default" name="button" data-toggle="modal" data-target="#clase{{$clase->id}}">Clase</button>
 												@if($clase->status!="Completa"&&$clase->metadata!="cupon enviado"&&$clase->metadata!="abonada a coach")
@@ -102,10 +107,9 @@
 
 						@else
 							<tr style="cursor: pointer;">
-						      <td>{{$clase->folio}}</td>
-									<td>{{$clase->order_id}}</td>
+						     
 									<td>{{$clase->fecha}} {{$clase->hora}}</td>
-									<td>{{$clase->created_at}}</td>
+
 						      <td>{{$clase->nombre}}</td>
 						      <td>
 										<?php
@@ -120,6 +124,13 @@
 									</td>
 						      <td>{{$clase->status}} {{$clase->metadata}}
 									</td>
+									<td>
+								      	@if($clase->abono)
+								      	{{$clase->abono->abono}}
+								      	@else
+								      	-
+								      	@endif
+								      </td>
 									<td>
 										<button type="button" class="btn btn-default" name="button" data-toggle="modal" data-target="#clase{{$clase->id}}">Clase</button>
 										@if($clase->status!="Completa"&&$clase->metadata!="cupon enviado"&&$clase->metadata!="abonada a coach")
@@ -137,13 +148,13 @@
 			  </tbody>
 			  <tfoot>
 			  <tr>
-					<th>Folio #</th>
-					<th>Orden</th>
+					
 					<th>Fecha de clase</th>
-					<th>Orden creada</th>
+
 					<th>Clase</th>
 					<th>Coach</th>
 					<th>Status</th>
+					<th>Abono</th>
 					<th>Acciones</th>
 			  </tr>
 			  </tfoot>
@@ -244,7 +255,7 @@
 													<label for="">¿Cuanto quieres abonar?</label>
 													<input type="hidden" name="_token" value="{{ csrf_token() }}">
 													<input type="hidden" name="user_id" value="{{ $coach->id }}">
-													<input type="hidden" name="orden_id" value="{{ $clase->id }}">
+													<input type="hidden" name="reservacion_id" value="{{ $clase->id }}">
 													<input type="number" name="abono" class="form-control" placeholder="Abono" required>
 													<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Completar</button>
 												</form>
