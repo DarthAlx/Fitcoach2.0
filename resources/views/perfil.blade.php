@@ -185,7 +185,7 @@
 
                  ?>
                  <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
-                   @if($proxima->tipo=="particular")
+                   @if($proxima->tipo=="A domicilio")
                      <i class="fa fa-home" aria-hidden="true"></i>
                    @else
                      <i class="fa fa-building" aria-hidden="true"></i>
@@ -218,7 +218,7 @@
                    @if ($pasada->status=="Cancelada")
                      <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                    @else
-                     @if($pasada->tipo=="particular")
+                     @if($pasada->tipo=="A domicilio")
                        <i class="fa fa-home" aria-hidden="true"></i>
                      @else
                        <i class="fa fa-building" aria-hidden="true"></i>
@@ -301,7 +301,7 @@
                 setlocale(LC_TIME, "es-ES");
                ?>
                <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
-                 @if($proxima->tipo=="particular")
+                 @if($proxima->tipo=="A domicilio")
                    <i class="fa fa-home" aria-hidden="true"></i>
                  @else
                    <i class="fa fa-building" aria-hidden="true"></i>
@@ -333,7 +333,7 @@
                  @if ($pasada->status=="Cancelada")
                    <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                  @else
-                   @if($pasada->tipo=="particular")
+                   @if($pasada->tipo=="A domicilio")
                      <i class="fa fa-home" aria-hidden="true"></i>
                    @else
                      <i class="fa fa-building" aria-hidden="true"></i>
