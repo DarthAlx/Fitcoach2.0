@@ -280,7 +280,7 @@
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
 										<h4 class="title">Cancelar</h4>
 										<?php $coach=App\User::find($clase->coach_id); ?>
-										<p>{{$clase->folio}} - {{$clase->nombre}}</p>
+										<p>{{$clase->nombre}}</p>
 										<div class="row">
 
 											<div class="col-sm-12">
@@ -290,10 +290,10 @@
 													<input type="hidden" name="orden_id" value="{{ $clase->id }}">
 													<select class="form-control" name="tipocancelacion" required>
 														<option value="">Tipo de cancelación</option>
-														<option value="cupon">Cupon</option>
+														<option value="token">Token</option>
 														<option value="abono">Abonar</option>
 													</select>
-													<input type="text" name="abono" class="form-control" placeholder="Abono/Cupón" required>
+													<input type="text" name="abono" class="form-control" placeholder="Abono/Tokens" required>
 													<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Completar</button>
 												</form>
 											</div>

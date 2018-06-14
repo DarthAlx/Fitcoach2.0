@@ -223,8 +223,8 @@ class OrdenController extends Controller
               $paquete= new PaqueteComprado();
               $paquete->user_id=$orden->user_id;
               $paquete->orden_id=$orden->id;
-              $paquete->clases=1;
-              $paquete->disponibles=1;
+              $paquete->clases=$request->abono;
+              $paquete->disponibles=$request->abono;
               $paquete->tipo=$orden->tipo;
               $paquete->fecha=$orden->fecha;
               $fecha = date('Y-m-d');
