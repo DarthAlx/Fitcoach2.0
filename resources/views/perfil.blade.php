@@ -738,7 +738,7 @@ Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio 
       foreach ($pasadas as $pasada) {
 
         $coach = App\User::find($pasada->coach_id);
-        if ($pasada->tipo=="residencial"){
+        if ($pasada->tipo=="En condominio"){
           $dire=$pasada->direccion;
         }
         else{

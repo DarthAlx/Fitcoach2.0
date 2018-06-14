@@ -80,14 +80,14 @@
                   setlocale(LC_TIME, "es-ES");
                  ?>
 
-                  @if ($proxima->tipo=="residencial")
+                  @if ($proxima->tipo=="En condominio")
                   @if (in_array($proxima->nombre.$proxima->fecha.$proxima->hora,$array))
 
                   <!--clase ya mostrada, no se hace nada-->
                   @else
 
                  <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
-                   @if($metadata[0]=="particular")
+                   @if($metadata[0]=="A domicilio")
                      <i class="fa fa-home" aria-hidden="true"></i>
                    @else
                      <i class="fa fa-building" aria-hidden="true"></i>
@@ -99,7 +99,7 @@
                   @endif
                 @else
                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
-                   @if($metadata[0]=="particular")
+                   @if($metadata[0]=="A domicilio")
                      <i class="fa fa-home" aria-hidden="true"></i>
                    @else
                      <i class="fa fa-building" aria-hidden="true"></i>
@@ -126,7 +126,7 @@
                   setlocale(LC_TIME, "es-ES");
                  ?>
 
-                 @if ($pasada->tipo=="residencial")
+                 @if ($pasada->tipo=="En condiminio")
                   @if (in_array($pasada->nombre.$pasada->fecha.$pasada->hora,$array))
 
                   <!--clase ya mostrada, no se hace nada-->
@@ -135,7 +135,7 @@
                    @if ($pasada->status=="Cancelada")
                      <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                    @else
-                     @if($pasada->tipo=="particular")
+                     @if($pasada->tipo=="A domicilio")
                        <i class="fa fa-home" aria-hidden="true"></i>
                      @else
                        <i class="fa fa-building" aria-hidden="true"></i>
@@ -152,7 +152,7 @@
                    @if ($pasada->status=="Cancelada")
                      <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                    @else
-                     @if($pasada->tipo=="particular")
+                     @if($pasada->tipo=="A domicilio")
                        <i class="fa fa-home" aria-hidden="true"></i>
                      @else
                        <i class="fa fa-building" aria-hidden="true"></i>
@@ -230,14 +230,14 @@
                 setlocale(LC_TIME, "es-ES");
                ?>
                 
-@if ($proxima->tipo=="residencial")
+@if ($proxima->tipo=="En condominio")
                   @if (in_array($proxima->nombre.$proxima->fecha.$proxima->hora,$array))
 
                   <!--clase ya mostrada, no se hace nada-->
                   @else
 
                  <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
-                   @if($metadata[0]=="particular")
+                   @if($metadata[0]=="A domicilio")
                      <i class="fa fa-home" aria-hidden="true"></i>
                    @else
                      <i class="fa fa-building" aria-hidden="true"></i>
@@ -249,7 +249,7 @@
                   @endif
                 @else
                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
-                   @if($metadata[0]=="particular")
+                   @if($metadata[0]=="A domicilio")
                      <i class="fa fa-home" aria-hidden="true"></i>
                    @else
                      <i class="fa fa-building" aria-hidden="true"></i>
@@ -274,7 +274,7 @@
                 setlocale(LC_TIME, "es-ES");
                ?>
               
-@if ($pasada->tipo=="residencial")
+@if ($pasada->tipo=="En condominio")
                   @if (in_array($pasada->nombre.$pasada->fecha.$pasada->hora,$array))
 
                   <!--clase ya mostrada, no se hace nada-->
@@ -283,7 +283,7 @@
                    @if ($pasada->status=="Cancelada")
                      <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                    @else
-                     @if($pasada->tipo=="particular")
+                     @if($pasada->tipo=="A domicilio")
                        <i class="fa fa-home" aria-hidden="true"></i>
                      @else
                        <i class="fa fa-building" aria-hidden="true"></i>
@@ -300,7 +300,7 @@
                    @if ($pasada->status=="Cancelada")
                      <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                    @else
-                     @if($pasada->tipo=="particular")
+                     @if($pasada->tipo=="A domicilio")
                        <i class="fa fa-home" aria-hidden="true"></i>
                      @else
                        <i class="fa fa-building" aria-hidden="true"></i>
@@ -719,7 +719,7 @@ $direccion->estado;
                      <div class="text-center">
                             <h1>{{$proxima->nombre}}</h1>
                             <?php $nombre=explode(" ",$cliente->name); 
-                            if ($proxima->tipo=="residencial") {
+                            if ($proxima->tipo=="En condominio") {
                               $clientesporclase=App\Orden::where('nombre', $proxima->nombre)->where('fecha', $proxima->fecha)->orderBy('nombre', 'asc')->get();
                             
                               foreach ($clientesporclase as $clienteporclase) {
@@ -805,7 +805,7 @@ $pasadas= App\Reservacion::where('coach_id', $user->id)->where('status', '<>', '
                      <div class="text-center">
                             <h1>{{$pasada->nombre}}</h1>
                             <?php $nombre=explode(" ",$cliente->name); 
-                            if ($pasada->tipo=="residencial") {
+                            if ($pasada->tipo=="En condominio") {
                              
                             }else{
                               ?>
