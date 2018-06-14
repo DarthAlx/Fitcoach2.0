@@ -720,7 +720,7 @@ $direccion->estado;
                             <h1>{{$proxima->nombre}}</h1>
                             <?php $nombre=explode(" ",$cliente->name); 
                             if ($proxima->tipo=="En condominio") {
-                              $clientesporclase=App\Orden::where('nombre', $proxima->nombre)->where('fecha', $proxima->fecha)->orderBy('nombre', 'asc')->get();
+                              $clientesporclase=App\Reservacion::where('nombre', $proxima->nombre)->where('fecha', $proxima->fecha)->orderBy('nombre', 'asc')->get();
                             
                               foreach ($clientesporclase as $clienteporclase) {
                                 echo $clienteporclase->user->name."<br>";
