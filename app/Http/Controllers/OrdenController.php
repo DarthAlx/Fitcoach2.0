@@ -220,6 +220,7 @@ class OrdenController extends Controller
       if ($request->tipocancelacion=="token") {
 
             $orden = Reservacion::find($request->id);
+
               $paquete= new PaqueteComprado();
               $paquete->user_id=$orden->user_id;
               $paquete->orden_id=$orden->id;
@@ -237,7 +238,7 @@ class OrdenController extends Controller
               $orden->save();
 
 
-            $this->sendclasscancel($orden->id);
+            //$this->sendclasscancel($orden->id);
           Session::flash('mensaje', 'Token devuelto.');
           Session::flash('class', 'success');
       }
@@ -250,7 +251,7 @@ class OrdenController extends Controller
         $orden->metadata="abonada a coach";
         $orden->save();
         
-        $this->sendclasscancel($orden->id);
+        //$this->sendclasscancel($orden->id);
         Session::flash('mensaje', 'Abono completado.');
         Session::flash('class', 'success');
       }
@@ -802,7 +803,7 @@ public function reservar(Request $request)
 
     public function sendclasscancel($id)
     {
-      $orden=Orden::where('id', $id)->first();
+      $orden=Reservacion::find($id);
       $user=User::find($orden->coach_id);
       if ($user->role!="banned") {
         Mail::send('emails.cancelada', ['orden'=>$orden,'user'=>$user], function ($m) use ($user) {

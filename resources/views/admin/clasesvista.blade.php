@@ -133,7 +133,7 @@
 								      </td>
 									<td>
 										<button type="button" class="btn btn-default" name="button" data-toggle="modal" data-target="#clase{{$clase->id}}">Clase</button>
-										@if($clase->status!="Completa"&&$clase->metadata!="cupon enviado"&&$clase->metadata!="abonada a coach")
+										@if($clase->status!="Completa"&&$clase->metadata!="token devuelto"&&$clase->metadata!="abonada a coach")
 											<button type="button" class="btn btn-primary" name="button" data-toggle="modal" data-target="#completar{{$clase->id}}">Completar</button>
 											<button type="button" class="btn btn-danger" name="button" data-toggle="modal" data-target="#cancelar{{$clase->id}}">Cancelar</button>
 										@endif
@@ -288,6 +288,7 @@
 													<input type="hidden" name="_token" value="{{ csrf_token() }}">
 													<input type="hidden" name="user_id" value="{{ $coach->id }}">
 													<input type="hidden" name="orden_id" value="{{ $clase->id }}">
+													<input type="hidden" name="id" value="{{ $clase->id }}">
 													<select class="form-control" name="tipocancelacion" required>
 														<option value="">Tipo de cancelación</option>
 														<option value="token">Token</option>
