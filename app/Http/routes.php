@@ -19,8 +19,11 @@ Route::get('/promo', function () {
 
 Route::get('mail/{id}', 'OrdenController@create');
 Route::get('/', function () {
+  $particulares=App\Paquete::where('tipo', 'A domicilio')->get();
+  $residenciales=App\Paquete::where('tipo', 'En condominio')->get();
+
   $sliders = App\Slider::orderBy('order', 'asc')->get();
-  return view('inicio', ['sliders'=>$sliders]) ;
+  return view('inicio', ['sliders'=>$sliders, 'particulares'=>$particulares,'residenciales'=>$residenciales]) ;
 });
 Route::get('/home', function () {
   return redirect()->intended(url('/'));
@@ -45,6 +48,15 @@ Route::post('/clasesdeportivas', function (Illuminate\Http\Request $request) {
 
 
     return view('clases', ['clases'=>$clases,'zonarequest'=>$zonarequest,'titulo'=>$titulo]);
+});
+
+Route::post('/claseskids', function (Illuminate\Http\Request $request) {
+  $clases = App\Clase::where('tipo', 'Kids')->orderBy('nombre', 'asc')->get();
+  $zonarequest= $request->zona;
+  $titulo="KIDS";
+
+
+    return view('kids', ['clases'=>$clases,'zonarequest'=>$zonarequest,'titulo'=>$titulo]);
 });
 
 Route::get('/clasesculturales', function () {
@@ -134,7 +146,7 @@ Route::post('/buscarcoach', function (Illuminate\Http\Request $request) {
     return view('instructores', ['coaches'=>$coaches]);
 });
 
-Route::get('/residenciales', function () {
+Route::get('/condominios', function () {
   $condominios = App\Condominio::all();
     return view('condominios', ['condominios'=>$condominios]);
 });
@@ -250,7 +262,7 @@ Route::group(['middleware' => 'administradores'], function(){
     $modulos = App\Modulo::all();
       return view('admin.usuarios', ['usuarios'=>$usuarios, 'modulos'=>$modulos]);
   });
-  Route::get('/condominios', function () {
+  Route::get('/residenciales', function () {
     $condominios = App\Condominio::all();
       return view('admin.condominios', ['condominios'=>$condominios]);
   });

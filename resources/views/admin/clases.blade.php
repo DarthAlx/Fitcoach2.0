@@ -74,6 +74,7 @@
 										<select class="form-control"  name="tipo" id="tipoNuevo" required>
 	                     <option value="">Selecciona un tipo</option>
 	                       <option value="Deportiva">Deportiva</option>
+	                       <option value="Kids">Kids</option>
 	                       <option value="Cultural">Cultural</option>
 	                   </select>
 										<input class="form-control" id="imagenNuevo" type="file" name="imagen" required>
@@ -106,6 +107,7 @@
 												<select class="form-control"  name="tipo" id="tipo{{ $clase->id }}" required>
 	                         	<option value="">Selecciona una opción</option>
 	                           <option value="Deportiva">Deportiva</option>
+	                           <option value="Kids">Kids</option>
 	                           <option value="Cultural">Cultural</option>
 	                      </select>
 				 		 						<script type="text/javascript">

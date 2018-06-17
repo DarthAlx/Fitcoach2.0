@@ -57,8 +57,9 @@
 			      <th>Clase</th>
 			      <th>Coach</th>
 			      <th>Status</th>
+			      <th>Aforo</th>
 			      <th>Abono</th>
-						<th>Acciones</th>
+				  <th>Acciones</th>
 			  </tr>
 			  </thead>
 			  <tbody>
@@ -88,12 +89,20 @@
 											</td>
 								      <td>{{$clase->status}} {{$clase->metadata}}</td>
 								      <td>
+								      	@if($clase->aforo!=null)
+								      	{{$clase->abono->aforo}}
+								      	@else
+								      	-
+								      	@endif
+								      </td>
+								      <td>
 								      	@if($clase->abono)
 								      	{{$clase->abono->abono}}
 								      	@else
-								      	0
+								      	-
 								      	@endif
 								      </td>
+								      
 											<td>
 												<button type="button" class="btn btn-default" name="button" data-toggle="modal" data-target="#clase{{$clase->id}}">Clase</button>
 												@if($clase->status!="Completa"&&$clase->metadata!="cupon enviado"&&$clase->metadata!="abonada a coach")
@@ -125,12 +134,20 @@
 						      <td>{{$clase->status}} {{$clase->metadata}}
 									</td>
 									<td>
+								      	@if($clase->aforo!=null)
+								      	{{$clase->abono->aforo}}
+								      	@else
+								      	-
+								      	@endif
+								      </td>
+									<td>
 								      	@if($clase->abono)
 								      	{{$clase->abono->abono}}
 								      	@else
 								      	-
 								      	@endif
 								      </td>
+
 									<td>
 										<button type="button" class="btn btn-default" name="button" data-toggle="modal" data-target="#clase{{$clase->id}}">Clase</button>
 										@if($clase->status!="Completa"&&$clase->metadata!="token devuelto"&&$clase->metadata!="abonada a coach")
@@ -154,6 +171,7 @@
 					<th>Clase</th>
 					<th>Coach</th>
 					<th>Status</th>
+					<th>Aforo</th>
 					<th>Abono</th>
 					<th>Acciones</th>
 			  </tr>
@@ -201,7 +219,7 @@
 
 													<?php
 																$coach=App\User::find($clase->coach_id);
-																$calificacion=App\Rating::where('orden_id', $clase->id)->first();
+																$calificacion=App\Rating::where('reservacion_id', $clase->id)->first();
 																if ($calificacion) {
 																	$promedio=$calificacion->rate;
 																}

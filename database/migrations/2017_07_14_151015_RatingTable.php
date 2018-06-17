@@ -15,9 +15,8 @@ class RatingTable extends Migration
       Schema::create('ratings', function (Blueprint $table) {
           $table->increments('id');
           $table->string('rate');
-          $table->integer('orden_id');
+          $table->integer('reservacion_id');
           $table->integer('user_id');
-
           $table->timestamps();
       });
     }

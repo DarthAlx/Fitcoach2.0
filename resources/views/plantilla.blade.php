@@ -101,10 +101,12 @@ fbq('track', 'ViewContent');
           <li class="menuclases"><a href="#">CLASES</a>
 						<ul>
 							<li><a href="{{ url('/clasesdeportivas') }}">Deportivas</a></li>
+							<li><a href="{{ url('/claseskids') }}">Kids</a></li>
 							<li><a href="{{ url('/clasesculturales') }}">Culturales</a></li>
 							<li><a href="{{ url('/eventos') }}">Eventos</a></li>
 					  </ul>
 					</li>
+					<li class="menuclases"><a href="{{ url('/condominios') }}">CONDOMINIOS</a></li>
 					@if (Auth::guest())
 							<li><a href="#" data-toggle="modal" data-target="#loginmodal" id="loginboton"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a> </li>
 					@elseif (Auth::user()->role=="usuario")
@@ -118,8 +120,8 @@ fbq('track', 'ViewContent');
 						<li><a href="{{url('salir')}}"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></a> </li>
 					@endif
 
-
-          <li><a href="{{url('/carrito')}}"><i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i></a></li>
+			
+          <!--li><a href="{{url('/carrito')}}"><i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i></a></li-->
           <li>
             <div id="nav-icon0" onclick="openNav()">
               <a href="#"><i class="fa fa-bars fa-2x" aria-hidden="true"></i></a>

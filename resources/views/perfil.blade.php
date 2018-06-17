@@ -110,7 +110,7 @@
                 <input type="radio" name="rate" id="rating4" value="4"> <label for="rating4"><i class="fa fa-star fa-2x" id="rate4" aria-hidden="true" onclick="pintar(4);"></i></label>
                 <input type="radio" name="rate" id="rating5" value="5"> <label for="rating5"><i class="fa fa-star fa-2x" id="rate5" aria-hidden="true" onclick="pintar(5);"></i></label>
                </div>
-               <input type="hidden" name="orden_id" value="{{$ultima->id}}">
+               <input type="hidden" name="reservacion_id" value="{{$ultima->id}}">
                <input type="hidden" name="user_id" value="{{$ultima->coach_id}}">
                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                <button type="submit" class="btn btn-success">Calificar</button>

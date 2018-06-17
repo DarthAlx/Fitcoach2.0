@@ -45,25 +45,187 @@
 			@include('holders.notificaciones')
 			<p>&nbsp;</p>
 			<p>&nbsp;</p>
-			<div class="container-bootstrap-fluid text-center" id="botones">
-				<div class="row">
-					<div class="col-sm-3 col-sm-offset-2 text-center">
-						<a href="{{ url('/clasesdeportivas') }}">
-							<img src="{{ url('images/home.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/home2.png')}}'" onmouseout="this.src='{{ url('images/home.png')}}'" alt="">
-						</a>
-					</div>
-					<p class="visible-xs">&nbsp;</p>
-					<div class="col-sm-3 col-sm-offset-2 text-center">
-						<a href="{{url('residenciales')}}">
-							<img src="{{ url('images/building.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/building2.png')}}'" onmouseout="this.src='{{ url('images/building.png')}}'" alt="">
-
-						</a>
-					</div>
-				</div>
-
-
-
-	    </div>
+			
 
 		</section>
+
+		<section class="paquetes" id="paquetes">
+		<div class="container-bootstrap">
+			<div class="row">
+				<div class="col-md-12  disponibles">
+					
+				
+			<div class="row text-center">
+				<div class="paquete-center">
+				
+					<div class="col-md-2 col-xs-6">
+						<div class="paquete" onclick="location.href='{{url('/clasesdeportivas')}}'" style="cursor:pointer; color: #EF7E19; border: 0;">
+							
+							<div>
+								<div class="circulo gotham2">
+									<i class="fa fa-home" aria-hidden="true"></i>
+								</div>
+								<div class=" gotham3 uppercase super_small">
+									 CLASES A DOMICILIO
+								</div>
+								
+								<div class="color_gris3 gotham3 v_small ppc">
+									&nbsp;
+								</div>
+								<div class="color_gris3 gotham3 v_small">
+									&nbsp;<br>
+									&nbsp;
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				@foreach($particulares as $paquete)
+					@if($paquete->paquete=="Primer clase")
+						<div class="col-md-2 col-xs-6">
+							<div class="paquete" onclick="location.href='{{url('/comprar-paquete')}}/{{$paquete->id}}'" style="cursor:pointer;">
+								<div class="blue-cap"></div>
+								<div class="info-paquete">
+									<div class="circulo gotham2">
+										<i class="fa fa-gift" aria-hidden="true"></i>
+									</div>
+									<div class="color_gris2 gotham3 uppercase super_small">
+										 PRIMER CLASE
+									</div>
+									<div class="precios gotham3 medium">
+											${{$paquete->precio}}
+									</div>
+									<div class="color_gris3 gotham3 v_small ppc">
+										&nbsp;
+									</div>
+									<div class="color_gris3 gotham3 v_small">
+										&nbsp;<br>
+										&nbsp;
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					@else
+						<div class="col-md-2 col-xs-6">
+							<div class="paquete" onclick="location.href='{{url('/comprar-paquete')}}/{{$paquete->id}}'" style="cursor:pointer;">
+								<div class="blue-cap"></div>
+								<div class="info-paquete">
+									<div class="circulo gotham2">
+										{{$paquete->num_clases}}
+									</div>
+									<div class="color_gris2 gotham3 uppercase super_small">
+										CLASE
+									</div>
+									<div class="precios gotham3 medium">
+											${{$paquete->precio}}
+									</div>
+									<div class="color_gris3 gotham3 v_small ppc">
+										PRECIO POR CLASE: ${{$paquete->precio_clase}}
+									</div>
+									<div class="color_gris3 gotham3 v_small">
+										&nbsp;<br>
+										Expira: {{$paquete->dias}} días
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					@endif
+				@endforeach
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+		<div class="row">
+				<div class="col-md-12  disponibles">
+
+			<div class="row text-center">
+				<div class="paquete-center">
+					<div class="col-md-2 col-xs-6">
+						<div class="paquete" onclick="location.href='{{url('/condominios')}}'" style="cursor:pointer; color: #EF7E19; border: 0;">
+							
+							<div>
+								<div class="circulo gotham2">
+									<i class="fa fa-building" aria-hidden="true"></i>
+								</div>
+								<div class=" gotham3 uppercase super_small">
+									 CONDOMINIOS
+								</div>
+								<div class="precios gotham3 medium">
+										&nbsp;
+								</div>
+								<div class="color_gris3 gotham3 v_small ppc">
+									&nbsp;
+								</div>
+								<div class="color_gris3 gotham3 v_small">
+									&nbsp;<br>
+									&nbsp;
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				@foreach($residenciales as $paquete)
+					@if($paquete->paquete=="Primer clase")
+						<div class="col-md-2 col-xs-6">
+							<div class="paquete" onclick="location.href='{{url('/comprar-paquete')}}/{{$paquete->id}}'" style="cursor:pointer;">
+								<div class="blue-cap"></div>
+								<div class="info-paquete">
+									<div class="circulo gotham2">
+										<i class="fa fa-gift" aria-hidden="true"></i>
+									</div>
+									<div class="color_gris2 gotham3 uppercase super_small">
+										 PRIMER CLASE
+									</div>
+									<div class="precios gotham3 medium">
+											${{$paquete->precio}}
+									</div>
+									<div class="color_gris3 gotham3 v_small ppc">
+										&nbsp;
+									</div>
+									<div class="color_gris3 gotham3 v_small">
+										&nbsp;<br>
+										&nbsp;
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					@else
+						<div class="col-md-2 col-xs-6">
+							<div class="paquete" onclick="location.href='{{url('/comprar-paquete')}}/{{$paquete->id}}'" style="cursor:pointer;">
+								<div class="blue-cap"></div>
+								<div class="info-paquete">
+									<div class="circulo gotham2">
+										{{$paquete->num_clases}}
+									</div>
+									<div class="color_gris2 gotham3 uppercase super_small">
+										CLASE
+									</div>
+									<div class="precios gotham3 medium">
+											${{$paquete->precio}}
+									</div>
+									<div class="color_gris3 gotham3 v_small ppc">
+										PRECIO POR CLASE: ${{$paquete->precio_clase}}
+									</div>
+									<div class="color_gris3 gotham3 v_small">
+										&nbsp;<br>
+										Expira: {{$paquete->dias}} días
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					@endif
+				@endforeach
+				</div>
+			</div>
+
+			</div>
+		</div>
+		</div>
+	</section>
 @endsection

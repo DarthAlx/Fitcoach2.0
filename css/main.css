@@ -964,3 +964,26 @@ button.close {
   border-right: 2px solid #ccc;
   border-bottom: 2px solid #ccc;
 }
+
+.paquetes .disponibles:before {
+    position: absolute;
+    content: "";
+    width: 60px !important;
+    height: 60px !important;
+    top: -2px;
+    left: -2px;
+    z-index: -1;
+    border-left: 4px solid #EF7E19 !important;
+    border-top: 4px solid #EF7E19 !important;
+}
+.paquetes .disponibles:after {
+  position: absolute;
+  content: "";
+  width: 60px !important;
+  height: 60px !important;
+  right: -2px;
+  bottom: -2px;
+  z-index:-1;
+  border-right: 4px solid #EF7E19 !important;
+  border-bottom: 4px solid #EF7E19 !important;
+}

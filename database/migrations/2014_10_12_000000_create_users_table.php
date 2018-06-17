@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
         $table->string('dob');
         $table->string('tel',10);
         $table->string('genero');
+        $table->integer('rating')->nullable(true);
         $table->rememberToken();
         $table->timestamps();
     });
