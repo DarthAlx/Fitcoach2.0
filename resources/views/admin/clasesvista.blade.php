@@ -90,7 +90,7 @@
 								      <td>{{$clase->status}} {{$clase->metadata}}</td>
 								      <td>
 								      	@if($clase->aforo!=null)
-								      	{{$clase->abono->aforo}}
+								      	{{$clase->aforo}}
 								      	@else
 								      	-
 								      	@endif
@@ -135,7 +135,7 @@
 									</td>
 									<td>
 								      	@if($clase->aforo!=null)
-								      	{{$clase->abono->aforo}}
+								      	{{$clase->aforo}}
 								      	@else
 								      	-
 								      	@endif
