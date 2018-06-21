@@ -49,7 +49,12 @@ Route::post('/clasesdeportivas', function (Illuminate\Http\Request $request) {
 
     return view('clases', ['clases'=>$clases,'zonarequest'=>$zonarequest,'titulo'=>$titulo]);
 });
-
+Route::get('/claseskids', function () {
+  $clases = App\Clase::where('tipo', 'Kids')->orderBy('nombre', 'asc')->get();
+  $zonarequest= 'todas';
+  $titulo="KIDS";
+    return view('kids', ['clases'=>$clases,'zonarequest'=>$zonarequest,'titulo'=>$titulo]);
+});
 Route::post('/claseskids', function (Illuminate\Http\Request $request) {
   $clases = App\Clase::where('tipo', 'Kids')->orderBy('nombre', 'asc')->get();
   $zonarequest= $request->zona;

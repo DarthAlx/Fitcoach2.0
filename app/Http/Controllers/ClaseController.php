@@ -119,8 +119,7 @@ class ClaseController extends Controller
                 $clase->tipo = $request->tipo;
                 $clase->descripcion = $request->descripcion;
 
-                $clase->precio = $request->precio;
-                $clase->precio_especial = $request->precio_especial;
+
                 $clase->save();
 
 
@@ -140,8 +139,7 @@ class ClaseController extends Controller
               $clase->nombre = $request->nombre;
               $clase->tipo = $request->tipo;
               $clase->descripcion = $request->descripcion;
-              $clase->precio = $request->precio;
-              $clase->precio_especial = $request->precio_especial;
+
               $clase->save();
 
 

@@ -97,9 +97,9 @@
   margin: 0 auto;
   width: 50%;
   height: 50%;
-  -webkit-border-radius: 50% !important;
+  /*-webkit-border-radius: 50% !important;
   -moz-border-radius: 50% !important;
-  border-radius: 50% !important;
+  border-radius: 50% !important;*/
 	min-width: 100px;
   min-height: 100px;
 	max-width: 100px;
@@ -573,7 +573,7 @@ color: #D58628 !important;
 	    color: #efeeee;
 			text-align: center;
 			    float: none !important;
-					line-height: 2 !important;
+					line-height: 1.2 !important;
 	}
 	.buscador .footerSubscribe {
     margin-top: 0px !important;
