@@ -9,25 +9,32 @@
           @include('holders.notificaciones')
         </div>
     </div>
-  <div class="modal-body row">
+
     @if (Auth::guest())
       <div class="col-sm-12">
           <h1 class="gotham2 text-center" style="padding: 15vh 0;">¡Inicia sesión o registrate con nosotros! <br><br><br> <button type="button" data-toggle="modal" data-target="#loginmodal" class="btn btn-success" style="width: 65%; margin: 0 auto;">Entrar</button></h1>
       </div>
     @else
       <?php $user=App\User::find(Auth::user()->id);?>
-
+</section>
+<div class="container-bootstrap">
     <div class="col-sm-12">
       <div class="cart-header">
         <div class="row">
-          <div class="col-md-6">
-            <h1 class="title"><strong>{{$paquete->num_clases}}</strong> CLASES {{$paquete->tipo}}</h1>
+          <div class="col-md-5">
+            <h1 class="title"><strong class="numofclass">{{$paquete->num_clases}}</strong> CLASES {{$paquete->tipo}}</h1>
           </div>
-          <div class="col-md-6">
-            <h1 class="title"><strong>${{$paquete->precio}}</strong> Expiran en {{$paquete->dias}} días</h1>
+          <div class="col-md-7 text-right">
+            <h1 class="title"><strong class="numofclass">&nbsp;</strong><strong>${{$paquete->precio}}</strong><strong class="numofclass">&nbsp;</strong>Expiran en {{$paquete->dias}} días</h1>
           </div>
         </div>
       </div>
+    </div>
+    </div>
+
+    <section class="container-bootstrap">
+      <div class="row">
+    <div class="col-sm-12">
       <?php $descuento = Cookie::get('descuentofc'); 
             $cuponera = App\Cuponera::find($descuento);
       ?>

@@ -22,6 +22,7 @@
 		<link rel="stylesheet" href="{{ url('js/data-tables/DT_bootstrap.css') }}" />
 		<link rel="stylesheet" type="text/css" href="{{ url('css/select2.min.css') }}" media="screen" />
 		<link rel="stylesheet" type="text/css" href="{{ url('css/main.css') }}" media="screen" />
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,700" rel="stylesheet">
 		<link href="{{ url('css/select2.min.css') }}" rel="stylesheet" />
 		<script type="text/javascript" src="{{ url('js/jquery-1.10.2.min.js') }}"></script>
 		<script type="text/javascript" src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>

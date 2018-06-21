@@ -62,6 +62,12 @@
 						<div class="paquete" onclick="location.href='{{url('/clasesdeportivas')}}'" style="cursor:pointer; color: #EF7E19; border: 0;">
 							
 							<div>
+								<div class="color_gris3 gotham3 v_small ppc">
+									&nbsp;
+								</div>
+								<div class="color_gris3 gotham3 v_small">
+									&nbsp;
+								</div>
 								<div class="circulo gotham2">
 									<i class="fa fa-home" aria-hidden="true"></i>
 								</div>
@@ -69,13 +75,8 @@
 									 CLASES A DOMICILIO
 								</div>
 								
-								<div class="color_gris3 gotham3 v_small ppc">
-									&nbsp;
-								</div>
-								<div class="color_gris3 gotham3 v_small">
-									&nbsp;<br>
-									&nbsp;
-								</div>
+								
+								
 								
 							</div>
 						</div>
@@ -111,7 +112,7 @@
 							<div class="paquete" onclick="location.href='{{url('/comprar-paquete')}}/{{$paquete->id}}'" style="cursor:pointer;">
 								<div class="blue-cap"></div>
 								<div class="info-paquete">
-									<div class="circulo gotham2">
+									<div class="circulo num">
 										{{$paquete->num_clases}}
 									</div>
 									<div class="color_gris2 gotham3 uppercase super_small">
@@ -148,22 +149,19 @@
 						<div class="paquete" onclick="location.href='{{url('/condominios')}}'" style="cursor:pointer; color: #EF7E19; border: 0;">
 							
 							<div>
+								<div class="color_gris3 gotham3 v_small ppc">
+									&nbsp;
+								</div>
+								<div class="color_gris3 gotham3 v_small">
+									&nbsp;
+								</div>
 								<div class="circulo gotham2">
 									<i class="fa fa-building" aria-hidden="true"></i>
 								</div>
 								<div class=" gotham3 uppercase super_small">
 									 CONDOMINIOS
 								</div>
-								<div class="precios gotham3 medium">
-										&nbsp;
-								</div>
-								<div class="color_gris3 gotham3 v_small ppc">
-									&nbsp;
-								</div>
-								<div class="color_gris3 gotham3 v_small">
-									&nbsp;<br>
-									&nbsp;
-								</div>
+
 								
 							</div>
 						</div>
@@ -199,7 +197,7 @@
 							<div class="paquete" onclick="location.href='{{url('/comprar-paquete')}}/{{$paquete->id}}'" style="cursor:pointer;">
 								<div class="blue-cap"></div>
 								<div class="info-paquete">
-									<div class="circulo gotham2">
+									<div class="circulo num">
 										{{$paquete->num_clases}}
 									</div>
 									<div class="color_gris2 gotham3 uppercase super_small">
