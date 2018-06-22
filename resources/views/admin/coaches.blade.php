@@ -1,4 +1,5 @@
 @extends('plantilla')
+
 @section('pagecontent')
 	<section class="container">
 		<div class="topclear">
@@ -6,13 +7,16 @@
 	  </div>
 		<div class="">
 		<div class="container-bootstrap-fluid">
+
+
+
 			<div class="row">
 				<div class="col-sm-12">
         	@include('holders.notificaciones')
       	</div>
 				<div class="col-sm-12">
 					<div class="title" style="font-size: 10vw; float: left; line-height: 0.8;">COACHES</div>
-					<div class="buscador hidden-xs" style="float: right; position: absolute; right: 0; bottom: 0;">
+					<!--div class="buscador hidden-xs" style="float: right; position: absolute; right: 0; bottom: 0;">
 					  <div class="footerSubscribe">
 					    <form action="{{url('coaches')}}" method="post">
 					      {!! csrf_field() !!}
@@ -21,9 +25,9 @@
 					    </form>
 					  </div>
 
-					</div>
+					</div-->
 				</div>
-				<div class="col-sm-3 visible-xs">
+				<!--div class="col-sm-3 visible-xs">
 					<div class="buscador">
 						<div class="footerSubscribe">
 			  			<form action="{{url('coaches')}}" method="post">
@@ -34,41 +38,102 @@
 			  		</div>
 
 					</div>
-				</div>
+				</div-->
+			</div>
+		
+
+
+
+
+
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+<div class="row">
+				<div class="col-sm-12 text-right">
+        	<a href="#" class="btn btn-success btn-lg hidden-xs" style="max-width: 200px;" data-toggle="modal" data-target="#nuevoadmin">Agregar Usuario</a>
+        	<a href="#" class="btn btn-success btn-lg visible-xs" data-toggle="modal" data-target="#nuevoadmin">Agregar Usuario</a>
+      	</div>
+</div>
+<p>&nbsp;</p>
+ 
+
+			<div class="row">
+				<div class="adv-table table-responsive">
+			  <table class="display table table-bordered table-striped table-hover" id="dynamic-table">
+			  <thead>
+			  <tr>
+			<th>Nombre</th>
+						<th><i class="fa fa-picture-o"></i></th>
+
+			      
+			      <th>Email</th>
+			      <th>Ultimo acceso</th>
+
+
+			  </tr>
+			  </thead>
+			  <tbody>
+					@if ($usuarios)
+						@foreach ($usuarios as $usuario)
+
+									<tr style="cursor: pointer;"  data-toggle="modal" data-target="#admin{{$usuario->id}}">
+
+								    <td>{{ucfirst($usuario->name)}}</td>
+											<td>
+												@if($usuario->detalles->photo!="")
+												 <img src="{{ url('uploads/avatars') }}/{{ $usuario->detalles->photo }}" class="img-responsive" style="max-width: 50px;">
+												@else
+												 <img src="{{ url('uploads/avatars') }}/dummy.png" alt="" class="img-responsive" style="max-width: 50px;">
+												@endif
+												
+											</td>
+
+								      
+								      <td>{{$usuario->email}}</td>
+								      <td>{{$usuario->acceso}}</td>
+								      
+								      
+											</tr>
+									
+								
+
+
+						@endforeach
+					@endif
+
+
+
+			  </tbody>
+			  <tfoot>
+			  <tr>
+					<th>Nombre</th>
+				<th><i class="fa fa-picture-o"></i></th>
+
+			      
+			      <th>Email</th>
+			      <th>Ultimo acceso</th>
+
+
+			  </tr>
+			  </tfoot>
+			  </table>
+
+			  </div>
 			</div>
 		</div>
 		<p>&nbsp;</p>
-    <div class="teamItemWrap clear">
-			<div class="teamItem">
-				<a><img src="{{ url('images') }}/plus.png" class="img-responsive"></a>
-				<div class="overlay" data-toggle="modal" data-target="#nuevoadmin">
-					<div class="teamItemNameWrap">
-						<a style="text-decoration:none;"><h3>Agregar instructor</h3></a>
-					</div>
-					<!--p>Formativa</p-->
-				</div>
-			</div>
-			@if ($usuarios)
-				@foreach ($usuarios as $usuario)
-	        <div class="teamItem">
-						@if($usuario->detalles->photo!="")
-						 <a><img src="{{ url('uploads/avatars') }}/{{ $usuario->detalles->photo }}" alt=""></a>
-						@else
-						 <a><img src="{{ url('uploads/avatars') }}/dummy.png" alt=""></a>
-						@endif
-	          <div class="overlay" data-toggle="modal" data-target="#admin{{$usuario->id}}">
-	            <div class="teamItemNameWrap">
-	              <a style="text-decoration:none;"><h3>{{ucfirst($usuario->name)}}</h3></a>
-	            </div>
-	            <!--p>Formativa</p-->
-	          </div>
-	        </div>
-	      @endforeach
-			@endif
-    </div>
+
   </div>
 	</section>
 @endsection
+
+
 
 @section('modals')
 

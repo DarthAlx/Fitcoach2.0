@@ -235,6 +235,39 @@
 
           </div>
         </div>
+
+
+        <div id="historial" class="listadeclases" style="display:none;">
+          <div class="list-group">
+
+              <?php
+              $compradas= $user->paquetes;
+
+              if ($compradas) {
+                date_default_timezone_set('America/Mexico_City');
+                foreach ($compradas as $comprada) {
+
+                 ?>
+                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#comprada{{$comprada->id}}">
+                   @if($comprada->tipo=="A domicilio")
+                     <i class="fa fa-home" aria-hidden="true"></i>
+                   @else
+                     <i class="fa fa-building" aria-hidden="true"></i>
+                   @endif
+                   <?php setlocale(LC_TIME, "es_MX"); ?>
+                   {{$comprada->clases}} Clases | Expira: {{$comprada->expiracion}} 
+                   <!--i class="fa fa-chevron-right pull-right" aria-hidden="true"></i-->
+                 </a>
+              <?php 
+                }  
+              } else{ ?>
+                <p>No has comprado ningún paquete.</p>
+                <?php  }
+               ?>
+
+
+          </div>
+        </div>
         </div>
 <hr>
       <h4>MIS DATOS</h4>
@@ -350,6 +383,38 @@
 
         </div>
       </div>
+      <div id="historiallg" class="listadeclases" style="display:none;">
+          <div class="list-group">
+
+              <?php
+              $compradas= $user->paquetes;
+
+
+              if ($compradas) {
+                date_default_timezone_set('America/Mexico_City');
+                foreach ($compradas as $comprada) {
+
+                 ?>
+                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#comprada{{$comprada->id}}">
+                   @if($comprada->tipo=="A domicilio")
+                     <i class="fa fa-home" aria-hidden="true"></i>
+                   @else
+                     <i class="fa fa-building" aria-hidden="true"></i>
+                   @endif
+                   <?php setlocale(LC_TIME, "es_MX"); ?>
+                   {{$comprada->clases}} Clases | Expira: {{$comprada->expiracion}} 
+                   <!--i class="fa fa-chevron-right pull-right" aria-hidden="true"></i-->
+                 </a>
+              <?php 
+                }  
+              } else{ ?>
+                <p>No has comprado ningún paquete.</p>
+                <?php  }
+               ?>
+
+
+          </div>
+        </div>
       </div>
 
     </div>

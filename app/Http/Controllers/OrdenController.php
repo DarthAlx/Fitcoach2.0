@@ -698,11 +698,12 @@ public function reservar(Request $request)
           $guardar->user_id=Auth::user()->id;
           $guardar->coach_id=$producto['metadata']['coach'];
           $guardar->tipo=$producto['metadata']['tipo'];
-          $grupo=Grupo::find($producto['metadata']['asociado']);
-          $guardar->nombre=$grupo->clase->nombre;
+          
 
 
           if ($producto['metadata']['tipo']=="En condominio") {
+            $grupo=Grupo::find($producto['metadata']['asociado']);
+          $guardar->nombre=$grupo->clase->nombre;
             
             if ($grupo->tipo=="Evento") {
               $guardar->direccion=$grupo->direccionevento;
@@ -711,6 +712,7 @@ public function reservar(Request $request)
               $guardar->direccion=$grupo->condominio->identificador.". ".$grupo->condominio->direccion;
             }
           }else {
+            $guardar->nombre=$producto['name'];
             if ($request->direccion==""&&$request->esresidencial!="true") {
               $guardar->direccion=$direccion->id;
             }

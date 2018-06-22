@@ -46,19 +46,23 @@
                 $('#btnpasadas').addClass('btn-clases');$('#btnpasadas').removeClass('btn-success');
                 $('#proximas').show();
                 $('#btnproximas').addClass('btn-success');$('#btnproximas').removeClass('btn-clases');
+                $('#historial').hide();
+                $('#btnhistorial').addClass('btn-clases');$('#btnhistoriallg').removeClass('btn-success');
               }
               if (valor=="pasadas") {
                 $('#proximas').hide();
                 $('#btnproximas').addClass('btn-clases');$('#btnproximas').removeClass('btn-success');
                 $('#pasadas').show();
                 $('#btnpasadas').addClass('btn-success');$('#btnpasadas').removeClass('btn-clases');
+                $('#historial').hide();
+                $('#btnhistorial').addClass('btn-clases');$('#btnhistoriallg').removeClass('btn-success');
               }
               if (valor=="historial") {
                 $('#proximas').hide();
                 $('#pasadas').hide();
                 $('#btnproximas').addClass('btn-clases');$('#btnproximas').removeClass('btn-success');
                 $('#btnpasadas').addClass('btn-clases');$('#btnpasadas').removeClass('btn-success');
-                $('#pasadas').show();
+                $('#historial').show();
                 $('#btnhistorial').addClass('btn-success');$('#btnhistorial').removeClass('btn-clases');
               }
             }
@@ -166,6 +170,32 @@
                 <p>No has tomado ninguna clase.</p>
                 <?php  } ?>
 
+
+          </div>
+        </div>
+
+        <div id="historial" class="listadeclases" style="display:none;">
+          <div class="list-group">
+              <?php
+              $abonos= $user->abonos;
+
+              if ($abonos) {
+                date_default_timezone_set('America/Mexico_City');
+                foreach ($abonos as $abono) {
+
+                 ?>
+                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#abono{{$abono->id}}">
+                     <i class="fa fa-plus" aria-hidden="true"></i>        
+                   <?php setlocale(LC_TIME, "es_MX"); ?>
+                   {{$abono->reservacion->nombre}} | {{$abono->reservacion->fecha}} {{$abono->reservacion->hora}} | Abono: ${{$abono->abono}} 
+                   <!--i class="fa fa-chevron-right pull-right" aria-hidden="true"></i-->
+                 </a>
+              <?php 
+                }  
+              } else{ ?>
+                <p>No has recibido ningún abono.</p>
+                <?php  }
+               ?>
 
           </div>
         </div>
@@ -317,6 +347,31 @@
 
         </div>
       </div>
+      <div id="historiallg" class="listadeclases" style="display:none;">
+          <div class="list-group">
+              <?php
+              $abonos= $user->abonos;
+
+              if ($abonos) {
+                date_default_timezone_set('America/Mexico_City');
+                foreach ($abonos as $abono) {
+
+                 ?>
+                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#abono{{$abono->id}}">
+                     <i class="fa fa-plus" aria-hidden="true"></i>        
+                   <?php setlocale(LC_TIME, "es_MX"); ?>
+                   {{$abono->reservacion->nombre}} | {{$abono->reservacion->fecha}} {{$abono->reservacion->hora}} | Abono: ${{$abono->abono}} 
+                   <!--i class="fa fa-chevron-right pull-right" aria-hidden="true"></i-->
+                 </a>
+              <?php 
+                }  
+              } else{ ?>
+                <p>No has recibido ningún abono.</p>
+                <?php  }
+               ?>
+
+          </div>
+        </div>
 
     </div>
   </div>

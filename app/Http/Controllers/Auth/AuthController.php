@@ -112,6 +112,8 @@ class AuthController extends Controller
     public function redirectPath()
     {
       $usuario = User::find(Auth::user()->id);
+      $usuario->acceso=date('Y-m-d');
+      $usuario->save();
       if (Auth::user()->role=="superadmin" || Auth::user()->role=="admin") {
         return url('/admin');
       }
