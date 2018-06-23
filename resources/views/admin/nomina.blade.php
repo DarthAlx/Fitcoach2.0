@@ -109,7 +109,7 @@
 	@if ($coaches)
 		@foreach ($coaches as $coach)
 			<?php
-				$ordenes= App\Orden::where('coach_id', $coach->id)->where('status', 'Completa')->get();
+				$ordenes= App\Reservacion::where('coach_id', $coach->id)->where('status', 'Completa')->get();
 				$pendiente=0;
 				foreach ($coach->abonos as $abono) {
 					$pendiente= $pendiente + $abono->abono;
@@ -150,6 +150,7 @@
 												</select>
 												<input type="text" name="referencia" class="form-control" value="" placeholder="Referencia" required>
 												<input type="text" name="monto" class="form-control" value="{{$pendiente}}" placeholder="Monto" required>
+												<input type="text" name="deducciones" class="form-control" placeholder="Deducciones" required>
 												<input type="hidden" name="ordenes" class="form-control"  placeholder="Referencia" required>
 			        					<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Pagar</button>
 			                </form>

@@ -149,13 +149,18 @@
 																						<td>
 																							<a href="{{url('/printlist')}}/{{$proxima->id}}" target="_blank" style="margin: 5px;"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
 																							<a data-toggle="modal" data-target="#grupo{{$proxima->id}}" style="margin: 5px;"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+
+																							@if(!$proxima->reservaciones->isEmpty())
+																							
+																							@else
 																							<a href="#"  onclick="javascript: document.getElementById('botoneliminar{{ $proxima->id }}').click();" style="margin: 5px;"><i class="fa fa-close" aria-hidden="true"></i></a>
-																					<form style="display: none;" action="{{ url('/eliminar-grupo') }}" method="post">
-										                        {!! csrf_field() !!}
-										                        {{ method_field('DELETE') }}
-										                        <input type="hidden" name="grupo_id" value="{{ $proxima->id }}">
-										                        <input type="submit" id="botoneliminar{{ $proxima->id }}">
-										                      </form>
+																							<form style="display: none;" action="{{ url('/eliminar-grupo') }}" method="post">
+																		                        {!! csrf_field() !!}
+																		                        {{ method_field('DELETE') }}
+																		                        <input type="hidden" name="grupo_id" value="{{ $proxima->id }}">
+																		                        <input type="submit" id="botoneliminar{{ $proxima->id }}">
+																		                    </form>
+																	                      	@endif
 
 																						</td>
 																			  </tr>

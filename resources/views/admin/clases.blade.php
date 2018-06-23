@@ -1,61 +1,131 @@
 @extends('plantilla')
+
 @section('pagecontent')
 	<section class="container">
 		<div class="topclear">
 	    &nbsp;
 	  </div>
-		<div class="row profile">
-	      <div class="col-sm-12">
-	        @include('holders.notificaciones')
-	      </div>
-	  </div>
 		<div class="">
 		<div class="container-bootstrap-fluid">
+
+
+
 			<div class="row">
-				<div class="col-sm-9">
-					<div class="title" style="font-size: 10vw; float: left; line-height: 0.8;">Clases</div>
+				<div class="col-sm-12">
+        	@include('holders.notificaciones')
+      	</div>
+				<div class="col-sm-12">
+					<div class="title" style="font-size: 10vw; float: left; line-height: 0.8;">CLASES</div>
+					<!--div class="buscador hidden-xs" style="float: right; position: absolute; right: 0; bottom: 0;">
+					  <div class="footerSubscribe">
+					    <form action="{{url('coaches')}}" method="post">
+					      {!! csrf_field() !!}
+					      <input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
+					      <button class="btnSubscribe" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+					    </form>
+					  </div>
+
+					</div-->
 				</div>
-				<div class="col-sm-3">
+				<!--div class="col-sm-3 visible-xs">
 					<div class="buscador">
 						<div class="footerSubscribe">
-			  			<form>
-			  				<input class="" type="text" name="" value="" placeholder="Buscar...">
+			  			<form action="{{url('coaches')}}" method="post">
+								{!! csrf_field() !!}
+			  				<input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
 								<button class="btnSubscribe" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
 			  			</form>
 			  		</div>
 
 					</div>
-				</div>
+				</div-->
+			</div>
+		
+
+
+
+
+
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+<div class="row">
+				<div class="col-sm-12 text-right">
+        	<a href="#" class="btn btn-success btn-lg hidden-xs" style="max-width: 200px;" data-toggle="modal" data-target="#nuevaclase">Agregar Clase</a>
+        	<a href="#" class="btn btn-success btn-lg visible-xs" data-toggle="modal" data-target="#nuevaclase">Agregar Clase</a>
+      	</div>
+</div>
+<p>&nbsp;</p>
+ 
+
+			<div class="row">
+				<div class="adv-table table-responsive">
+			  <table class="display table table-bordered table-striped table-hover" id="dynamic-table">
+			  <thead>
+			  <tr>
+			<th>Nombre</th>
+						<th><i class="fa fa-picture-o"></i></th>
+
+			      
+			      <th>Tipo</th>
+
+
+
+			  </tr>
+			  </thead>
+			  <tbody>
+					@if ($clases)
+						@foreach ($clases as $clase)
+
+									<tr style="cursor: pointer;"  data-toggle="modal" data-target="#clase{{$clase->id}}">
+
+								    <td>{{ucfirst($clase->nombre)}}</td>
+											<td>
+												 <img src="{{ url('uploads/clases') }}/{{$clase->imagen}}" class="img-responsive" style="max-width: 50px;">
+											</td>
+
+								      
+								      		<td>{{$clase->tipo}}</td>		      
+								      
+											</tr>
+									
+								
+
+
+						@endforeach
+					@endif
+
+
+
+			  </tbody>
+			  <tfoot>
+			  <tr>
+					<th>Nombre</th>
+						<th><i class="fa fa-picture-o"></i></th>
+
+			      
+			      <th>Tipo</th>
+
+
+			  </tr>
+			  </tfoot>
+			  </table>
+
+			  </div>
 			</div>
 		</div>
 		<p>&nbsp;</p>
-    <div class="teamItemWrap clear">
-			<div class="teamItem">
-				<a data-toggle="modal" data-target="#nuevaclase"><img src="{{ url('images') }}/plus.png" class="img-responsive"></a>
-				<div class="overlay">
-					<div class="teamItemNameWrap">
-						<a style="text-decoration:none;" data-toggle="modal" data-target="#nuevaclase"><h3>Agregar clase</h3></a>
-					</div>
-					<!--p>Formativa</p-->
-				</div>
-			</div>
-			@if ($clases)
-				@foreach ($clases as $clase)
-	        <div class="teamItem">
-	          <a data-toggle="modal" data-target="#clase{{$clase->id}}"><img src="{{ url('uploads/clases') }}/{{$clase->imagen}}" class="img-responsive"></a>
-	          <div class="overlay">
-	            <div class="teamItemNameWrap">
-	              <a style="text-decoration:none;" data-toggle="modal" data-target="#clase{{$clase->id}}"><h3>{{ucfirst($clase->nombre)}}</h3></a>
-	            </div>
-	            <!--p>Formativa</p-->
-	          </div>
-	        </div>
-	      @endforeach
-			@endif
-    </div>
+
   </div>
 	</section>
 @endsection
+
+
 
 @section('modals')
 	<div class="modal fade" id="nuevaclase" tabindex="-1" role="dialog">

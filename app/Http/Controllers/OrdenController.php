@@ -288,7 +288,7 @@ class OrdenController extends Controller
 
 
     public function nomina()
-    {
+    {        
       $coaches = User::where('role', 'instructor')->get();
       return view('admin.nomina',['coaches'=>$coaches]);
     }
@@ -694,7 +694,7 @@ public function reservar(Request $request)
        
         foreach ($productos as $producto) {
           $guardar = new Reservacion();
-          $guardar->horario_id=$producto['metadata']['asociado'];
+          
           $guardar->user_id=Auth::user()->id;
           $guardar->coach_id=$producto['metadata']['coach'];
           $guardar->tipo=$producto['metadata']['tipo'];
@@ -702,6 +702,7 @@ public function reservar(Request $request)
 
 
           if ($producto['metadata']['tipo']=="En condominio") {
+            $guardar->grupo_id=$producto['metadata']['asociado'];
             $grupo=Grupo::find($producto['metadata']['asociado']);
           $guardar->nombre=$grupo->clase->nombre;
             
@@ -712,6 +713,7 @@ public function reservar(Request $request)
               $guardar->direccion=$grupo->condominio->identificador.". ".$grupo->condominio->direccion;
             }
           }else {
+            $guardar->horario_id=$producto['metadata']['asociado'];
             $guardar->nombre=$producto['name'];
             if ($request->direccion==""&&$request->esresidencial!="true") {
               $guardar->direccion=$direccion->id;

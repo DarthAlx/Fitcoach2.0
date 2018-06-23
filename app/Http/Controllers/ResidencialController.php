@@ -10,6 +10,7 @@ use App\Grupo;
 use App\Evento;
 use App\Orden;
 use App\Condominio;
+use App\Reservacion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
@@ -126,9 +127,11 @@ class ResidencialController extends Controller
 
     public function printlist($id)
   {
-      $ordenes=Orden::where('asociado', $id)->get();
+      $ordenes=Reservacion::where('grupo_id', $id)->get();
       $residencial=Grupo::find($id);
       $condominio=$residencial->condominio;
+
+      /*return view('emails.list', ['ordenes'=>$ordenes,'residencial'=>$residencial,'condominio'=>$condominio]);*/
       $view =  \View::make('emails.list', ['ordenes'=>$ordenes,'residencial'=>$residencial,'condominio'=>$condominio])->render();
       $pdf = \App::make('dompdf.wrapper');
       $pdf->loadHTML($view);

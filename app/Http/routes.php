@@ -288,19 +288,19 @@ Route::group(['middleware' => 'administradores'], function(){
   Route::delete('eliminar-clase', 'ClaseController@destroy');
 
   Route::get('/grupos', function () {
-    $grupos = App\Residencial::all();
+    $grupos = App\Grupo::all();
     $coaches = App\User::where('role', 'instructor')->get();
     $clases = App\Clase::all();
     $condominios = App\Condominio::all();
-    $eventos = App\Residencial::where('tipo', 'Evento')->get();
+    $eventos = App\Grupo::where('tipo', 'Evento')->get();
       return view('admin.grupos', ['grupos'=>$grupos, 'coaches'=>$coaches, 'clases'=>$clases, 'condominios'=>$condominios, 'eventos'=>$eventos]);
   });
   Route::post('/grupos', function (Illuminate\Http\Request $request) {
-    $grupos = App\Residencial::all();
+    $grupos = App\Grupo::all();
     $coaches = App\User::where('role', 'instructor')->get();
     $clases = App\Clase::all();
     $condominios = App\Condominio::where('identificador', 'like', '%'.$request->busqueda.'%')->get();
-    $eventos = App\Residencial::where('tipo', 'Evento')->get();
+    $eventos = App\Grupo::where('tipo', 'Evento')->get();
       return view('admin.residenciales', ['grupos'=>$grupos, 'coaches'=>$coaches, 'clases'=>$clases, 'condominios'=>$condominios, 'eventos'=>$eventos]);
   });
   Route::post('agregar-grupo', 'ResidencialController@store');

@@ -19,6 +19,7 @@ class PagoTable extends Migration
         $table->string('metodo');
         $table->string('referencia');
         $table->string('monto');
+        $table->string('deducciones');
         $table->string('ordenes');
         $table->timestamps();
     });

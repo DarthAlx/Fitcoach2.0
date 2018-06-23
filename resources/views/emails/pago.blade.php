@@ -501,6 +501,7 @@
 																									<td style="width: 30%;"><span>Fecha</span></td>
 																									<td style="width: 30%;"><span>Metodo</span></td>
 																									<td style="width: 30%;"><span>Monto</span></td>
+																									<td style="width: 30%;"><span>Deducciones</span></td>
 
 																							</tr>
 
@@ -510,6 +511,13 @@
 																									<td style="width: 30%;">{{$pago->fecha}}</td>
 																									<td style="width: 30%;">{{$pago->metodo}}</td>
 																									<td style="width: 30%;">${{$pago->monto}}</td>
+																									<td style="width: 30%;">${{$pago->deducciones}}</td>
+
+																							</tr>
+																							<tr class="text">
+																									<td colspan="3" style="width: 80%;">Total</td>
+																									<td colspan="2" style="width: 20%;">${{intval($pago->monto)-intval($pago->deducciones)}}</td>
+																									
 
 																							</tr>
 

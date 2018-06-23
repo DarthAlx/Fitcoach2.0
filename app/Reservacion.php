@@ -8,7 +8,7 @@ class Reservacion extends Model
 {
     protected $table = 'reservaciones';
 
-	protected $fillable = ['horario_id', 'user_id','coach_id','nombre', 'tipo','fecha','hora', 'direccion', 'aforo', 'status','metadata'];
+	protected $fillable = ['horario_id', 'grupo_id', 'user_id','coach_id','nombre', 'tipo','fecha','hora', 'direccion', 'aforo', 'status','metadata'];
 
 	public function user(){
 		return $this->belongsTo('App\User');
@@ -22,4 +22,7 @@ class Reservacion extends Model
 	 public function abono(){
 	   return $this->hasOne('App\Abono');
 	 }
+	 public function grupo(){
+		return $this->belongsTo('App\Grupo');
+	}
 }

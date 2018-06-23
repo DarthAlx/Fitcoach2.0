@@ -14,7 +14,8 @@ class CreateReservacionsTable extends Migration
     {
         Schema::create('reservaciones', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('horario_id');
+            $table->bigInteger('horario_id')->nullable(true);
+            $table->bigInteger('grupo_id')->nullable(true);
             $table->bigInteger('user_id');
             $table->bigInteger('coach_id');
             $table->string('nombre');
