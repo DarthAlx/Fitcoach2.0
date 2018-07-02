@@ -79,4 +79,7 @@ class User extends Model implements AuthenticatableContract,
     public function grupo(){
         return $this->hasOne('App\Grupo');
     }
+    public function libres(){
+          return $this->hasMany('App\Libres');
+        }
 }

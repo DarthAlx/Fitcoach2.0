@@ -642,6 +642,43 @@
                 </form>
       				</div>
               </div>
+              <button type="button" style="width: 100%" class="list-group-item" name="button" data-toggle="collapse" data-target="#libres" aria-expanded="false" aria-controls="libres">Días libres</button>
+              <div class="collapse" id="libres">
+
+                <div>
+
+                  @if($user->libres)
+                  @foreach($user->libres as $libre)
+                  {{$libre->fecha}}
+                  <form style="display: none;" action="{{ url('/eliminar-libre') }}" method="post">
+                    {!! csrf_field() !!}
+                    {{ method_field('DELETE') }}
+                    <input type="hidden" name="libre_id" value="{{ $libre->id }}">
+                    <input type="submit" id="botoneliminar{{ $libre->id }}">
+                  </form>
+                  @endforeach
+                  @else
+                  Aún no tienes días libres
+                  @endif
+                </div>
+              </div>
+
+
+              <div class="collapse" id="libres">
+                
+              </div>
+              <button type="button" style="width: 100%" class="well" name="button" data-toggle="collapse" data-target="#nuevolibre" aria-expanded="false" aria-controls="nuevolibre">Nuevo día libre</button>
+              <div class="collapse" id="nuevolibre">
+                <div>
+
+                  <h4>Agregar día libre</h4>
+                  <form action="{{ url('/agregar-libre') }}" method="post">
+                    <input class="form-control datepicker" type="text" placeholder="Fecha (si no es recurrente)" name="fecha">
+                    {!! csrf_field() !!}
+                    <button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Guardar</button>
+                  </form>
+                </div>
+              </div>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

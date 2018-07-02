@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use App\Clase;
+use App\Libres;
 
 class ClaseController extends Controller
 {
@@ -164,5 +165,27 @@ class ClaseController extends Controller
       Session::flash('mensaje', 'Clase eliminada correctamente!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/clases'));
+    }
+
+
+
+    public function libre(Request $request)
+    {
+      $libre= new Libres($request->all());
+      $libre->save();
+      
+      Session::flash('mensaje', 'Día libre guardado correctamente!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url()->previous());
+    }
+
+
+    public function destroylibre(Request $request)
+    {
+      $libre = Libres::find($request->libre_id);
+      $libre->delete();
+      Session::flash('mensaje', 'Día libre eliminado correctamente!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url()->previous());
     }
 }

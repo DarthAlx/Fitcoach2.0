@@ -14,6 +14,8 @@ class CreateLibresTable extends Migration
     {
         Schema::create('libres', function (Blueprint $table) {
             $table->increments('id');
+            $table->date('fecha');
+            $table->bigInteger('user_id');
             $table->timestamps();
         });
     }

@@ -85,7 +85,7 @@
       <div class="row">
          <div class="col-md-12">
            <a class="btn btn-success" href="{{url('/clasesdeportivas')}}">Reservar</a><br>
-           <a class="btn btn-success" href="#">Comprar</a>
+           <a class="btn btn-success" href="{{url('/')}}#paquetes">Comprar</a>
          </div>
        </div>
       <hr>

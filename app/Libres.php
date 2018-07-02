@@ -8,9 +8,9 @@ class Libres extends Model
 {
     protected $table = 'libres';
 
-	protected $fillable = ['horario_id', 'fecha', 'hora', 'user_id'];
+	protected $fillable = ['fecha', 'user_id'];
 
-  	public function horario(){
-       	return $this->belongsTo('App\Horario');
+  	public function user(){
+       	return $this->belongsTo('App\User');
     }
 }
