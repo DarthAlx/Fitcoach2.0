@@ -240,6 +240,7 @@ fbq('track', 'ViewContent');
 							<input type="tel" class="form-control" name="tel" value="{{ old('tel') }}" minlength="10" placeholder="Teléfono (10 dígitos)" required>
 							<input  type="password" class="form-control" name="password" placeholder="Contraseña" required>
 							<input type="password" class="form-control" name="password_confirmation" placeholder="Repetir contraseña"  required>
+							<input type="text" class="form-control" value="{{ old('referencia') }}" name="referencia" placeholder="Código de referencia">
 							<div class="checkbox" style="padding: 10px 0;">
 								<input type="checkbox" name="términos" value="Sí" required> <a href="{{url('/legales')}}?page=terminos" style="text-decoration: none; color: #000;">Acepto términos y condiciones y</a> <a href="{{url('/legales')}}?page=terminos" style="text-decoration: none; color: #000;">aviso de privacidad.</a>
 							</div>

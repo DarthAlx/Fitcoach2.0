@@ -358,13 +358,42 @@ class OrdenController extends Controller
      */
     public function update(Request $request)
     {
-      $orden = Reservacion::find($request->ordencancelar);
-      $orden->status = 'Cancelada';
-      $orden->metadata=$request->tipocancelacion;
-      $orden->save();
-      Session::flash('mensaje', '¡Orden Cancelada!');
-      Session::flash('class', 'success');
-      return redirect($this->redirectPath());
+
+
+      if ($request->tipocancelacion=="24 horas antes") {
+              $orden = Reservacion::find($request->ordencancelar);
+
+              $paquete= new PaqueteComprado();
+              $paquete->user_id=$orden->user_id;
+              $paquete->orden_id=$orden->id;
+              $paquete->clases=$orden->tokens;
+              $paquete->disponibles=$orden->tokens;
+              $paquete->tipo=$orden->tipo;
+              $paquete->fecha=$orden->fecha;
+              $fecha = date('Y-m-d');
+              $nuevafecha = strtotime ( '+15 day' , strtotime ( $fecha ) ) ;
+              $paquete->expiracion = date ( 'Y-m-d' , $nuevafecha );
+
+              $paquete->save();
+              $orden->status='Cancelada';
+              $orden->metadata="token devuelto";
+              $orden->save();
+
+
+            //$this->sendclasscancel($orden->id);
+              Session::flash('mensaje', 'Token devuelto.');
+              Session::flash('class', 'success');
+      }
+      else{
+              $orden = Reservacion::find($request->ordencancelar);
+              $orden->status = 'Cancelada';
+              $orden->metadata=$request->tipocancelacion;
+              $orden->save();
+              Session::flash('mensaje', '¡Orden Cancelada!');
+              Session::flash('class', 'success');
+              return redirect($this->redirectPath());
+      }
+      
     }
 
     /**
@@ -495,6 +524,39 @@ class OrdenController extends Controller
         $this->sendinvoice($guardar->id);
         //$this->sendclassrequest($order->id);
         //Session::flash('total', $order->amount);
+        $cuantascompradas=0;
+
+        if ($user->referencia!=""&&!str_contains($user->referencia, '-ganado')) {
+          $clasescompradas=PaqueteComprado::where('user_id',$user->id)->get();
+          foreach ($clasescompradas as $compradas) {
+            $cuantascompradas=$cuantascompradas+$compradas->clases;
+          }
+          if ($cuantascompradas>=4) {
+            $referente=User::where('code',$user->referencia)->first();
+
+            if ($referente->role=="usuario") {
+              $paquetecomprado = new PaqueteComprado();
+              $paquetecomprado->user_id=$referente->id;
+              $paquetecomprado->orden_id="Referencia";
+              $paquetecomprado->clases=1;
+              $paquetecomprado->disponibles=1;
+              $paquetecomprado->tipo="A domicilio";
+              $paquetecomprado->fecha=date("Y-m-d");
+              $fecha = date('Y-m-d');
+              $nuevafecha = strtotime ( '+15 day' , strtotime ( $fecha ) ) ;
+              $expiracion = date ( 'Y-m-d' , $nuevafecha );
+              $paquetecomprado->expiracion=$expiracion;
+              $paquetecomprado->save();
+            }
+            elseif ($referente->role=="instructor") {
+              # code...
+            }
+            $user->referencia=$user->referencia.'-ganado';
+            $user->save();
+            
+
+          }
+        }
         return redirect()->intended(url('/completa'));
 
 
@@ -694,6 +756,7 @@ public function reservar(Request $request)
        
         foreach ($productos as $producto) {
           $guardar = new Reservacion();
+          $guardar->tokens = 1;
           
           $guardar->user_id=Auth::user()->id;
           $guardar->coach_id=$producto['metadata']['coach'];

@@ -26,6 +26,7 @@ class CreateReservacionsTable extends Migration
             $table->string('aforo');
             $table->string('status');
             $table->string('metadata');
+            $table->string('tokens');
             $table->timestamps();
         });
     }

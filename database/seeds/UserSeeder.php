@@ -29,7 +29,8 @@ class UserSeeder extends Seeder
             'name'=>'Alexis morales',
             'email'=>'cavalerasss@hotmail.com',
             'password'=>bcrypt('admin123'),
-            'role' =>'instructor'
+            'role' =>'instructor',
+            'code' =>'AbC154'
         ]);
 
       

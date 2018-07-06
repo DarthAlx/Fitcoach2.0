@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
         $table->string('genero');
         $table->integer('rating')->nullable(true);
         $table->date('acceso')->default(date('Y-m-d'));
+        $table->string('code');
+        $table->string('referencia')->nullable(true);
         $table->rememberToken();
         $table->timestamps();
     });

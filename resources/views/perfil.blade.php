@@ -12,6 +12,7 @@
             $nombre[1] = null;
         }?>
         <h2>Hola <span class="nombre">{{ucfirst($nombre[0])}} {{ucfirst($nombre[1])}}</span></h2>
+        <h4 style="text-align: right">código de referencia: <strong>{{$user->code}}</strong></h4>
       </div>
   </div>
   <script type="text/javascript">
