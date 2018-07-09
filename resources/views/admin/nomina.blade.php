@@ -31,6 +31,7 @@
 			      <th>Celular</th>
 			      <th>Último pago</th>
 			      <th>Pendiente</th>
+			      <th>Referencias</th>
 						<th>Acciones</th>
 			  </tr>
 			  </thead>
@@ -52,6 +53,7 @@
 								else {
 									$fecha=$ultimo->fecha;
 								}
+								$referencias=App\User::where('referencia',$coach->code.'-ganado')->count();
 							?>
 							<tr style="cursor: pointer;">
 						      <td>
@@ -65,6 +67,7 @@
 						      <td>{{$coach->tel}}</td>
 						      <td>{{$fecha}}</td>
 						      <td>${{$pendiente}}</td>
+						      <td>{{$referencias}}</td>
 									<td>
 										<button type="button" name="button" class="btn btn-primary" data-toggle="modal" data-target="#pagar{{$coach->id}}">Pagar</button>
 										<button type="button" name="button" class="btn btn-primary" data-toggle="modal" data-target="#historial{{$coach->id}}">Historial</button>
@@ -73,6 +76,7 @@
 						@endforeach
 					@else
 						<tr style="cursor: pointer;">
+								<td></td>
 								<td></td>
 								<td></td>
 								<td></td>
@@ -90,6 +94,7 @@
 					<th>Celular</th>
 					<th>Último pago</th>
 					<th>Pendiente</th>
+					<th>Referencias</th>
 					<th>Acciones</th>
 			  </tr>
 			  </tfoot>
