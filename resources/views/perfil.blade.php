@@ -1,6 +1,6 @@
 @extends('plantilla')
 @section('pagecontent')
-<div class="container-bootstrap">
+<div class="container-bootstrap-fluid">
   <div class="topclear">
     &nbsp;
   </div>
@@ -12,7 +12,8 @@
             $nombre[1] = null;
         }?>
         <h2>Hola <span class="nombre">{{ucfirst($nombre[0])}} {{ucfirst($nombre[1])}}</span></h2>
-        <h4 style="text-align: right">código de referencia: <strong>{{$user->code}}</strong></h4>
+        <h4 style="text-align: right">código de referencia: <strong>{{$user->code}}</strong> <a href="#" style="color: #000;" id="shareBtn"><i class="fa fa-share-alt" aria-hidden="true"></i>
+</a></h4>
       </div>
   </div>
   <script type="text/javascript">
@@ -26,7 +27,7 @@
  }
   </script>
   <div class="row">
-    <div class="col-md-4 sidebar">
+    <div class="col-md-4 col-lg-3 sidebar">
       <?php 
       $user=App\User::find(Auth::user()->id);
       $particulares=App\PaqueteComprado::where('user_id', $user->id)->where('tipo','A domicilio')->where('disponibles','<>',0)->orderBy('expiracion','asc')->get();
@@ -53,7 +54,8 @@
        ?>
        <div class="row">
          <div class="col-md-12">
-           <p style="font-size: 1.2rem; ">CLASES DISPONIBLES</p>
+          <h4>CLASES DISPONIBLES</h4>
+           
          </div>
        </div>
       <div class="row">
@@ -141,10 +143,15 @@
 
       <div class="clasesperfil visible-xs">
         <hr>
-        <div class="text-center">
-          <button type="button" id="btnproximas" class="btn btn-success" style="display:inline-block; width:25%;" onclick="verclases('proximas')">Próximas clases</button>
-          <button type="button" id="btnpasadas" class="btn btn-clases" style="display:inline-block; width:25%;" onclick="verclases('pasadas')">Clases pasadas</button>
-          <button type="button" id="btnhistorial" class="btn btn-clases" style="display:inline-block; width:25%;" onclick="verclases('historial')">Historial de clases</button>
+        <div class="text-center row">
+
+
+          <div class="col-xs-12"><button type="button" id="btnproximas" class="btn btn-success" style="display:inline-block; width:100%;" onclick="verclases('proximas')">Próximas clases</button></div>
+          <div class="col-xs-12"><button type="button" id="btnpasadas" class="btn btn-clases" style="display:inline-block; width:100%;" onclick="verclases('pasadas')">Clases pasadas</button></div>
+          <div class="col-xs-12"><button type="button" id="btnhistorial" class="btn btn-clases" style="display:inline-block; width:100%;" onclick="verclases('historial')">Historial de compras</button></div>
+          
+          
+          
           <script type="text/javascript">
             function verclases(valor) {
               if (valor=="proximas") {
@@ -196,7 +203,7 @@
                    <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                  </a>
               <?php } } else{ ?>
-                <p>No has tomado ninguna clase.</p>
+                <p class="text-center">No has tomado ninguna clase.</p>
                 <?php  } ?>
             @endif
 
@@ -230,7 +237,7 @@
                    <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                  </a>
               <?php } } else{ ?>
-                <p>No has tomado ninguna clase.</p>
+                <p class="text-center">No has tomado ninguna clase.</p>
                 <?php  } ?>
             @endif
 
@@ -244,7 +251,7 @@
               <?php
               $compradas= $user->paquetes;
 
-              if ($compradas) {
+              if (!$compradas->isEmpty()) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($compradas as $comprada) {
 
@@ -262,7 +269,7 @@
               <?php 
                 }  
               } else{ ?>
-                <p>No has comprado ningún paquete.</p>
+                <p class="text-center">No has comprado ningún paquete.</p>
                 <?php  }
                ?>
 
@@ -284,13 +291,16 @@
       @endif
       <button type="button" class="btn" data-toggle="modal" data-target="#agregartarjeta"><span>Nueva tarjeta +</span></button>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-8 col-lg-9">
     <div class="clasesperfil hidden-xs">
       <hr>
-      <div class="text-center">
-        <button type="button" id="btnproximaslg" class="btn btn-success" style="display:inline-block; width:30%;" onclick="verclaseslg('proximaslg')">Próximas clases</button>
-        <button type="button" id="btnpasadaslg" class="btn btn-clases" style="display:inline-block; width:30%;" onclick="verclaseslg('pasadaslg')">Clases pasadas</button>
-        <button type="button" id="btnhistoriallg" class="btn btn-clases" style="display:inline-block; width:30%;" onclick="verclaseslg('historiallg')">Historial de Clases</button>
+      <div class="text-center row">
+        <div class="col-sm-4"><button type="button" id="btnproximaslg" class="btn btn-success" style="display:inline-block; width:100%;" onclick="verclaseslg('proximaslg')">Próximas clases</button></div>
+        <div class="col-sm-4"><button type="button" id="btnpasadaslg" class="btn btn-clases" style="display:inline-block; width:100%;" onclick="verclaseslg('pasadaslg')">Clases pasadas</button></div>
+        <div class="col-sm-4"><button type="button" id="btnhistoriallg" class="btn btn-clases" style="display:inline-block; width:100%;" onclick="verclaseslg('historiallg')">Historial de compras</button></div>
+        
+        
+        
         <script type="text/javascript">
           function verclaseslg(valor) {
             if (valor=="proximaslg") {
@@ -345,7 +355,7 @@
                  <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                </a>
             <?php } } else{ ?>
-              <p>No has tomado ninguna clase.</p>
+              <p class="text-center">No has tomado ninguna clase.</p>
               <?php  } ?>
           @endif
 
@@ -378,7 +388,7 @@
                  <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                </a>
             <?php } } else{ ?>
-              <p>No has tomado ninguna clase.</p>
+              <p class="text-center">No has tomado ninguna clase.</p>
               <?php  } ?>
           @endif
 
@@ -391,7 +401,7 @@
               $compradas= $user->paquetes;
 
 
-              if ($compradas) {
+              if (!$compradas->isEmpty()) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($compradas as $comprada) {
 
@@ -409,7 +419,7 @@
               <?php 
                 }  
               } else{ ?>
-                <p>No has comprado ningún paquete.</p>
+                <p class="text-center">No has comprado ningún paquete.</p>
                 <?php  }
                ?>
 
@@ -423,6 +433,16 @@
 
 </div>
 
+<script>
+document.getElementById('shareBtn').onclick = function() {
+  FB.ui({
+    method: 'share',
+    display: 'popup',
+quote:'Usa mi código de referencia: {{$user->code}}',
+    href: "{{url('/')}}",
+  }, function(response){});
+}
+</script>
 
 
 @endsection

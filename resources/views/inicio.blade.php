@@ -52,6 +52,11 @@
 		<section class="paquetes" id="paquetes">
 		<div class="container-bootstrap">
 			<div class="row">
+				<div class="col-md-12 text-center">
+					<h1 class="title">COMPRAR CLASES</h1>
+				</div>
+			</div>
+			<div class="row">
 				<div class="col-md-12  disponibles">
 					
 				
@@ -84,13 +89,13 @@
 				@foreach($particulares as $paquete)
 					@if($paquete->paquete=="Primer clase")
 						<div class="col-md-2 col-xs-6">
-							<div class="paquete" onclick="location.href='{{url('/comprar-paquete')}}/{{$paquete->id}}'" style="cursor:pointer;">
+							<div class="paquete" onclick="location.href='{{url('/comprar-paquete')}}/{{$paquete->id}}'" style="cursor:pointer; color: #EF7E19;">
 								<div class="blue-cap"></div>
 								<div class="info-paquete">
 									<div class="circulo gotham2">
 										<i class="fa fa-gift" aria-hidden="true"></i>
 									</div>
-									<div class="color_gris2 gotham3 uppercase super_small">
+									<div class="color_gris2 gotham3 uppercase super_small" style=" color: #EF7E19;">
 										 PRIMER CLASE
 									</div>
 									<div class="precios gotham3 medium">
@@ -140,6 +145,7 @@
 
 		</div>
 	</div>
+	<hr style=" border-color: #EF7E19;">
 		<div class="row">
 				<div class="col-md-12  disponibles">
 
@@ -169,13 +175,13 @@
 				@foreach($residenciales as $paquete)
 					@if($paquete->paquete=="Primer clase")
 						<div class="col-md-2 col-xs-6">
-							<div class="paquete" onclick="location.href='{{url('/comprar-paquete')}}/{{$paquete->id}}'" style="cursor:pointer;">
+							<div class="paquete" onclick="location.href='{{url('/comprar-paquete')}}/{{$paquete->id}}'" style=" color: #EF7E19; cursor:pointer;">
 								<div class="blue-cap"></div>
 								<div class="info-paquete">
 									<div class="circulo gotham2">
 										<i class="fa fa-gift" aria-hidden="true"></i>
 									</div>
-									<div class="color_gris2 gotham3 uppercase super_small">
+									<div class="color_gris2 gotham3 uppercase super_small" style=" color: #EF7E19;">
 										 PRIMER CLASE
 									</div>
 									<div class="precios gotham3 medium">

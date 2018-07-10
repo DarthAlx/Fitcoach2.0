@@ -84,7 +84,7 @@
 <p>&nbsp;</p>
 
     <form action="{{url('cargo')}}" method="POST" id="payment-form">
-      {!! csrf_field() !!}
+      <input id="tokencsrf" type="hidden" name="_token" value="{{ csrf_token() }}">
       <input type="hidden" value="{{$paquete->id}}" name="paquete" />
       <input type="hidden" id="token_id" name="token_id" />
     <div class="row">

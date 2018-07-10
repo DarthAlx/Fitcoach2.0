@@ -1,6 +1,6 @@
 @extends('plantilla')
 @section('pagecontent')
-<div class="container-bootstrap">
+<div class="container-bootstrap-fluid">
   <div class="topclear">
     &nbsp;
   </div>
@@ -16,7 +16,7 @@
       </div>
   </div>
   <div class="row">
-    <div class="col-md-4 sidebar">
+    <div class="col-md-4 col-lg-3 sidebar">
       <hr>
       <div class="claseanterior text-center">
         <h4>PENDIENTE POR PAGAR</h4>
@@ -36,10 +36,10 @@
       </div>
       <div class="clasesperfil visible-xs">
         <hr>
-        <div class="text-center">
-          <button type="button" id="btnproximas" class="btn btn-success" style="display:inline-block; width:25%;" onclick="verclases('proximas')">Próximas clases</button>
-          <button type="button" id="btnpasadas" class="btn btn-clases" style="display:inline-block; width:25%;" onclick="verclases('pasadas')">Clases pasadas</button>
-          <button type="button" id="btnhistorial" class="btn btn-clases" style="display:inline-block; width:25%;" onclick="verclases('historial')">Historial de clases</button>
+        <div class="text-center row">
+          <div class="col-xs-12"><button type="button" id="btnproximas" class="btn btn-success" style="display:inline-block; width:100%;" onclick="verclases('proximas')">Próximas clases</button></div>
+          <div class="col-xs-12"><button type="button" id="btnpasadas" class="btn btn-clases" style="display:inline-block; width:100%;" onclick="verclases('pasadas')">Clases pasadas</button></div>
+          <div class="col-xs-12"><button type="button" id="btnhistorial" class="btn btn-clases" style="display:inline-block; width:100%;" onclick="verclases('historial')">Historial de pagos</button></div>
           <script type="text/javascript">
             function verclases(valor) {
               if (valor=="proximas") {
@@ -115,7 +115,7 @@
                  @endif
 
               <?php } } else{ ?>
-                <p>No has tomado ninguna clase.</p>
+                <p class="text-center">No has dado ninguna clase.</p>
                 <?php  } ?>
           </div>
         </div>
@@ -124,7 +124,7 @@
               <?php  $array=array();
 
               $pasadas= App\Reservacion::where('coach_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('created_at', 'desc')->get();
-              if ($pasadas) {
+              if (!$pasadas->isEmpty()) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($pasadas as $pasada) {
                   $fecha=date_create($pasada->fecha);
@@ -168,7 +168,7 @@
                  </a>
                  @endif
               <?php } } else{ ?>
-                <p>No has tomado ninguna clase.</p>
+                <p class="text-center">No has dado ninguna clase.</p>
                 <?php  } ?>
 
 
@@ -180,7 +180,7 @@
               <?php
               $abonos= $user->abonos;
 
-              if ($abonos) {
+              if (!$abonos->isEmpty()) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($abonos as $abono) {
 
@@ -194,7 +194,7 @@
               <?php 
                 }  
               } else{ ?>
-                <p>No has recibido ningún abono.</p>
+                <p class="text-center">No has recibido ningún abono.</p>
                 <?php  }
                ?>
 
@@ -212,12 +212,12 @@
       <button type="button" class="btn" data-toggle="modal" data-target="#cambiarcontraseña"><span>Contraseña</span> <i class="fa fa-pencil" aria-hidden="true"></i></button>
 
     </div>
-    <div class="col-md-8 hidden-xs">
+    <div class="col-md-8 col-lg-9 hidden-xs">
       <hr>
-      <div class="text-center">
-        <button type="button" id="btnproximaslg" class="btn btn-success" style="display:inline-block; width:30%;" onclick="verclaseslg('proximaslg')">Próximas Clases</button>
-        <button type="button" id="btnpasadaslg" class="btn btn-clases" style="display:inline-block; width:30%;" onclick="verclaseslg('pasadaslg')">Clases Pasadas</button>
-        <button type="button" id="btnhistoriallg" class="btn btn-clases" style="display:inline-block; width:30%;" onclick="verclaseslg('historiallg')">Historial de Clases</button>
+      <div class="text-center row">
+        <div class="col-sm-4"><button type="button" id="btnproximaslg" class="btn btn-success" style="display:inline-block; width:100%;" onclick="verclaseslg('proximaslg')">Próximas clases</button></div>
+        <div class="col-sm-4"><button type="button" id="btnpasadaslg" class="btn btn-clases" style="display:inline-block; width:100%;" onclick="verclaseslg('pasadaslg')">Clases pasadas</button></div>
+        <div class="col-sm-4"><button type="button" id="btnhistoriallg" class="btn btn-clases" style="display:inline-block; width:100%;" onclick="verclaseslg('historiallg')">Historial de pagos</button></div>
         <script type="text/javascript">
           function verclaseslg(valor) {
             if (valor=="proximaslg") {
@@ -290,7 +290,7 @@
                  </a>
                  @endif
             <?php } } else{ ?>
-              <p>No has tomado ninguna clase.</p>
+              <p class="text-center">No has dado ninguna clase.</p>
               <?php  } ?>
         </div>
       </div>
@@ -298,7 +298,7 @@
         <div class="list-group">
             <?php $array=array();
             $pasadas= App\Reservacion::where('coach_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('created_at', 'desc')->get();
-            if ($pasadas) {
+            if (!$pasadas->isEmpty()) {
               date_default_timezone_set('America/Mexico_City');
               foreach ($pasadas as $pasada) {
                 $fecha=date_create($pasada->fecha);
@@ -342,7 +342,7 @@
                  </a>
                  @endif
             <?php } } else{ ?>
-              <p>No has tomado ninguna clase.</p>
+              <p class="text-center">No has dado ninguna clase.</p>
               <?php  } ?>
 
 
@@ -353,7 +353,7 @@
               <?php
               $abonos= $user->abonos;
 
-              if ($abonos) {
+              if (!$abonos->isEmpty()) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($abonos as $abono) {
 
@@ -367,7 +367,7 @@
               <?php 
                 }  
               } else{ ?>
-                <p>No has recibido ningún abono.</p>
+                <p class="text-center">No has recibido ningún abono.</p>
                 <?php  }
                ?>
 
