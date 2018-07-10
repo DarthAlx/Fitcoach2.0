@@ -271,7 +271,7 @@ Route::group(['middleware' => 'administradores'], function(){
     $condominios = App\Condominio::all();
       return view('admin.condominios', ['condominios'=>$condominios]);
   });
-  Route::post('/condominios-admin', function (Illuminate\Http\Request $request) {
+  Route::post('/condominios', function (Illuminate\Http\Request $request) {
     $condominios = App\Condominio::where('identificador', 'like', '%'.$request->busqueda.'%')->get();
     return view('admin.condominios', ['condominios'=>$condominios]);
   });
