@@ -172,11 +172,12 @@ class ClaseController extends Controller
     public function libre(Request $request)
     {
       $libre= new Libres($request->all());
+      $libre->user_id=Auth::user()->id;
       $libre->save();
       
       Session::flash('mensaje', 'Día libre guardado correctamente!');
       Session::flash('class', 'success');
-      return redirect()->intended(url()->previous());
+      return redirect()->intended(url('/perfilinstructor'));
     }
 
 
@@ -186,6 +187,6 @@ class ClaseController extends Controller
       $libre->delete();
       Session::flash('mensaje', 'Día libre eliminado correctamente!');
       Session::flash('class', 'success');
-      return redirect()->intended(url()->previous());
+      return redirect()->intended(url('/perfilinstructor'));
     }
 }

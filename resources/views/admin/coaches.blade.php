@@ -73,6 +73,7 @@
 
 			      
 			      <th>Email</th>
+			      <th>Teléfono</th>
 			      <th>Ultimo acceso</th>
 
 
@@ -96,6 +97,7 @@
 
 								      
 								      <td>{{$usuario->email}}</td>
+								       <td>{{$usuario->tel}}</td>
 								      <td>{{$usuario->acceso}}</td>
 								      
 								      
@@ -117,6 +119,7 @@
 
 			      
 			      <th>Email</th>
+			      <th>Teléfono</th>
 			      <th>Ultimo acceso</th>
 
 

@@ -648,15 +648,29 @@
 
                 <div>
 
-                  @if($user->libres)
+                  @if(!$user->libres->isEmpty())
                   @foreach($user->libres as $libre)
-                  {{$libre->fecha}}
-                  <form style="display: none;" action="{{ url('/eliminar-libre') }}" method="post">
-                    {!! csrf_field() !!}
-                    {{ method_field('DELETE') }}
-                    <input type="hidden" name="libre_id" value="{{ $libre->id }}">
-                    <input type="submit" id="botoneliminar{{ $libre->id }}">
-                  </form>
+                  <table class="table">
+                    <tr>
+                      <th>Día</th>
+                      <th>Eliminar</th>
+                    </tr>
+                    <tr>
+                      <td>
+                        {{$libre->fecha}}
+                      </td>
+                      <td>
+                        <form  action="{{ url('/eliminar-libre') }}" method="post">
+                          {!! csrf_field() !!}
+                          {{ method_field('DELETE') }}
+                          <input type="hidden" name="libre_id" value="{{ $libre->id }}">
+                          <button type="submit" class="btn btn-danger" id="botoneliminar{{ $libre->id }}">Eliminar</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </table>
+                  
+                  
                   @endforeach
                   @else
                   Aún no tienes días libres
@@ -665,9 +679,7 @@
               </div>
 
 
-              <div class="collapse" id="libres">
-                
-              </div>
+
               <button type="button" style="width: 100%" class="well" name="button" data-toggle="collapse" data-target="#nuevolibre" aria-expanded="false" aria-controls="nuevolibre">Nuevo día libre</button>
               <div class="collapse" id="nuevolibre">
                 <div>
