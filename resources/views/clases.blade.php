@@ -1,5 +1,6 @@
 @extends('plantilla')
 @section('pagecontent')
+
 	<section class="container">
 		<div class="topclear">
 	    &nbsp;
@@ -14,6 +15,7 @@
 				</div>
 
 			</div>
+
 <br>
 			<div class="row">
 				<div class="col-md-6 col-xs-6">
@@ -101,6 +103,7 @@
 								$fechasformateadas=array();
 
 
+
 								for ($i=0; $i < 30 ; $i++) {
 									$nuevafecha = strtotime ( '+'.($i+1).'day' , strtotime ( $fecha ) ) ;
 									$nuevafecha = date ( 'Y-m-d' , $nuevafecha );
@@ -116,6 +119,7 @@
 								}
 
 								 ?>
+
 				<div class="container-fluid" id="trabajo">
 
 	        <div class="row">
@@ -153,9 +157,20 @@
 															$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 															?>
 															@foreach ($particulares as $particular)
+
+															<?php 
+															$diaslibres=App\Libres::where('user_id',$particular->user_id)->get();
+															$libres=array();
+
+															foreach ($diaslibres as $dialibre) {
+
+															$libres[]= $dialibre->fecha ;
+															}
+
+															?>
 																<?php $existe=App\Reservacion::where('coach_id', $particular->user_id)->where('fecha', $fechas[$x])->where('hora', $particular->hora)->first(); ?>
 																@if (!$existe)
-																	@if ($particular->fecha==$fechas[$x]||in_array($dia_n, explode(",",$particular->recurrencia)))
+																	@if (!in_array($fechas[$x], $libres) && ($particular->fecha==$fechas[$x]||in_array($dia_n, explode(",",$particular->recurrencia))))
 	                                  <?php $nombre=explode(" ",$particular->user->name); ?>
 																		<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}{{$i}}','{{$particular->clase->id}}','{{$clase->id}}');" style="cursor:pointer;">
 																			<input type="checkbox" class="carritocheck" id="carrito{{$x}}{{$particular->id}}{{$i}}" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
@@ -203,18 +218,27 @@
 														<?php
 
 														if ($zonarequest=="todas") {
-															$particulares=App\Particular::where('clase_id', $clase->id)->orderBy('hora', 'asc')->get();
+															$particulares=App\Horario::where('clase_id', $clase->id)->orderBy('hora', 'asc')->get();
 														}
 														else {
-															$particulares=App\Particular::where('clase_id', $clase->id)->where('zona_id', $zonarequest)->orderBy('hora', 'asc')->get();
+															$particulares=App\Horario::where('clase_id', $clase->id)->where('zona_id', $zonarequest)->orderBy('hora', 'asc')->get();
 														}
 														list($año, $mes, $dia) = explode("-", $fechas[$x]);
 														$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 														?>
 														@foreach ($particulares as $particular)
-															<?php $existe=App\Orden::where('coach_id', $particular->user_id)->where('fecha', $fechas[$x])->where('hora', $particular->hora)->first(); ?>
+
+														<?php 
+															$diaslibres=App\Libres::where('user_id',$particular->user_id)->get();
+															$libres=array();
+															foreach ($diaslibres as $dialibre) {
+															$libres[]=$dialibre->fecha;
+														}
+															?>
+
+															<?php $existe=App\Reservacion::where('coach_id', $particular->user_id)->where('fecha', $fechas[$x])->where('hora', $particular->hora)->first(); ?>
 															@if (!$existe)
-																@if ($particular->fecha==$fechas[$x]||in_array($dia_n, explode(",",$particular->recurrencia)))
+																@if (!in_array($fechas[$x], $libres) && ($particular->fecha==$fechas[$x]||in_array($dia_n, explode(",",$particular->recurrencia))))
 																	<?php $nombre=explode(" ",$particular->user->name); ?>
 																	<li class="list-group-item" onclick="agregaracarrito('{{$x}}{{$particular->id}}{{$i}}mini','{{$particular->clase->id}}','{{$clase->id}}');" style="cursor:pointer;">
 																		<input type="checkbox" class="carritocheck" id="carrito{{$x}}{{$particular->id}}{{$i}}mini" name="carrito[]" value="{{$particular->id}},{{$fechas[$x]}}" style="display:none">
