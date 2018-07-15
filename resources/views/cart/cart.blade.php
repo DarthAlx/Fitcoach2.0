@@ -17,15 +17,21 @@
     @else
       <?php $user=App\User::find(Auth::user()->id);?>
 </section>
-<div class="container-bootstrap">
+<div class="container-bootstrap-fluid">
     <div class="col-sm-12">
       <div class="cart-header">
         <div class="row">
-          <div class="col-md-5">
-            <h1 class="title"><strong class="numofclass">{{$paquete->num_clases}}</strong> CLASES {{$paquete->tipo}}</h1>
+          <div class="col-xs-3 col-sm-1  col-md-1">
+            <h1 class="title"><strong class="numofclass">{{$paquete->num_clases}}</strong></h1>
           </div>
-          <div class="col-md-7 text-right">
-            <h1 class="title"><strong class="numofclass">&nbsp;</strong><strong>${{$paquete->precio}}</strong><strong class="numofclass">&nbsp;</strong>Expiran en {{$paquete->dias}} días</h1>
+          <div class="col-xs-9 col-sm-4 col-md-4">
+            <h1 class="title"> CLASES {{$paquete->tipo}}<strong class="numofclass">&nbsp;</strong></h1>
+          </div>
+          <div class="col-xs-3 col-sm-1 col-sm-offset-1 col-md-1 col-md-offset-1">
+            <h1 class="title"><strong class="numofclass">&nbsp;</strong><strong>${{$paquete->precio}}</strong></h1>
+          </div>
+          <div class="col-xs-9 col-sm-5 col-md-5 text-right">
+            <h1 class="title"><strong class="numofclass">&nbsp;</strong>Expiran en {{$paquete->dias}} días</h1>
           </div>
         </div>
       </div>
@@ -68,7 +74,7 @@
     </div>
 <p>&nbsp;</p>
 @if(!$descuento)
-<div class="row">
+<div class="">
 <div class="col-sm-6 col-sm-offset-3">
   <div class="coupon">
 
@@ -87,7 +93,7 @@
       <input id="tokencsrf" type="hidden" name="_token" value="{{ csrf_token() }}">
       <input type="hidden" value="{{$paquete->id}}" name="paquete" />
       <input type="hidden" id="token_id" name="token_id" />
-    <div class="row">
+    <div class="">
     <div class="col-sm-6 col-sm-offset-3">
 
 

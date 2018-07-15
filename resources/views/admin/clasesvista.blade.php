@@ -97,7 +97,7 @@
 								      </td>
 								      <td>
 								      	@if($clase->abono)
-								      	{{$clase->abono->abono}}
+								      	${{$clase->abono->abono}} MXN
 								      	@else
 								      	-
 								      	@endif
@@ -199,7 +199,7 @@
 			      <div class="modal-body">
 
 			              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
-										<h4 class="title">{{$clase->folio}}: {{$clase->nombre}}</h4>
+										<h4 class="title">{{$clase->id}}: {{$clase->nombre}}</h4>
 										<div class="row">
 											<div class="col-sm-5">
 				      					<p>

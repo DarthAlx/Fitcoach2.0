@@ -645,9 +645,7 @@ color: #D58628 !important;
 	    color: #efeeee;
 
 	}
-  .cart-header .title {
-    font-size: 35px;
-  }
+
 	.teamItemNameWrap h3 {
 	    font-size: 20px;
 	}
@@ -666,7 +664,20 @@ color: #D58628 !important;
 }
 
 }
+@media (max-width: 767px){
+.cart-header .title {
+    font-size: 3rem;
+    text-align: center;
+  }
+  .cart-header .title .numofclass {
+    font-weight: bold;
+    font-size: 4rem !important;
+}
 
+.mainMenu ul li {
+    margin-left: 0px !important;
+}
+}
 
 @media (min-width: 768px){
 	.modal-dialog {
@@ -676,6 +687,11 @@ color: #D58628 !important;
 	.buscador .footerSubscribe {
     margin-top: 2.5vh;
 }
+
+  .cart-header .title {
+    font-size: 2rem;
+  }
+
 }
 @media (min-width: 992px){
 	.modal-dialog {
@@ -685,6 +701,9 @@ color: #D58628 !important;
 	.buscador .footerSubscribe {
     margin-top: 4.5vh;
 }
+  .cart-header .title {
+    font-size: 2.5rem;
+  }
 }
 @media (min-width: 1250px){
 	.teamItem .overlay a {
