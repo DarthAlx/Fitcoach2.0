@@ -54,11 +54,11 @@
     											<?php $coach=App\User::find($product->options->coach); ?>
     											Coach: {{ $coach->name }}<br>
                           @if ($product->options->tipo=="residencial")
-                            <?php $residencial=App\Grupo::find($product->id); $esresidencial=true;?>
+                            <?php $residencial=App\Horario::find($product->id); $esresidencial=true;?>
                             @if ($residencial->tipo=="Evento")
                               Dirección: {!!$residencial->direccionevento!!}
                             @else
-                              Dirección: {{$residencial->condominio->direccion}}
+                              Dirección: {{$residencial->grupo->condominio->direccion}}
                             @endif
 
                         @else

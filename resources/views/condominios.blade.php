@@ -113,7 +113,7 @@
 												<div class="col-sm-2 col-xs-4 separacion">
 													{{$fechasformateadas[$x]}}
 													<ul class="list-group calendarioinst">
-														<?php $residenciales=App\Grupo::where('tipo', 'En condominio')->orderBy('hora', 'asc')->get();
+														<?php $residenciales=App\Horario::where('tipo', 'En condominio')->orderBy('hora', 'asc')->get();
 														list($año, $mes, $dia) = explode("-", $fechas[$x]);
 														$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 														?>
@@ -121,8 +121,8 @@
 															@if ($residencial->ocupados<$residencial->cupo)
 																@if ($residencial->fecha==$fechas[$x])
                                   <?php $nombre=explode(" ",$residencial->user->name); ?>
-																	<li class="list-group-item text-center"  onclick="agregaracarrito('{{$x}}{{$residencial->id}}{{$i}}','{{$residencial->condominio->id}}','{{$condominio->id}}');" style="cursor:pointer;">
-																		<input type="checkbox" class="carritocheck" id="carrito{{$x}}{{$residencial->id}}{{$i}}" name="carrito[]" value="{{$residencial->id}},{{$fechas[$x]}}" style="display:none">
+																	<li class="list-group-item text-center"  onclick="agregaracarrito('{{$x}}{{$residencial->id}}{{$i}}','{{$residencial->grupo_id}}','{{$condominio->id}}');" style="cursor:pointer;">
+																		<input type="checkbox" class="carritocheck" id="carrito{{$x}}{{$residencial->id}}{{$i}}" name="carrito[]" value="{{$residencial->id}},{{$fechas[$x]}},{{$residencial->tokens}}" style="display:none">
 																		<input type="hidden" name="tipo" value="En condominio">
 																		{{$residencial->clase->nombre}}<br>{{ucfirst($nombre[0])}}<br>{{$residencial->hora}}
 																		<i class="fa fa-square-o faselect pull-right fa{{$x}}{{$residencial->id}}{{$i}}" aria-hidden="true"></i>
@@ -161,7 +161,7 @@
 										<div class="col-xs-6 separacion">
 											{{$fechasformateadas[$x]}}
 											<ul class="list-group calendarioinst">
-												<?php $residenciales=App\Grupo::where('tipo', 'En condominio')->get();
+												<?php $residenciales=App\Horario::where('tipo', 'En condominio')->get();
 												list($año, $mes, $dia) = explode("-", $fechas[$x]);
 												$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 												?>
@@ -169,8 +169,8 @@
 													@if ($residencial->ocupados<$residencial->cupo)
 														@if ($residencial->fecha==$fechas[$x])
 															<?php $nombre=explode(" ",$residencial->user->name); ?>
-															<li class="list-group-item text-center"  onclick="agregaracarrito('{{$x}}{{$residencial->id}}{{$i}}mini','{{$residencial->condominio->id}}','{{$condominio->id}}');" style="cursor:pointer;">
-																<input type="checkbox" class="carritocheck"  id="carrito{{$x}}{{$residencial->id}}{{$i}}mini" name="carrito[]" value="{{$residencial->id}},{{$fechas[$x]}}" style="display:none">
+															<li class="list-group-item text-center"  onclick="agregaracarrito('{{$x}}{{$residencial->id}}{{$i}}mini','{{$residencial->grupo_id}}','{{$condominio->id}}');" style="cursor:pointer;">
+																<input type="checkbox" class="carritocheck"  id="carrito{{$x}}{{$residencial->id}}{{$i}}mini" name="carrito[]" value="{{$residencial->id}},{{$fechas[$x]}},{{$residencial->tokens}}" style="display:none">
 																<input type="hidden" name="tipo" value="En condominio">
 																{{$residencial->clase->nombre}}<br>{{ucfirst($nombre[0])}}<br>{{$residencial->hora}}
 																<i class="fa fa-square-o faselect pull-right fa{{$x}}{{$residencial->id}}{{$i}}mini" aria-hidden="true"></i>

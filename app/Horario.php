@@ -8,7 +8,7 @@ class Horario extends Model
 {
     protected $table = 'horarios';
 
-	protected $fillable = ['fecha', 'hora', 'user_id', 'recurrencia','zona_id','clase_id', 'grupo_id'];
+	protected $fillable = ['fecha', 'hora', 'user_id', 'recurrencia','zona_id','clase_id', 'grupo_id','tipo', 'audiencia', 'cupo', 'ocupados','tokens'];
 
   	public function clase(){
        	return $this->belongsTo('App\Clase');
@@ -27,5 +27,5 @@ class Horario extends Model
     }
     public function zona(){
     return $this->belongsTo('App\Zona');
-  }
+  	}
 }

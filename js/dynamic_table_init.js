@@ -15,6 +15,9 @@ $(document).ready(function() {
     $('#dynamic-table').dataTable( {
         "aaSorting": [[ 0, "desc" ]]
     } );
+    $('#dynamic-table2').dataTable( {
+        "aaSorting": [[ 0, "desc" ]]
+    } );
 
     /*
      * Insert a 'details' column to the table

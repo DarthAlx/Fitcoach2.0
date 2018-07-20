@@ -56,9 +56,9 @@ class OrdenController extends Controller
         foreach ($request->carrito as $item) {
           if ($request->tipo=="En condominio") {
             $items=explode(",",$item);
-            $clase=Grupo::find($items[0]);
-            Cart::add($clase->id,$clase->clase->nombre,1,0, ['tipo'=>'residencial','fecha' => $items[1],'hora' => $clase->hora, 'coach' => $clase->user_id]);
-            Session::flash('mensaje', 'La clase que vas a reservar es únicamente para condóminos del residencial '.$clase->condominio->identificador.'. <br>
+            $clase=Horario::find($items[0]);
+            Cart::add($clase->id,$clase->clase->nombre,1,$items[2], ['tipo'=>'residencial','fecha' => $items[1],'hora' => $clase->hora, 'coach' => $clase->user_id]);
+            Session::flash('mensaje', 'La clase que vas a reservar es únicamente para condóminos del residencial '.$clase->grupo->condominio->identificador.'. <br>
   No habrá cambios o devoluciones si eres externo y no puedes tomarla.');
             Session::flash('class', 'warning');
           }
@@ -363,18 +363,22 @@ class OrdenController extends Controller
       if ($request->tipocancelacion=="24 horas antes") {
               $orden = Reservacion::find($request->ordencancelar);
 
-              $paquete= new PaqueteComprado();
-              $paquete->user_id=$orden->user_id;
-              $paquete->orden_id=$orden->id;
-              $paquete->clases=$orden->tokens;
-              $paquete->disponibles=$orden->tokens;
-              $paquete->tipo=$orden->tipo;
-              $paquete->fecha=$orden->fecha;
-              $fecha = date('Y-m-d');
-              $nuevafecha = strtotime ( '+15 day' , strtotime ( $fecha ) ) ;
-              $paquete->expiracion = date ( 'Y-m-d' , $nuevafecha );
-
-              $paquete->save();
+              $particular=PaqueteComprado::where('user_id', $user->id)->where('tipo','A domicilio')->orderBy('expiracion','desc')->first();
+              $residencial=PaqueteComprado::where('user_id', $user->id)->where('tipo','En condominio')->orderBy('expiracion','desc')->first();
+              if($orden->tipo=="En condominio"){
+                $residencial->disponibles=$residencial->disponibles+$orden->tokens;
+                /*$fecha = date('Y-m-d',$residencial->expiracion);
+                $nuevafecha = strtotime ( '+5 day' , strtotime ( $fecha ) ) ;
+                $residencial->expiracion = date ( 'Y-m-d' , $nuevafecha );*/
+                $residencial->save();
+              }
+              else{
+                $particular->disponibles=$particular->disponibles+$orden->tokens;
+                /*$fecha = date('Y-m-d',$particular->expiracion);
+                $nuevafecha = strtotime ( '+5 day' , strtotime ( $fecha ) ) ;
+                $particular->expiracion = date ( 'Y-m-d' , $nuevafecha );*/
+                $particular->save();
+              }
               $orden->status='Cancelada';
               $orden->metadata="token devuelto";
               $orden->save();
@@ -389,10 +393,11 @@ class OrdenController extends Controller
               $orden->status = 'Cancelada';
               $orden->metadata=$request->tipocancelacion;
               $orden->save();
-              Session::flash('mensaje', '¡Orden Cancelada!');
+              Session::flash('mensaje', '¡Reservación Cancelada!');
               Session::flash('class', 'success');
-              return redirect($this->redirectPath());
+              
       }
+      return redirect($this->redirectPath());
       
     }
 
@@ -660,7 +665,7 @@ public function reservar(Request $request)
 
           $productos[]=array(
             'name' => $product->name,
-            'unit_price' => 0,
+            'unit_price' => 1,
             'quantity' => 1,
             'metadata' => array(
               'tipo' => 'A domicilio',
@@ -677,7 +682,7 @@ public function reservar(Request $request)
           $esresidencial=true;
           $productos[]=array(
             'name' => $product->name,
-            'unit_price' => 0,
+            'unit_price' => $product->price,
             'quantity' => 1,
             'metadata' => array(
               'tipo' => 'En condominio',
@@ -688,7 +693,7 @@ public function reservar(Request $request)
               'hora' => $product->options->hora
             )
           );
-          $rescart++;
+          $rescart=$rescart+$product->price;
         }
 
       }
@@ -756,7 +761,7 @@ public function reservar(Request $request)
        
         foreach ($productos as $producto) {
           $guardar = new Reservacion();
-          $guardar->tokens = 1;
+          $guardar->tokens = $producto['unit_price'];
           
           $guardar->user_id=Auth::user()->id;
           $guardar->coach_id=$producto['metadata']['coach'];
@@ -765,15 +770,15 @@ public function reservar(Request $request)
 
 
           if ($producto['metadata']['tipo']=="En condominio") {
-            $guardar->grupo_id=$producto['metadata']['asociado'];
-            $grupo=Grupo::find($producto['metadata']['asociado']);
+            $guardar->horario_id=$producto['metadata']['asociado'];
+            $grupo=Horario::find($producto['metadata']['asociado']);
           $guardar->nombre=$grupo->clase->nombre;
             
             if ($grupo->tipo=="Evento") {
               $guardar->direccion=$grupo->direccionevento;
             }
             elseif ($grupo->tipo=="En condominio") {
-              $guardar->direccion=$grupo->condominio->identificador.". ".$grupo->condominio->direccion;
+              $guardar->direccion=$grupo->grupo->condominio->identificador.". ".$grupo->grupo->condominio->direccion;
             }
           }else {
             $guardar->horario_id=$producto['metadata']['asociado'];
@@ -791,8 +796,8 @@ public function reservar(Request $request)
 
           $guardar->status='Proxima';
           $guardar->save();
-          if ($producto['metadata']['tipo']=="residencial") {
-            $residencial= Grupo::find($producto['metadata']['asociado']);
+          if ($producto['metadata']['tipo']=="En condominio") {
+            $residencial= Horario::find($producto['metadata']['asociado']);
             $residencial->ocupados++;
             $residencial->save();
           }

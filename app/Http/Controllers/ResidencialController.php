@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Grupo;
+use App\Horario;
 use App\Evento;
 use App\Orden;
 use App\Condominio;
@@ -47,10 +48,20 @@ class ResidencialController extends Controller
     public function store(Request $request)
     {
       $guardar = new Grupo($request->all());
+      $guardar->save();
+      Session::flash('mensaje', '¡Grupo guardado!');
+
+
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/grupos'));
+    }
+    public function store2(Request $request)
+    {
+      $guardar = new Horario($request->all());
       $guardar->ocupados=0;
       $guardar->tipo = "En condominio";
       $guardar->save();
-      Session::flash('mensaje', '¡Grupo guardado!');
+      Session::flash('mensaje', '¡Horario guardado!');
 
 
       Session::flash('class', 'success');
@@ -90,19 +101,34 @@ class ResidencialController extends Controller
     public function update(Request $request)
     {
       $grupo = Grupo::find($request->grupo_id);
+      $grupo->nombre = $request->nombre;
+      $grupo->condominio_id = $request->condominio_id;
+      $grupo->descripcion = $request->descripcion;
+        $grupo->save();
+        Session::flash('mensaje', '¡Grupo actualizado!');
+        Session::flash('class', 'success');
+        return redirect()->intended(url('/grupos'));
+
+
+
+    }
+
+    public function update2(Request $request)
+    {
+      $grupo = Horario::find($request->horario_id);
       $grupo->fecha = $request->fecha;
       $grupo->hora = $request->hora;
       $grupo->user_id = $request->user_id;
-      $grupo->condominio_id = $request->condominio_id;
+      $grupo->grupo_id = $request->grupo_id;
       $grupo->clase_id = $request->clase_id;
-      $grupo->precio = $request->precio;
+      $grupo->tokens = $request->tokens;
       $grupo->audiencia = $request->audiencia;
       $grupo->tipo = "En condominio";
       $grupo->cupo = $request->cupo;
-      $grupo->descripcion = $request->descripcion;
+ 
 
         $grupo->save();
-        Session::flash('mensaje', '¡Grupo actualizado!');
+        Session::flash('mensaje', '¡Horario actualizado!');
         Session::flash('class', 'success');
         return redirect()->intended(url('/grupos'));
 
@@ -121,6 +147,15 @@ class ResidencialController extends Controller
       $grupo = Grupo::find($request->grupo_id);
       $grupo->delete();
       Session::flash('mensaje', '¡Grupo eliminado correctamente!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/grupos'));
+    }
+
+    public function destroy2(Request $request)
+    {
+      $grupo = Horario::find($request->horario_id);
+      $grupo->delete();
+      Session::flash('mensaje', '¡Horario eliminado correctamente!');
       Session::flash('class', 'success');
       return redirect()->intended(url('/grupos'));
     }
