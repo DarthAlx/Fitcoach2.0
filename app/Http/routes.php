@@ -393,6 +393,9 @@ Route::any('eliminar-zona/{id}', 'ZonaController@destroy');
   Route::get('printeventlist/{id}', 'ResidencialController@printlistevent');
   Route::get('printgroups/{id}', 'ResidencialController@printgroups');
 
+  Route::post('tokenplus', 'OrdenController@tokenplus');
+  Route::post('tokenminus', 'OrdenController@tokenminus');
+
 });
 
 

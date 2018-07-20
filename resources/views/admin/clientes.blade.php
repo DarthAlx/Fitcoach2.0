@@ -57,6 +57,8 @@
 								<input type="hidden" name="user_id" value="{{ $usuario->id }}">
 								<input type="submit" id="botoneliminar{{ $usuario->id }}">
 							</form>
+							<a href="#" class="btn btn-primary"  data-toggle="modal" data-target="#tokenplus{{$usuario->id}}"><i class="fa fa-plus"></i></a>
+							<a href="#" class="btn btn-info"  data-toggle="modal" data-target="#tokenminus{{$usuario->id}}"><i class="fa fa-minus"></i></a>
 						</td>
 						  </tr>
 						@endforeach
@@ -119,6 +121,7 @@
 		      									<th>Paquete</th>
 			      								<th>Tipo</th>
 			      								<th>Fecha</th>
+														<th>Expiración</th>
 			      								<th>Pagado</th>
 		      								</tr>
 		      							</thead>
@@ -129,7 +132,8 @@
 				      									<td>{{$paquete->clases}} Clases</td>
 				      									<td>{{$paquete->tipo}}</td>
 				      									<td>{{$paquete->fecha}}</td>
-				      									<td>{{$paquete->orden->cantidad-$paquete->orden->descuento}}</td>
+																<td>{{$paquete->expiracion}}</td>
+				      									<td>${{$paquete->orden->cantidad-$paquete->orden->descuento}} MXN</td>
 				      								</tr>
 			      								@endforeach
 		      								
@@ -145,6 +149,77 @@
 		    </div><!-- /.modal-content -->
 		  </div><!-- /.modal-dialog -->
 		</div><!-- /.modal detalles user -->
+
+
+
+
+
+
+
+		<div class="modal fade" id="tokenplus{{$usuario->id}}" tabindex="-1" role="dialog">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+
+			      <div class="modal-body">
+
+			              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
+
+			      				<div>
+			      					<h4>Añadir token a {{$usuario->name}}</h4>
+											
+
+			                <form action="{{ url('/tokenplus') }}" method="post">
+			        					<input type="hidden" name="_token" value="{{ csrf_token() }}">
+												<input type="hidden" name="user_id" value="{{ $usuario->id }}">
+												<select class="form-control"  name="tipo" required>
+													<option value="">Seleccionar tipo de clase</option>
+													<option value="A domicilio">A domicilio</option>
+													<option value="En condominio">En condominio</option>
+												</select>
+												<input type="number" name="tokens" class="form-control" value="" placeholder="Tokens" required>
+												
+			        					<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Añadir</button>
+			                </form>
+			      				</div>
+			      </div>
+			    </div><!-- /.modal-content -->
+			  </div><!-- /.modal-dialog -->
+			</div><!-- /.modal pago-->
+
+
+			<div class="modal fade" id="tokenminus{{$usuario->id}}" tabindex="-1" role="dialog">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+
+			      <div class="modal-body">
+
+			              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
+
+			      				<div>
+			      					<h4>Quitar token a {{$usuario->name}}</h4>
+											
+
+			                <form action="{{ url('/tokenminus') }}" method="post">
+			        					<input type="hidden" name="_token" value="{{ csrf_token() }}">
+												<input type="hidden" name="user_id" value="{{ $usuario->id }}">
+												<select class="form-control"  name="tipo" required>
+													<option value="">Seleccionar tipo de clase</option>
+													<option value="A domicilio">A domicilio</option>
+													<option value="En condominio">En condominio</option>
+												</select>
+												<input type="number" name="tokens" class="form-control" value="" placeholder="Tokens" required>
+												
+			        					<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Quitar</button>
+			                </form>
+			      				</div>
+			      </div>
+			    </div><!-- /.modal-content -->
+			  </div><!-- /.modal-dialog -->
+			</div><!-- /.modal pago-->
+
+
+
+
 	@endforeach
 @endif
 

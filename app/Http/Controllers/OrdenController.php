@@ -217,30 +217,52 @@ class OrdenController extends Controller
     {
 
 
+      
+
+
       if ($request->tipocancelacion=="token") {
+        $orden = Reservacion::find($request->id);
 
-            $orden = Reservacion::find($request->id);
+        if($orden->status!="Cancelada"){
+          $particular=PaqueteComprado::where('user_id', $user->id)->where('tipo','A domicilio')->orderBy('expiracion','desc')->first();
+          $residencial=PaqueteComprado::where('user_id', $user->id)->where('tipo','En condominio')->orderBy('expiracion','desc')->first();
+          if($orden->tipo=="En condominio"&&$residencial){
+            $residencial->disponibles=$residencial->disponibles+$orden->tokens;
+            /*$fecha = date('Y-m-d',$residencial->expiracion);
+            $nuevafecha = strtotime ( '+5 day' , strtotime ( $fecha ) ) ;
+            $residencial->expiracion = date ( 'Y-m-d' , $nuevafecha );*/
+            $residencial->save();
+            $orden->status='Cancelada';
+            $orden->metadata="token devuelto";
+            Session::flash('mensaje', 'Token devuelto.');
+            Session::flash('class', 'success');
+          }
+          elseif($orden->tipo=="A domicilio"&&$particular){
+            $particular->disponibles=$particular->disponibles+$orden->tokens;
+            /*$fecha = date('Y-m-d',$particular->expiracion);
+            $nuevafecha = strtotime ( '+5 day' , strtotime ( $fecha ) ) ;
+            $particular->expiracion = date ( 'Y-m-d' , $nuevafecha );*/
+            $particular->save();
+            $orden->status='Cancelada';
+            $orden->metadata="token devuelto";
+            Session::flash('mensaje', 'Token devuelto.');
+            Session::flash('class', 'success');
+          }
 
-              $paquete= new PaqueteComprado();
-              $paquete->user_id=$orden->user_id;
-              $paquete->orden_id=$orden->id;
-              $paquete->clases=$request->abono;
-              $paquete->disponibles=$request->abono;
-              $paquete->tipo=$orden->tipo;
-              $paquete->fecha=$orden->fecha;
-              $fecha = date('Y-m-d');
-              $nuevafecha = strtotime ( '+15 day' , strtotime ( $fecha ) ) ;
-              $paquete->expiracion = date ( 'Y-m-d' , $nuevafecha );
+          else{
+            Session::flash('mensaje', 'No se realizó ninguna operación.');
+            Session::flash('class', 'danger');
+          }
 
-              $paquete->save();
-              $orden->status='Cancelada';
-              $orden->metadata="token devuelto";
-              $orden->save();
+          $orden->save();
 
 
-            //$this->sendclasscancel($orden->id);
-          Session::flash('mensaje', 'Token devuelto.');
-          Session::flash('class', 'success');
+        //$this->sendclasscancel($orden->id);
+          
+        }else{
+          Session::flash('mensaje', 'La clase ya fué cancelada.');
+          Session::flash('class', 'danger');
+        }
       }
       else {
         $abono = new Abono($request->all());
@@ -362,31 +384,48 @@ class OrdenController extends Controller
 
       if ($request->tipocancelacion=="24 horas antes") {
               $orden = Reservacion::find($request->ordencancelar);
+              if($orden->status!="Cancelada"){
+                $particular=PaqueteComprado::where('user_id', $user->id)->where('tipo','A domicilio')->orderBy('expiracion','desc')->first();
+                $residencial=PaqueteComprado::where('user_id', $user->id)->where('tipo','En condominio')->orderBy('expiracion','desc')->first();
+                if($orden->tipo=="En condominio"&&$residencial){
+                  $residencial->disponibles=$residencial->disponibles+$orden->tokens;
+                  /*$fecha = date('Y-m-d',$residencial->expiracion);
+                  $nuevafecha = strtotime ( '+5 day' , strtotime ( $fecha ) ) ;
+                  $residencial->expiracion = date ( 'Y-m-d' , $nuevafecha );*/
+                  $residencial->save();
+                  $orden->status='Cancelada';
+                  $orden->metadata="token devuelto";
+                  Session::flash('mensaje', 'Token devuelto.');
+                  Session::flash('class', 'success');
+                }
+                elseif($orden->tipo=="A domicilio"&&$particular){
+                  $particular->disponibles=$particular->disponibles+$orden->tokens;
+                  /*$fecha = date('Y-m-d',$particular->expiracion);
+                  $nuevafecha = strtotime ( '+5 day' , strtotime ( $fecha ) ) ;
+                  $particular->expiracion = date ( 'Y-m-d' , $nuevafecha );*/
+                  $particular->save();
+                  $orden->status='Cancelada';
+                  $orden->metadata="token devuelto";
+                  Session::flash('mensaje', 'Token devuelto.');
+                  Session::flash('class', 'success');
+                  
+                }
+                else{
+                  Session::flash('mensaje', 'No se realizó ninguna operación.');
+                  Session::flash('class', 'danger');
+                }
+                
+                $orden->save();
 
-              $particular=PaqueteComprado::where('user_id', $user->id)->where('tipo','A domicilio')->orderBy('expiracion','desc')->first();
-              $residencial=PaqueteComprado::where('user_id', $user->id)->where('tipo','En condominio')->orderBy('expiracion','desc')->first();
-              if($orden->tipo=="En condominio"){
-                $residencial->disponibles=$residencial->disponibles+$orden->tokens;
-                /*$fecha = date('Y-m-d',$residencial->expiracion);
-                $nuevafecha = strtotime ( '+5 day' , strtotime ( $fecha ) ) ;
-                $residencial->expiracion = date ( 'Y-m-d' , $nuevafecha );*/
-                $residencial->save();
+
+              //$this->sendclasscancel($orden->id);
+                
+              }else{
+                Session::flash('mensaje', 'La clase ya fué cancelada.');
+                Session::flash('class', 'danger');
               }
-              else{
-                $particular->disponibles=$particular->disponibles+$orden->tokens;
-                /*$fecha = date('Y-m-d',$particular->expiracion);
-                $nuevafecha = strtotime ( '+5 day' , strtotime ( $fecha ) ) ;
-                $particular->expiracion = date ( 'Y-m-d' , $nuevafecha );*/
-                $particular->save();
-              }
-              $orden->status='Cancelada';
-              $orden->metadata="token devuelto";
-              $orden->save();
 
-
-            //$this->sendclasscancel($orden->id);
-              Session::flash('mensaje', 'Token devuelto.');
-              Session::flash('class', 'success');
+              
       }
       else{
               $orden = Reservacion::find($request->ordencancelar);
@@ -426,6 +465,12 @@ class OrdenController extends Controller
       require 'vendor/autoload.php';
       $user=User::find(Auth::user()->id);
       $paquete=Paquete::find($request->paquete);
+
+      if(!$user->ordenes->isEmpty()&&$paquete->paquete=="Primer clase"){
+        Session::flash('mensaje', "No eres candidato para esta promoción");
+        Session::flash('class', 'danger');
+        return back();
+      }
       
       header('Content-Type: text/html; charset=utf-8');
       $openpay = Openpay::getInstance('mada0wigbpnzcmsbtxoa', 'sk_e0b51d10bbc343d780bac55f832c6257');
@@ -812,6 +857,68 @@ public function reservar(Request $request)
       
 
       }
+
+
+
+      public function tokenplus(Request $request){
+            $user=User::find($request->user_id);
+            $particular=PaqueteComprado::where('user_id', $user->id)->where('tipo','A domicilio')->orderBy('expiracion','desc')->first();
+            $residencial=PaqueteComprado::where('user_id', $user->id)->where('tipo','En condominio')->orderBy('expiracion','desc')->first();
+            if($request->tipo=="En condominio"&&$residencial){
+              $residencial->disponibles=$residencial->disponibles+$request->tokens;
+              $fecha =$residencial->expiracion;
+              $nuevafecha = strtotime ( '+1 day' , strtotime ( $fecha ) ) ;
+              $residencial->expiracion = date ( 'Y-m-d' , $nuevafecha );
+              $residencial->save();
+              Session::flash('mensaje', 'Token añadido.');
+            Session::flash('class', 'success');
+            }
+            elseif($request->tipo=="A domicilio"&&$particular){
+              $particular->disponibles=$particular->disponibles+$request->tokens;
+              $fecha = $particular->expiracion;
+              $nuevafecha = strtotime ( '+1 day' , strtotime ( $fecha ) ) ;
+              $particular->expiracion = date ( 'Y-m-d' , $nuevafecha );
+              $particular->save();
+              Session::flash('mensaje', 'Token añadido.');
+            Session::flash('class', 'success');
+            }
+            else{
+              Session::flash('mensaje', 'No se realizó ninguna operación.');
+              Session::flash('class', 'danger');
+            }
+          //$this->sendclasscancel($orden->id);
+            
+            return back();
+
+        
+      }
+
+      public function tokenminus(Request $request){
+        $user=User::find($request->user_id);
+        $particular=PaqueteComprado::where('user_id', $user->id)->where('tipo','A domicilio')->where('disponibles','<',$request->tokens)->orderBy('expiracion','desc')->first();
+        $residencial=PaqueteComprado::where('user_id', $user->id)->where('tipo','En condominio')->where('disponibles','<',$request->tokens)->orderBy('expiracion','desc')->first();
+        if($request->tipo=="En condominio"&&$residencial){
+          $residencial->disponibles=$residencial->disponibles-$request->tokens;
+          $residencial->save();
+          Session::flash('mensaje', 'Token eliminado.');
+        Session::flash('class', 'success');
+        }
+        elseif($request->tipo=="A domicilio"&&$particular){
+          $particular->disponibles=$particular->disponibles-$request->tokens;
+          $particular->save();
+          Session::flash('mensaje', 'Token eliminado.');
+        Session::flash('class', 'success');
+        }
+        else{
+          Session::flash('mensaje', 'No se realizó ninguna operación.');
+          Session::flash('class', 'danger');
+        }
+      //$this->sendclasscancel($orden->id);
+        
+        return back();
+
+    
+  }
 
 
 
