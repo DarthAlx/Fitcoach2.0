@@ -82,4 +82,7 @@ class User extends Model implements AuthenticatableContract,
     public function libres(){
           return $this->hasMany('App\Libres');
         }
+    public function documentacion(){
+        return $this->hasOne('App\Documentacion');
+    }    
 }

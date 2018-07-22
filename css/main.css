@@ -694,6 +694,10 @@ color: #D58628 !important;
 
 }
 @media (min-width: 992px){
+    .container-bootstrap-fluid{
+        padding-right: 100px;
+        padding-left: 100px;
+    }
 	.modal-dialog {
 	    width: 900px;
 	    margin: 30px auto;

@@ -208,6 +208,7 @@
       <hr>
       <h4>MIS DATOS</h4>
       <button type="button" class="btn" data-toggle="modal" data-target="#datosdeusuario"><span>Datos de usuario</span> <i class="fa fa-pencil" aria-hidden="true"></i></button>
+      <button type="button" class="btn" data-toggle="modal" data-target="#documentos"><span>Documentación</span> <i class="fa fa-pencil" aria-hidden="true"></i></button>
       <button type="button" class="btn" data-toggle="modal" data-target="#datosbancarios"><span>Pago</span> <i class="fa fa-pencil" aria-hidden="true"></i></button>
       <button type="button" class="btn" data-toggle="modal" data-target="#cambiarcontraseña"><span>Contraseña</span> <i class="fa fa-pencil" aria-hidden="true"></i></button>
 
@@ -950,6 +951,80 @@ $pasadas= App\Reservacion::where('coach_id', $user->id)->where('status', '<>', '
          </div><!-- /.modal-dialog -->
        </div><!-- /.modal contraseña -->
     <?php } }?>
+
+
+
+
+
+
+
+
+
+    <div class="modal fade" id="documentos" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+    
+          <div class="modal-body">
+    
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
+    
+                  <div>
+                    <h4>Subir documentación</h4>
+                    <form action="{{ url('/subir-documentacion') }}" method="post" enctype="multipart/form-data">
+                      @if($user->documentacion)
+                        {{ method_field('PUT') }}
+                      @endif
+                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    
+    
+                      @if($user->documentacion)
+
+                        <label>Cédula de Identificación Fiscal (RFC)</label>
+                        <input class="form-control" type="file" value="{{ $user->documentacion->rfc }}" placeholder="Cédula de Identificación Fiscal (RFC)" name="rfc" required>
+                        <label>Credencial de Elector (INE)</label>
+                        <input class="form-control" type="file" value="{{ $user->documentacion->ine }}" placeholder="Credencial de Elector (INE)" name="ine" required>
+                        <label>Clave Única de Registro de Población (CURP)</label>
+                        <input class="form-control" type="file" value="{{ $user->documentacion->curp }}" placeholder="Clave Única de Registro de Población (CURP)" name="curp" required>
+                        <label>Acta de Nacimiento</label>
+                        <input class="form-control" type="file" value="{{ $user->documentacion->acta }}" placeholder="Acta de Nacimiento" name="acta" required>
+                        <label>Comprobante de domicilio</label>
+                        <input class="form-control" type="file" value="{{ $user->documentacion->domicilio }}" placeholder="Comprobante de domicilio" name="domicilio" required>
+                        <label>Certificaciones</label>
+                        <input class="form-control" type="file" value="{{ $user->documentacion->certificaciones }}" placeholder="Certificaciones" name="certificaciones" required>
+                        <label>Carta de recomendación 1</label>
+                        <input class="form-control" type="file" value="{{ $user->documentacion->recomendacion1 }}" placeholder="Carta de recomendación 1" name="recomendacion1" required>
+                        <label>Carta de recomendación 2</label>
+                        <input class="form-control" type="file" value="{{ $user->documentacion->recomendacion2 }}" placeholder="Carta de recomendación 2" name="recomendacion2" required>
+                      @else
+
+                        <label>Cédula de Identificación Fiscal (RFC)</label>
+                        <input class="form-control" type="file" value="{{ old('rfc') }}" placeholder="Cédula de Identificación Fiscal (RFC)" name="rfc" required>
+                        <label>Credencial de Elector (INE)</label>
+                        <input class="form-control" type="file" value="{{ old('ine') }}" placeholder="Credencial de Elector (INE)" name="ine" required>
+                        <label>Clave Única de Registro de Población (CURP)</label>
+                        <input class="form-control" type="file" value="{{ old('curp') }}" placeholder="Clave Única de Registro de Población (CURP)" name="curp" required>
+                        <label>Acta de Nacimiento</label>
+                        <input class="form-control" type="file" value="{{ old('acta') }}" placeholder="Acta de Nacimiento" name="acta" required>
+                        <label>Comprobante de domicilio</label>
+                        <input class="form-control" type="file" value="{{ old('domicilio') }}" placeholder="Comprobante de domicilio" name="domicilio" required>
+                        <label>Certificaciones</label>
+                        <input class="form-control" type="file" value="{{ old('certificaciones') }}" placeholder="Certificaciones" name="certificaciones" required>
+                        <label>Carta de recomendación 1</label>
+                        <input class="form-control" type="file" value="{{ old('recomendacion1') }}" placeholder="Carta de recomendación 1" name="recomendacion1" required>
+                        <label>Carta de recomendación 2</label>
+                        <input class="form-control" type="file" value="{{ old('recomendacion2') }}" placeholder="Carta de recomendación 2" name="recomendacion2" required>
+    
+                      @endif
+    
+                      <button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Guardar</button>
+    
+    
+                    </form>
+                  </div>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal detalles user -->
 
 
 @endsection

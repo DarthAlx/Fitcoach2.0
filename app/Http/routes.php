@@ -448,6 +448,10 @@ Route::group(['middleware' => 'instructores'], function(){
 
   Route::post('actualizar-bancarios', 'BancariosController@store');
   Route::put('actualizar-bancarios', 'BancariosController@update');
+
+
+  Route::post('subir-documentacion', 'BancariosController@store2');
+  Route::put('subir-documentacion', 'BancariosController@update2');
   Route::put('terminar-orden', 'OrdenController@terminar');
 
     Route::post('agregar-libre', 'ClaseController@libre');

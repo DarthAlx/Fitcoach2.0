@@ -273,7 +273,7 @@
                      <i class="fa fa-building" aria-hidden="true"></i>
                    @endif
                    <?php setlocale(LC_TIME, "es_MX"); ?>
-                   {{$comprada->clases}} Clases | Expira: {{$comprada->expiracion}}  | ${{$comprada->orden->cantidad-$comprada->orden->descuento-$comprada->orden->impuestos}} MXN
+                   {{$comprada->clases}} Clases | Expira: {{$comprada->expiracion}} 
                    <!--i class="fa fa-chevron-right pull-right" aria-hidden="true"></i-->
                  </a>
               <?php 
@@ -423,7 +423,7 @@
                      <i class="fa fa-building" aria-hidden="true"></i>
                    @endif
                    <?php setlocale(LC_TIME, "es_MX"); ?>
-                   {{$comprada->clases}} Clases | Expira: {{$comprada->expiracion}}   | ${{$comprada->orden->cantidad-$comprada->orden->descuento-$comprada->orden->impuestos}} MXN
+                   {{$comprada->clases}} Clases | Expira: {{$comprada->expiracion}} 
                    <!--i class="fa fa-chevron-right pull-right" aria-hidden="true"></i-->
                  </a>
               <?php 
