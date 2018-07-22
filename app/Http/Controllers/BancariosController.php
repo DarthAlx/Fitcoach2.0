@@ -57,7 +57,6 @@ class BancariosController extends Controller
 
      public function store2(Request $request)
      {
-         dd($request->file());
        $documentacion = new Documentacion();
        if ($request->hasFile('rfc')) {
             $file = $request->file('rfc');
