@@ -159,11 +159,34 @@
 															@foreach ($modulos as $modulo)
 					                       <div class="checkbox">
 					                        <label>
-					                          <input type='checkbox' class="permisos" name="permisos[]"  value="{{$modulo->nombre}}">{{ ucfirst($modulo->nombre) }}
+					                          <input type='checkbox' class="permisos" name="permisos[]" id="permiso{{$modulo->nombre}}"  value="{{$modulo->nombre}}">{{ ucfirst($modulo->nombre) }}
 					                        </label>
 					                       </div>
 					                    @endforeach
 														</div>
+														<div class="form-group" id="editor" style="display:none">
+                            <label class="control-label">Coordinador condominio</label>
+					                       <div class="checkbox">
+					                        <label>
+					                          <input type='checkbox' name="editor" value="1"> Habilitado
+					                        </label>
+					                       </div>
+														</div>
+
+														<script>
+														$(document).ready(function() {
+
+																$('#permisocondominios').change(function() {
+																		if(this.checked) {
+																				$('#editor').show();
+																		}
+																		else{
+																			$('#editor').hide();
+																		}
+																		
+																});
+														});
+														</script>
 										<input type="password" class="form-control" name="password" placeholder="Contraseña" required>
 										<input type="password" class="form-control" name="password_confirmation" placeholder="Repetir contraseña" required>
 	        					<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Guardar</button>
@@ -216,6 +239,29 @@
 																		</div>
 		 					                    @endforeach
 		 														</div>
+																 <div class="form-group" id="editor{{$admin->id}}" style="display:none">
+																	<label class="control-label">Coordinador condominio</label>
+																			<div class="checkbox">
+																				<label>
+																					<input type='checkbox' name="editor" value="1"> Habilitado
+																				</label>
+																			</div>
+																	</div>
+
+																	<script>
+																	$(document).ready(function() {
+
+																			$('#check{{$admin->id}}condominios').change(function() {
+																					if(this.checked) {
+																							$('#editor{{$admin->id}}').show();
+																					}
+																					else{
+																						$('#editor{{$admin->id}}').hide();
+																					}
+																					
+																			});
+																	});
+																	</script>
 
 
 

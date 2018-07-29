@@ -113,7 +113,12 @@ fbq('track', 'ViewContent');
 
    <header id="header"><div class="headerWrap clear is-sticky">
 <a class="logo" id="logo" href="{{ url('/') }}">
-        <img src="{{ url('images/Logo-FITCOACH.png') }}" alt="" width="161" height="46" class="logo-white">
+			@if(url('/')==Illuminate\Support\Facades\URL::current())
+				<img src="{{ url('images/Logo-Blanco.png') }}" alt="" width="161" height="46" class="logo-white" id="blanco">
+			@else
+        <img src="{{ url('images/Logo-FITCOACH.png') }}" alt="" width="161" height="46" class="logo-white" id="negro">
+			@endif
+				
         <img class="logo-black" src="{{ url('images/Logo-FITCOACH.png') }}" width="117" height="34" alt="">
 </a>
 			<nav class="mainMenu">

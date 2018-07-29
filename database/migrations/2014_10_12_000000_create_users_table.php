@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
         $table->date('acceso')->default(date('Y-m-d'));
         $table->string('code');
         $table->string('referencia')->nullable(true);
+        $table->boolean('editor')->default(false);
         $table->rememberToken();
         $table->timestamps();
     });

@@ -99,6 +99,13 @@ class UserController extends Controller
           $guardar = new User($request->all());
           $guardar->role="admin";
           $guardar->password=bcrypt($request->password);
+          //editor
+          if (isset($request->editor)) {
+            $guardar->editor=1;
+          }
+          else{
+            $guardar->editor=0;
+          }
           $guardar->save();
           $permisos = new Detalle();
 
@@ -106,6 +113,8 @@ class UserController extends Controller
               $permisos->permisos=implode(",", $request->permisos);
               $permisos->user_id=$guardar->id;
             }
+
+            
 
 
 
@@ -174,7 +183,13 @@ class UserController extends Controller
         if ($request->password) {
           $guardar->password=bcrypt($request->password);
         }
-
+//editor
+if (isset($request->editor)) {
+  $guardar->editor=1;
+}
+else{
+  $guardar->editor=0;
+}
         $guardar->save();
         $permisos = Detalle::find($guardar->detalles->id);
 
@@ -187,6 +202,8 @@ class UserController extends Controller
             $permisos->permisos=$request->permisos;
             $permisos->user_id=$guardar->id;
           }
+
+           
 
 
 
