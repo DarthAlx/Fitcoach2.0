@@ -25,4 +25,7 @@ class Reservacion extends Model
 	 public function grupo(){
 		return $this->belongsTo('App\Grupo');
 	}
+	public function plan(){
+		return $this->hasOne('App\Plan');
+	}
 }

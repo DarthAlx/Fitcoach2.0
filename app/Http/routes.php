@@ -396,6 +396,16 @@ Route::any('eliminar-zona/{id}', 'ZonaController@destroy');
   Route::post('tokenplus', 'OrdenController@tokenplus');
   Route::post('tokenminus', 'OrdenController@tokenminus');
 
+
+  Route::get('/rooms', function () {
+    $rooms = App\Room::all();
+    
+      return view('admin.rooms', ['rooms'=>$rooms]);
+  });
+  Route::post('agregar-room', 'RoomController@store');
+  Route::put('actualizar-room', 'RoomController@update');
+  Route::delete('eliminar-room', 'RoomController@destroy');
+
 });
 
 

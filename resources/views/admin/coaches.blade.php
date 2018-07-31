@@ -199,7 +199,19 @@
 			              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
 
 			      				<div>
-			      					<h4>Actualizar coach</h4>
+											<h4>Actualizar coach</h4>
+											@if($admin->documentacion)
+											<a href="{{url('uploads/documentos')}}/{{$admin->rfc}}" class="btn btn-default">rfc</a> &nbsp;
+											<a href="{{url('uploads/documentos')}}/{{$admin->ine}}" class="btn btn-default">ine</a> &nbsp;
+											<a href="{{url('uploads/documentos')}}/{{$admin->curp}}" class="btn btn-default">curp</a> &nbsp;
+											<a href="{{url('uploads/documentos')}}/{{$admin->acta}}" class="btn btn-default">acta</a> &nbsp;
+											<a href="{{url('uploads/documentos')}}/{{$admin->domicilo}}" class="btn btn-default">domicilo</a> &nbsp;
+											<a href="{{url('uploads/documentos')}}/{{$admin->certificaciones}}" class="btn btn-default">certificaciones</a> &nbsp;
+											<a href="{{url('uploads/documentos')}}/{{$admin->recomendacion1}}" class="btn btn-default">recomendacion1</a> &nbsp;
+											<a href="{{url('uploads/documentos')}}/{{$admin->recomendacion2}}" class="btn btn-default">recomendacion2</a> &nbsp;
+											@else
+											<p>El coach aún no envía documentación.</p>
+											@endif
 			                <form action="{{ url('/actualizar-coach') }}" method="post" enctype="multipart/form-data">
 												{{ method_field('PUT') }}
 			        					<input type="hidden" name="_token" value="{{ csrf_token() }}">

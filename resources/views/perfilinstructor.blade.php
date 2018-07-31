@@ -275,6 +275,7 @@
                      <i class="fa fa-building" aria-hidden="true"></i>
                    @endif
                    {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $proxima->hora }}
+                   <i class="fa fa-list" aria-hidden="true"></i>
                    <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                  </a>
                  <?php $array[]=$proxima->nombre.$proxima->fecha.$proxima->hora; ?>
@@ -287,6 +288,7 @@
                      <i class="fa fa-building" aria-hidden="true"></i>
                    @endif
                    {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $proxima->hora }}
+                   <i class="fa fa-list" aria-hidden="true"></i>
                    <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
                  </a>
                  @endif
@@ -785,7 +787,95 @@
 
     if (!$proximas->isEmpty()) {
       date_default_timezone_set('America/Mexico_City');
-      foreach ($proximas as $proxima) {
+      foreach ($proximas as $proxima) { ?>
+        <div class="modal fade" id="plan{{$proxima->id}}" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+ 
+              <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
+                  <div class="container-bootstrap" style="width: 100%;">
+
+
+                      <h4>Subir documentación</h4>
+                      <form action="{{ url('/planear-clase') }}" method="post" enctype="multipart/form-data">
+                        @if($proxima->plan)
+                          {{ method_field('PUT') }}
+                        @endif
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+      
+      
+                        @if(!$proxima->plan)
+  
+                          <label>Fase inicial</label>
+                          <textarea name="inicio" class="form-control" cols="30" rows="10"></textarea>
+                          <label>Minutos</label>
+                          <input type="number" class="form-control" name="minutosinicio">
+
+                          <label>Fase medular</label>
+                          <textarea name="medular" class="form-control" cols="30" rows="10"></textarea>
+                          <label>Minutos</label>
+                          <input type="number" class="form-control" name="minutosmedular">
+
+                          <label>Fase final</label>
+                          <textarea name="final" class="form-control" cols="30" rows="10"></textarea>
+                          <label>Minutos</label>
+                          <input type="number" class="form-control" name="minutosfinal">
+
+                          <label>Comentarios</label>
+                          <textarea name="comentarios" class="form-control" cols="30" rows="10"></textarea>
+                          <input type="hidden" name="reservacion_id" value="{{$proxima->id}}">
+
+
+                          
+                        @else
+                        {{$proxima->plan}}
+  
+                          <label>Fase inicial</label>
+                          <textarea name="inicio" class="form-control" cols="30" rows="10">{{$proxima->plan->inicio}}</textarea>
+                          <label>Minutos</label>
+                          <input type="number" class="form-control" name="minutosinicio" value="{{$proxima->plan->minutosinicio}}">
+
+                          <label>Fase medular</label>
+                          <textarea name="medular" class="form-control" cols="30" rows="10">{{$proxima->plan->medular}}</textarea>
+                          <label>Minutos</label>
+                          <input type="number" class="form-control" name="minutosmedular" value="{{$proxima->plan->minutosmedular}}">
+
+                          <label>Fase final</label>
+                          <textarea name="final" class="form-control" cols="30" rows="10">{{$proxima->plan->final}}</textarea>
+                          <label>Minutos</label>
+                          <input type="number" class="form-control" name="minutosfinal" value="{{$proxima->plan->minutosfinal}}">
+
+                          <label>Comentarios</label>
+                          <textarea name="comentarios" class="form-control" cols="30" rows="10">{{$proxima->plan->comentarios}}</textarea>
+                          <input type="hidden" name="reservacion_id" value="{{$proxima->id}}">
+      
+                        @endif
+      
+                        <button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Guardar</button>
+      
+      
+                      </form>
+
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <?php
         $cliente = App\User::find($proxima->user_id);
         if ($proxima->tipo=="En condominio"){
           $dire=$proxima->direccion;

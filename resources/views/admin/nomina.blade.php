@@ -151,7 +151,8 @@
 												<select class="form-control"  name="metodo" required>
 													<option value="">Seleccionar método de pago</option>
 													<option value="Transferencia">Transferencia</option>
-													<option value="Pagadora">Pagadora</option>
+													<option value="Asimilados">Asimilados</option>
+													<option value="Efectivo">Efectivo</option>
 												</select>
 												<input type="text" name="referencia" class="form-control" value="" placeholder="Referencia" required>
 												<input type="text" name="monto" class="form-control" value="{{$pendiente}}" placeholder="Monto" required>
