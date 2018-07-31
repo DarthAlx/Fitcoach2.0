@@ -1045,3 +1045,14 @@ button.close {
 .paquetes .disponibles:before, .paquetes .disponibles:after {
 border: 0 !important;
 }
+.icopopup{
+    color: #fff;
+    background: #000;
+    border-radius: 50%;
+    padding: 5px;
+    width: 25px;
+    text-align: center;
+}
+.list-group-item a{
+    text-decoration: none;
+}
