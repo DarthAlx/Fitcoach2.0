@@ -16,7 +16,7 @@ class CreatePlansTable extends Migration
             $table->increments('id');
             $table->longText('inicio');
             $table->longText('medular');
-            $table->longText('fin');
+            $table->longText('final');
             $table->string('minutosinicio');
             $table->string('minutosmedular');
             $table->string('minutosfinal');
