@@ -79,7 +79,7 @@
 			  <tr>
 			      <th>Ticket #</th>
 						<th>Orden</th>
-			      <th>Fecha de clase</th>
+			      <th>Paquete comprado</th>
 						<th>Orden creada</th>
 			      <th>Cliente</th>
 			      <th>Total</th>
@@ -107,7 +107,7 @@
 						<tr style="cursor: pointer;">
 									<td>{{$venta->folio}}</td>
 						      <td>{{$venta->order_id}}</td>
-						      <td>{{$venta->fecha}} {{$venta->hora}}</td>
+						      <td>{{$venta->paquete->clases}} clases {{$venta->paquete->tipo}}</td>
 									<td>{{$venta->created_at}}</td>
 						      <td>{{$venta->user->name}}</td>
 						      <td>@if($descuento){{$grantotal-$descuento->monto}}@else{{$grantotal}}@endif</td>
@@ -137,7 +137,7 @@
 			  <tr>
 					<th>Ticket #</th>
 					<th>Orden</th>
-					<th>Fecha de clase</th>
+					<th>Paquete comprado</th>
 					<th>Orden creada</th>
 					<th>Cliente</th>
 					<th>Total</th>

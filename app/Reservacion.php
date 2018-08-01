@@ -13,7 +13,7 @@ class Reservacion extends Model
 	public function user(){
 		return $this->belongsTo('App\User');
 	}
-	public function horarios(){
+	public function horario(){
 		return $this->belongsTo('App\Horario');
 	}
 	public function rate(){

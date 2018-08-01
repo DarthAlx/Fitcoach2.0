@@ -969,7 +969,7 @@ button.close {
         line-height: 2;
 
 }
-.disponibles:before {
+/*.disponibles:before {
   position: absolute;
   content: "";
   width: 30px;
@@ -990,9 +990,9 @@ button.close {
   z-index:-1;
   border-right: 2px solid #ccc;
   border-bottom: 2px solid #ccc;
-}
+}*/
 
-.paquetes .disponibles:before {
+/*.paquetes .disponibles:before {
     position: absolute;
     content: "";
     width: 60px !important;
@@ -1013,7 +1013,7 @@ button.close {
   z-index:-1;
   border-right: 4px solid #EF7E19 !important;
   border-bottom: 4px solid #EF7E19 !important;
-}
+}*/
 .cart-header{
   padding: 40px 0;
 }

@@ -50,7 +50,7 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Horario');
     }
     public function residenciales(){
-        return $this->hasMany('App\Grupo');
+        return $this->hasMany('App\Horario');
     }
     public function ordenes(){
         return $this->hasMany('App\Orden');

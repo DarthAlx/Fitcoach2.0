@@ -45,13 +45,13 @@
 
 			</div>
 			@include('holders.notificaciones')
-			<p>&nbsp;</p>
+			<p id="paquetes">&nbsp;</p>
 			<p>&nbsp;</p>
 			
 
 		</section>
 
-		<section class="paquetes" id="paquetes">
+		<section class="paquetes">
 		<div class="container-bootstrap">
 			<div class="row">
 				<div class="col-md-12 text-center">

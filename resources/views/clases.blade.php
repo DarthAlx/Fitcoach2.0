@@ -157,7 +157,7 @@
 															$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 															?>
 															@foreach ($particulares as $particular)
-
+															@if($particular->tipo!="En condominio")
 															<?php 
 															$diaslibres=App\Libres::where('user_id',$particular->user_id)->get();
 															$libres=array();
@@ -184,6 +184,7 @@
 																		</li>
 																	@endif
 																@endif
+															@endif
 															@endforeach
 														</ul>
 													</div>
@@ -227,7 +228,7 @@
 														$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 														?>
 														@foreach ($particulares as $particular)
-
+														@if($particular->tipo!="En condominio")
 														<?php 
 															$diaslibres=App\Libres::where('user_id',$particular->user_id)->get();
 															$libres=array();
@@ -252,6 +253,7 @@
 																	</li>
 																@endif
 															@endif
+														@endif
 														@endforeach
 													</ul>
 												</div>

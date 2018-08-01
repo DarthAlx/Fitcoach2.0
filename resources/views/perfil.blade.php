@@ -59,7 +59,7 @@
          </div>
        </div>
       <div class="row">
-        <div class="col-xs-6">
+        <div class="col-xs-6" style="border-right: 1px solid #EF7E19;">
           <div class="disponibles">
             
             <p class="small">

@@ -114,7 +114,7 @@ fbq('track', 'ViewContent');
    <header id="header"><div class="headerWrap clear is-sticky">
 <a class="logo" id="logo" href="{{ url('/') }}">
 			@if(url('/')==Illuminate\Support\Facades\URL::current())
-				<img src="{{ url('images/Logo-Blanco.png') }}" alt="" width="161" height="46" class="logo-white" id="blanco">
+				<img src="{{ url('images/Logo-Blanco.png') }}" alt="" width="161" height="40" class="logo-white" id="blanco">
 			@else
         <img src="{{ url('images/Logo-FITCOACH.png') }}" alt="" width="161" height="46" class="logo-white" id="negro">
 			@endif
@@ -175,7 +175,6 @@ fbq('track', 'ViewContent');
 	     <a href="#">ACTIVACIÓN DE CONDOMINIOS</a>
       <a href="{{url('coaches')}}">COACHES</a>
       <a href="{{url('/')}}#botones">RESERVAR</a>
-      <a href="{{url('residenciales')}}">CONDOMINIOS</a>
 			<a href="{{url('quienes-somos')}}">¿QUIÉNES SOMOS?</a>
 			<a href="{{url('legales')}}">LEGAL</a>
 			<a href="{{url('contacto')}}">CONTACTO</a>

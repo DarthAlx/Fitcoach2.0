@@ -105,28 +105,9 @@
 										@endif
 									</div>
 									<div class="col-sm-6">
-										<h1 class="gotham2">Residenciales</h1>
-										@if ($coach->residenciales)
-											@foreach ($coach->residenciales as $residencial)
-												<?php
-												date_default_timezone_set('America/Mexico_City');
-												setlocale(LC_TIME, "es-ES");
-				                $fecha=new DateTime($residencial->fecha);
-												$hoy=new DateTime("now");
-				                
-												$interval = date_diff($hoy, $fecha);
-												$intervalo = intval($interval->format('%R%a días'));
-													?>
-
-													@if ($residencial->ocupados<$residencial->cupo&&$intervalo>=0&&$residencial->tipo=="Residencial")
-														<a href="#" class="list-group-item" data-toggle="modal" data-target="#condominio{{$residencial->id}}">
-															<i class="fa fa-building" aria-hidden="true"></i>
-						 									{{strftime("%d %b", strtotime($residencial->fecha))}} | {{ $residencial->hora }} | {{$residencial->condominio->identificador}}
-						 									<i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
-														</a>
-													@endif
-
-											@endforeach
+										<h1 class="gotham2">Particulares</h1>
+										@if ($coach->horarios)
+											<a href="#" class="list-group-item" data-toggle="modal" data-target="#calendario2{{$coach->id}}" onclick="acero();">Ver calendario</a>
 										@else
 											Este coach no tiene horarios disponibles.
 										@endif
@@ -140,72 +121,7 @@
 		@endforeach
 	@endif
 
-@if ($coaches)
-	@foreach ($coaches as $coach)
-		@if ($coach->residenciales)
 
-			@foreach ($coach->residenciales as $residencial)
-				@if ($residencial->tipo=="Residencial")
-				<div class="modal fade" id="condominio{{$residencial->id}}" tabindex="-1" role="dialog">
-				  <div class="modal-dialog" role="document">
-				    <div class="modal-content">
-				      <div class="modal-body residencial">
-				              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
-											<div class="container-bootstrap" style="width: 100%;">
-												<div class="row">
-													<div class="col-sm-4 sidebar">
-														<div class="text-center">
-																		<div class="title">
-																				{{$residencial->clase->nombre}}
-
-																		</div>
-																	 <div class="profile-userpic">
-																		 <img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" class="img-responsive" alt="">
-																	 </div>
-																	 <?php $nombre=explode(" ",$coach->name); ?>
-																	 <h2>{{ucfirst($nombre[0])}}</h2>
-														</div>
-														<div class="gotham2 text-center">
-															<p><strong>Hora:</strong> {{$residencial->hora}}</p>
-															<p><strong>Lugar:</strong> {{$residencial->condominio->identificador}}<br>{{$residencial->condominio->direccion}}</p>
-															<p><strong>Cupo:</strong> {{$residencial->cupo}} personas <br>
-																 <strong>Lugares disponibles:</strong> {{intval($residencial->cupo)-intval($residencial->ocupados)}}
-															</p>
-														</div>
-
-													</div>
-													<div class="col-sm-8 sidebar">
-														<div class="title text-center">
-															${{$residencial->precio}}
-
-														</div>
-														<!--img src="{{ url('uploads/condominios') }}/{{ $residencial->condominio->imagen }}" class="img-responsive"-->
-														<form action="{{url('carrito')}}"  onsubmit="fbq('track', 'AddToCart');" method="post">
-															{!! csrf_field() !!}
-															<input type="hidden" name="residencial_id" value="{{$residencial->id}}">
-															<input type="hidden" name="tipo" value="Residencial">
-															<div class="row">
-																<div class="col-sm-8 col-sm-offset-4">
-																		<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar">
-																</div>
-															</div>
-
-														</form>
-													</div>
-												</div>
-
-											</div>
-
-				      </div>
-				    </div><!-- /.modal-content -->
-				  </div><!-- /.modal-dialog -->
-				</div><!-- /.modal contraseña -->
-				@endif
-			@endforeach
-		@endif
-	@endforeach
-
-@endif
 
 
 
@@ -270,6 +186,7 @@
 														$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 														?>
 														@foreach ($particulares as $particular)
+														@if($particular->tipo!="En condominio")
 														<?php 
 															$diaslibres=App\Libres::where('user_id',$particular->user_id)->get();
 															$libres=array();
@@ -292,6 +209,7 @@
 																		{{$particular->hora}} <i class="fa fa-square-o faselect pull-right fa{{$x}}{{$particular->id}}{{$i}}" aria-hidden="true"></i>
 																	</li>
 																@endif
+															@endif
 															@endif
 														@endforeach
 													</ul>
@@ -325,6 +243,7 @@
 													$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 													?>
 													@foreach ($particulares as $particular)
+													@if($particular->tipo!="En condominio")
 													<?php 
 															$diaslibres=App\Libres::where('user_id',$particular->user_id)->get();
 															$libres=array();
@@ -341,6 +260,7 @@
 																	{{$particular->hora}} <i class="fa fa-square-o faselect pull-right fa{{$x}}{{$particular->id}}{{$i}}mini" aria-hidden="true"></i>
 																</li>
 															@endif
+														@endif
 														@endif
 													@endforeach
 												</ul>
@@ -386,6 +306,184 @@
 					</div><!-- /.modal-content -->
 				</div><!-- /.modal-dialog -->
 			</div><!-- /.modal detalles user -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<div class="modal fade" id="calendario2{{$coach->id}}" tabindex="-1" role="dialog">
+				<div class="modal-dialog calendario" role="document">
+					<div class="modal-content">
+						<div class="modal-body">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
+							<?php
+							setlocale(LC_TIME, "es-MX");
+							date_default_timezone_set('America/Mexico_City');
+							$fecha = date('Y-m-d');
+							$fechas=array();
+							$fechasformateadas=array();
+
+
+							for ($i=0; $i < 30 ; $i++) {
+								$nuevafecha = strtotime ( '+'.($i+0).'day' , strtotime ( $fecha ) ) ;
+								$nuevafecha = date ( 'Y-m-d' , $nuevafecha );
+								$format=date("d", strtotime($nuevafecha));
+								$numdias=date("w", strtotime($nuevafecha));
+								$nummeses=date("n", strtotime($nuevafecha));
+								$arraydia=array('Dom','Lun','Mar','Mié','Jue','Vie','Sáb');
+								$arraymes=array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto', 'Septiembre','Octubre','Noviembre','Diciembre');
+								$num=$arraydia[intval($numdias)];
+								$nummes=$arraymes[intval($nummeses)-1];
+								$fechas[]= $nuevafecha;
+								$fechasformateadas[]=ucfirst($num . " " . $format . " " .$nummes);
+							}
+
+							 ?>
+			<div class="container-fluid" id="trabajo">
+
+        <div class="row">
+      		<div class="col-md-12">
+      			<form action="{{url('carrito')}}" onsubmit="fbq('track', 'AddToCart');" method="post">
+							{!! csrf_field() !!}
+
+						<h1 class="title">{{ucfirst($coach->name)}} </h1>
+
+
+
+							<div id="myCarousel2{{$coach->id}}" class="carousel slide hidden-xs"  data-wrap="false">
+			        <div class="carousel-inner">
+								@for ($i=0; $i < 5 ; $i++)
+									@if ($i==0)
+										<div class="item active">
+									@else
+										<div class="item">
+									@endif
+						        <div class="row-fluid">
+											@for ($x=$i*6; $x < ($i+1)*6 ; $x++)
+												<div class="col-sm-2 col-xs-4 separacion">
+													{{$fechasformateadas[$x]}}
+													<ul class="list-group calendarioinst">
+														<?php $residenciales=App\Horario::where('tipo', 'En condominio')->orderBy('hora', 'asc')->get();
+														list($año, $mes, $dia) = explode("-", $fechas[$x]);
+														$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
+														?>
+														@foreach ($residenciales as $residencial)
+															@if ($residencial->ocupados<$residencial->cupo)
+																@if ($residencial->fecha==$fechas[$x])
+                                  <?php $nombre=explode(" ",$residencial->user->name); ?>
+																	<li class="list-group-item text-center"  onclick="agregaracarrito2('{{$x}}{{$residencial->id}}{{$i}}','{{$coach->id}}','{{$clase->id}}');" style="cursor:pointer;">
+																		<input type="checkbox" class="carritocheck" id="carrito2{{$x}}{{$residencial->id}}{{$i}}" name="carrito[]" value="{{$residencial->id}},{{$fechas[$x]}},{{$residencial->tokens}}" style="display:none">
+																		<input type="hidden" name="tipo" value="En condominio">
+																		{{$residencial->clase->nombre}}<br>{{ucfirst($nombre[0])}}<br>{{$residencial->hora}}
+																		<i class="fa fa-square-o faselect pull-right fa2{{$x}}{{$residencial->id}}{{$i}}" aria-hidden="true"></i>
+																	</li>
+																@endif
+															@endif
+														@endforeach
+													</ul>
+												</div>
+											@endfor
+						        </div>
+					        </div>
+								@endfor
+			        </div>
+
+
+			        <a class="left carousel-control" href="#myCarousel2{{$coach->id}}" data-slide="prev"><em class="fa fa-2x fa-chevron-left" aria-hidden="true" style="color: #000;"></em>
+			        </a>
+			        <a class="right carousel-control" href="#myCarousel2{{$coach->id}}" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
+			        </a>
+			        </div>
+        	</div>
+
+
+
+					<div id="myCarouselmini2{{$coach->id}}" class="carousel slide visible-xs"  data-wrap="false">
+					<div class="carousel-inner">
+						@for ($i=0; $i < 15 ; $i++)
+							@if ($i==0)
+								<div class="item active">
+							@else
+								<div class="item">
+							@endif
+								<div class="row-fluid">
+									@for ($x=$i*2; $x < ($i+1)*2 ; $x++)
+										<div class="col-xs-6 separacion">
+											{{$fechasformateadas[$x]}}
+											<ul class="list-group calendarioinst">
+												<?php $residenciales=App\Horario::where('tipo', 'En condominio')->get();
+												list($año, $mes, $dia) = explode("-", $fechas[$x]);
+												$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
+												?>
+												@foreach ($residenciales as $residencial)
+													@if ($residencial->ocupados<$residencial->cupo)
+														@if ($residencial->fecha==$fechas[$x])
+															<?php $nombre=explode(" ",$residencial->user->name); ?>
+															<li class="list-group-item text-center"  onclick="agregaracarrito2('{{$x}}{{$residencial->id}}{{$i}}mini','{{$coach->id}}','{{$clase->id}}');" style="cursor:pointer;">
+																<input type="checkbox" class="carritocheck"  id="carrito2{{$x}}{{$residencial->id}}{{$i}}mini" name="carrito[]" value="{{$residencial->id}},{{$fechas[$x]}},{{$residencial->tokens}}" style="display:none">
+																<input type="hidden" name="tipo" value="En condominio">
+																{{$residencial->clase->nombre}}<br>{{ucfirst($nombre[0])}}<br>{{$residencial->hora}}
+																<i class="fa fa-square-o faselect pull-right fa2{{$x}}{{$residencial->id}}{{$i}}mini" aria-hidden="true"></i>
+															</li>
+														@endif
+													@endif
+												@endforeach
+											</ul>
+										</div>
+									@endfor
+								</div>
+							</div>
+						@endfor
+					</div>
+
+
+					<a class="left carousel-control" href="#myCarouselmini2{{$coach->id}}" data-slide="prev"><em class="fa fa-2x fa-chevron-left" aria-hidden="true" style="color: #000;"></em>
+					</a>
+					<a class="right carousel-control" href="#myCarouselmini2{{$coach->id}}" data-slide="next"><em class="fa fa-2x fa-chevron-right" aria-hidden="true" style="color: #000;"></em>
+					</a>
+					</div>
+					<input type="hidden" name="cantidad" id="cantidad2{{$coach->id}}">
+								<p>&nbsp;</p>
+								<div class="row">
+									<div class="col-sm-8">
+										<div id="clasesseleccionadas2{{$clase->id}}" class="clasesseleccionadas title text-center">
+			 								0 clases seleccionadas.
+										</div>
+									</div>
+									<p>&nbsp;</p>
+									<div class="col-sm-4">
+										<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar" id="reservar2{{$coach->id}}{{$clase->id}}" disabled>
+									</div>
+								</div>
+								</form>
+
+
+
+
+			</div>
+
+
+
+        </div>
+      </div>
+
+						</div>
+
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal-dialog -->
+			</div><!-- /.modal detalles user -->
 		@endforeach
 	@endif
 
@@ -418,6 +516,34 @@
 				$('#reservar'+valor2+valor3).prop( "disabled", false );
 			}
 		}
+
+		clasesseleccionadas2=0;
+			function agregaracarrito2(valor, valor2,valor3){
+				if (document.getElementById('carrito2'+valor).checked) {
+					document.getElementById('carrito2'+valor).checked = false;
+					$('#carrito2'+valor).removeClass('seleccionada');
+					$('.fa2'+valor).removeClass('fa-square');
+					$('.fa2'+valor).addClass('fa-square-o');
+					if (clasesseleccionadas>0) {
+						clasesseleccionadas--;
+					}
+					$('#cantidad2'+valor3).val(clasesseleccionadas);
+					$('#clasesseleccionadas2'+valor3).html(clasesseleccionadas+" clases seleccionadas.");
+					if (clasesseleccionadas<=0) {
+						$('#reservar2'+valor2+valor3).prop( "disabled", true );
+					}
+				}
+				else {
+					document.getElementById('carrito2'+valor).checked = true;
+					$('#carrito2'+valor).addClass('seleccionada');
+					$('.fa2'+valor).removeClass('fa-square-o');
+					$('.fa2'+valor).addClass('fa-square');
+					clasesseleccionadas++;
+					$('#cantidad2'+valor3).val(clasesseleccionadas);
+					$('#clasesseleccionadas2'+valor3).html(clasesseleccionadas+" clases seleccionadas.");
+					$('#reservar2'+valor2+valor3).prop( "disabled", false );
+				}
+			}
 		function acero(){
 				clasesseleccionadas=0;
 				$('.clasesseleccionadas').html("0 clases seleccionadas.");

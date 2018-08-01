@@ -11,4 +11,7 @@ class Condominio extends Model
   public function residenciales(){
       return $this->hasMany('App\Grupo');
   }
+  public function grupos(){
+    return $this->hasMany('App\Grupo');
+}
 }
