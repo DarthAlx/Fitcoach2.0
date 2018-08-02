@@ -74,7 +74,7 @@
 			      
 			      <th>Email</th>
 			      <th>Teléfono</th>
-			      <th>Ultimo acceso</th>
+			      <th>Último acceso</th>
 
 
 			  </tr>
@@ -120,7 +120,7 @@
 			      
 			      <th>Email</th>
 			      <th>Teléfono</th>
-			      <th>Ultimo acceso</th>
+			      <th>Último acceso</th>
 
 
 			  </tr>

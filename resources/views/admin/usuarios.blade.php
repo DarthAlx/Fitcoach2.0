@@ -73,7 +73,8 @@
 
 			      
 			      <th>Email</th>
-			      <th>Ultimo acceso</th>
+						<th>Rol</th>
+			      <th>Último acceso</th>
 
 
 			  </tr>
@@ -89,6 +90,7 @@
 
 								      
 								      <td>{{$usuario->email}}</td>
+											<td>{{$usuario->role}}</td>
 								      <td>{{$usuario->acceso}}</td>
 								      
 								      
@@ -110,7 +112,7 @@
 
 			      
 			      <th>Email</th>
-			      <th>Ultimo acceso</th>
+			      <th>Último acceso</th>
 
 
 			  </tr>
