@@ -113,7 +113,39 @@
 
 		      				<div>
 		      					@if(!$usuario->paquetes->isEmpty())
-		      					<h4>Historial de compras</h4>
+										<h4>Historial de compras</h4>
+										<?php
+										$user=$usuario;
+										$particulares=App\PaqueteComprado::where('user_id', $user->id)->where('tipo','A domicilio')->where('disponibles','<>',0)->orderBy('expiracion','asc')->get();
+										$residenciales=App\PaqueteComprado::where('user_id', $user->id)->where('tipo','En condominio')->where('disponibles','<>',0)->orderBy('expiracion','asc')->get();
+										$partdisp=0;
+										$resdisp=0; 
+										$partexp=0;
+										$resexp=0;      
+										$today = strtotime(date('Y-m-d'));
+
+										foreach ($particulares as $pd) {
+
+										$expire = strtotime($pd->expiracion);
+											if ($expire >= $today) {
+												$partdisp=$partdisp+$pd->disponibles;
+											}
+											else{
+												$partexp=$partexp+$pd->disponibles;
+											}
+										}
+
+										foreach ($residenciales as $rd) {
+
+										$expire = strtotime($rd->expiracion);
+											if ($expire >= $today) {
+												$resdisp=$resdisp+$rd->disponibles;
+											}
+											else{
+												$resexp=$resexp+$rd->disponibles;
+											}
+										}
+										?>
 		      					<div class="table-responsive">
 		      						<table class="table">
 		      							<thead>
