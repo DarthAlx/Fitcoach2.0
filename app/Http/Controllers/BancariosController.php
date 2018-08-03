@@ -8,9 +8,13 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Bancarios;
 use App\Documentacion;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Mail;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+
 class BancariosController extends Controller
 {
     /**
@@ -59,6 +63,7 @@ class BancariosController extends Controller
      {
        $documentacion = new Documentacion();
        $user=User::find(Auth::user()->id);
+       $documentacion->user_id=Auth::user()->id;
        if ($request->hasFile('rfc')) {
             $file = $request->file('rfc');
             if ($file->getClientOriginalExtension()=="pdf") {
@@ -74,11 +79,7 @@ class BancariosController extends Controller
             }
     
         }
-        else{
-            Session::flash('mensaje', 'El archivo (rfc) no es un documento valido');
-            Session::flash('class', 'danger');
-            return redirect()->intended(url('/perfilinstructor'));
-        }
+
 
         if ($request->hasFile('ine')) {
             $file = $request->file('ine');
@@ -95,11 +96,7 @@ class BancariosController extends Controller
             }
     
         }
-        else{
-            Session::flash('mensaje', 'El archivo (ine) no es un documento valido');
-            Session::flash('class', 'danger');
-            return redirect()->intended(url('/perfilinstructor'));
-        }
+
         if ($request->hasFile('curp')) {
             $file = $request->file('curp');
             if ($file->getClientOriginalExtension()=="pdf") {
@@ -115,11 +112,7 @@ class BancariosController extends Controller
             }
     
         }
-        else{
-            Session::flash('mensaje', 'El archivo (curp) no es un documento valido');
-            Session::flash('class', 'danger');
-            return redirect()->intended(url('/perfilinstructor'));
-        }
+
         if ($request->hasFile('acta')) {
             $file = $request->file('acta');
             if ($file->getClientOriginalExtension()=="pdf") {
@@ -135,11 +128,7 @@ class BancariosController extends Controller
             }
     
         }
-        else{
-            Session::flash('mensaje', 'El archivo (acta de nacimiento) no es un documento valido');
-            Session::flash('class', 'danger');
-            return redirect()->intended(url('/perfilinstructor'));
-        }
+
         if ($request->hasFile('domicilio')) {
             $file = $request->file('domicilio');
             if ($file->getClientOriginalExtension()=="pdf") {
@@ -155,11 +144,7 @@ class BancariosController extends Controller
             }
     
         }
-        else{
-            Session::flash('mensaje', 'El archivo (comprobante de domicilio) no es un documento valido');
-            Session::flash('class', 'danger');
-            return redirect()->intended(url('/perfilinstructor'));
-        }
+
         if ($request->hasFile('certificaciones')) {
             $file = $request->file('certificaciones');
             if ($file->getClientOriginalExtension()=="pdf") {
@@ -175,11 +160,7 @@ class BancariosController extends Controller
             }
     
         }
-        else{
-            Session::flash('mensaje', 'El archivo (certificaciones) no es un documento valido');
-            Session::flash('class', 'danger');
-            return redirect()->intended(url('/perfilinstructor'));
-        }
+
         if ($request->hasFile('recomendacion1')) {
             $file = $request->file('recomendacion1');
             if ($file->getClientOriginalExtension()=="pdf") {
@@ -195,11 +176,7 @@ class BancariosController extends Controller
             }
     
         }
-        else{
-            Session::flash('mensaje', 'El archivo (carta de recomendación 1) no es un documento valido');
-            Session::flash('class', 'danger');
-            return redirect()->intended(url('/perfilinstructor'));
-        }
+
         if ($request->hasFile('recomendacion2')) {
             $file = $request->file('recomendacion2');
             if ($file->getClientOriginalExtension()=="pdf") {
@@ -215,11 +192,7 @@ class BancariosController extends Controller
             }
     
         }
-        else{
-            Session::flash('mensaje', 'El archivo (carta de recomendación 2) no es un documento valido');
-            Session::flash('class', 'danger');
-            return redirect()->intended(url('/perfilinstructor'));
-        }
+
 
 
         $documentacion->save();
@@ -285,13 +258,14 @@ class BancariosController extends Controller
 
     public function update2(Request $request)
     {
-      $documentacion = Documentacion::find(Auth::user()->id);
+      $documentacion = Documentacion::find($request->documentacion);
       $user=User::find(Auth::user()->id);
       if ($request->hasFile('rfc')) {
         $file = $request->file('rfc');
         if ($file->getClientOriginalExtension()=="pdf") {
         $name = $user->id ."-rfc-". time(). "." . $file->getClientOriginalExtension();
         $path = base_path('uploads/documentos/');
+        File::delete($path . $documentacion->rfc);
         $file-> move($path, $name);
         $documentacion->rfc = $name;
         }
@@ -302,17 +276,14 @@ class BancariosController extends Controller
         }
 
     }
-    else{
-        Session::flash('mensaje', 'El archivo (rfc) no es un documento valido');
-        Session::flash('class', 'danger');
-        return redirect()->intended(url('/perfilinstructor'));
-    }
+
 
     if ($request->hasFile('ine')) {
         $file = $request->file('ine');
         if ($file->getClientOriginalExtension()=="pdf") {
         $name = $user->id ."-ine-". time(). "." . $file->getClientOriginalExtension();
         $path = base_path('uploads/documentos/');
+        File::delete($path . $documentacion->ine);
         $file-> move($path, $name);
         $documentacion->ine = $name;
         }
@@ -323,16 +294,13 @@ class BancariosController extends Controller
         }
 
     }
-    else{
-        Session::flash('mensaje', 'El archivo (ine) no es un documento valido');
-        Session::flash('class', 'danger');
-        return redirect()->intended(url('/perfilinstructor'));
-    }
+
     if ($request->hasFile('curp')) {
         $file = $request->file('curp');
         if ($file->getClientOriginalExtension()=="pdf") {
         $name = $user->id ."-curp-". time(). "." . $file->getClientOriginalExtension();
         $path = base_path('uploads/documentos/');
+        File::delete($path . $documentacion->curp);
         $file-> move($path, $name);
         $documentacion->curp = $name;
         }
@@ -343,16 +311,13 @@ class BancariosController extends Controller
         }
 
     }
-    else{
-        Session::flash('mensaje', 'El archivo (curp) no es un documento valido');
-        Session::flash('class', 'danger');
-        return redirect()->intended(url('/perfilinstructor'));
-    }
+
     if ($request->hasFile('acta')) {
         $file = $request->file('acta');
         if ($file->getClientOriginalExtension()=="pdf") {
         $name = $user->id ."-acta-". time(). "." . $file->getClientOriginalExtension();
         $path = base_path('uploads/documentos/');
+        File::delete($path . $documentacion->acta);
         $file-> move($path, $name);
         $documentacion->acta = $name;
         }
@@ -363,16 +328,13 @@ class BancariosController extends Controller
         }
 
     }
-    else{
-        Session::flash('mensaje', 'El archivo (acta de nacimiento) no es un documento valido');
-        Session::flash('class', 'danger');
-        return redirect()->intended(url('/perfilinstructor'));
-    }
+
     if ($request->hasFile('domicilio')) {
         $file = $request->file('domicilio');
         if ($file->getClientOriginalExtension()=="pdf") {
         $name = $user->id ."-domicilio-". time(). "." . $file->getClientOriginalExtension();
         $path = base_path('uploads/documentos/');
+        File::delete($path . $documentacion->domicilio);
         $file-> move($path, $name);
         $documentacion->domicilio = $name;
         }
@@ -383,16 +345,13 @@ class BancariosController extends Controller
         }
 
     }
-    else{
-        Session::flash('mensaje', 'El archivo (comprobante de domicilio) no es un documento valido');
-        Session::flash('class', 'danger');
-        return redirect()->intended(url('/perfilinstructor'));
-    }
+
     if ($request->hasFile('certificaciones')) {
         $file = $request->file('certificaciones');
         if ($file->getClientOriginalExtension()=="pdf") {
         $name = $user->id ."-certificaciones-". time(). "." . $file->getClientOriginalExtension();
         $path = base_path('uploads/documentos/');
+        File::delete($path . $documentacion->certificaciones);
         $file-> move($path, $name);
         $documentacion->certificaciones = $name;
         }
@@ -403,16 +362,13 @@ class BancariosController extends Controller
         }
 
     }
-    else{
-        Session::flash('mensaje', 'El archivo (certificaciones) no es un documento valido');
-        Session::flash('class', 'danger');
-        return redirect()->intended(url('/perfilinstructor'));
-    }
+
     if ($request->hasFile('recomendacion1')) {
         $file = $request->file('recomendacion1');
         if ($file->getClientOriginalExtension()=="pdf") {
         $name = $user->id ."-recomendacion1-". time(). "." . $file->getClientOriginalExtension();
         $path = base_path('uploads/documentos/');
+        File::delete($path . $documentacion->recomendacion1);
         $file-> move($path, $name);
         $documentacion->recomendacion1 = $name;
         }
@@ -423,16 +379,13 @@ class BancariosController extends Controller
         }
 
     }
-    else{
-        Session::flash('mensaje', 'El archivo (carta de recomendación 1) no es un documento valido');
-        Session::flash('class', 'danger');
-        return redirect()->intended(url('/perfilinstructor'));
-    }
+ 
     if ($request->hasFile('recomendacion2')) {
         $file = $request->file('recomendacion2');
         if ($file->getClientOriginalExtension()=="pdf") {
         $name = $user->id ."-recomendacion2-". time(). "." . $file->getClientOriginalExtension();
         $path = base_path('uploads/documentos/');
+        File::delete($path . $documentacion->recomendacion2);
         $file-> move($path, $name);
         $documentacion->recomendacion2 = $name;
         }
@@ -443,11 +396,7 @@ class BancariosController extends Controller
         }
 
     }
-    else{
-        Session::flash('mensaje', 'El archivo (carta de recomendación 2) no es un documento valido');
-        Session::flash('class', 'danger');
-        return redirect()->intended(url('/perfilinstructor'));
-    }
+
 
 
     $documentacion->save();

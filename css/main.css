@@ -1056,3 +1056,10 @@ border: 0 !important;
 .list-group-item a{
     text-decoration: none;
 }
+.listadeclases .list-group-item{
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    font-family: Gotham3;
+    padding: 20px 0;
+}

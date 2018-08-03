@@ -989,11 +989,11 @@ $direccion->estado;
                          {!! csrf_field() !!}
                          {{ method_field('PUT') }}
                           <input type="hidden" name="revision" value="{{$proxima->id}}">
-                          <input type="text" id="aforo{{$proxima->id}}" name="aforo" class="form-control" placeholder="Aforo" style="display:none; width: 30%" required><br>
+                          <input type="text" id="taforo{{$proxima->id}}" name="aforo" class="form-control" placeholder="Aforo" style="display:none; width: 30%" required><br>
 
-                         <button type="submit" id="botonmandar{{$proxima->id}}" class="btn btn-primary btn-lg" name="button" style="display:none;">¿Mandar a revisión?</button>
+                         <button type="submit" id="tbotonmandar{{$proxima->id}}" class="btn btn-primary btn-lg" name="button" style="display:none;">¿Mandar a revisión?</button>
                        </form>
-                       <button class="btn btn-primary btn-lg" id="botonmandar2{{$proxima->id}}" name="button" onclick="javascript: document.getElementById('botonmandar2{{$proxima->id}}').style.display='none'; document.getElementById('botonmandar{{$proxima->id}}').style.display='inline-block'; document.getElementById('aforo{{$proxima->id}}').style.display='inline-block'; ">Terminar</button>
+                       <button class="btn btn-primary btn-lg" id="tbotonmandar2{{$proxima->id}}" name="button" onclick="javascript: document.getElementById('tbotonmandar2{{$proxima->id}}').style.display='none'; document.getElementById('tbotonmandar{{$proxima->id}}').style.display='inline-block'; document.getElementById('taforo{{$proxima->id}}').style.display='inline-block'; ">Terminar</button>
 
 
 
@@ -1179,6 +1179,7 @@ $pasadas= App\Reservacion::where('coach_id', $user->id)->where('status', '<>', '
                     <form action="{{ url('/subir-documentacion') }}" method="post" enctype="multipart/form-data">
                       @if($user->documentacion)
                         {{ method_field('PUT') }}
+                        <input type="hidden" name="documentacion" value="{{$user->documentacion->id}}">
                       @endif
                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
     
@@ -1186,39 +1187,39 @@ $pasadas= App\Reservacion::where('coach_id', $user->id)->where('status', '<>', '
                       @if($user->documentacion)
 
                         <label>Cédula de Identificación Fiscal (RFC)</label>
-                        <input class="form-control" type="file" value="{{ $user->documentacion->rfc }}" placeholder="Cédula de Identificación Fiscal (RFC)" name="rfc" required>
+                        <input class="form-control" type="file" value="{{ $user->documentacion->rfc }}" placeholder="Cédula de Identificación Fiscal (RFC)" name="rfc">
                         <label>Credencial de Elector (INE)</label>
-                        <input class="form-control" type="file" value="{{ $user->documentacion->ine }}" placeholder="Credencial de Elector (INE)" name="ine" required>
+                        <input class="form-control" type="file" value="{{ $user->documentacion->ine }}" placeholder="Credencial de Elector (INE)" name="ine">
                         <label>Clave Única de Registro de Población (CURP)</label>
-                        <input class="form-control" type="file" value="{{ $user->documentacion->curp }}" placeholder="Clave Única de Registro de Población (CURP)" name="curp" required>
+                        <input class="form-control" type="file" value="{{ $user->documentacion->curp }}" placeholder="Clave Única de Registro de Población (CURP)" name="curp">
                         <label>Acta de Nacimiento</label>
-                        <input class="form-control" type="file" value="{{ $user->documentacion->acta }}" placeholder="Acta de Nacimiento" name="acta" required>
+                        <input class="form-control" type="file" value="{{ $user->documentacion->acta }}" placeholder="Acta de Nacimiento" name="acta">
                         <label>Comprobante de domicilio</label>
-                        <input class="form-control" type="file" value="{{ $user->documentacion->domicilio }}" placeholder="Comprobante de domicilio" name="domicilio" required>
+                        <input class="form-control" type="file" value="{{ $user->documentacion->domicilio }}" placeholder="Comprobante de domicilio" name="domicilio">
                         <label>Certificaciones</label>
-                        <input class="form-control" type="file" value="{{ $user->documentacion->certificaciones }}" placeholder="Certificaciones" name="certificaciones" required>
+                        <input class="form-control" type="file" value="{{ $user->documentacion->certificaciones }}" placeholder="Certificaciones" name="certificaciones">
                         <label>Carta de recomendación 1</label>
-                        <input class="form-control" type="file" value="{{ $user->documentacion->recomendacion1 }}" placeholder="Carta de recomendación 1" name="recomendacion1" required>
+                        <input class="form-control" type="file" value="{{ $user->documentacion->recomendacion1 }}" placeholder="Carta de recomendación 1" name="recomendacion1">
                         <label>Carta de recomendación 2</label>
-                        <input class="form-control" type="file" value="{{ $user->documentacion->recomendacion2 }}" placeholder="Carta de recomendación 2" name="recomendacion2" required>
+                        <input class="form-control" type="file" value="{{ $user->documentacion->recomendacion2 }}" placeholder="Carta de recomendación 2" name="recomendacion2">
                       @else
 
                         <label>Cédula de Identificación Fiscal (RFC)</label>
-                        <input class="form-control" type="file" value="{{ old('rfc') }}" placeholder="Cédula de Identificación Fiscal (RFC)" name="rfc" required>
+                        <input class="form-control" type="file" value="{{ old('rfc') }}" placeholder="Cédula de Identificación Fiscal (RFC)" name="rfc">
                         <label>Credencial de Elector (INE)</label>
-                        <input class="form-control" type="file" value="{{ old('ine') }}" placeholder="Credencial de Elector (INE)" name="ine" required>
+                        <input class="form-control" type="file" value="{{ old('ine') }}" placeholder="Credencial de Elector (INE)" name="ine">
                         <label>Clave Única de Registro de Población (CURP)</label>
-                        <input class="form-control" type="file" value="{{ old('curp') }}" placeholder="Clave Única de Registro de Población (CURP)" name="curp" required>
+                        <input class="form-control" type="file" value="{{ old('curp') }}" placeholder="Clave Única de Registro de Población (CURP)" name="curp">
                         <label>Acta de Nacimiento</label>
-                        <input class="form-control" type="file" value="{{ old('acta') }}" placeholder="Acta de Nacimiento" name="acta" required>
+                        <input class="form-control" type="file" value="{{ old('acta') }}" placeholder="Acta de Nacimiento" name="acta">
                         <label>Comprobante de domicilio</label>
-                        <input class="form-control" type="file" value="{{ old('domicilio') }}" placeholder="Comprobante de domicilio" name="domicilio" required>
+                        <input class="form-control" type="file" value="{{ old('domicilio') }}" placeholder="Comprobante de domicilio" name="domicilio">
                         <label>Certificaciones</label>
-                        <input class="form-control" type="file" value="{{ old('certificaciones') }}" placeholder="Certificaciones" name="certificaciones" required>
+                        <input class="form-control" type="file" value="{{ old('certificaciones') }}" placeholder="Certificaciones" name="certificaciones">
                         <label>Carta de recomendación 1</label>
-                        <input class="form-control" type="file" value="{{ old('recomendacion1') }}" placeholder="Carta de recomendación 1" name="recomendacion1" required>
+                        <input class="form-control" type="file" value="{{ old('recomendacion1') }}" placeholder="Carta de recomendación 1" name="recomendacion1">
                         <label>Carta de recomendación 2</label>
-                        <input class="form-control" type="file" value="{{ old('recomendacion2') }}" placeholder="Carta de recomendación 2" name="recomendacion2" required>
+                        <input class="form-control" type="file" value="{{ old('recomendacion2') }}" placeholder="Carta de recomendación 2" name="recomendacion2">
     
                       @endif
     

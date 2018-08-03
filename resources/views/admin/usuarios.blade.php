@@ -112,6 +112,7 @@
 
 			      
 			      <th>Email</th>
+						<th>Rol</th>
 			      <th>Último acceso</th>
 
 

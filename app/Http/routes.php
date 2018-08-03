@@ -460,8 +460,8 @@ Route::group(['middleware' => 'instructores'], function(){
   Route::put('actualizar-bancarios', 'BancariosController@update');
 
 
-  Route::post('subir-documentacion', 'PlanController@store');
-  Route::put('subir-documentacion', 'PlanController@update');
+  Route::post('planear-clase', 'PlanController@store');
+  Route::put('planear-clase', 'PlanController@update');
   
   Route::put('terminar-orden', 'OrdenController@terminar');
 
@@ -469,6 +469,6 @@ Route::group(['middleware' => 'instructores'], function(){
   Route::delete('eliminar-libre', 'ClaseController@destroylibre');
 
 
-  Route::post('planear-clase', 'BancariosController@store2');
-  Route::put('planear-clase', 'BancariosController@update2');
+  Route::post('subir-documentacion', 'BancariosController@store2');
+  Route::put('subir-documentacion', 'BancariosController@update2');
 });

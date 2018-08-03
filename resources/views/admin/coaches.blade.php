@@ -201,14 +201,15 @@
 			      				<div>
 											<h4>Actualizar coach</h4>
 											@if($admin->documentacion)
-											<a href="{{url('uploads/documentos')}}/{{$admin->rfc}}" class="btn btn-default">rfc</a> &nbsp;
-											<a href="{{url('uploads/documentos')}}/{{$admin->ine}}" class="btn btn-default">ine</a> &nbsp;
-											<a href="{{url('uploads/documentos')}}/{{$admin->curp}}" class="btn btn-default">curp</a> &nbsp;
-											<a href="{{url('uploads/documentos')}}/{{$admin->acta}}" class="btn btn-default">acta</a> &nbsp;
-											<a href="{{url('uploads/documentos')}}/{{$admin->domicilo}}" class="btn btn-default">domicilo</a> &nbsp;
-											<a href="{{url('uploads/documentos')}}/{{$admin->certificaciones}}" class="btn btn-default">certificaciones</a> &nbsp;
-											<a href="{{url('uploads/documentos')}}/{{$admin->recomendacion1}}" class="btn btn-default">recomendacion1</a> &nbsp;
-											<a href="{{url('uploads/documentos')}}/{{$admin->recomendacion2}}" class="btn btn-default">recomendacion2</a> &nbsp;
+											@if($admin->documentacion->rfc!="")<a target="_blank" download href="{{url('uploads/documentos')}}/{{$admin->documentacion->rfc}}" class="btn btn-default">rfc</a> &nbsp; @endif
+											@if($admin->documentacion->ine!="")<a target="_blank" download href="{{url('uploads/documentos')}}/{{$admin->documentacion->ine}}" class="btn btn-default">ine</a> &nbsp; @endif
+											@if($admin->documentacion->curp!="")<a target="_blank" download href="{{url('uploads/documentos')}}/{{$admin->documentacion->curp}}" class="btn btn-default">curp</a> &nbsp; @endif
+											@if($admin->documentacion->acta!="")<a target="_blank" download href="{{url('uploads/documentos')}}/{{$admin->documentacion->acta}}" class="btn btn-default">acta</a> &nbsp; @endif
+											@if($admin->documentacion->domicilio!="")<a target="_blank" download href="{{url('uploads/documentos')}}/{{$admin->documentacion->domicilio}}" class="btn btn-default">domicilo</a> &nbsp; @endif
+											@if($admin->documentacion->certificaciones!="")<a target="_blank" download href="{{url('uploads/documentos')}}/{{$admin->documentacion->certificaciones}}" class="btn btn-default">certificaciones</a> &nbsp; @endif
+											@if($admin->documentacion->recomendacion1!="")<a target="_blank" download href="{{url('uploads/documentos')}}/{{$admin->documentacion->recomendacion1}}" class="btn btn-default">recomendacion1</a> &nbsp; @endif
+											@if($admin->documentacion->recomendacion2!="")<a target="_blank" download href="{{url('uploads/documentos')}}/{{$admin->documentacion->recomendacion2}}" class="btn btn-default">recomendacion2</a> &nbsp; @endif
+											<p>&nbsp;</p>
 											@else
 											<p>El coach aún no envía documentación.</p>
 											@endif
