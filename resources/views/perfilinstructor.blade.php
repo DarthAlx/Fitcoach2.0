@@ -129,6 +129,7 @@
                 {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
                 </div>      
                 <div class="col-xs-2">
+                
                 {{$proxima->horario->zona->identificador}}
                 </div>
                 <div class="col-xs-3">

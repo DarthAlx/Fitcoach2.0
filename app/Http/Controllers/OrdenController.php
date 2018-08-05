@@ -81,7 +81,7 @@ class OrdenController extends Controller
           else {
             $precio=$clase->clase->precio;
           }
-          Cart::add($clase->clase->id,$clase->clase->nombre,1,0, ['tipo'=>'particular','fecha' => $items[1],'hora' => $clase->hora, 'coach' => $clase->user_id]);
+          Cart::add($clase->id,$clase->clase->nombre,1,0, ['tipo'=>'particular','fecha' => $items[1],'hora' => $clase->hora, 'coach' => $clase->user_id]);
           Session::flash('mensaje', 'La clase que vas a reservar es únicamente para la zona '.$zona.'.<br>
   No habrá cambios o devoluciones si no estas en la zona y no es posible para el COACH asistir.');
           Session::flash('class', 'warning');
@@ -708,6 +708,7 @@ public function reservar(Request $request)
       $items=Cart::content();
 
       foreach ($items as $product) {
+       
 
         if ($product->options->tipo=="particular") {
 
