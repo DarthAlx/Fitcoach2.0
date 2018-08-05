@@ -147,43 +147,43 @@
                           <div class="form-group row"  id="identificadorNuevolabel">
                             <label class="col-sm-3 control-label" for="card-number">Identificador</label>
                             <div class="col-sm-9">
-                              <input class="form-control" type="text" value="{{ old('identificadordireccion') }}" id="identificadordireccion"  name="identificadordireccion" placeholder="Ej: Casa, Condominio, Oficina ...">
+                              <input class="form-control" type="text" value="{{ old('identificadordireccion') }}" id="identificadordireccion"  name="identificadordireccion" placeholder="Ej: Casa, Condominio, Oficina ..." required>
                             </div>
                           </div>
                           <div class="form-group row"  id="calleNuevolabel">
                             <label class="col-sm-3 control-label" for="card-holder-name">Calle</label>
                             <div class="col-sm-9 col-md-5">
-                              <input class="form-control" type="text" value="{{ old('calle') }}" id="calle"  name="calle">
+                              <input class="form-control" type="text" value="{{ old('calle') }}" id="calle"  name="calle" required>
                             </div>
                             <div class="col-sm-6 col-md-2">
-                              <input class="form-control" type="text" value="{{ old('numero_ext') }}" id="numero_ext"  name="numero_ext" placeholder="# Ext" >
+                              <input class="form-control" type="text" value="{{ old('numero_ext') }}" id="numero_ext"  name="numero_ext" placeholder="# Ext"  required>
                             </div>
                             <div class="col-sm-6 col-md-2">
-                              <input class="form-control" type="text" value="{{ old('numero_int') }}" id="numero_int"  name="numero_int" placeholder="# Int">
+                              <input class="form-control" type="text" value="{{ old('numero_int') }}" id="numero_int"  name="numero_int" placeholder="# Int" required>
                             </div>
                           </div>
                           <div class="form-group row"  id="coloniaNuevolabel">
                             <label class="col-sm-3 control-label" for="card-number">Colonia</label>
                             <div class="col-sm-9">
-                              <input class="form-control" type="text" value="{{ old('colonia') }}" id="colonia"  name="colonia" >
+                              <input class="form-control" type="text" value="{{ old('colonia') }}" id="colonia"  name="colonia"  required>
                             </div>
                           </div>
                           <div class="form-group row"  id="municipio_delNuevolabel">
                             <label class="col-sm-3 control-label" for="card-number">Municipio / Del</label>
                             <div class="col-sm-9">
-                             <input class="form-control" type="text" value="{{ old('municipio_del') }}" id="municipio_del"  name="municipio_del" >
+                             <input class="form-control" type="text" value="{{ old('municipio_del') }}" id="municipio_del"  name="municipio_del"  required>
                             </div>
                           </div>
                           <div class="form-group row"  id="cpNuevolabel">
                             <label class="col-sm-3 control-label" for="card-number">Código postal</label>
                             <div class="col-sm-9">
-                             <input class="form-control" type="text" value="{{ old('cp') }}" id="cp"  name="cp" >
+                             <input class="form-control" type="text" value="{{ old('cp') }}" id="cp"  name="cp" required >
                             </div>
                           </div>
                           <div class="form-group row"  id="estadoNuevolabel">
                             <label class="col-sm-3 control-label" for="card-number">Estado</label>
                             <div class="col-sm-9">
-                              <select class="form-control" value="{{old('estado')}}" name="estado" id="estado" >
+                              <select class="form-control" value="{{old('estado')}}" name="estado" id="estado" required >
                                 <option value="">Selecciona una opción</option>
                                 <option value="CDMX">CDMX</option>
                                 <option value="Edo. Méx">Edo. Méx</option>
@@ -200,7 +200,7 @@
                         @else
                         <div class="form-group">
                             <div class="col-sm-12 text-right">
-                              <button class="btn btn-success" type="submit"  id="botonguardarNuevo">Reservar</button>
+                              <button class="btn btn-success" type="submit"  id="botonguardarNuevo2">Reservar</button>
                             </div>
                           </div>
                           <input type="hidden" name="esresidencial" value="true">
@@ -231,19 +231,25 @@
     </div>
 
     </form>
+    <script>
+      $('#card-form').on('submit',function(){
+        $('#botonguardarNuevo').addClass('disabled');
+        $('#botonguardarNuevo2').addClass('disabled');
+      });
+    </script>
 @endif <!--carritovacio-->
     @if (!$user->direcciones->isEmpty())
       <script type="text/javascript">
         $('#direccion').change(function(){
           if ($('#direccion').val()!="") {
-            $('#identificadorNuevo').prop( "disabled", true );
-            $('#calleNuevo').prop( "disabled", true );
-            $('#numero_extNuevo').prop( "disabled", true );
-            $('#numero_intNuevo').prop( "disabled", true );
-            $('#coloniaNuevo').prop( "disabled", true );
-            $('#municipio_delNuevo').prop( "disabled", true );
-            $('#cpNuevo').prop( "disabled", true );
-            $('#estadoNuevo').prop( "disabled", true );
+            $('#identificadordireccion').prop( "disabled", true );
+            $('#calle').prop( "disabled", true );
+            $('#numero_ext').prop( "disabled", true );
+            $('#numero_int').prop( "disabled", true );
+            $('#colonia').prop( "disabled", true );
+            $('#municipio_del').prop( "disabled", true );
+            $('#cp').prop( "disabled", true );
+            $('#estado').prop( "disabled", true );
             $('#identificadorNuevolabel').hide();
             $('#calleNuevolabel').hide();
             $('#numero_extNuevolabel').hide();
@@ -252,16 +258,24 @@
             $('#municipio_delNuevolabel').hide();
             $('#cpNuevolabel').hide();
             $('#estadoNuevolabel').hide();
+            $('#identificadordireccion').prop( "required", false );
+            $('#calle').prop( "required", false );
+            $('#numero_ex').prop( "required", false );
+            $('#numero_int').prop( "required", false );
+            $('#colonia').prop( "required", false );
+            $('#municipio_del').prop( "required", false );
+            $('#cp').prop( "required", false );
+            $('#estado').prop( "required", false );
           }
           else{
-            $('#identificadorNuevo').prop( "disabled", false );
-            $('#calleNuevo').prop( "disabled", false );
-            $('#numero_extNuevo').prop( "disabled", false );
-            $('#numero_intNuevo').prop( "disabled", false );
-            $('#coloniaNuevo').prop( "disabled", false );
-            $('#municipio_delNuevo').prop( "disabled", false );
-            $('#cpNuevo').prop( "disabled", false );
-            $('#estadoNuevo').prop( "disabled", false );
+            $('#identificadordireccion').prop( "disabled", false );
+            $('#calle').prop( "disabled", false );
+            $('#numero_ext').prop( "disabled", false );
+            $('#numero_int').prop( "disabled", false );
+            $('#colonia').prop( "disabled", false );
+            $('#municipio_del').prop( "disabled", false );
+            $('#cp').prop( "disabled", false );
+            $('#estado').prop( "disabled", false );
             $('#identificadorNuevolabel').show();
             $('#calleNuevolabel').show();
             $('#numero_extNuevolabel').show();
@@ -270,6 +284,16 @@
             $('#municipio_delNuevolabel').show();
             $('#cpNuevolabel').show();
             $('#estadoNuevolabel').show();
+            $('#identificadordireccion').prop( "required", true );
+            $('#calle').prop( "required", true );
+            $('#numero_ext').prop( "required", true );
+            $('#numero_int').prop( "required", true );
+            $('#colonia').prop( "required", true );
+            $('#municipio_del').prop( "required", true );
+            $('#cp').prop( "required", true );
+            $('#estado').prop( "required", true );
+
+
           }
         });
       </script>

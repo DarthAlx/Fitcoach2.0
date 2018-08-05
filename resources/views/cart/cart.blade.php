@@ -168,6 +168,11 @@
         <div class="form-group">
           <div class="col-sm-12 text-right">
             <a id="pay-button" class="btn btn-success" type="submit">Pagar</a>
+            <script>
+              $('#pay-button').on('click',function(){
+                $('#pay-button').addClass('disabled');
+              });
+            </script>
 
             <button id="boton" type="submit" style="display:none"></button>
                        
@@ -313,9 +318,13 @@ OpenPay.setId('mada0wigbpnzcmsbtxoa');
     };
 
     var error_callbak = function(response) {
+
+                $('#pay-button').removeClass('disabled');
+              
         var desc = response.data.description != undefined ? response.data.description : response.message;
         alert("ERROR [" + response.status + "] " + desc);
         $("#pay-button").prop("disabled", false);
+        
     };
 });
 //termina api openpay

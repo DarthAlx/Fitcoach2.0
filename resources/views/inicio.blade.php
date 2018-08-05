@@ -91,7 +91,7 @@
 				@foreach($particulares as $paquete)
 					@if($paquete->paquete=="Primer clase")
 						<div class="col-md-2 col-xs-6">
-							<div class="paquete" onclick="location.href='{{url('/comprar-paquete')}}/{{$paquete->id}}'" style="cursor:pointer; color: #EF7E19;">
+							<div class="paquete" @if(Auth::guest())  onclick="document.getElementById('loginboton').click()" @else onclick="location.href='{{url('/comprar-paquete')}}/{{$paquete->id}}'" @endif style="cursor:pointer; color: #EF7E19;">
 								<div class="blue-cap"></div>
 								<div class="info-paquete">
 									<div class="circulo gotham2">
@@ -116,7 +116,7 @@
 						</div>
 					@else
 						<div class="col-md-2 col-xs-6">
-							<div class="paquete" onclick="location.href='{{url('/comprar-paquete')}}/{{$paquete->id}}'" style="cursor:pointer;">
+							<div class="paquete" @if(Auth::guest())  onclick="document.getElementById('loginboton').click()" @else  onclick="location.href='{{url('/comprar-paquete')}}/{{$paquete->id}}'" @endif style="cursor:pointer;">
 								<div class="blue-cap"></div>
 								<div class="info-paquete">
 									<div class="circulo num">
@@ -154,7 +154,7 @@
 			<div class="row text-center">
 				<div class="paquete-center">
 					<div class="col-md-2 col-xs-6">
-						<div class="paquete" onclick="location.href='{{url('/condominios')}}'" style="cursor:pointer; color: #EF7E19; border: 0;">
+						<div class="paquete"  @if(Auth::guest())  onclick="document.getElementById('loginboton').click()" @else  onclick="location.href='{{url('/condominios')}}'" @endif style="cursor:pointer; color: #EF7E19; border: 0;">
 							
 							<div>
 								<div class="color_gris3 gotham3 v_small ppc">
@@ -177,7 +177,7 @@
 				@foreach($residenciales as $paquete)
 					@if($paquete->paquete=="Primer clase")
 						<div class="col-md-2 col-xs-6">
-							<div class="paquete" onclick="location.href='{{url('/comprar-paquete')}}/{{$paquete->id}}'" style=" color: #EF7E19; cursor:pointer;">
+							<div class="paquete"  @if(Auth::guest())  onclick="document.getElementById('loginboton').click()" @else  onclick="location.href='{{url('/comprar-paquete')}}/{{$paquete->id}}'" @endif style=" color: #EF7E19; cursor:pointer;">
 								<div class="blue-cap"></div>
 								<div class="info-paquete">
 									<div class="circulo gotham2">
@@ -202,7 +202,7 @@
 						</div>
 					@else
 						<div class="col-md-2 col-xs-6">
-							<div class="paquete" onclick="location.href='{{url('/comprar-paquete')}}/{{$paquete->id}}'" style="cursor:pointer;">
+							<div class="paquete"  @if(Auth::guest())  onclick="document.getElementById('loginboton').click()" @else  onclick="location.href='{{url('/comprar-paquete')}}/{{$paquete->id}}'" @endif style="cursor:pointer;">
 								<div class="blue-cap"></div>
 								<div class="info-paquete">
 									<div class="circulo num">

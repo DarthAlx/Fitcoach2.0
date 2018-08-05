@@ -449,8 +449,8 @@ Route::group(['middleware' => 'instructores'], function(){
     $user = App\User::find(Auth::user()->id);
     return view('perfilinstructor', ['user'=>$user]) ;
   });
-  Route::post('actualizar-perfil', 'DetalleController@storeinst');
-  Route::put('actualizar-perfil', 'DetalleController@updateinst');
+  Route::post('actualizar-perfilcoach', 'DetalleController@storeinst');
+  Route::put('actualizar-perfilcoach', 'DetalleController@updateinst');
 
   Route::post('agregar-horario', 'ParticularController@store');
   Route::put('actualizar-horario', 'ParticularController@update');

@@ -477,7 +477,7 @@
 
       				<div>
       					<h4>Editar detalles</h4>
-                <form action="{{ url('/actualizar-perfil') }}" method="post">
+                <form action="{{ url('/actualizar-perfilcoach') }}" method="post">
                   @if($user->detalles)
                     {{ method_field('PUT') }}
                   @endif

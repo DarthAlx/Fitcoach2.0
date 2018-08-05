@@ -174,7 +174,7 @@ fbq('track', 'ViewContent');
     <div class="overlay-content">
 	     <a href="#">ACTIVACIÓN DE CONDOMINIOS</a>
       <a href="{{url('coaches')}}">COACHES</a>
-      <a href="{{url('/')}}#botones">RESERVAR</a>
+      <a href="{{url('/')}}#paquetes">COMPRAR CLASES</a>
 			<a href="{{url('quienes-somos')}}">¿QUIÉNES SOMOS?</a>
 			<a href="{{url('legales')}}">LEGAL</a>
 			<a href="{{url('contacto')}}">CONTACTO</a>
@@ -254,7 +254,7 @@ fbq('track', 'ViewContent');
 							<input id="emaillogin2" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Correo electrónico" required>
 							<input type="email" class="form-control" name="email_confirmation" value="{{ old('email_confirmation') }}" placeholder="Confirmar correo electrónico" required>
 							<input type="text" class="form-control" value="{{ old('name') }}" name="name" placeholder="Nombre completo" required>
-							<input type="text" class="form-control datepicker" value="{{ old('dob') }}" name="dob" placeholder="Fecha de nacimiento aaaa-mm-dd" required>
+							<input type="date" class="form-control" value="{{ old('dob') }}" name="dob" placeholder="Fecha de nacimiento aaaa-mm-dd" required>
 							<select class="form-control" name="genero" value="{{ old('genero') }}" required>
 								<option value="">Genero</option>
 								<option value="Masculino">Masculino</option>
@@ -263,7 +263,7 @@ fbq('track', 'ViewContent');
 							<input type="tel" class="form-control" name="tel" value="{{ old('tel') }}" minlength="10" placeholder="Teléfono (10 dígitos)" required>
 							<input  type="password" class="form-control" name="password" placeholder="Contraseña" required>
 							<input type="password" class="form-control" name="password_confirmation" placeholder="Repetir contraseña"  required>
-							<input type="text" class="form-control" value="{{ old('referencia') }}" name="referencia" placeholder="Código de referencia">
+							<input type="text" class="form-control" value="{{ old('referencia') }}" name="referencia" placeholder="Código de referencia (opcional)">
 							<div class="checkbox" style="padding: 10px 0;">
 								<input type="checkbox" name="términos" value="Sí" required> <a href="{{url('/legales')}}?page=terminos" style="text-decoration: none; color: #000;">Acepto términos y condiciones y</a> <a href="{{url('/legales')}}?page=terminos" style="text-decoration: none; color: #000;">aviso de privacidad.</a>
 							</div>

@@ -164,25 +164,30 @@
           
           <script type="text/javascript">
             function verclases(valor) {
+     
               if (valor=="proximas") {
-                $('#pasadas').hide();
-                $('#btnpasadas').addClass('btn-clases');$('#btnpasadas').removeClass('btn-success');
-                $('#proximas').show();
-                $('#btnproximas').addClass('btn-success');$('#btnproximas').removeClass('btn-clases');
-              }
-              if (valor=="pasadas") {
+              $('#pasadas').hide();
+              $('#btnpasadas').addClass('btn-clases');$('#btnpasadas').removeClass('btn-success');
+              $('#historial').hide();
+              $('#btnhistorial').addClass('btn-clases');$('#btnhistorial').removeClass('btn-success');
+              $('#proximas').show();
+              $('#btnproximas').addClass('btn-success');$('#btnproximas').removeClass('btn-clases');
+            }
+            if (valor=="pasadas") {
+              $('#proximas').hide();
+              $('#btnproximas').addClass('btn-clases');$('#btnproximas').removeClass('btn-success');
+              $('#historial').hide();
+              $('#btnhistorial').addClass('btn-clases');$('#btnhistorial').removeClass('btn-success');
+              $('#pasadas').show();
+              $('#btnpasadas').addClass('btn-success');$('#btnpasadas').removeClass('btn-clases');
+            }
+            if (valor=="historial") {
                 $('#proximas').hide();
-                $('#btnproximas').addClass('btn-clases');$('#btnproximas').removeClass('btn-success');
-                $('#pasadas').show();
-                $('#btnpasadas').addClass('btn-success');$('#btnpasadas').removeClass('btn-clases');
-              }
-              if (valor=="historial") {
-                $('#proximas').hide();
                 $('#pasadas').hide();
-                $('#btnproximas').addClass('btn-clases');$('#btnproximas').removeClass('btn-success');
-                $('#btnpasadas').addClass('btn-clases');$('#btnpasadas').removeClass('btn-success');
-                $('#pasadas').show();
+                $('#btnproximas').addClass('btn-clases'); $('#btnproximas').removeClass('btn-success');
+                $('#btnpasadas').addClass('btn-clases'); $('#btnpasadas').removeClass('btn-success');
                 $('#btnhistorial').addClass('btn-success');$('#btnhistorial').removeClass('btn-clases');
+                $('#historial').show();
               }
             }
           </script>
