@@ -86,33 +86,58 @@
                   setlocale(LC_TIME, "es-ES");
                  ?>
 
-                  @if ($proxima->tipo=="En condominio")
+                  if ($proxima->tipo=="En condominio")
                   @if (in_array($proxima->nombre.$proxima->fecha.$proxima->hora,$array))
 
                   <!--clase ya mostrada, no se hace nada-->
                   @else
 
-                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
-                   @if($proxima->tipo=="A domicilio")
-                     <i class="fa fa-home" aria-hidden="true"></i>
-                   @else
-                     <i class="fa fa-building" aria-hidden="true"></i>
-                   @endif
-                   {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $proxima->hora }}
-                   <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
-                 </a>
+                 <div class="list-group-item row">
+                    <div class="col-xs-2">
+                      <strong>{{$proxima->nombre}}</strong>
+                    </div>
+                    <div class="col-xs-2">
+                    {{$proxima->horario->grupo->condominio->identificador}}
+                    </div>
+                    <div class="col-xs-3">
+                    {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
+                    </div>      
+                    <div class="col-xs-2">
+                    {{$proxima->horario->audiencia}}
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="pull-right" data-toggle="modal" data-target="#terminar{{$proxima->id}}"><a href="#"><i class="fa fa-check icopopup"></i> &nbsp;</a></div>
+                      <div class="pull-right" data-toggle="modal" data-target="#plan{{$proxima->id}}"><a href="#"><i class="fa fa-list icopopup"></i> &nbsp;</a></div>
+                      <div class="pull-right" data-toggle="modal" data-target="#telefono{{$proxima->id}}"><a href="#"><i class="fa fa-phone icopopup"></i> &nbsp;</a></div>
+                      <div class="pull-right" data-toggle="modal" data-target="#direccion{{$proxima->id}}"><a href="#"><i class="fa fa-map-marker icopopup"></i> &nbsp;</a></div>
+                    </div>
+
+                 </div>
                  <?php $array[]=$proxima->nombre.$proxima->fecha.$proxima->hora; ?>
                   @endif
                 @else
-                <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
-                   @if($proxima->tipo=="A domicilio")
-                     <i class="fa fa-home" aria-hidden="true"></i>
-                   @else
-                     <i class="fa fa-building" aria-hidden="true"></i>
-                   @endif
-                   {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $proxima->hora }}
-                   <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
-                 </a>
+                <div class="list-group-item row">
+                <div class="col-xs-2">
+                  <strong>{{$proxima->nombre}}</strong>
+                </div>
+                <div class="col-xs-2">
+
+                <?php $nombre=explode(" ",$proxima->user->name);?>
+                <span data-toggle="tooltip" data-placement="bottom" title="{{$proxima->user->name}}">{{ucfirst($nombre[0])}}</span>
+                </div>
+                <div class="col-xs-3">
+                {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
+                </div>      
+                <div class="col-xs-2">
+                {{$proxima->horario->zona->identificador}}
+                </div>
+                <div class="col-xs-3">
+                    <div class="pull-right" data-toggle="modal" data-target="#terminar{{$proxima->id}}"><a href="#"><i class="fa fa-check icopopup"></i> &nbsp;</a></div>
+                   <div class="pull-right" data-toggle="modal" data-target="#plan{{$proxima->id}}"><a href="#"><i class="fa fa-list icopopup"></i> &nbsp;</a></div>
+                   <div class="pull-right" data-toggle="modal" data-target="#telefono{{$proxima->id}}"><a href="#"><i class="fa fa-phone icopopup"></i> &nbsp;</a></div>
+                   <div class="pull-right" data-toggle="modal" data-target="#direccion{{$proxima->id}}"><a href="#"><i class="fa fa-map-marker icopopup"></i> &nbsp;</a></div>
+                </div>
+                 </div>
                  @endif
 
               <?php } } else{ ?>
@@ -137,36 +162,47 @@
 
                   <!--clase ya mostrada, no se hace nada-->
                   @else
-                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
-                   @if ($pasada->status=="CANCELADA")
-                     <i class="fa fa-times-circle-o" aria-hidden="true"></i>
-                   @else
-                     @if($pasada->tipo=="A domicilio")
-                       <i class="fa fa-home" aria-hidden="true"></i>
-                     @else
-                       <i class="fa fa-building" aria-hidden="true"></i>
-                     @endif
-                    @endif
-                   {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
-                   <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
-                 </a>
+                 <div class="list-group-item row">
+                    <div class="col-xs-2">
+                      <strong>{{$pasada->nombre}}</strong>
+                    </div>
+                    <div class="col-xs-2">
+                    {{$pasada->horario->grupo->condominio->identificador}}
+                    </div>
+                    <div class="col-xs-3">
+                    {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
+                    </div>      
+                    <div class="col-xs-2">
+                    {{$pasada->horario->audiencia}}
+                    </div>
+                    <div class="col-xs-3">
+
+                    </div>
+
+                 </div>
 
                  <?php $array[]=$pasada->nombre.$pasada->fecha.$pasada->hora; ?>
                   @endif
                 @else
-                <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
-                   @if ($pasada->status=="CANCELADA")
-                     <i class="fa fa-times-circle-o" aria-hidden="true"></i>
-                   @else
-                     @if($pasada->tipo=="A domicilio")
-                       <i class="fa fa-home" aria-hidden="true"></i>
-                     @else
-                       <i class="fa fa-building" aria-hidden="true"></i>
-                     @endif
-                    @endif
-                   {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
-                   <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
-                 </a>
+                <div class="list-group-item row">
+                <div class="col-xs-2">
+                  <strong>{{$pasada->nombre}}</strong>
+                </div>
+                <div class="col-xs-2">
+
+                <?php $nombre=explode(" ",$pasada->user->name);?>
+                <span data-toggle="tooltip" data-placement="bottom" title="{{$pasada->user->name}}">{{ucfirst($nombre[0])}}</span>
+                </div>
+                <div class="col-xs-3">
+                {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
+                </div>      
+                <div class="col-xs-2">
+                {{$pasada->horario->zona->identificador}}
+                </div>
+                <div class="col-xs-3">
+
+                </div>
+                 </div>
                  @endif
               <?php } } else{ ?>
                 <p class="text-center">No has dado ninguna clase.</p>
@@ -340,41 +376,52 @@
                 setlocale(LC_TIME, "es-ES");
                ?>
               
-@if ($pasada->tipo=="En condominio")
+              @if ($pasada->tipo=="En condiminio")
                   @if (in_array($pasada->nombre.$pasada->fecha.$pasada->hora,$array))
 
                   <!--clase ya mostrada, no se hace nada-->
                   @else
-                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
-                   @if ($pasada->status=="CANCELADA")
-                     <i class="fa fa-times-circle-o" aria-hidden="true"></i>
-                   @else
-                     @if($pasada->tipo=="A domicilio")
-                       <i class="fa fa-home" aria-hidden="true"></i>
-                     @else
-                       <i class="fa fa-building" aria-hidden="true"></i>
-                     @endif
-                    @endif
-                   {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
-                   <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
-                 </a>
+                 <div class="list-group-item row">
+                    <div class="col-xs-2">
+                      <strong>{{$pasada->nombre}}</strong>
+                    </div>
+                    <div class="col-xs-2">
+                    {{$pasada->horario->grupo->condominio->identificador}}
+                    </div>
+                    <div class="col-xs-3">
+                    {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
+                    </div>      
+                    <div class="col-xs-2">
+                    {{$pasada->horario->audiencia}}
+                    </div>
+                    <div class="col-xs-3">
+
+                    </div>
+
+                 </div>
 
                  <?php $array[]=$pasada->nombre.$pasada->fecha.$pasada->hora; ?>
                   @endif
                 @else
-                <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
-                   @if ($pasada->status=="CANCELADA")
-                     <i class="fa fa-times-circle-o" aria-hidden="true"></i>
-                   @else
-                     @if($pasada->tipo=="A domicilio")
-                       <i class="fa fa-home" aria-hidden="true"></i>
-                     @else
-                       <i class="fa fa-building" aria-hidden="true"></i>
-                     @endif
-                    @endif
-                   {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
-                   <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
-                 </a>
+                <div class="list-group-item row">
+                <div class="col-xs-2">
+                  <strong>{{$pasada->nombre}}</strong>
+                </div>
+                <div class="col-xs-2">
+
+                <?php $nombre=explode(" ",$pasada->user->name);?>
+                <span data-toggle="tooltip" data-placement="bottom" title="{{$pasada->user->name}}">{{ucfirst($nombre[0])}}</span>
+                </div>
+                <div class="col-xs-3">
+                {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
+                </div>      
+                <div class="col-xs-2">
+                {{$pasada->horario->zona->identificador}}
+                </div>
+                <div class="col-xs-3">
+
+                </div>
+                 </div>
                  @endif
             <?php } } else{ ?>
               <p class="text-center">No has dado ninguna clase.</p>
