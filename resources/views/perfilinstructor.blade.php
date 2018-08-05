@@ -86,7 +86,7 @@
                   setlocale(LC_TIME, "es-ES");
                  ?>
 
-                  if ($proxima->tipo=="En condominio")
+                  @if ($proxima->tipo=="En condominio")
                   @if (in_array($proxima->nombre.$proxima->fecha.$proxima->hora,$array))
 
                   <!--clase ya mostrada, no se hace nada-->
