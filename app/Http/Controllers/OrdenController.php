@@ -197,12 +197,12 @@ class OrdenController extends Controller
       if ($orden->tipo=='En condominio') {
         $ordenes=Reservacion::where('nombre',$orden->nombre)->where('fecha',$orden->fecha)->where('hora',$orden->hora)->get();
         foreach ($ordenes as $ordenr) {
-          $ordenr->status = 'Completa';
+          $ordenr->status = 'COMPLETA';
           $ordenr->save();
         }
       }
       else{
-      $orden->status="Completa";
+      $orden->status="COMPLETA";
       $orden->save();
       }
       
@@ -223,7 +223,7 @@ class OrdenController extends Controller
       if ($request->tipocancelacion=="token") {
         $orden = Reservacion::find($request->id);
 
-        if($orden->status!="Cancelada"){
+        if($orden->status!="CANCELADA"){
           $particular=PaqueteComprado::where('user_id', $user->id)->where('tipo','A domicilio')->orderBy('expiracion','desc')->first();
           $residencial=PaqueteComprado::where('user_id', $user->id)->where('tipo','En condominio')->orderBy('expiracion','desc')->first();
           if($orden->tipo=="En condominio"&&$residencial){
@@ -232,7 +232,7 @@ class OrdenController extends Controller
             $nuevafecha = strtotime ( '+5 day' , strtotime ( $fecha ) ) ;
             $residencial->expiracion = date ( 'Y-m-d' , $nuevafecha );*/
             $residencial->save();
-            $orden->status='Cancelada';
+            $orden->status='CANCELADA';
             $orden->metadata="token devuelto";
             Session::flash('mensaje', 'Token devuelto.');
             Session::flash('class', 'success');
@@ -243,7 +243,7 @@ class OrdenController extends Controller
             $nuevafecha = strtotime ( '+5 day' , strtotime ( $fecha ) ) ;
             $particular->expiracion = date ( 'Y-m-d' , $nuevafecha );*/
             $particular->save();
-            $orden->status='Cancelada';
+            $orden->status='CANCELADA';
             $orden->metadata="token devuelto";
             Session::flash('mensaje', 'Token devuelto.');
             Session::flash('class', 'success');
@@ -265,13 +265,16 @@ class OrdenController extends Controller
         }
       }
       else {
-        $abono = new Abono($request->all());
-        $abono->save();
+        
 
         $orden = Reservacion::find($request->id);
-        $orden->status='Cancelada';
+        $orden->status='CANCELADA';
         $orden->metadata="abonada a coach";
         $orden->save();
+        $abono = new Abono($request->all());
+        $abono->abono=$request->abono;
+        $abono->reservacion_id=$orden->id;
+        $abono->save();
         
         //$this->sendclasscancel($orden->id);
         Session::flash('mensaje', 'Abono completado.');
@@ -294,12 +297,12 @@ class OrdenController extends Controller
       if ($orden->tipo=='residencial') {
         $ordenes=Reservacion::where('nombre',$orden->nombre)->where('fecha',$orden->fecha)->where('hora',$orden->hora)->get();
         foreach ($ordenes as $ordenr) {
-          $ordenr->status = 'Porrevisar';
+          $ordenr->status = 'EN REVISIÓN';
           $ordenr->save();
         }
       }
       else{
-        $orden->status = 'Porrevisar';
+        $orden->status = 'EN REVISIÓN';
         $orden->save();
       }
       Session::flash('mensaje', '¡Orden en revisión!');
@@ -380,11 +383,11 @@ class OrdenController extends Controller
      */
     public function update(Request $request)
     {
-
+      $user=User::find(Auth::user()->id);
 
       if ($request->tipocancelacion=="24 horas antes") {
               $orden = Reservacion::find($request->ordencancelar);
-              if($orden->status!="Cancelada"){
+              if($orden->status!="CANCELADA"){
                 $particular=PaqueteComprado::where('user_id', $user->id)->where('tipo','A domicilio')->orderBy('expiracion','desc')->first();
                 $residencial=PaqueteComprado::where('user_id', $user->id)->where('tipo','En condominio')->orderBy('expiracion','desc')->first();
                 if($orden->tipo=="En condominio"&&$residencial){
@@ -393,7 +396,7 @@ class OrdenController extends Controller
                   $nuevafecha = strtotime ( '+5 day' , strtotime ( $fecha ) ) ;
                   $residencial->expiracion = date ( 'Y-m-d' , $nuevafecha );*/
                   $residencial->save();
-                  $orden->status='Cancelada';
+                  $orden->status='CANCELADA';
                   $orden->metadata="token devuelto";
                   Session::flash('mensaje', 'Token devuelto.');
                   Session::flash('class', 'success');
@@ -404,7 +407,7 @@ class OrdenController extends Controller
                   $nuevafecha = strtotime ( '+5 day' , strtotime ( $fecha ) ) ;
                   $particular->expiracion = date ( 'Y-m-d' , $nuevafecha );*/
                   $particular->save();
-                  $orden->status='Cancelada';
+                  $orden->status='CANCELADA';
                   $orden->metadata="token devuelto";
                   Session::flash('mensaje', 'Token devuelto.');
                   Session::flash('class', 'success');
@@ -429,7 +432,7 @@ class OrdenController extends Controller
       }
       else{
               $orden = Reservacion::find($request->ordencancelar);
-              $orden->status = 'Cancelada';
+              $orden->status = 'CANCELADA';
               $orden->metadata=$request->tipocancelacion;
               $orden->save();
               Session::flash('mensaje', '¡Reservación Cancelada!');
@@ -533,7 +536,7 @@ class OrdenController extends Controller
          
           $guardar->cantidad=$total;
           $guardar->descuento=$desc;
-          $guardar->status='Pagada';
+          $guardar->status='PAGADA';
           $guardar->save();
 
 
@@ -839,7 +842,7 @@ public function reservar(Request $request)
           $guardar->fecha=$producto['metadata']['fecha'];
           $guardar->hora=$producto['metadata']['hora'];
 
-          $guardar->status='Proxima';
+          $guardar->status='PROXIMA';
           $guardar->save();
           if ($producto['metadata']['tipo']=="En condominio") {
             $residencial= Horario::find($producto['metadata']['asociado']);

@@ -114,7 +114,7 @@
 	@if ($coaches)
 		@foreach ($coaches as $coach)
 			<?php
-				$ordenes= App\Reservacion::where('coach_id', $coach->id)->where('status', 'Completa')->get();
+				$ordenes= App\Reservacion::where('coach_id', $coach->id)->where('status', 'COMPLETO')->get();
 				$pendiente=0;
 				foreach ($coach->abonos as $abono) {
 					$pendiente= $pendiente + $abono->abono;

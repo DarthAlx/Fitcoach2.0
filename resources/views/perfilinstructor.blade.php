@@ -21,6 +21,7 @@
       <div class="claseanterior text-center">
         <h4>PENDIENTE POR PAGAR</h4>
         @if ($user->abonos)
+        
           <?php
             $cantidad=0;
             foreach ($user->abonos as $pendiente) {
@@ -73,7 +74,7 @@
         <div id="proximas" class="listadeclases">
           <div class="list-group">
               <?php $array=array();
-              $proximas= App\Reservacion::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('created_at', 'asc')->get();
+              $proximas= App\Reservacion::where('coach_id', $user->id)->where('status', 'PROXIMA')->orderBy('created_at', 'asc')->get();
               if (!$proximas->isEmpty()) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($proximas as $proxima) {
@@ -123,7 +124,7 @@
           <div class="list-group">
               <?php  $array=array();
 
-              $pasadas= App\Reservacion::where('coach_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('created_at', 'desc')->get();
+              $pasadas= App\Reservacion::where('coach_id', $user->id)->where('status', '<>', 'PROXIMA')->orderBy('created_at', 'desc')->get();
               if (!$pasadas->isEmpty()) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($pasadas as $pasada) {
@@ -137,7 +138,7 @@
                   <!--clase ya mostrada, no se hace nada-->
                   @else
                  <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
-                   @if ($pasada->status=="Cancelada")
+                   @if ($pasada->status=="CANCELADA")
                      <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                    @else
                      @if($pasada->tipo=="A domicilio")
@@ -154,7 +155,7 @@
                   @endif
                 @else
                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
-                   @if ($pasada->status=="Cancelada")
+                   @if ($pasada->status=="CANCELADA")
                      <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                    @else
                      @if($pasada->tipo=="A domicilio")
@@ -182,7 +183,9 @@
 
               if (!$abonos->isEmpty()) {
                 date_default_timezone_set('America/Mexico_City');
+                
                 foreach ($abonos as $abono) {
+                  
 
                  ?>
                  <a href="#" class="list-group-item" data-toggle="modal" data-target="#abono{{$abono->id}}">
@@ -252,7 +255,7 @@
       <div id="proximaslg" class="listadeclases">
         <div class="list-group">
             <?php $array=array();
-            $proximas= App\Reservacion::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('created_at', 'asc')->get();
+            $proximas= App\Reservacion::where('coach_id', $user->id)->where('status', 'PROXIMA')->orderBy('created_at', 'asc')->get();
             if (!$proximas->isEmpty()) {
               date_default_timezone_set('America/Mexico_City');
               foreach ($proximas as $proxima) {
@@ -329,7 +332,7 @@
       <div id="pasadaslg" class="listadeclases" style="display:none;">
         <div class="list-group">
             <?php $array=array();
-            $pasadas= App\Reservacion::where('coach_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('created_at', 'desc')->get();
+            $pasadas= App\Reservacion::where('coach_id', $user->id)->where('status', '<>', 'PROXIMA')->orderBy('created_at', 'desc')->get();
             if (!$pasadas->isEmpty()) {
               date_default_timezone_set('America/Mexico_City');
               foreach ($pasadas as $pasada) {
@@ -343,7 +346,7 @@
                   <!--clase ya mostrada, no se hace nada-->
                   @else
                  <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
-                   @if ($pasada->status=="Cancelada")
+                   @if ($pasada->status=="CANCELADA")
                      <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                    @else
                      @if($pasada->tipo=="A domicilio")
@@ -360,7 +363,7 @@
                   @endif
                 @else
                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
-                   @if ($pasada->status=="Cancelada")
+                   @if ($pasada->status=="CANCELADA")
                      <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                    @else
                      @if($pasada->tipo=="A domicilio")
@@ -811,7 +814,7 @@
 
 
     <?php
-    $proximas= App\Reservacion::where('coach_id', $user->id)->where('status', 'Proxima')->orderBy('created_at', 'asc')->get();
+    $proximas= App\Reservacion::where('coach_id', $user->id)->where('status', 'PROXIMA')->orderBy('created_at', 'asc')->get();
 
 
     if (!$proximas->isEmpty()) {
@@ -1093,7 +1096,7 @@ $direccion->estado;
 
     <?php
 
-$pasadas= App\Reservacion::where('coach_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('created_at', 'desc')->get();
+$pasadas= App\Reservacion::where('coach_id', $user->id)->where('status', '<>', 'PROXIMA')->orderBy('created_at', 'desc')->get();
 
     if (!$pasadas->isEmpty()) {
       date_default_timezone_set('America/Mexico_City');
@@ -1131,13 +1134,13 @@ $pasadas= App\Reservacion::where('coach_id', $user->id)->where('status', '<>', '
                    </div>
                    <div class="col-sm-8">
                      <div class="title ">
-                       @if ($pasada->status=="Completa")
+                       @if ($pasada->status=="COMPLETA")
                          Completa
                        @endif
-                       @if ($pasada->status=="Cancelada")
+                       @if ($pasada->status=="CANCELADA")
                          Cancelada
                        @endif
-                       @if ($pasada->status=="Porrevisar")
+                       @if ($pasada->status=="EN REVISIÓN")
                          Por revisar
                        @endif
                      </div>

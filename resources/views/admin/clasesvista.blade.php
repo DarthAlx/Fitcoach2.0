@@ -105,7 +105,7 @@
 								      
 											<td>
 												<button type="button" class="btn btn-default" name="button" data-toggle="modal" data-target="#clase{{$clase->id}}">Clase</button>
-												@if($clase->status!="Completa"&&$clase->metadata!="cupon enviado"&&$clase->metadata!="abonada a coach")
+												@if($clase->status!="COMPLETA"&&$clase->metadata!="cupon enviado"&&$clase->metadata!="abonada a coach")
 													<button type="button" class="btn btn-primary" name="button" data-toggle="modal" data-target="#completar{{$clase->id}}">Completar</button>
 													<button type="button" class="btn btn-danger" name="button" data-toggle="modal" data-target="#cancelar{{$clase->id}}">Cancelar</button>
 												@endif
@@ -150,7 +150,7 @@
 
 									<td>
 										<button type="button" class="btn btn-default" name="button" data-toggle="modal" data-target="#clase{{$clase->id}}">Clase</button>
-										@if($clase->status!="Completa"&&$clase->metadata!="token devuelto"&&$clase->metadata!="abonada a coach")
+										@if($clase->status!="COMPLETA"&&$clase->metadata!="token devuelto"&&$clase->metadata!="abonada a coach")
 											<button type="button" class="btn btn-primary" name="button" data-toggle="modal" data-target="#completar{{$clase->id}}">Completar</button>
 											<button type="button" class="btn btn-danger" name="button" data-toggle="modal" data-target="#cancelar{{$clase->id}}">Cancelar</button>
 										@endif

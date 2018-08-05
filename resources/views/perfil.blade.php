@@ -106,7 +106,7 @@
         <h4>CLASE ANTERIOR</h4>
         @if ($user->reservaciones)
           <?php
-          $ultima= App\Reservacion::where('user_id', $user->id)->where('status', 'Completa')->orderBy('fecha', 'desc')->first();
+          $ultima= App\Reservacion::where('user_id', $user->id)->where('status', 'COMPLETA')->orWhere('status','EN REVISIÓN')->orderBy('fecha', 'desc')->first();
           if ($ultima) {
             $coachu= App\User::find($ultima->coach_id);
             $nombre=explode(" ",$coachu->name);
@@ -193,7 +193,7 @@
           <div class="list-group">
             @if ($user->reservaciones)
               <?php
-              $proximas= App\Reservacion::where('user_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'desc')->get();
+              $proximas= App\Reservacion::where('user_id', $user->id)->where('status', 'PROXIMA')->orderBy('fecha', 'desc')->get();
               if (!$proximas->isEmpty()) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($proximas as $proxima) {
@@ -202,16 +202,58 @@
                   $fecha=date_create($proxima->fecha);
 
                  ?>
-                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
-                   @if($proxima->tipo=="A domicilio")
-                     <i class="fa fa-home" aria-hidden="true"></i>
-                   @else
-                     <i class="fa fa-building" aria-hidden="true"></i>
-                   @endif
-                   <?php setlocale(LC_TIME, "es_MX"); ?>
-                   {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $proxima->hora }}
-                   <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
-                 </a>
+
+
+
+                 @if ($proxima->tipo=="En condominio")
+                 <div class="list-group-item row">
+                    <div class="col-xs-2">
+                      <strong>{{$proxima->nombre}}</strong>
+                    </div>
+                    <div class="col-xs-2">
+    
+                    <?php $nombre=explode(" ",$proxima->horario->user->name);?>
+                    <span data-toggle="tooltip" data-placement="bottom" title="{{$proxima->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
+                    </div>
+                    <div class="col-xs-3">
+                    {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
+                    </div>      
+                    <div class="col-xs-2">
+                        <span data-toggle="tooltip" data-placement="bottom" title="{{$proxima->horario->grupo->condominio->direccion}}">{{$proxima->horario->grupo->condominio->identificador}}</span>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="pull-right" data-toggle="modal" data-target="#cancelar{{$proxima->id}}"><a href="#"><i class="fa fa-times icopopup"></i> &nbsp;</a></div>
+                       <div class="pull-right" data-toggle="modal" data-target="#telefono{{$proxima->id}}"><a href="#"><i class="fa fa-phone icopopup"></i> &nbsp;</a></div>
+                    </div>
+                    </div>
+@else
+                <div class="list-group-item row">
+                <div class="col-xs-2">
+                  <strong>{{$proxima->nombre}}</strong>
+                </div>
+                <div class="col-xs-2">
+
+                <?php $nombre=explode(" ",$proxima->horario->user->name);?>
+                <span data-toggle="tooltip" data-placement="bottom" title="{{$proxima->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
+                </div>
+                <div class="col-xs-3">
+                {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
+                </div>      
+                <div class="col-xs-2">
+                    <?php $direccion=App\Direccion::find($proxima->direccion); ?>
+                    @if($direccion)
+                  {{$direccion->identificador}}
+                  @endif
+                </div>
+                <div class="col-xs-3">
+                    <div class="pull-right" data-toggle="modal" data-target="#cancelar{{$proxima->id}}"><a href="#"><i class="fa fa-times icopopup"></i> &nbsp;</a></div>
+                   <div class="pull-right" data-toggle="modal" data-target="#telefono{{$proxima->id}}"><a href="#"><i class="fa fa-phone icopopup"></i> &nbsp;</a></div>
+                </div>
+                 </div>
+                 @endif <!--en condominio-->
+
+
+
               <?php } } else{ ?>
                 <p class="text-center">No has tomado ninguna clase.</p>
                 <?php  } ?>
@@ -223,7 +265,7 @@
           <div class="list-group">
             @if ($user->reservaciones)
               <?php
-              $pasadas= App\Reservacion::where('user_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('fecha', 'desc')->get();
+              $pasadas= App\Reservacion::where('user_id', $user->id)->where('status', '<>', 'PROXIMA')->orderBy('fecha', 'desc')->get();
               if (!$pasadas->isEmpty()) {
                 date_default_timezone_set('America/Mexico_City');
                 foreach ($pasadas as $pasada) {
@@ -232,20 +274,48 @@
                   $fecha=date_create($pasada->fecha);
                   setlocale(LC_TIME, "es-ES");
                  ?>
-                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
-                   @if ($pasada->status=="Cancelada")
-                     <i class="fa fa-times-circle-o" aria-hidden="true"></i>
-                   @else
-                     @if($pasada->tipo=="A domicilio")
-                       <i class="fa fa-home" aria-hidden="true"></i>
-                     @else
-                       <i class="fa fa-building" aria-hidden="true"></i>
-                     @endif
-                    @endif
-                    <?php setlocale(LC_TIME, "es_MX"); ?>
-                   {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
-                   <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
-                 </a>
+                 @if ($proxima->tipo=="En condominio")
+                 <div class="list-group-item row">
+                    <div class="col-xs-2">
+                      <strong>{{$proxima->nombre}}</strong>
+                    </div>
+                    <div class="col-xs-2">
+    
+                    <?php $nombre=explode(" ",$proxima->horario->user->name);?>
+                    <span data-toggle="tooltip" data-placement="bottom" title="{{$proxima->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
+                    </div>
+                    <div class="col-xs-3">
+                    {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
+                    </div>      
+                    <div class="col-xs-2">
+                        <span data-toggle="tooltip" data-placement="bottom" title="{{$proxima->horario->grupo->condominio->direccion}}">{{$proxima->horario->grupo->condominio->identificador}}</span>
+                    </div>
+                    <div class="col-xs-3">
+                    </div>
+                    </div>
+@else
+                <div class="list-group-item row">
+                <div class="col-xs-2">
+                  <strong>{{$proxima->nombre}}</strong>
+                </div>
+                <div class="col-xs-2">
+
+                <?php $nombre=explode(" ",$proxima->horario->user->name);?>
+                <span data-toggle="tooltip" data-placement="bottom" title="{{$proxima->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
+                </div>
+                <div class="col-xs-3">
+                {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
+                </div>      
+                <div class="col-xs-2">
+                    <?php $direccion=App\Direccion::find($proxima->direccion); ?>
+                    @if($direccion)
+                  {{$direccion->identificador}}
+                  @endif
+                </div>
+                <div class="col-xs-3">
+                </div>
+                 </div>
+                 @endif <!--en condominio-->
               <?php } } else{ ?>
                 <p class="text-center">No has tomado ninguna clase.</p>
                 <?php  } ?>
@@ -346,7 +416,7 @@
         <div class="list-group">
           @if ($user->reservaciones)
             <?php
-            $proximas= App\Reservacion::where('user_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
+            $proximas= App\Reservacion::where('user_id', $user->id)->where('status', 'PROXIMA')->orderBy('fecha', 'asc')->get();
             if (!$proximas->isEmpty()) {
               date_default_timezone_set('America/Mexico_City');
               foreach ($proximas as $proxima) {
@@ -354,16 +424,52 @@
                 $fecha=date_create($proxima->fecha);
                 setlocale(LC_TIME, "es-ES");
                ?>
-               <a href="#" class="list-group-item" data-toggle="modal" data-target="#proximas{{$proxima->id}}">
-                 @if($proxima->tipo=="A domicilio")
-                   <i class="fa fa-home" aria-hidden="true"></i>
-                 @else
-                   <i class="fa fa-building" aria-hidden="true"></i>
-                 @endif
-                 <?php setlocale(LC_TIME, "es_MX"); ?>
-                 {{$proxima->nombre}} | {{strftime("%d %B", strtotime($proxima->fecha))}} | {{ $proxima->hora }}
-                 <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
-               </a>
+               @if ($proxima->tipo=="En condominio")
+               <div class="list-group-item row">
+                  <div class="col-xs-2">
+                    <strong>{{$proxima->nombre}}</strong>
+                  </div>
+                  <div class="col-xs-2">
+  
+                  <?php $nombre=explode(" ",$proxima->horario->user->name);?>
+                  <span data-toggle="tooltip" data-placement="bottom" title="{{$proxima->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
+                  </div>
+                  <div class="col-xs-3">
+                  {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
+                  </div>      
+                  <div class="col-xs-2">
+                      <span data-toggle="tooltip" data-placement="bottom" title="{{$proxima->horario->grupo->condominio->direccion}}">{{$proxima->horario->grupo->condominio->identificador}}</span>
+                  </div>
+                  <div class="col-xs-3">
+                      <div class="pull-right" data-toggle="modal" data-target="#cancelar{{$proxima->id}}"><a href="#"><i class="fa fa-times icopopup"></i> &nbsp;</a></div>
+                     <div class="pull-right" data-toggle="modal" data-target="#telefono{{$proxima->id}}"><a href="#"><i class="fa fa-phone icopopup"></i> &nbsp;</a></div>
+                  </div>
+                  </div>
+@else
+              <div class="list-group-item row">
+              <div class="col-xs-2">
+                <strong>{{$proxima->nombre}}</strong>
+              </div>
+              <div class="col-xs-2">
+
+              <?php $nombre=explode(" ",$proxima->horario->user->name);?>
+              <span data-toggle="tooltip" data-placement="bottom" title="{{$proxima->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
+              </div>
+              <div class="col-xs-3">
+              {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
+              </div>      
+              <div class="col-xs-2">
+                <?php $direccion=App\Direccion::find($proxima->direccion); ?>
+                @if($direccion)
+              {{$direccion->identificador}}
+              @endif
+              </div>
+              <div class="col-xs-3">
+                  <div class="pull-right" data-toggle="modal" data-target="#cancelar{{$proxima->id}}"><a href="#"><i class="fa fa-times icopopup"></i> &nbsp;</a></div>
+                 <div class="pull-right" data-toggle="modal" data-target="#telefono{{$proxima->id}}"><a href="#"><i class="fa fa-phone icopopup"></i> &nbsp;</a></div>
+              </div>
+               </div>
+               @endif <!--en condominio-->
             <?php } } else{ ?>
               <p class="text-center">No has tomado ninguna clase.</p>
               <?php  } ?>
@@ -375,7 +481,7 @@
         <div class="list-group">
           @if ($user->reservaciones)
             <?php
-            $pasadas= App\Reservacion::where('user_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('fecha', 'desc')->get();
+            $pasadas= App\Reservacion::where('user_id', $user->id)->where('status', '<>', 'PROXIMA')->orderBy('fecha', 'desc')->get();
             if (!$pasadas->isEmpty()) {
               date_default_timezone_set('America/Mexico_City');
               foreach ($pasadas as $pasada) {
@@ -383,20 +489,48 @@
                 $fecha=date_create($pasada->fecha);
                 setlocale(LC_TIME, "es-ES");
                ?>
-               <a href="#" class="list-group-item" data-toggle="modal" data-target="#pasadas{{$pasada->id}}">
-                 @if ($pasada->status=="Cancelada")
-                   <i class="fa fa-times-circle-o" aria-hidden="true"></i>
-                 @else
-                   @if($pasada->tipo=="A domicilio")
-                     <i class="fa fa-home" aria-hidden="true"></i>
-                   @else
-                     <i class="fa fa-building" aria-hidden="true"></i>
-                   @endif
+               @if ($proxima->tipo=="En condominio")
+                 <div class="list-group-item row">
+                    <div class="col-xs-2">
+                      <strong>{{$proxima->nombre}}</strong>
+                    </div>
+                    <div class="col-xs-2">
+    
+                    <?php $nombre=explode(" ",$proxima->horario->user->name);?>
+                    <span data-toggle="tooltip" data-placement="bottom" title="{{$proxima->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
+                    </div>
+                    <div class="col-xs-3">
+                    {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
+                    </div>      
+                    <div class="col-xs-2">
+                        <span data-toggle="tooltip" data-placement="bottom" title="{{$proxima->horario->grupo->condominio->direccion}}">{{$proxima->horario->grupo->condominio->identificador}}</span>
+                    </div>
+                    <div class="col-xs-3">
+                    </div>
+                    </div>
+@else
+                <div class="list-group-item row">
+                <div class="col-xs-2">
+                  <strong>{{$proxima->nombre}}</strong>
+                </div>
+                <div class="col-xs-2">
+
+                <?php $nombre=explode(" ",$proxima->horario->user->name);?>
+                <span data-toggle="tooltip" data-placement="bottom" title="{{$proxima->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
+                </div>
+                <div class="col-xs-3">
+                {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
+                </div>      
+                <div class="col-xs-2">
+                    <?php $direccion=App\Direccion::find($proxima->direccion); ?>
+                    @if($direccion)
+                  {{$direccion->identificador}}
                   @endif
-                  <?php setlocale(LC_TIME, "es_MX"); ?>
-                 {{$pasada->nombre}} | {{strftime("%d %B", strtotime($pasada->fecha))}} | {{ $pasada->hora }}
-                 <i class="fa fa-chevron-right pull-right" aria-hidden="true"></i>
-               </a>
+                </div>
+                <div class="col-xs-3">
+                </div>
+                 </div>
+                 @endif <!--en condominio-->
             <?php } } else{ ?>
               <p class="text-center">No has tomado ninguna clase.</p>
               <?php  } ?>
@@ -730,7 +864,7 @@ quote:'Usa mi código de referencia: {{$user->code}}',
 
 
     <?php
-    $proximas= App\Reservacion::where('user_id', $user->id)->where('status', 'Proxima')->orderBy('fecha', 'asc')->get();
+    $proximas= App\Reservacion::where('user_id', $user->id)->where('status', 'PROXIMA')->orderBy('fecha', 'asc')->get();
     if (!$proximas->isEmpty()) {
       date_default_timezone_set('America/Mexico_City');
       foreach ($proximas as $proxima) {
@@ -757,7 +891,7 @@ quote:'Usa mi código de referencia: {{$user->code}}',
 
 
        ?>
-       <div class="modal fade" id="proximas{{$proxima->id}}" tabindex="-1" role="dialog">
+       <!--div class="modal fade" id="proximas{{$proxima->id}}" tabindex="-1" role="dialog">
          <div class="modal-dialog" role="document">
            <div class="modal-content">
 
@@ -817,9 +951,87 @@ Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio 
 
 
              </div>
-           </div><!-- /.modal-content -->
-         </div><!-- /.modal-dialog -->
-       </div><!-- /.modal contraseña -->
+           </div>
+         </div>
+       </div--><!-- /.modal contraseña -->
+
+
+
+
+
+       <div class="modal fade" id="cancelar{{$proxima->id}}" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+
+            <div class="modal-body">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
+              <div class="container-bootstrap" style="width: 100%;">
+                <div class="row">
+                  
+                  <div class="col-sm-12 text-center">
+                      <h4>Cancelar clase</h4>
+                    <p>&nbsp;</p>
+
+                      <form class="" action="{{url('/cancelar-orden')}}" method="post">
+                        {!! csrf_field() !!}
+                        {{ method_field('PUT') }}
+                        @if ($horastotales>=24)
+                          <p class="text-center"><strong>IMPORTANTE</strong><br>
+Si cancelas se va a restaurar el token de tu clase.<br>
+¿Estás seguro que deseas continuar?</p>
+                          <input type="hidden" name="tipocancelacion" value="24 horas antes">
+                        @else
+                          <p class="text-center"><strong>IMPORTANTE</strong><br>
+Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio o devolución por el servicio.<br>
+¿Estás seguro que deseas continuar?</p>
+                          <input type="hidden" name="tipocancelacion" value="sin devolución">
+                        @endif
+                        <input type="hidden" name="ordencancelar" value="{{$proxima->id}}">
+                        <button type="submit" id="botoncancelar{{$proxima->id}}" class="btn btn-danger btn-lg" name="button" style="display:none;">Confirmar cancelación</button>
+                      </form>
+                      <button class="btn btn-danger btn-lg" id="botoncancelar2{{$proxima->id}}" name="button" onclick="javascript: document.getElementById('botoncancelar2{{$proxima->id}}').style.display='none'; document.getElementById('botoncancelar{{$proxima->id}}').style.display='inline-block'; ">Cancelar</button>
+
+
+
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal contraseña -->
+
+
+
+
+
+
+       <div class="modal fade" id="telefono{{$proxima->id}}" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+
+            <div class="modal-body">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
+                <div class="container-bootstrap" style="width: 100%;">
+                    <h4>Contacto telefónico</h4>
+                    <h2 class="text-center">Teléfono: {{ $coach->tel }}</h2>
+                    <div class="text-center">
+                      <a href="tel:{{ $coach->tel }}" class="btn btn-primary">Llamar</a>
+                    </div>
+                    
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
     <?php } }?>
 
 
@@ -828,7 +1040,7 @@ Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio 
 
 
     <?php
-    $pasadas= App\Reservacion::where('user_id', $user->id)->where('status', '<>', 'Proxima')->orderBy('fecha', 'desc')->get();
+    $pasadas= App\Reservacion::where('user_id', $user->id)->where('status', '<>', 'PROXIMA')->orderBy('fecha', 'desc')->get();
     if (!$pasadas->isEmpty()) {
       date_default_timezone_set('America/Mexico_City');
       foreach ($pasadas as $pasada) {
@@ -867,10 +1079,10 @@ Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio 
                    </div>
                    <div class="col-sm-8">
                      <div class="title ">
-                       @if ($pasada->status=="Completa"||$pasada->status=="Porrevisar")
+                       @if ($pasada->status=="COMPLETA"||$pasada->status=="EN REVISIÓN")
                          Completa
                        @endif
-                       @if ($pasada->status=="Cancelada")
+                       @if ($pasada->status=="CANCELADA")
                          Cancelada
                        @endif
                      </div>
@@ -881,7 +1093,7 @@ Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio 
                    </div>
                    <div class="col-sm-12 text-center">
                      <p>&nbsp;</p>
-                     @if ($pasada->status=="Completa")
+                     @if ($pasada->status=="COMPLETA")
                        <!--form class="" action="{{url('/calificar-orden')}}" method="post">
                          {!! csrf_field() !!}
                          <input type="hidden" name="calificacion" value="">
