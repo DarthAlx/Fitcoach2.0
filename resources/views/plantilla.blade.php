@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es-mx">
 	<head>
-		<title>FITCOACH México | El club en tu casa</title>
+		<title>FITCOACH | El club en tu casa</title>
 		<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
         <meta name="description" content="Nuestro objetivo es activar las áreas comunes de los condominios dándoles una administración de club deportivo. Actividades deportivas, culturales y sociales en la comodidad de tu casa.">
         <meta name="keywords" content="clases,deportivas,culturales,sociales,curso,verano,carrera,fitcoach,domicilio,instructores,profesores,deportes,interlomas,santa fe,areas,comunes">
@@ -12,7 +12,7 @@
 		<!--[if lt IE 8]>
 			<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE8.js"></script>
 		<![endif]-->
-		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="{{url('images/favicon.jpeg')}}" type="image/x-icon" />
 		<link rel="stylesheet" type="text/css" href="{{ url('css/bxslider.css') }}" media="screen" />
 		<script src="https://use.fontawesome.com/a57ec16dec.js"></script>
 		<link rel="stylesheet" type="text/css" href="{{ url('css/selectric.css') }}" media="screen" />

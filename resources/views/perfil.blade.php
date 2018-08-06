@@ -228,7 +228,6 @@
                     </div>
                     <div class="col-xs-3">
                         <div class="pull-right" data-toggle="modal" data-target="#cancelar{{$proxima->id}}"><a href="#"><i class="fa fa-times icopopup"></i> &nbsp;</a></div>
-                       <div class="pull-right" data-toggle="modal" data-target="#telefono{{$proxima->id}}"><a href="#"><i class="fa fa-phone icopopup"></i> &nbsp;</a></div>
                     </div>
                     </div>
 @else
@@ -296,6 +295,7 @@
                         <span data-toggle="tooltip" data-placement="bottom" title="{{$pasada->horario->grupo->condominio->direccion}}">{{$pasada->horario->grupo->condominio->identificador}}</span>
                     </div>
                     <div class="col-xs-3">
+                    {{$pasada->status}}
                     </div>
                     </div>
 @else
@@ -318,6 +318,7 @@
                   @endif
                 </div>
                 <div class="col-xs-3">
+                {{$pasada->status}}
                 </div>
                  </div>
                  @endif <!--en condominio-->
@@ -447,7 +448,6 @@
                   </div>
                   <div class="col-xs-3">
                       <div class="pull-right" data-toggle="modal" data-target="#cancelar{{$proxima->id}}"><a href="#"><i class="fa fa-times icopopup"></i> &nbsp;</a></div>
-                     <div class="pull-right" data-toggle="modal" data-target="#telefono{{$proxima->id}}"><a href="#"><i class="fa fa-phone icopopup"></i> &nbsp;</a></div>
                   </div>
                   </div>
 @else
@@ -494,45 +494,47 @@
                 $fecha=date_create($pasada->fecha);
                 setlocale(LC_TIME, "es-ES");
                ?>
-               @if ($proxima->tipo=="En condominio")
+               @if ($pasada->tipo=="En condominio")
                  <div class="list-group-item row">
                     <div class="col-xs-2">
-                      <strong>{{$proxima->nombre}}</strong>
+                      <strong>{{$pasada->nombre}}</strong>
                     </div>
                     <div class="col-xs-2">
     
-                    <?php $nombre=explode(" ",$proxima->horario->user->name);?>
-                    <span data-toggle="tooltip" data-placement="bottom" title="{{$proxima->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
+                    <?php $nombre=explode(" ",$pasada->horario->user->name);?>
+                    <span data-toggle="tooltip" data-placement="bottom" title="{{$pasada->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
                     </div>
                     <div class="col-xs-3">
-                    {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
+                    {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
                     </div>      
                     <div class="col-xs-2">
-                        <span data-toggle="tooltip" data-placement="bottom" title="{{$proxima->horario->grupo->condominio->direccion}}">{{$proxima->horario->grupo->condominio->identificador}}</span>
+                        <span data-toggle="tooltip" data-placement="bottom" title="{{$pasada->horario->grupo->condominio->direccion}}">{{$pasada->horario->grupo->condominio->identificador}}</span>
                     </div>
                     <div class="col-xs-3">
+                    {{$pasada->status}}
                     </div>
                     </div>
 @else
                 <div class="list-group-item row">
                 <div class="col-xs-2">
-                  <strong>{{$proxima->nombre}}</strong>
+                  <strong>{{$pasada->nombre}}</strong>
                 </div>
                 <div class="col-xs-2">
 
-                <?php $nombre=explode(" ",$proxima->horario->user->name);?>
-                <span data-toggle="tooltip" data-placement="bottom" title="{{$proxima->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
+                <?php $nombre=explode(" ",$pasada->horario->user->name);?>
+                <span data-toggle="tooltip" data-placement="bottom" title="{{$pasada->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
                 </div>
                 <div class="col-xs-3">
-                {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
+                {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
                 </div>      
                 <div class="col-xs-2">
-                    <?php $direccion=App\Direccion::find($proxima->direccion); ?>
+                    <?php $direccion=App\Direccion::find($pasada->direccion); ?>
                     @if($direccion)
                   {{$direccion->identificador}}
                   @endif
                 </div>
                 <div class="col-xs-3">
+                {{$pasada->status}}
                 </div>
                  </div>
                  @endif <!--en condominio-->

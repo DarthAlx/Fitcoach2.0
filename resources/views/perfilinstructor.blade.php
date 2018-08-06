@@ -108,7 +108,6 @@
                     <div class="col-xs-3">
                         <div class="pull-right" data-toggle="modal" data-target="#terminar{{$proxima->id}}"><a href="#"><i class="fa fa-check icopopup"></i> &nbsp;</a></div>
                       <div class="pull-right" data-toggle="modal" data-target="#plan{{$proxima->id}}"><a href="#"><i class="fa fa-list icopopup"></i> &nbsp;</a></div>
-                      <div class="pull-right" data-toggle="modal" data-target="#telefono{{$proxima->id}}"><a href="#"><i class="fa fa-phone icopopup"></i> &nbsp;</a></div>
                       <div class="pull-right" data-toggle="modal" data-target="#direccion{{$proxima->id}}"><a href="#"><i class="fa fa-map-marker icopopup"></i> &nbsp;</a></div>
                     </div>
 
@@ -177,7 +176,7 @@
                     {{$pasada->horario->audiencia}}
                     </div>
                     <div class="col-xs-3">
-
+                    {{$pasada->status}}
                     </div>
 
                  </div>
@@ -201,7 +200,7 @@
                 {{$pasada->horario->zona->identificador}}
                 </div>
                 <div class="col-xs-3">
-
+                {{$pasada->status}}
                 </div>
                  </div>
                  @endif
@@ -324,7 +323,6 @@
                     <div class="col-xs-3">
                         <div class="pull-right" data-toggle="modal" data-target="#terminar{{$proxima->id}}"><a href="#"><i class="fa fa-check icopopup"></i> &nbsp;</a></div>
                       <div class="pull-right" data-toggle="modal" data-target="#plan{{$proxima->id}}"><a href="#"><i class="fa fa-list icopopup"></i> &nbsp;</a></div>
-                      <div class="pull-right" data-toggle="modal" data-target="#telefono{{$proxima->id}}"><a href="#"><i class="fa fa-phone icopopup"></i> &nbsp;</a></div>
                       <div class="pull-right" data-toggle="modal" data-target="#direccion{{$proxima->id}}"><a href="#"><i class="fa fa-map-marker icopopup"></i> &nbsp;</a></div>
                     </div>
 
@@ -396,7 +394,7 @@
                     {{$pasada->horario->audiencia}}
                     </div>
                     <div class="col-xs-3">
-
+                    {{$pasada->status}}
                     </div>
 
                  </div>
@@ -420,7 +418,7 @@
                 {{$pasada->horario->zona->identificador}}
                 </div>
                 <div class="col-xs-3">
-
+                {{$pasada->status}}
                 </div>
                  </div>
                  @endif

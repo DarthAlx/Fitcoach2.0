@@ -52,7 +52,7 @@
 
     											Horario: {{ $product->options->hora }}<br>
     											<?php $coach=App\User::find($product->options->coach); ?>
-    											Coach: {{ $coach->name }}<br>
+    											COACH: {{ $coach->name }}<br>
                           @if ($product->options->tipo=="residencial")
                             <?php $residencial=App\Horario::find($product->id); $esresidencial=true;?>
                             @if ($residencial->tipo=="Evento")

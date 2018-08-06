@@ -123,7 +123,7 @@
 										{{$paquete->num_clases}}
 									</div>
 									<div class="color_gris2 gotham3 uppercase super_small">
-										CLASE
+										@if($paquete->num_clases>1) CLASES @else CLASE @endif
 									</div>
 									<div class="precios gotham3 medium">
 											${{$paquete->precio}}
@@ -209,7 +209,7 @@
 										{{$paquete->num_clases}}
 									</div>
 									<div class="color_gris2 gotham3 uppercase super_small">
-										CLASE
+									@if($paquete->num_clases>1) CLASES @else CLASE @endif
 									</div>
 									<div class="precios gotham3 medium">
 											${{$paquete->precio}}
