@@ -210,7 +210,7 @@
 									</div>
 									<p>&nbsp;</p>
 									<div class="col-sm-4">
-										<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar" id="reservar{{$condominio->grupo_id}}{{$condominio->id}}" disabled>
+										<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar" id="reservar{{$condominio->id}}" disabled>
 									</div>
 								</div>
 								</form>
@@ -246,7 +246,7 @@
 					$('#cantidad'+valor3).val(clasesseleccionadas);
 					$('#clasesseleccionadas'+valor3).html(clasesseleccionadas+" clases seleccionadas.");
 					if (clasesseleccionadas<=0) {
-						$('#reservar'+valor2+valor3).prop( "disabled", true );
+						$('#reservar'+valor3).prop( "disabled", true );
 					}
 				}
 				else {
@@ -257,7 +257,7 @@
 					clasesseleccionadas++;
 					$('#cantidad'+valor3).val(clasesseleccionadas);
 					$('#clasesseleccionadas'+valor3).html(clasesseleccionadas+" clases seleccionadas.");
-					$('#reservar'+valor2+valor3).prop( "disabled", false );
+					$('#reservar'+valor3).prop( "disabled", false );
 				}
 			}
 
