@@ -374,6 +374,7 @@
 											<input type="hidden" name="user_id" value="{{$grupo->user_id}}">
 											<input type="hidden" name="clase_id" value="{{$grupo->clase_id}}">
 											<input type="hidden" name="grupo_id" value="{{$grupo->id}}">
+											<input type="hidden" name="condominio_id" value="{{$grupo->condominio_id}}">
 											<input type="hidden" name="audiencia" value="{{$grupo->audiencia}}">
 											<input type="hidden" name="cupo" value="{{$grupo->cupo}}">
 											<input type="hidden" name="tokens" value="{{$grupo->tokens}}">

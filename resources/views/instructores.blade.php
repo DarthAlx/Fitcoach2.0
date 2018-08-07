@@ -97,7 +97,7 @@
 								</div>
 								<div class="row">
 									<div class="col-sm-6">
-										<h1 class="gotham2">Particulares</h1>
+										<h1 class="gotham2">A domicilio</h1>
 										@if ($coach->horarios)
 											<a href="#" class="list-group-item" data-toggle="modal" data-target="#calendario{{$coach->id}}" onclick="acero();">Ver calendario</a>
 										@else
@@ -105,7 +105,7 @@
 										@endif
 									</div>
 									<div class="col-sm-6">
-										<h1 class="gotham2">Particulares</h1>
+										<h1 class="gotham2">En condominio</h1>
 										@if ($coach->horarios)
 											<a href="#" class="list-group-item" data-toggle="modal" data-target="#calendario2{{$coach->id}}" onclick="acero();">Ver calendario</a>
 										@else

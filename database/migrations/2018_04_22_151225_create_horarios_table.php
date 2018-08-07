@@ -21,6 +21,7 @@ class CreateHorariosTable extends Migration
             $table->integer('zona_id')->nullable();
             $table->integer('clase_id')->nullable(); 
             $table->integer('grupo_id')->nullable();
+            $table->integer('condominio_id')->nullable();
             $table->integer('room_id')->nullable();
             $table->string('tipo')->nullable();
             $table->string('audiencia')->nullable();

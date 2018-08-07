@@ -121,7 +121,7 @@
 												<div class="col-sm-2 col-xs-4 separacion">
 													{{$fechasformateadas[$x]}}
 													<ul class="list-group calendarioinst">
-														<?php $residenciales=App\Horario::where('tipo', 'En condominio')->orderBy('hora', 'asc')->get();
+														<?php $residenciales=App\Horario::where('tipo', 'En condominio')->where('condominio_id',$condominio->id)->orderBy('hora', 'asc')->get();
 														list($año, $mes, $dia) = explode("-", $fechas[$x]);
 														$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 														?>
@@ -169,7 +169,7 @@
 										<div class="col-xs-6 separacion">
 											{{$fechasformateadas[$x]}}
 											<ul class="list-group calendarioinst">
-												<?php $residenciales=App\Horario::where('tipo', 'En condominio')->get();
+												<?php $residenciales=App\Horario::where('tipo', 'En condominio')->where('condominio_id',$condominio->id)->orderBy('hora', 'asc')->get();
 												list($año, $mes, $dia) = explode("-", $fechas[$x]);
 												$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 												?>
@@ -210,7 +210,7 @@
 									</div>
 									<p>&nbsp;</p>
 									<div class="col-sm-4">
-										<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar" id="reservar{{$condominio->id}}{{$condominio->id}}" disabled>
+										<input type="submit" class="btn btn-success btn-lg" name="" value="Reservar" id="reservar{{$condominio->grupo_id}}{{$condominio->id}}" disabled>
 									</div>
 								</div>
 								</form>

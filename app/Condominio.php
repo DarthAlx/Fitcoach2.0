@@ -14,4 +14,7 @@ class Condominio extends Model
   public function grupos(){
     return $this->hasMany('App\Grupo');
 }
+public function horarios(){
+    return $this->hasMany('App\Horario');
+}
 }
