@@ -77,7 +77,7 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Reservacion');
     }
     public function grupo(){
-        return $this->hasOne('App\Grupo');
+        return $this->hasMany('App\Grupo');
     }
     public function libres(){
           return $this->hasMany('App\Libres');

@@ -256,6 +256,7 @@ else{
         else {
           $guardar = new User($request->all());
           $guardar->role="instructor";
+          $guardar->code=str_random(6);
           $guardar->password=bcrypt($request->password);
 
           $permisos = new Detalle();

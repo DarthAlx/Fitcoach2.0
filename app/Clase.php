@@ -14,4 +14,7 @@ class Clase extends Model
   public function residenciales(){
       return $this->hasMany('App\Residencial');
   }
+  public function grupos(){
+    return $this->hasMany('App\Grupo');
+}
 }

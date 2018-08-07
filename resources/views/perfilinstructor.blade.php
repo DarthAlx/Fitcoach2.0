@@ -1235,21 +1235,21 @@ $pasadas= App\Reservacion::where('coach_id', $user->id)->where('status', '<>', '
     
                       @if($user->documentacion)
 
-                        <label>Cédula de Identificación Fiscal (RFC)</label>
+                        <label>Cédula de Identificación Fiscal (RFC)</label>@if($user->documentacion->rfc!="") <i class="fa fa-check"></i>@endif
                         <input class="form-control" type="file" value="{{ $user->documentacion->rfc }}" placeholder="Cédula de Identificación Fiscal (RFC)" name="rfc">
-                        <label>Credencial de Elector (INE)</label>
+                        <label>Credencial de Elector (INE)</label>@if($user->documentacion->ine!="") <i class="fa fa-check"></i>@endif
                         <input class="form-control" type="file" value="{{ $user->documentacion->ine }}" placeholder="Credencial de Elector (INE)" name="ine">
-                        <label>Clave Única de Registro de Población (CURP)</label>
+                        <label>Clave Única de Registro de Población (CURP)</label>@if($user->documentacion->curp!="") <i class="fa fa-check"></i>@endif
                         <input class="form-control" type="file" value="{{ $user->documentacion->curp }}" placeholder="Clave Única de Registro de Población (CURP)" name="curp">
-                        <label>Acta de Nacimiento</label>
+                        <label>Acta de Nacimiento</label>@if($user->documentacion->acta!="") <i class="fa fa-check"></i>@endif
                         <input class="form-control" type="file" value="{{ $user->documentacion->acta }}" placeholder="Acta de Nacimiento" name="acta">
-                        <label>Comprobante de domicilio</label>
+                        <label>Comprobante de domicilio</label>@if($user->documentacion->domicilio!="") <i class="fa fa-check"></i>@endif
                         <input class="form-control" type="file" value="{{ $user->documentacion->domicilio }}" placeholder="Comprobante de domicilio" name="domicilio">
-                        <label>Certificaciones</label>
+                        <label>Certificaciones</label>@if($user->documentacion->certificaciones!="") <i class="fa fa-check"></i>@endif
                         <input class="form-control" type="file" value="{{ $user->documentacion->certificaciones }}" placeholder="Certificaciones" name="certificaciones">
-                        <label>Carta de recomendación 1</label>
+                        <label>Carta de recomendación 1</label>@if($user->documentacion->recomendacion1!="") <i class="fa fa-check"></i>@endif
                         <input class="form-control" type="file" value="{{ $user->documentacion->recomendacion1 }}" placeholder="Carta de recomendación 1" name="recomendacion1">
-                        <label>Carta de recomendación 2</label>
+                        <label>Carta de recomendación 2</label>@if($user->documentacion->recomendacion2!="") <i class="fa fa-check"></i>@endif
                         <input class="form-control" type="file" value="{{ $user->documentacion->recomendacion2 }}" placeholder="Carta de recomendación 2" name="recomendacion2">
                       @else
 

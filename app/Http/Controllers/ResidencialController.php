@@ -119,13 +119,7 @@ class ResidencialController extends Controller
       $grupo = Horario::find($request->horario_id);
       $grupo->fecha = $request->fecha;
       $grupo->hora = $request->hora;
-      $grupo->user_id = $request->user_id;
-      $grupo->grupo_id = $request->grupo_id;
-      $grupo->clase_id = $request->clase_id;
-      $grupo->tokens = $request->tokens;
-      $grupo->audiencia = $request->audiencia;
-      $grupo->tipo = "En condominio";
-      $grupo->cupo = $request->cupo;
+
  
 
         $grupo->save();
