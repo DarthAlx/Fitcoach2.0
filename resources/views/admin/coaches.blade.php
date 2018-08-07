@@ -68,6 +68,7 @@
 			  <table class="display table table-bordered table-striped table-hover" id="dynamic-table">
 			  <thead>
 			  <tr>
+				<th>ID</th>
 			<th>Nombre</th>
 						<th><i class="fa fa-picture-o"></i></th>
 
@@ -84,7 +85,7 @@
 						@foreach ($usuarios as $usuario)
 
 									<tr style="cursor: pointer;"  data-toggle="modal" data-target="#admin{{$usuario->id}}">
-
+									<td>{{$usuario->id}}</td>
 								    <td>{{ucfirst($usuario->name)}}</td>
 											<td>
 												@if($usuario->detalles->photo!="")
@@ -114,6 +115,7 @@
 			  </tbody>
 			  <tfoot>
 			  <tr>
+				<th>ID</th>
 					<th>Nombre</th>
 				<th><i class="fa fa-picture-o"></i></th>
 
