@@ -476,7 +476,7 @@ class OrdenController extends Controller
       }
       
       header('Content-Type: text/html; charset=utf-8');
-      $openpay = Openpay::getInstance('mada0wigbpnzcmsbtxoa', 'sk_e0b51d10bbc343d780bac55f832c6257');
+      $openpay = Openpay::getInstance('mdy8fyernqnnrukcfnn5', 'sk_e5e17b4f5d164154967fcfc15d7955ba');
       Openpay::setProductionMode(false);
           $customer = array(
            'name' => $user->name,
