@@ -191,7 +191,9 @@
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
 
 										<div>
-											<h4>Actualizar grupo</h4>
+											<a  role="button"  data-toggle="collapse" href="#actualizargrupo{{$grupo->id}}" aria-expanded="false" aria-controls="collapseExample"  class="btn btn-primary">Actualizar grupo</a>
+											
+											<div class="collapse" id="actualizargrupo{{$grupo->id}}">
 											<form action="{{ url('/actualizar-grupo') }}" method="post" enctype="multipart/form-data">
 												{{ method_field('PUT') }}
 												<input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -272,6 +274,7 @@
 												<input type="hidden" name="grupo_id" value="{{ $grupo->id }}">
 												<input type="submit" id="botoneliminargrupo{{ $grupo->id }}">
 											</form>
+											</div>
 
 
 
@@ -331,8 +334,8 @@
 																	<p>&nbsp;</p>
 <div class="row">
 				<div class="col-sm-12 text-right">
-        	<a href="#" class="btn btn-success btn-lg hidden-xs" style="max-width: 200px;" data-toggle="modal" data-target="#nuevohorario">Agregar horario</a>
-        	<a href="#" class="btn btn-success btn-lg visible-xs" data-toggle="modal" data-target="#nuevohorario">Agregar horario</a>
+        	<a href="#" class="btn btn-success btn-lg hidden-xs" style="max-width: 200px;" data-toggle="modal" data-target="#nuevohorario{{$grupo->id}}">Agregar horario</a>
+        	<a href="#" class="btn btn-success btn-lg visible-xs" data-toggle="modal" data-target="#nuevohorario{{$grupo->id}}">Agregar horario</a>
       	</div>
 </div>
 <p>&nbsp;</p>
