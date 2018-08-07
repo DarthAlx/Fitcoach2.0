@@ -16,6 +16,7 @@ class CreateGruposTable extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->integer('condominio_id');
+            $table->integer('room_id');
             $table->longText('descripcion');
             $table->timestamps();
         });

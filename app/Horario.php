@@ -28,8 +28,6 @@ class Horario extends Model
     public function zona(){
     return $this->belongsTo('App\Zona');
 	  }
-	public function room(){
-		return $this->belongsTo('App\Room');
-	}
+	
 	  
 }

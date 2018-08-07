@@ -8,7 +8,7 @@ class Room extends Model
 {
     protected $table = 'rooms';
   protected $fillable = ['nombre', 'descripcion','imagen'];
-  public function horarios(){
-    return $this->hasMany('App\Horario');
+  public function grupos(){
+    return $this->hasMany('App\Grupo');
   }
 }

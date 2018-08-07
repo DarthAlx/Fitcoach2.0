@@ -103,7 +103,7 @@
                     {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
                     </div>      
                     <div class="col-xs-2">
-                    {{$proxima->horario->audiencia}}
+                    {{$proxima->horario->grupo->room->nombre}}
                     </div>
                     <div class="col-xs-3">
                         <div class="pull-right" data-toggle="modal" data-target="#terminar{{$proxima->id}}"><a href="#"><i class="fa fa-check icopopup"></i> &nbsp;</a></div>
@@ -173,7 +173,7 @@
                     {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
                     </div>      
                     <div class="col-xs-2">
-                    {{$pasada->horario->audiencia}}
+                    {{$pasada->horario->grupo->room->nombre}}
                     </div>
                     <div class="col-xs-3">
                     {{$pasada->status}}
@@ -318,7 +318,7 @@
                     {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
                     </div>      
                     <div class="col-xs-2">
-                    {{$proxima->horario->audiencia}}
+                    {{$proxima->horario->grupo->room->nombre}}
                     </div>
                     <div class="col-xs-3">
                         <div class="pull-right" data-toggle="modal" data-target="#terminar{{$proxima->id}}"><a href="#"><i class="fa fa-check icopopup"></i> &nbsp;</a></div>
@@ -391,7 +391,7 @@
                     {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
                     </div>      
                     <div class="col-xs-2">
-                    {{$pasada->horario->audiencia}}
+                    {{$pasada->horario->grupo->room->nombre}}
                     </div>
                     <div class="col-xs-3">
                     {{$pasada->status}}

@@ -136,6 +136,13 @@
 	                       <option value="{{ $condominio->id }}">{{ $condominio->identificador }}</option>
 	                     @endforeach
 										 </select>
+
+										 <select class="form-control"  name="room_id" id="room_idNuevo" >
+											<option value="">Selecciona un room</option>
+											@foreach ($rooms as $room)
+											<option value="{{ $room->id }}">{{ $room->nombre }}</option>
+											@endforeach
+										 </select>
 										 <textarea name="descripcion" class="form-control" placeholder="Descripción" rows="10"></textarea>
 
 
@@ -167,17 +174,28 @@
 
 												<input type="text" id="nombre" class="form-control" name="nombre" placeholder="Nombre" value="{{$grupo->nombre or old('nombre') }}" >
 
-												<select class="form-control"  name="condominio_id" id="condominio{{ $grupo->id }}" >
+												<select class="form-control"  name="condominio_id" id="condominio_id{{ $grupo->id }}" >
 													<option value="">Selecciona un condominio</option>
 													@foreach ($condominios as $condominio)
 														<option value="{{ $condominio->id }}">{{ $condominio->identificador }}</option>
 													@endforeach
 												</select>
+												
 										 
 
 
 												<script type="text/javascript">
-												 if (document.getElementById('condominio{{ $grupo->id }}') != null) document.getElementById('condominio{{ $grupo->id }}').value = '{!! $grupo->id !!}';
+												 if (document.getElementById('condominio_id{{ $grupo->id }}') != null) document.getElementById('condominio_id{{ $grupo->id }}').value = '{!! $grupo->condominio_id !!}';
+												</script>
+
+												<select class="form-control"  name="room_id" id="room_id{{ $grupo->id }}" >
+											<option value="">Selecciona un room</option>
+											@foreach ($rooms as $room)
+											<option value="{{ $room->id }}">{{ $room->nombre }}</option>
+											@endforeach
+										 </select>
+										 <script type="text/javascript">
+												 if (document.getElementById('room_id{{ $grupo->id }}') != null) document.getElementById('room_id{{ $grupo->id }}').value = '{!! $grupo->room_id !!}';
 												</script>
 												<textarea name="descripcion" class="form-control" rows="10">{{ $grupo->descripcion }}</textarea>
 
@@ -408,7 +426,7 @@
 												<input type="hidden" name="horario_id" value="{{ $horario->id }}">
 
 												@if(!$proxima->reservaciones->isEmpty())
-																							
+																						<p>Ya existen reservaciones.</p>	
 																							@else
 												<div class="text-center">
 													<button  class="btn btn-success" type="submit" style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important; width: 40%; display: inline-block;">Actualizar</button>
