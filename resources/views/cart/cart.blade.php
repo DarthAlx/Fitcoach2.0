@@ -103,6 +103,7 @@
 
         <div class="form-group" >
           <div class="col-xs-12 text-center">
+          En tu estado de cuenta aparecerá la leyenda OpenPay*FITCOACH <br>
             <i class="fa fa-cc-visa fa-2x">&nbsp;</i> <i class="fa fa-cc-mastercard fa-2x">&nbsp;</i> <i class="fa fa-cc-amex fa-2x">&nbsp;</i>
           </div>
           <p>&nbsp;</p>
