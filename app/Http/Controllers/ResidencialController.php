@@ -103,6 +103,7 @@ class ResidencialController extends Controller
       $grupo = Grupo::find($request->grupo_id);
       $grupo->nombre = $request->nombre;
       $grupo->condominio_id = $request->condominio_id;
+      $grupo->room_id = $request->room_id;
       $grupo->descripcion = $request->descripcion;
         $grupo->save();
         Session::flash('mensaje', '¡Grupo actualizado!');
