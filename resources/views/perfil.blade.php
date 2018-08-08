@@ -295,7 +295,11 @@
                         <span data-toggle="tooltip" data-placement="bottom" title="{{$pasada->horario->grupo->condominio->direccion}}">{{$pasada->horario->grupo->condominio->identificador}}</span>
                     </div>
                     <div class="col-xs-3">
+                    @if($pasada->status=="EN REVISIÓN")
+                    TERMINADA
+                    @else
                     {{$pasada->status}}
+                    @endif
                     </div>
                     </div>
 @else
@@ -511,7 +515,11 @@
                         <span data-toggle="tooltip" data-placement="bottom" title="{{$pasada->horario->grupo->condominio->direccion}}">{{$pasada->horario->grupo->condominio->identificador}}</span>
                     </div>
                     <div class="col-xs-3">
+                    @if($pasada->status=="EN REVISIÓN")
+                    TERMINADA
+                    @else
                     {{$pasada->status}}
+                    @endif
                     </div>
                     </div>
 @else

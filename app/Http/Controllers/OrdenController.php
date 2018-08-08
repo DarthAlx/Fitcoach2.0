@@ -165,14 +165,14 @@ class OrdenController extends Controller
       $to = date ( 'Y-m-d' , $to_n );
 
       if (!$request->status) {
-        $clases = Orden::whereBetween('fecha', array($from, $to))->get();
+        $clases = Reservacion::whereBetween('fecha', array($from, $to))->get();
 
       }
       elseif ($request->status=="*") {
-        $clases = Orden::whereBetween('fecha', array($from, $to))->get();
+        $clases = Reservacion::whereBetween('fecha', array($from, $to))->get();
       }
       else {
-        $clases = Orden::where('status', $request->status)->whereBetween('fecha', array($from, $to))->get();
+        $clases = Reservacion::where('status', $request->status)->whereBetween('fecha', array($from, $to))->get();
 
       }
 
@@ -182,7 +182,7 @@ class OrdenController extends Controller
 
     public function comentarios(Request $request)
     {
-      $coment = Orden::find($request->orden_id);
+      $coment = Reservacion::find($request->orden_id);
       $coment->comentarios=$request->comentarios;
       $coment->save();
       Session::flash('mensaje', 'Comentario hecho.');
@@ -319,7 +319,7 @@ class OrdenController extends Controller
     {
       $orden = Reservacion::find($request->revision);
       $orden->aforo=$request->aforo;
-      if ($orden->tipo=='residencial') {
+      if ($orden->tipo=='En condominio') {
         $ordenes=Reservacion::where('nombre',$orden->nombre)->where('fecha',$orden->fecha)->where('hora',$orden->hora)->get();
         foreach ($ordenes as $ordenr) {
           $ordenr->status = 'EN REVISIÓN';

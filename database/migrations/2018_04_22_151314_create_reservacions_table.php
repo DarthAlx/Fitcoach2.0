@@ -27,6 +27,7 @@ class CreateReservacionsTable extends Migration
             $table->string('status');
             $table->string('metadata');
             $table->string('tokens');
+            $table->longText('comentarios');
             $table->timestamps();
         });
     }

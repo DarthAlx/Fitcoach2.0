@@ -25,10 +25,10 @@
 					<div class=" col-sm-3 col-md-2 col-md-offset-4">
 						<select class="form-control" name="status" id="status">
 							<option value="*">Todas</option>
-							<option value="Proxima">Proxima</option>
-							<option value="Cancelada">Cancelada</option>
-							<option value="Porrevisar">Por revisar</option>
-							<option value="Completa">Completada</option>
+							<option value="PROXIMA">Proxima</option>
+							<option value="CANCELADA">Cancelada</option>
+							<option value="EN REVISIÓN">Por revisar</option>
+							<option value="COMPLETA">Completada</option>
 						</select>
 						<script type="text/javascript">
 							document.getElementById('status').value='{!!$status!!}';
@@ -206,7 +206,7 @@
 				      						<strong>Fecha: </strong> {{$clase->fecha}}<br>
 													<strong>Lugar: </strong> {{$clase->direccion}}<br>
 													<strong>Tipo: </strong> {{$clase->tipo}}<br>
-													@if ($clase->tipo=="residencial")
+													@if ($clase->tipo=="En condominio")
 
 													@else
 														<strong>Cliente: </strong> @if ($clase->user){{$clase->user->name}}@else

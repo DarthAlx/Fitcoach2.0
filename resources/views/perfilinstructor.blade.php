@@ -128,8 +128,9 @@
                 {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
                 </div>      
                 <div class="col-xs-2">
-                
+                @if ($proxima->tipo=="A domicilio")
                 {{$proxima->horario->zona->identificador}}
+                @endif
                 </div>
                 <div class="col-xs-3">
                     <div class="pull-right" data-toggle="modal" data-target="#terminar{{$proxima->id}}"><a href="#"><i class="fa fa-check icopopup"></i> &nbsp;</a></div>
@@ -157,7 +158,7 @@
                   setlocale(LC_TIME, "es-ES");
                  ?>
 
-                 @if ($pasada->tipo=="En condiminio")
+                 @if ($pasada->tipo=="En condominio")
                   @if (in_array($pasada->nombre.$pasada->fecha.$pasada->hora,$array))
 
                   <!--clase ya mostrada, no se hace nada-->
@@ -197,7 +198,9 @@
                 {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
                 </div>      
                 <div class="col-xs-2">
+                @if ($pasada->tipo=="A domicilio")
                 {{$pasada->horario->zona->identificador}}
+                @endif
                 </div>
                 <div class="col-xs-3">
                 {{$pasada->status}}
@@ -343,7 +346,9 @@
                 {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
                 </div>      
                 <div class="col-xs-2">
+                @if ($proxima->tipo=="A domicilio")
                 {{$proxima->horario->zona->identificador}}
+                @endif
                 </div>
                 <div class="col-xs-3">
                     <div class="pull-right" data-toggle="modal" data-target="#terminar{{$proxima->id}}"><a href="#"><i class="fa fa-check icopopup"></i> &nbsp;</a></div>
@@ -374,12 +379,16 @@
                 $fecha=date_create($pasada->fecha);
                 setlocale(LC_TIME, "es-ES");
                ?>
+               <script>
+              console.log('{{$pasada->tipo}}');
+               </script>
               
-              @if ($pasada->tipo=="En condiminio")
+              @if ($pasada->tipo=="En condominio")
                   @if (in_array($pasada->nombre.$pasada->fecha.$pasada->hora,$array))
-
+                  
                   <!--clase ya mostrada, no se hace nada-->
                   @else
+                 
                  <div class="list-group-item row">
                     <div class="col-xs-2">
                       <strong>{{$pasada->nombre}}</strong>
@@ -400,6 +409,7 @@
                  </div>
 
                  <?php $array[]=$pasada->nombre.$pasada->fecha.$pasada->hora; ?>
+
                   @endif
                 @else
                 <div class="list-group-item row">
@@ -415,7 +425,10 @@
                 {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
                 </div>      
                 <div class="col-xs-2">
+                @if ($pasada->tipo=="A domicilio")
                 {{$pasada->horario->zona->identificador}}
+                @endif
+                <p>pff</p>
                 </div>
                 <div class="col-xs-3">
                 {{$pasada->status}}
@@ -575,7 +588,7 @@
   <?php $permitidas = explode(",",$user->detalles->clases);
 
         $clases = App\Clase::whereIn('id', $permitidas)->get(); 
-        $particulares = App\Reservacion::where('coach_id',$user->id)->get();
+        $particulares = App\Horario::where('user_id',$user->id)->where('tipo','A domicilio')->get();
         ?>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
