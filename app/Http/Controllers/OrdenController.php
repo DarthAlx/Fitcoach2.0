@@ -318,16 +318,18 @@ class OrdenController extends Controller
     public function terminar(Request $request)
     {
       $orden = Reservacion::find($request->revision);
-      $orden->aforo=$request->aforo;
+      
       if ($orden->tipo=='En condominio') {
         $ordenes=Reservacion::where('nombre',$orden->nombre)->where('fecha',$orden->fecha)->where('hora',$orden->hora)->get();
         foreach ($ordenes as $ordenr) {
           $ordenr->status = 'EN REVISIÓN';
+          $ordenr->aforo=$request->aforo;
           $ordenr->save();
         }
       }
       else{
         $orden->status = 'EN REVISIÓN';
+        $orden->aforo=$request->aforo;
         $orden->save();
       }
       Session::flash('mensaje', '¡Orden en revisión!');
