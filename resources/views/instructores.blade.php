@@ -386,7 +386,7 @@
 																	<li class="list-group-item text-center"  onclick="agregaracarrito2('{{$x}}{{$residencial->id}}{{$i}}','{{$coach->id}}','{{$clase->id}}');" style="cursor:pointer;">
 																		<input type="checkbox" class="carritocheck" id="carrito2{{$x}}{{$residencial->id}}{{$i}}" name="carrito[]" value="{{$residencial->id}},{{$fechas[$x]}},{{$residencial->tokens}}" style="display:none">
 																		<input type="hidden" name="tipo" value="En condominio">
-																		{{$residencial->clase->nombre}}<br>{{ucfirst($nombre[0])}}<br>{{$residencial->hora}}
+																		{{$residencial->clase->nombre}}<br>{{$residencial->condominio->identificador}}<br>{{$residencial->hora}}
 																		<i class="fa fa-square-o faselect pull-right fa2{{$x}}{{$residencial->id}}{{$i}}" aria-hidden="true"></i>
 																	</li>
 																@endif
@@ -434,7 +434,7 @@
 															<li class="list-group-item text-center"  onclick="agregaracarrito2('{{$x}}{{$residencial->id}}{{$i}}mini','{{$coach->id}}','{{$clase->id}}');" style="cursor:pointer;">
 																<input type="checkbox" class="carritocheck"  id="carrito2{{$x}}{{$residencial->id}}{{$i}}mini" name="carrito[]" value="{{$residencial->id}},{{$fechas[$x]}},{{$residencial->tokens}}" style="display:none">
 																<input type="hidden" name="tipo" value="En condominio">
-																{{$residencial->clase->nombre}}<br>{{ucfirst($nombre[0])}}<br>{{$residencial->hora}}
+																{{$residencial->clase->nombre}}<br>{{$residencial->condominio->identificador}}<br>{{$residencial->hora}}
 																<i class="fa fa-square-o faselect pull-right fa2{{$x}}{{$residencial->id}}{{$i}}mini" aria-hidden="true"></i>
 															</li>
 														@endif
