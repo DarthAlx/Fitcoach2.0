@@ -222,22 +222,30 @@ class OrdenController extends Controller
 
       if ($request->tipocancelacion=="token") {
         $orden = Reservacion::find($request->id);
+        
 
         if($orden->status!="CANCELADA"){
-          $particular=PaqueteComprado::where('user_id', $user->id)->where('tipo','A domicilio')->orderBy('expiracion','desc')->first();
-          $residencial=PaqueteComprado::where('user_id', $user->id)->where('tipo','En condominio')->orderBy('expiracion','desc')->first();
           if($orden->tipo=="En condominio"&&$residencial){
-            $residencial->disponibles=$residencial->disponibles+$orden->tokens;
-            /*$fecha = date('Y-m-d',$residencial->expiracion);
-            $nuevafecha = strtotime ( '+5 day' , strtotime ( $fecha ) ) ;
-            $residencial->expiracion = date ( 'Y-m-d' , $nuevafecha );*/
-            $residencial->save();
-            $orden->status='CANCELADA';
-            $orden->metadata="token devuelto";
-            Session::flash('mensaje', 'Token devuelto.');
-            Session::flash('class', 'success');
+
+            $ordenes=Reservacion::where('nombre',$orden->nombre)->where('fecha',$orden->fecha)->where('hora',$orden->hora)->get();
+            foreach ($ordenes as $ordenr) {
+              $residencial=PaqueteComprado::where('user_id', $ordenr->user_id)->where('tipo','En condominio')->orderBy('expiracion','desc')->first();
+
+              $residencial->disponibles=$residencial->disponibles+$orden->tokens;        
+              $residencial->save();
+              $ordenr->status='CANCELADA';
+              $ordenr->metadata="token devuelto";
+              Session::flash('mensaje', 'Token devuelto.');
+              Session::flash('class', 'success');
+              $ordenr->save();
+            }
+
+
+            
           }
           elseif($orden->tipo=="A domicilio"&&$particular){
+            $particular=PaqueteComprado::where('user_id', $orden->user_id)->where('tipo','A domicilio')->orderBy('expiracion','desc')->first();
+
             $particular->disponibles=$particular->disponibles+$orden->tokens;
             /*$fecha = date('Y-m-d',$particular->expiracion);
             $nuevafecha = strtotime ( '+5 day' , strtotime ( $fecha ) ) ;
@@ -247,6 +255,7 @@ class OrdenController extends Controller
             $orden->metadata="token devuelto";
             Session::flash('mensaje', 'Token devuelto.');
             Session::flash('class', 'success');
+            $orden->save();
           }
 
           else{
@@ -254,12 +263,14 @@ class OrdenController extends Controller
             Session::flash('class', 'danger');
           }
 
-          $orden->save();
+          
 
 
         //$this->sendclasscancel($orden->id);
           
-        }else{
+        }//clasecancelada
+        
+        else{
           Session::flash('mensaje', 'La clase ya fué cancelada.');
           Session::flash('class', 'danger');
         }
@@ -267,10 +278,24 @@ class OrdenController extends Controller
       else {
         
 
+
         $orden = Reservacion::find($request->id);
-        $orden->status='CANCELADA';
-        $orden->metadata="abonada a coach";
-        $orden->save();
+        if ($orden->tipo=='En condominio') {
+          
+          $ordenes=Reservacion::where('nombre',$orden->nombre)->where('fecha',$orden->fecha)->where('hora',$orden->hora)->get();
+          foreach ($ordenes as $ordenr) {
+            $ordenr->status='CANCELADA';
+            $ordenr->metadata="abonada a coach";
+            $ordenr->save();
+          }
+        }
+        else{
+          $orden->status='CANCELADA';
+          $orden->metadata="abonada a coach";
+          $orden->save();
+        }
+
+
         $abono = new Abono($request->all());
         $abono->abono=$request->abono;
         $abono->reservacion_id=$orden->id;
@@ -399,6 +424,12 @@ class OrdenController extends Controller
                   $orden->status='CANCELADA';
                   $orden->metadata="token devuelto";
                   Session::flash('mensaje', 'Token devuelto.');
+                  Session::flash('class', 'success');
+                }
+                elseif($orden->tipo=="En condominio"&&$orden->tokens==0){
+                  $orden->status='CANCELADA';
+                  $orden->metadata="token devuelto";
+                  Session::flash('mensaje', 'Participación cancelada.');
                   Session::flash('class', 'success');
                 }
                 elseif($orden->tipo=="A domicilio"&&$particular){

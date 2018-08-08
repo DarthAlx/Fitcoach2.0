@@ -143,10 +143,10 @@
 
 															<?php
 															if ($zonarequest=="todas") {
-																$particulares=App\Horario::where('clase_id', $clase->id)->orderBy('hora', 'asc')->get();
+																$particulares=App\Horario::where('clase_id', $clase->id)->where('tipo',"A domicilio")->orderBy('hora', 'asc')->get();
 															}
 															else {
-																$particulares=App\Horario::where('clase_id', $clase->id)->where('zona_id', $zonarequest)->orderBy('hora', 'asc')->get();
+																$particulares=App\Horario::where('clase_id', $clase->id)->where('tipo',"A domicilio")->where('zona_id', $zonarequest)->orderBy('hora', 'asc')->get();
 															}
 
 															list($año, $mes, $dia) = explode("-", $fechas[$x]);
@@ -203,16 +203,16 @@
 														<?php
 
 														if ($zonarequest=="todas") {
-															$particulares=App\Particular::where('clase_id', $clase->id)->orderBy('hora', 'asc')->get();
+															$particulares=App\Horario::where('clase_id', $clase->id)->where('tipo',"A domicilio")->orderBy('hora', 'asc')->get();
 														}
 														else {
-															$particulares=App\Particular::where('clase_id', $clase->id)->where('zona_id', $zonarequest)->orderBy('hora', 'asc')->get();
+															$particulares=App\Horario::where('clase_id', $clase->id)->where('tipo',"A domicilio")->where('zona_id', $zonarequest)->orderBy('hora', 'asc')->get();
 														}
 														list($año, $mes, $dia) = explode("-", $fechas[$x]);
 														$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 														?>
 														@foreach ($particulares as $particular)
-															<?php $existe=App\Orden::where('coach_id', $particular->user_id)->where('fecha', $fechas[$x])->where('hora', $particular->hora)->first(); ?>
+															<?php $existe=App\Reservacion::where('coach_id', $particular->user_id)->where('fecha', $fechas[$x])->where('hora', $particular->hora)->first(); ?>
 															@if (!$existe)
 																@if ($particular->fecha==$fechas[$x]||in_array($dia_n, explode(",",$particular->recurrencia)))
 																	<?php $nombre=explode(" ",$particular->user->name); ?>

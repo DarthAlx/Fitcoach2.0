@@ -66,7 +66,7 @@
 <?php $array=array(); ?>
 					@if ($clases)
 						@foreach ($clases as $clase)
-							@if ($clase->tipo=="residencial")
+							@if ($clase->tipo=="En condominio")
 								@if (in_array($clase->nombre.$clase->fecha.$clase->hora,$array))
 
 									<!--clase ya mostrada, no se hace nada-->

@@ -151,6 +151,7 @@
 		<div class="row">
 				<div class="col-md-12  disponibles">
 
+					
 			<div class="row text-center">
 				<div class="paquete-center">
 					<div class="col-md-2 col-xs-6">

@@ -181,7 +181,7 @@
 												<div class="col-sm-2 col-xs-6 separacion">
 													{{$fechasformateadas[$x]}}
 													<ul class="list-group calendarioinst">
-														<?php $particulares=App\Horario::where('user_id', $coach->id)->orderBy('hora', 'asc')->get();
+														<?php $particulares=App\Horario::where('tipo', 'A domicilio')->where('user_id', $coach->id)->orderBy('hora', 'asc')->get();
 														list($año, $mes, $dia) = explode("-", $fechas[$x]);
 														$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 														?>
@@ -238,7 +238,7 @@
 											<div class="col-xs-6 separacion">
 												{{$fechasformateadas[$x]}}
 												<ul class="list-group calendarioinst">
-													<?php $particulares=App\Horario::where('user_id', $coach->id)->orderBy('hora','asc')->get();
+													<?php $particulares=App\Horario::where('tipo', 'A domicilio')->where('user_id', $coach->id)->orderBy('hora','asc')->get();
 													list($año, $mes, $dia) = explode("-", $fechas[$x]);
 													$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 													?>
@@ -375,7 +375,7 @@
 												<div class="col-sm-2 col-xs-4 separacion">
 													{{$fechasformateadas[$x]}}
 													<ul class="list-group calendarioinst">
-														<?php $residenciales=App\Horario::where('tipo', 'En condominio')->orderBy('hora', 'asc')->get();
+														<?php $residenciales=App\Horario::where('tipo', 'En condominio')->where('user_id',$coach->id)->orderBy('hora', 'asc')->get();
 														list($año, $mes, $dia) = explode("-", $fechas[$x]);
 														$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 														?>
@@ -423,7 +423,7 @@
 										<div class="col-xs-6 separacion">
 											{{$fechasformateadas[$x]}}
 											<ul class="list-group calendarioinst">
-												<?php $residenciales=App\Horario::where('tipo', 'En condominio')->get();
+												<?php $residenciales=App\Horario::where('tipo', 'En condominio')->where('user_id',$coach->id)->orderBy('hora', 'asc')->get();
 												list($año, $mes, $dia) = explode("-", $fechas[$x]);
 												$dia_n=date("w", mktime(0, 0, 0, $mes, $dia, $año));
 												?>
