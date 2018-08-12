@@ -35,14 +35,14 @@
 
 												<strong>Detalles del evento:</strong> <br>
 
-												Fecha:{{$residencial->fecha}} {{$residencial->hora}}<br>
-												Clase:{{$residencial->clase->nombre}}<br>
-												Coach:{{$residencial->user->name}}<br>
-												Lugar: {{$residencial->condominio->identificador}}<br>{{$residencial->condominio->direccion}}<br>
-												Cupo: {{$residencial->cupo}} personas <br>
-													 Lugares disponibles: {{intval($residencial->cupo)-intval($residencial->ocupados)}}<br>
+												Fecha:{{$horario->fecha}} {{$horario->hora}}<br>
+												Clase:{{$horario->clase->nombre}}<br>
+												Coach:{{$horario->user->name}}<br>
+												Lugar: {{$horario->grupo->condominio->identificador}}<br>{{$horario->grupo->condominio->direccion}}<br>
+												Cupo: {{$horario->cupo}} personas <br>
+													 Lugares disponibles: {{intval($horario->cupo)-intval($horario->ocupados)}}<br>
 
-												Audiencia: {{$residencial->audiencia}}
+												Audiencia: {{$horario->audiencia}}
 											</p>
 										</td>
 										<td align="right"> </td>

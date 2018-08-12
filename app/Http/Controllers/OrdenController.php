@@ -357,7 +357,22 @@ class OrdenController extends Controller
       foreach ($coach->abonos as $abono) {
         $pendiente= $pendiente + $abono->abono;
       }
-      if ($request->monto==$pendiente) {
+      if($request->monto>$pendiente){
+            $referenciados=User::where('referencia',$coach->code.'-ganado')->get();
+            foreach($referenciados as $referenciado){
+              $referenciado->referencia=$coach->code.'-pagado';
+              $referenciado->save();
+            }
+            
+            foreach ($coach->abonos as $abono) {
+              $abono->delete();
+            }
+            $this->sendpayment($guardar->id);
+            Session::flash('mensaje', 'El pago se realizó con éxito.');
+            Session::flash('class', 'success');
+            return redirect()->intended(url('/nomina'));
+      }
+      elseif ($request->monto==$pendiente) {
         foreach ($coach->abonos as $abono) {
           $abono->delete();
         }
@@ -612,7 +627,7 @@ class OrdenController extends Controller
         //Session::flash('total', $order->amount);
         $cuantascompradas=0;
 
-        if ($user->referencia!=""&&!str_contains($user->referencia, '-ganado')) {
+        if ($user->referencia!=""&&!str_contains($user->referencia, '-ganado')&&!str_contains($user->referencia, '-pagado')) {
           $clasescompradas=PaqueteComprado::where('user_id',$user->id)->get();
           foreach ($clasescompradas as $compradas) {
             $cuantascompradas=$cuantascompradas+$compradas->clases;
@@ -621,18 +636,12 @@ class OrdenController extends Controller
             $referente=User::where('code',$user->referencia)->first();
 
             if ($referente->role=="usuario") {
-              $paquetecomprado = new PaqueteComprado();
-              $paquetecomprado->user_id=$referente->id;
-              $paquetecomprado->orden_id="Referencia";
-              $paquetecomprado->clases=1;
-              $paquetecomprado->disponibles=1;
-              $paquetecomprado->tipo="A domicilio";
-              $paquetecomprado->fecha=date("Y-m-d");
-              $fecha = date('Y-m-d');
-              $nuevafecha = strtotime ( '+15 day' , strtotime ( $fecha ) ) ;
-              $expiracion = date ( 'Y-m-d' , $nuevafecha );
-              $paquetecomprado->expiracion=$expiracion;
-              $paquetecomprado->save();
+                  $particular=PaqueteComprado::where('user_id', $user->id)->where('tipo','A domicilio')->orderBy('expiracion','desc')->first();
+                  $particular->disponibles=$particular->disponibles+1;
+                  $fecha = date('Y-m-d',$particular->expiracion);
+                  $nuevafecha = strtotime ( '+5 day' , strtotime ( $fecha ) ) ;
+                  $particular->expiracion = date ( 'Y-m-d' , $nuevafecha );
+                  $particular->save();
             }
             elseif ($referente->role=="instructor") {
               # code...

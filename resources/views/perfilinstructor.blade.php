@@ -107,7 +107,8 @@
                     </div>
                     <div class="col-xs-3">
                         <div class="pull-right" data-toggle="modal" data-target="#terminar{{$proxima->id}}"><a href="#"><i class="fa fa-check icopopup"></i> &nbsp;</a></div>
-                      <div class="pull-right" data-toggle="modal" data-target="#plan{{$proxima->id}}"><a href="#"><i class="fa fa-list icopopup"></i> &nbsp;</a></div>
+                      <div class="pull-right" data-toggle="modal" data-target="#plan{{$proxima->id}}"><a href="#"><i class="fa fa-check-square-o icopopup"></i> &nbsp;</a></div>
+                      <div class="pull-right"><a href="{{url('/listainscritos')}}/{{$proxima->id}}" target="_blank"><i class="fa fa-list icopopup"></i> &nbsp;</a></div>
                       <div class="pull-right" data-toggle="modal" data-target="#direccion{{$proxima->id}}"><a href="#"><i class="fa fa-map-marker icopopup"></i> &nbsp;</a></div>
                     </div>
 
@@ -134,7 +135,7 @@
                 </div>
                 <div class="col-xs-3">
                     <div class="pull-right" data-toggle="modal" data-target="#terminar{{$proxima->id}}"><a href="#"><i class="fa fa-check icopopup"></i> &nbsp;</a></div>
-                   <div class="pull-right" data-toggle="modal" data-target="#plan{{$proxima->id}}"><a href="#"><i class="fa fa-list icopopup"></i> &nbsp;</a></div>
+                   <div class="pull-right" data-toggle="modal" data-target="#plan{{$proxima->id}}"><a href="#"><i class="fa fa-check-square-o icopopup"></i> &nbsp;</a></div>
                    <div class="pull-right" data-toggle="modal" data-target="#telefono{{$proxima->id}}"><a href="#"><i class="fa fa-phone icopopup"></i> &nbsp;</a></div>
                    <div class="pull-right" data-toggle="modal" data-target="#direccion{{$proxima->id}}"><a href="#"><i class="fa fa-map-marker icopopup"></i> &nbsp;</a></div>
                 </div>
@@ -218,25 +219,25 @@
         <div id="historial" class="listadeclases" style="display:none;">
           <div class="list-group">
               <?php
-              $abonos= $user->abonos;
+              $pagos= $user->pagos;
 
-              if (!$abonos->isEmpty()) {
+              if (!$pagos->isEmpty()) {
                 date_default_timezone_set('America/Mexico_City');
                 
-                foreach ($abonos as $abono) {
+                foreach ($pagos as $pago) {
                   
 
                  ?>
-                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#abono{{$abono->id}}">
+                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#abono{{$pago->id}}">
                      <i class="fa fa-plus" aria-hidden="true"></i>        
                    <?php setlocale(LC_TIME, "es_MX"); ?>
-                   {{$abono->reservacion->nombre}} | {{$abono->reservacion->fecha}} {{$abono->reservacion->hora}} | Abono: ${{$abono->abono}} 
+                   {{$pago->fecha}} | {{$pago->metodo}} | Pago: ${{$pago->monto-$pago->deducciones}}  
                    <!--i class="fa fa-chevron-right pull-right" aria-hidden="true"></i-->
                  </a>
               <?php 
                 }  
               } else{ ?>
-                <p class="text-center">No has recibido ningún abono.</p>
+                <p class="text-center">No has recibido ningún pago.</p>
                 <?php  }
                ?>
 
@@ -325,7 +326,8 @@
                     </div>
                     <div class="col-xs-3">
                         <div class="pull-right" data-toggle="modal" data-target="#terminar{{$proxima->id}}"><a href="#"><i class="fa fa-check icopopup"></i> &nbsp;</a></div>
-                      <div class="pull-right" data-toggle="modal" data-target="#plan{{$proxima->id}}"><a href="#"><i class="fa fa-list icopopup"></i> &nbsp;</a></div>
+                      <div class="pull-right" data-toggle="modal" data-target="#plan{{$proxima->id}}"><a href="#"><i class="fa fa-check-square-o icopopup"></i> &nbsp;</a></div>
+                      <div class="pull-right"><a href="{{url('/listainscritos')}}/{{$proxima->id}}" target="_blank"><i class="fa fa-list icopopup"></i> &nbsp;</a></div>
                       <div class="pull-right" data-toggle="modal" data-target="#direccion{{$proxima->id}}"><a href="#"><i class="fa fa-map-marker icopopup"></i> &nbsp;</a></div>
                     </div>
 
@@ -443,29 +445,31 @@
         </div>
       </div>
       <div id="historiallg" class="listadeclases" style="display:none;">
-          <div class="list-group">
-              <?php
-              $abonos= $user->abonos;
+        <div class="list-group">
+          <?php
+          $pagos= $user->pagos;
 
-              if (!$abonos->isEmpty()) {
-                date_default_timezone_set('America/Mexico_City');
-                foreach ($abonos as $abono) {
+          if (!$pagos->isEmpty()) {
+            date_default_timezone_set('America/Mexico_City');
+            
+            foreach ($pagos as $pago) {
+              
 
-                 ?>
-                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#abono{{$abono->id}}">
-                     <i class="fa fa-plus" aria-hidden="true"></i>        
-                   <?php setlocale(LC_TIME, "es_MX"); ?>
-                   {{$abono->reservacion->nombre}} | {{$abono->reservacion->fecha}} {{$abono->reservacion->hora}} | Abono: ${{$abono->abono}} 
-                   <!--i class="fa fa-chevron-right pull-right" aria-hidden="true"></i-->
-                 </a>
-              <?php 
-                }  
-              } else{ ?>
-                <p class="text-center">No has recibido ningún abono.</p>
-                <?php  }
-               ?>
+             ?>
+             <a href="#" class="list-group-item" data-toggle="modal" data-target="#abono{{$pago->id}}">
+                 <i class="fa fa-plus" aria-hidden="true"></i>        
+               <?php setlocale(LC_TIME, "es_MX"); ?>
+               {{$pago->fecha}} | {{$pago->metodo}} | Pago: ${{$pago->monto-$pago->deducciones}} 
+               <!--i class="fa fa-chevron-right pull-right" aria-hidden="true"></i-->
+             </a>
+          <?php 
+            }  
+          } else{ ?>
+            <p class="text-center">No has recibido ningún pago.</p>
+            <?php  }
+           ?>
 
-          </div>
+      </div>
         </div>
 
     </div>

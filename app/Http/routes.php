@@ -473,4 +473,7 @@ Route::group(['middleware' => 'instructores'], function(){
 
   Route::post('subir-documentacion', 'BancariosController@store2');
   Route::put('subir-documentacion', 'BancariosController@update2');
+
+  Route::get('listainscritos/{id}', 'ResidencialController@printlist');
+
 });

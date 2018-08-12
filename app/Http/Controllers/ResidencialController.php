@@ -157,15 +157,15 @@ class ResidencialController extends Controller
 
     public function printlist($id)
   {
-      $ordenes=Reservacion::where('grupo_id', $id)->get();
-      $residencial=Grupo::find($id);
-      $condominio=$residencial->condominio;
+      $horario=Horario::find($id);
+      $ordenes=$horario->reservaciones;
+      $condominio=$horario->condominio;
 
-      /*return view('emails.list', ['ordenes'=>$ordenes,'residencial'=>$residencial,'condominio'=>$condominio]);*/
-      $view =  \View::make('emails.list', ['ordenes'=>$ordenes,'residencial'=>$residencial,'condominio'=>$condominio])->render();
+     return view('emails.list', ['ordenes'=>$ordenes,'horario'=>$horario,'condominio'=>$condominio]);
+      /*$view =  \View::make('emails.list', ['ordenes'=>$ordenes,'horario'=>$horario,'condominio'=>$condominio])->render();
       $pdf = \App::make('dompdf.wrapper');
       $pdf->loadHTML($view);
-      return $pdf->stream('list.pdf');
+      return $pdf->stream('list.pdf');*/
   }
   public function printgroups($id)
 {
