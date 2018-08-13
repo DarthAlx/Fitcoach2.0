@@ -167,6 +167,11 @@ Los datos personales que obtenemos de estas tecnologías de rastreo son los sigu
         información podrá ser utilizada por FITCOACH para mejorar y perfeccionar los Servicios, en este sentido, los Usuarios otorgan a la compañía el
         uso no exclusivo e irrevocable libre de regalías para usar, reproducir, divulgar, distribuir, modificar y explotar dichos comentarios sin restricción
         alguna.</p>
+        <h5>Pago</h5>
+        <p>
+        El uso del Sitio Web será gratuito. Podrá encontrar información sobre las tarifas aplicables para los Servicios en el Sitio Web. FITCOACH podrá modificar o actualizar las mismas ocasionalmente, sin necesidad de previo aviso. Será su responsabilidad mantenerse informado sobre las tarifas actuales para los Servicios. Usted acuerda pagar todos los Servicios que solicite (con independencia de si los utiliza o asiste a las clases), mediante cargo automático a tarjeta de crédito o medio de pago electrónico que usted haya proporcionado a través del Sitio Web. El costo de los Servicios causa Impuesto al Valor Agregado. En todo caso, usted será responsable del pago puntual de todos los Servicios que solicite. Los pagos y cargos realizados no son reembolsables. FITCOACH podrá utilizarÁ OPEN PAY un procesador de pagos de terceros (“Procesador de Pago”) para vincular su tarjeta de crédito o el medio de pago electrónico que nos proporcione a su nombre de usuario y contraseña en el Sitio Web. El procesamiento de pagos, con respecto al uso que haga de los Servicios estará sujeto a las condiciones y políticas de privacidad del Procesador del Pago y el emisor de su tarjeta de crédito además de a estas Condiciones del Usuario. FITCOACH no será responsable de ningún error del Procesador de Pago. En relación con el uso del Sitio Web y los Servicios, FITCOACH obtendrá determinados
+
+datos de la transacción, que FITCOACH utilizará únicamente de conformidad al aviso de privacidad de FITCOACH.</p>
     <h5>Cancelación del Servicio</h5>
     <p>Si el Cliente desea cancelar el Servicio programado, se requiere un aviso de cancelación con al menos 24 horas de anticipación al servicio originalmente
         programado. La notificación deberá ser hecha a través de un correo electrónico dirigido a contacto@fitcoach.mx. En caso que el Cliente no cancele
