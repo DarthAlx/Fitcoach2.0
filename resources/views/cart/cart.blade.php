@@ -103,7 +103,7 @@
 
         <div class="form-group" >
           <div class="col-xs-12 text-center">
-          En tu estado de cuenta aparecerá la leyenda OpenPay*FITCOACH <br>
+          
             <i class="fa fa-cc-visa fa-2x">&nbsp;</i> <i class="fa fa-cc-mastercard fa-2x">&nbsp;</i> <i class="fa fa-cc-amex fa-2x">&nbsp;</i>
           </div>
           <p>&nbsp;</p>
@@ -126,21 +126,21 @@
 
             <div class="col-xs-12">
 
-                <input class="form-control" id="numtarjeta"  name="numero" placeholder="Número de tarjeta" autocomplete="off" data-openpay-card="card_number" type="text" > </div>
+                <input class="form-control" id="numtarjeta"  name="numero" placeholder="Número de tarjeta" autocomplete="off" data-openpay-card="card_number" maxlength="16" type="text" > </div>
         </div>
         <div class="form-group row">
           <div id="tarjeta2label">
             <div class="col-sm-5 col-xs-12">
                 <input class="form-control" id="nombretitular"  name="nombre" placeholder="Nombre del titular" autocomplete="off" data-openpay-card="holder_name"  type="text" > </div>
             <div class="col-sm-2 col-xs-3">
-                <input class="form-control" id="mm" placeholder="MM" name="mes" data-openpay-card="expiration_month" type="text" > </div>
+                <input class="form-control" id="mm" placeholder="MM" name="mes" data-openpay-card="expiration_month" type="text" maxlength="2"> </div>
             <div class="col-sm-2 col-xs-3">
-                <input class="form-control" id="aa" placeholder="AA" name="año" data-openpay-card="expiration_year" type="text" > </div>
+                <input class="form-control" id="aa" placeholder="AA" name="año" data-openpay-card="expiration_year" type="text"  maxlength="2"> </div>
           </div>
 <label class="col-sm-3 control-label" for="card-number" id="cvvlabel" style="display:none;">Código de seguridad:</label>
             <div class="col-sm-3 col-xs-6">
                 <div class="input-group">
-                    <input class="form-control" id="cvv" placeholder="CVV" autocomplete="off" data-openpay-card="cvv2" type="text" > <span class="input-group-btn"> <button type="button" class="form-control" data-toggle="popover" data-container="body" data-placement="top" data-content="Código de seguridad de 3 dígitos ubicado normalmente en la parte trasera de su tarjeta. Las tarjetas American Express tienen un código de 4 dígitos ubicado en el frente.">?</button> </span>
+                    <input class="form-control" id="cvv" placeholder="CVV" autocomplete="off" data-openpay-card="cvv2" maxlength="4" type="text" > <span class="input-group-btn"> <button type="button" class="form-control" data-toggle="popover" data-container="body" data-placement="top" data-content="Código de seguridad de 3 dígitos ubicado normalmente en la parte trasera de su tarjeta. Las tarjetas American Express tienen un código de 4 dígitos ubicado en el frente.">?</button> </span>
 									</div>
             </div>
         </div>
@@ -169,6 +169,8 @@
         <div class="form-group">
           <div class="col-sm-12 text-right">
             <a id="pay-button" class="btn btn-success" type="submit">Pagar</a>
+            <p>&nbsp;</p>
+            <p class="text-center" style="color: #ccc !important;">  En tu estado de cuenta aparecerá la leyenda <img src="{{url('/images/op.png')}}" style="max-width:50px;">*FITCOACH </p>
             <script>
               $('#pay-button').on('click',function(){
                 $('#pay-button').addClass('disabled');

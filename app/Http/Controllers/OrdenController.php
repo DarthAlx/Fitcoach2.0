@@ -673,37 +673,37 @@ class OrdenController extends Controller
     }
 
 //ERRORES
-    catch (OpenpayApiTransactionError $e) {
+    catch (\OpenpayApiTransactionError $e) {
        $Motivo='ERROR de transacción: ' . $e->getMessage();
        Session::flash('mensaje', $Motivo);
         Session::flash('class', 'danger');
         return back();
 
-    } catch (OpenpayApiRequestError $e) {
+    } catch (\OpenpayApiRequestError $e) {
       $Motivo='ERROR en la petición: ' . $e->getMessage();
       Session::flash('mensaje', $Motivo);
         Session::flash('class', 'danger');
         return back();
 
-    } catch (OpenpayApiConnectionError $e) {
+    } catch (\OpenpayApiConnectionError $e) {
       $Motivo='ERROR en la conexión: ' . $e->getMessage();
       Session::flash('mensaje', $Motivo);
         Session::flash('class', 'danger');
         return back();
 
-    } catch (OpenpayApiAuthError $e) {
+    } catch (\OpenpayApiAuthError $e) {
       $Motivo='ERROR en la autenticación de la API: ' . $e->getMessage();
       Session::flash('mensaje', $Motivo);
         Session::flash('class', 'danger');
         return back();
 
-    } catch (OpenpayApiError $e) {
+    } catch (\OpenpayApiError $e) {
       $Motivo='ERROR de API: ' . $e->getMessage();
       Session::flash('mensaje', $Motivo);
         Session::flash('class', 'danger');
         return back();
 
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
       $Motivo='ERROR en el script: ' . $e->getMessage();
       Session::flash('mensaje', $Motivo);
         Session::flash('class', 'danger');
