@@ -12,7 +12,9 @@
                             <hr>
 														<div class="coupon">
 															<label>¡Queremos saber de ti! Déjanos tus datos y un Asesor Wellness se pondrá en contacto contigo.</label>
-														</div>
+                                                        </div>
+                                                        <div class="col-md-6"><label>Tel: 5523907490</label></div>
+                        <div class="col-md-6"><label>Av de las Plazas, Bosque Real, Huxquilucan, Estado de Mexico</label></div>
 													</div>
 												<form method="post" enctype="multipart/form-data" action="{{ url('/contacto') }}">
 													<input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -34,8 +36,7 @@
 
                         </form>
 
-                        <div class="col-md-6"><h5>Tel: 5523907490</h5></div>
-                        <div class="col-md-6"><h5>Av de las Plazas, Bosque Real, Huxquilucan, Estado de Mexico</h5></div>
+                        
 			</div>
 		</div>
 		<p>&nbsp;</p>
