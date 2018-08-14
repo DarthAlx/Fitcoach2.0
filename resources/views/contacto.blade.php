@@ -33,6 +33,9 @@
                             </div>
 
                         </form>
+
+                        <div class="col-md-6"><h5>Tel: 5523907490</h5></div>
+                        <div class="col-md-6"><h5>Av de las Plazas, Bosque Real, Huxquilucan, Estado de Mexico</h5></div>
 			</div>
 		</div>
 		<p>&nbsp;</p>
