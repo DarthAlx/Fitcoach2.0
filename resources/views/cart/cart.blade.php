@@ -300,9 +300,9 @@
 
     //api openpay
 $(document).ready(function() {
-OpenPay.setId('mdy8fyernqnnrukcfnn5');
-    OpenPay.setApiKey('pk_43e04ea18d12435fbc8f288ea1ad38cd');
-    OpenPay.setSandboxMode(true);
+OpenPay.setId('mtxcxt534uf7g731pnty');
+    OpenPay.setApiKey('pk_3e69354359be4e8bb3fe4ee38583435b');
+    OpenPay.setSandboxMode(false);
     //Se genera el id de dispositivo
     var deviceSessionId = OpenPay.deviceData.setup("payment-form", "deviceIdHiddenFieldName");
 

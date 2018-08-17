@@ -475,7 +475,7 @@
 
 												<input type="hidden" name="horario_id" value="{{ $horario->id }}">
 
-												@if(!$proxima->reservaciones->isEmpty())
+												@if(!$horario->reservaciones->isEmpty())
 																						<p>Ya existen reservaciones.</p>	
 																							@else
 												<div class="text-center">
