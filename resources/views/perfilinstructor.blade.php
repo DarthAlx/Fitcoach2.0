@@ -108,14 +108,14 @@
                     <div class="col-xs-3">
                         <div class="pull-right" data-toggle="modal" data-target="#terminar{{$proxima->id}}"><a href="#"><i class="fa fa-check icopopup"></i> &nbsp;</a></div>
                       <div class="pull-right" data-toggle="modal" data-target="#plan{{$proxima->id}}"><a href="#"><i class="fa fa-check-square-o icopopup"></i> &nbsp;</a></div>
-                      <div class="pull-right"><a href="{{url('/listainscritos')}}/{{$proxima->id}}" target="_blank"><i class="fa fa-list icopopup"></i> &nbsp;</a></div>
+                      <div class="pull-right"><a href="{{url('/listainscritos')}}/{{$proxima->horario->id}}" target="_blank"><i class="fa fa-list icopopup"></i> &nbsp;</a></div>
                       <div class="pull-right" data-toggle="modal" data-target="#direccion{{$proxima->id}}"><a href="#"><i class="fa fa-map-marker icopopup"></i> &nbsp;</a></div>
                     </div>
 
                  </div>
                  <?php $array[]=$proxima->nombre.$proxima->fecha.$proxima->hora; ?>
                   @endif
-                @else
+                @elseif ($proxima->tipo=="A domicilio")
                 <div class="list-group-item row">
                 <div class="col-xs-2">
                   <strong>{{$proxima->nombre}}</strong>
@@ -327,14 +327,14 @@
                     <div class="col-xs-3">
                         <div class="pull-right" data-toggle="modal" data-target="#terminar{{$proxima->id}}"><a href="#"><i class="fa fa-check icopopup"></i> &nbsp;</a></div>
                       <div class="pull-right" data-toggle="modal" data-target="#plan{{$proxima->id}}"><a href="#"><i class="fa fa-check-square-o icopopup"></i> &nbsp;</a></div>
-                      <div class="pull-right"><a href="{{url('/listainscritos')}}/{{$proxima->id}}" target="_blank"><i class="fa fa-list icopopup"></i> &nbsp;</a></div>
+                      <div class="pull-right"><a href="{{url('/listainscritos')}}/{{$proxima->horario->id}}" target="_blank"><i class="fa fa-list icopopup"></i> &nbsp;</a></div>
                       <div class="pull-right" data-toggle="modal" data-target="#direccion{{$proxima->id}}"><a href="#"><i class="fa fa-map-marker icopopup"></i> &nbsp;</a></div>
                     </div>
 
                  </div>
                  <?php $array[]=$proxima->nombre.$proxima->fecha.$proxima->hora; ?>
                   @endif
-                @else
+                @elseif ($proxima->tipo=="A domicilio")
                 <div class="list-group-item row">
                 <div class="col-xs-2">
                   <strong>{{$proxima->nombre}}</strong>
@@ -413,7 +413,7 @@
                  <?php $array[]=$pasada->nombre.$pasada->fecha.$pasada->hora; ?>
 
                   @endif
-                @else
+                @elseif ($proxima->tipo=="A domicilio")
                 <div class="list-group-item row">
                 <div class="col-xs-2">
                   <strong>{{$pasada->nombre}}</strong>

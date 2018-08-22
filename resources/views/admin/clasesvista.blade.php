@@ -114,7 +114,7 @@
 									<?php $array[]=$clase->nombre.$clase->fecha.$clase->hora; ?>
 								@endif
 
-						@else
+						@elseif ($clase->tipo=="A domicilio")
 							<tr style="cursor: pointer;">
 						     
 									<td>{{$clase->fecha}} {{$clase->hora}}</td>
@@ -208,7 +208,7 @@
 													<strong>Tipo: </strong> {{$clase->tipo}}<br>
 													@if ($clase->tipo=="En condominio")
 
-													@else
+													@elseif ($clase->tipo=="A domicilio")
 														<strong>Cliente: </strong> @if ($clase->user){{$clase->user->name}}@else
 															<p>No existe el usuario</p>
 														@endif<br>

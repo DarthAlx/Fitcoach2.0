@@ -106,7 +106,7 @@
         <h4>CLASE ANTERIOR</h4>
         @if ($user->reservaciones)
           <?php
-          $ultima= App\Reservacion::where('user_id', $user->id)->where('status', 'COMPLETA')->orWhere('status','EN REVISIÓN')->orderBy('fecha', 'desc')->first();
+          $ultima= App\Reservacion::where('user_id', $user->id)->where('status', 'COMPLETA')->orderBy('fecha', 'desc')->first();
           if ($ultima) {
             $coachu= App\User::find($ultima->coach_id);
             $nombre=explode(" ",$coachu->name);

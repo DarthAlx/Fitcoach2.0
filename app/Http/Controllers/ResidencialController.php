@@ -197,7 +197,7 @@ public function printlistevent($id)
 public function storeevento(Request $request)
 {
   $evento = new Evento($request->all());
-  
+    $evento->ocupados=0;
 
     if ($request->hasFile('imagen')) {
     $file = $request->file('imagen');
@@ -226,11 +226,7 @@ public function storeevento(Request $request)
     Session::flash('class', 'danger');
     return redirect()->intended(url('/eventos-admin'));
   }
-  $guardar = new Grupo($request->all());
-  $guardar->ocupados=0;
-  $guardar->tipo="Evento";
-  $guardar->evento_id=$guardar->id;
-  $guardar->save();
+
 
 
 
@@ -239,17 +235,16 @@ public function storeevento(Request $request)
 }
 public function updateevento(Request $request)
 {
-  $grupo = Grupo::find($request->evento_id);
-
+  $grupo = Evento::find($request->evento);
+  $grupo->nombre = $request->nombre;
+  $grupo->direccion = $request->direccion;
   $grupo->fecha = $request->fecha;
   $grupo->hora = $request->hora;
-  $grupo->user_id = $request->user_id;
   $grupo->precio = $request->precio;
-
-  $grupo->tipo ="Evento";
   $grupo->cupo = $request->cupo;
   $grupo->descripcion=$request->descripcion;
-  $evento=$grupo->evento;
+  $grupo->condominio_id = $request->condominio_id;
+
 
 
     if ($request->hasFile('imagen')) {
@@ -262,14 +257,9 @@ public function updateevento(Request $request)
 
       $file-> move($path, $name);
       File::delete($path . $grupo->imagenevento);
-      $evento->nombre=$request->nombre;
-      $evento->direccion=$request->direccion;
-      $evento->imagen = $name;
+      $grupo->imagen = $name;
 
-      $evento->save();
-      Session::flash('mensaje', '¡Evento actualizado!');
-      Session::flash('class', 'success');
-      return redirect()->intended(url('/eventos-admin'));
+      
     }
     else{
       Session::flash('mensaje', 'El archivo no es una imagen valida.');
@@ -278,14 +268,12 @@ public function updateevento(Request $request)
     }
 
   }
-  else{
-    $evento->nombre=$request->nombre;
-    $evento->direccion=$request->direccion;
-    $evento>save();
-    Session::flash('mensaje', '¡Evento actualizado!');
-    Session::flash('class', 'success');
-    return redirect()->intended(url('/eventos-admin'));
-  }
+
+  $grupo->save();
+      Session::flash('mensaje', '¡Evento actualizado!');
+      Session::flash('class', 'success');
+      return redirect()->intended(url('/eventos-admin'));
+
 
 
 
@@ -293,12 +281,10 @@ public function updateevento(Request $request)
 }
 public function destroyevento(Request $request)
 {
-  $grupo = Grupo::find($request->evento_id);
-  $evento=$grupo->evento;
+  $evento = Evento::find($request->evento);
   $path = base_path('uploads/clases/');
   File::delete($path . $evento->imagen);
   $evento->delete();
-  $grupo->delete();
   Session::flash('mensaje', '¡Evento eliminado correctamente!');
   Session::flash('class', 'success');
   return redirect()->intended(url('/eventos-admin'));
