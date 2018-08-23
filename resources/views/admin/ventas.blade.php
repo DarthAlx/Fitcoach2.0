@@ -92,7 +92,7 @@
 
 					@if ($ventas)
 						@foreach ($ventas as $venta)
-						<?php $descuento=App\Cuponera::where('orden_id', $venta->order_id)->first();  
+						<?php $descuento=App\Cuponera::where('orden_id', $venta->id)->first();  
 								$totales=App\Orden::where('folio', $venta->folio)->get();
 								$grantotal=0;
 								foreach ($totales as $total) {

@@ -75,7 +75,7 @@
 														</tr>
 														@endforeach
 														<?php 
-														$descuento=App\Cuponera::where('orden_id', $orden->order_id)->first(); 
+														$descuento=App\Cuponera::where('orden_id', $orden->id)->first(); 
 														if ($descuento){
 															$grantotal=$grantotal-$descuento->monto;
 															$iva=($grantotal/1.16)*0.16;

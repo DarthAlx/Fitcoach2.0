@@ -1001,10 +1001,11 @@ public function reservar(Request $request)
         $ordenes=Orden::where('order_id', $id)->get();
         $datos=Orden::where('order_id', $id)->first();
         $user=User::find($datos->user_id);
-        $view =  \View::make('emails.receipt', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user])->render();
+        return view('emails.receipt',['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user]);
+        /*$view =  \View::make('emails.receipt', ['ordenes'=>$ordenes,'datos'=>$datos,'user'=>$user])->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
-        return $pdf->stream('invoice.pdf');
+        return $pdf->stream('invoice.pdf');*/
     }
     public function sendinvoice($id)
     {

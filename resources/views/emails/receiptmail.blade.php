@@ -521,9 +521,9 @@
 																							</tr>
 																							
 																							<?php 
-																						$descuento=$orden->descuento; 
-																						if ($descuento>0){
-																							$grantotal=$grantotal-$descuento;
+																						$descuento=App\Cuponera::where('orden_id', $orden->id)->first();
+																						if ($descuento){
+																							$grantotal=$grantotal-$descuento->monto;
 																							$iva=($grantotal/1.16)*0.16;
 																							$subtotal=$grantotal-$iva;
 																						}
@@ -546,10 +546,10 @@
 																									</td>
 																							</tr>
 																							
-																							@if ($descuento>0)
+																							@if ($descuento)
 																								<tr>
-																										<td align="right" style="width: 50%;"><strong>Descuento ({{$orden->cupon->descripcion}}):</strong></td>
-																										<td class="text">-${{ $orden->cupon->monto }}</td>
+																										<td align="right" style="width: 50%;"><strong>Descuento ({{$descuento->descripcion}}):</strong></td>
+																										<td class="text">-${{ $descuento->monto }}</td>
 																								</tr>
 																							@endif
 																							<tr>
