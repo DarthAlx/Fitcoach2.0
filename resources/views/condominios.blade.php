@@ -49,11 +49,11 @@
 			@if ($condominios)
 				@foreach ($condominios as $condominio)
 	        <div class="teamItem">
-	          <a><img src="{{ url('uploads/condominios') }}/{{ $condominio->imagen }}" class="img-responsive"></a>
-	          <div class="overlay" data-toggle="modal" data-target="#calendario{{$condominio->id}}">
+	          <a ><img src="{{ url('uploads/condominios') }}/{{ $condominio->imagen }}" class="img-responsive"></a>
+	          <div class="overlay" >
 	            <div class="teamItemNameWrap">
 
-	              <a style="text-decoration:none;"><h3>{{ucfirst($condominio->identificador)}}</h3></a>
+	              <a href="/condominios/{{strtolower(urlencode($condominio->identificador))}}" style="text-decoration:none;"><h3>{{ucfirst($condominio->identificador)}}</h3></a>
 	            </div>
 	            <!--p>Formativa</p-->
 	          </div>

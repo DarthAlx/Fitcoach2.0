@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Detalle;
 use App\Particular;
 use App\Residencial;
+use Illuminate\Support\Facades\Session;
 use Validator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -78,52 +78,7 @@ class UserController extends Controller
     {
         //
     }
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
-    }
-    public function storeadmin(Request $request)
-    {
-        $validator = $this->validator($request->all());
 
-        if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
-        }
-        else {
-          $guardar = new User($request->all());
-          $guardar->role="admin";
-          $guardar->password=bcrypt($request->password);
-          //editor
-          if (isset($request->editor)) {
-            $guardar->editor=1;
-          }
-          else{
-            $guardar->editor=0;
-          }
-          $guardar->save();
-          $permisos = new Detalle();
-
-            if ($request->permisos) {
-              $permisos->permisos=implode(",", $request->permisos);
-              $permisos->user_id=$guardar->id;
-            }
-
-            
-
-
-
-          $permisos->save();
-          Session::flash('mensaje', '¡Usuario guardado!');
-          Session::flash('class', 'success');
-          return redirect()->intended(url('/admins'));
-        }
-    }
 
 
 
@@ -156,88 +111,6 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-     protected function validatorUpdate(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'password' => 'confirmed|min:6'
-        ]);
-    }
-    public function updateadmin(Request $request)
-    {
-      $validator = $this->validatorUpdate($request->all());
-
-      if ($validator->fails()) {
-          $this->throwValidationException(
-              $request, $validator
-          );
-      }
-      else {
-        $guardar = User::find($request->admin_id);
-        $guardar->name=$request->name;
-        $guardar->email=$request->email;
-        $guardar->dob=$request->dob;
-        $guardar->tel=$request->tel;
-        $guardar->genero=$request->genero;
-        if ($request->password) {
-          $guardar->password=bcrypt($request->password);
-        }
-//editor
-if (isset($request->editor)) {
-  $guardar->editor=1;
-}
-else{
-  $guardar->editor=0;
-}
-        $guardar->save();
-        $permisos = Detalle::find($guardar->detalles->id);
-
-
-          if ($request->permisos) {
-            $permisos->permisos=implode(",", $request->permisos);
-            $permisos->user_id=$guardar->id;
-          }
-          else {
-            $permisos->permisos=$request->permisos;
-            $permisos->user_id=$guardar->id;
-          }
-
-           
-
-
-
-        $permisos->save();
-        Session::flash('mensaje', '¡Usuario actualizado!');
-        Session::flash('class', 'success');
-        return redirect()->intended(url('/admins'));
-      }
-    }
-
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroyadmin(Request $request)
-    {
-      $guardar = User::find($request->admin_id);
-
-      $guardar->email="banned". "-". time();
-      $guardar->role="banned";
-      $guardar->password=bcrypt("banhammer");
-
-      $guardar->save();
-      Session::flash('mensaje', '¡Usuario eliminado correctamente!');
-      Session::flash('class', 'success');
-      return redirect()->intended(url('/admins'));
-    }
-
-
-
 
 
 

@@ -1063,3 +1063,19 @@ border: 0 !important;
     font-family: Gotham3;
     padding: 20px 0;
 }
+
+.condominios-clases{
+    padding-top: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #cdcd;
+}
+.condominios-clases-text{
+    text-transform: uppercase;
+}
+.ver-clases{
+    padding-top: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 26px;
+    border-bottom: 1px solid #cdcdcd;
+}

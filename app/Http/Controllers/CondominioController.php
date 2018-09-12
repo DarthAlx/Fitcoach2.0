@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Horario;
+use App\Services\RoomService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -21,7 +24,29 @@ class CondominioController extends Controller
      */
     public function index()
     {
-        //
+        $condominios = Condominio::all();
+        return view('condominios', ['condominios'=>$condominios]);
+    }
+
+    public function show($name){
+        $now= Carbon::now();
+        $description = urldecode($name);
+        $service = new RoomService();
+        $condominio = Condominio::with('eventos')
+            ->whereRaw("lower(identificador) = '$description'")
+            ->get()->first();
+        $rooms = $service->getRoomsbyCondominio($condominio->id);
+        $horarios = Horario::with('clase')
+            ->with('user')
+            ->with('grupo.room')
+            ->where('tipo', 'En condominio')
+            ->where('fecha', $now->toDateString())
+            ->where('condominio_id',$condominio->id)->orderBy('hora', 'asc')->get();
+        return view('condominio.ver')
+            ->with('condominio', $condominio)
+            ->with('hour', $now->hour)
+            ->with('rooms', $rooms)
+            ->with('horarios', $horarios);
     }
 
     /**
@@ -78,17 +103,6 @@ class CondominioController extends Controller
 
 
 
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
