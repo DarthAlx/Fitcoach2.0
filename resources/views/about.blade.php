@@ -12,7 +12,7 @@
 
 		<div class="container-bootstrap-fluid" style="padding-right: 5%; padding-left: 5%;">
 			<div class="row">
-
+				<script src="//player.dacast.com/js/player.js" id="92729_c_442469" player="jw7" width="720" height="400" jwurl="https://content.jwplatform.com/libraries/cDBPN7qh.js" class="dacast-video"></script>
 				<div class="col-sm-12">
 					<div class="singlePostWrap" style="text-align: center;">
 						<p>&nbsp;</p>
