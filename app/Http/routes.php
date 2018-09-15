@@ -380,6 +380,7 @@ Route::any('eliminar-zona/{id}', 'ZonaController@destroy');
   Route::get('verinvoice/{id}', 'OrdenController@verinvoice');
   Route::get('printinvoice/{id}', 'OrdenController@invoice');
   Route::get('nomina', 'OrdenController@nomina');
+  Route::get('reportes', 'Reports\ReportController@index');
   Route::post('pagar', 'OrdenController@pago');
   Route::get('historialpagos/{id}', 'OrdenController@historialpagos');
   Route::get('clasesvista', 'OrdenController@clasesvista');

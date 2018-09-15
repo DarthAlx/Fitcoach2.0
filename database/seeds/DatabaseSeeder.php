@@ -12,23 +12,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
-        $this->call(UserSeeder::class);
-        $this->call(DetalleSeeder::class);
+        //Model::unguard();
+        //$this->call(UserSeeder::class);
+        //$this->call(DetalleSeeder::class);
         //$this->call(DireccionSeeder::class);
-        $this->call(SliderSeeder::class);
+        //$this->call(SliderSeeder::class);
         //$this->call(ClaseSeeder::class);
         //$this->call(ZonaSeeder::class);
-        $this->call(CondominioSeeder::class);
+        //$this->call(CondominioSeeder::class);
         //$this->call(OrdenSeeder::class);
         //$this->call(ParticularSeeder::class);
         //$this->call(ResidencialesSeeder::class);
-        $this->call(folio::class);
-        $this->call(ModuloSeeder::class);
-        $this->call(PaqueteSeeder::class);
-        $this->call(ZonaSeeder::class);
-        $this->call(ClaseSeeder::class);
+        //$this->call(folio::class);
+        //$this->call(ModuloSeeder::class);
+        //$this->call(PaqueteSeeder::class);
+        //$this->call(ZonaSeeder::class);
+        //$this->call(ClaseSeeder::class);
 
-        Model::reguard();
+        //Model::reguard();
+        $this->call(ReportSeeder::class);
     }
 }
