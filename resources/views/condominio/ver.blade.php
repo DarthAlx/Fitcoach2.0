@@ -14,14 +14,18 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="ver-clases">
-                            <button class="btn btn-success btn-block " data-toggle="modal" data-target="#calendario{{$condominio->id}}">
+                            <button class="btn btn-success btn-block " data-toggle="modal"
+                                    data-target="#calendario{{$condominio->id}}">
                                 Ver todas las clases
                             </button>
                         </div>
                         <div class="row">
                             @foreach($rooms as $room)
                                 <div class="col-lg-6">
-                                    <img src="{{ url('uploads/rooms') }}/{{ $room->imagen }}" class="img-responsive">
+                                    <a href="/condominios/{{strtolower(urlencode($condominio->identificador))}}/{!! $room->id !!}">
+                                        <img src="{{ url('uploads/rooms') }}/{{ $room->imagen }}"
+                                             class="img-responsive">
+                                    </a>
                                 </div>
                             @endforeach
                         </div>
@@ -56,9 +60,21 @@
                                             Impartida
                                         </button>
                                     @else
-                                        <button class="btn btn-success">
-                                            Reservar
-                                        </button>
+                                        <form action="{{url('carrito')}}" onsubmit="fbq('track', 'AddToCart');"
+                                              method="post">
+                                            {!! csrf_field() !!}
+                                            <input type="hidden" name="cantidad" value="1">
+                                            <input type="hidden"
+                                                   name="carrito[]"
+                                                   value="{{$horario->id}},{{$date}},{{$horario->tokens}}">
+                                            <input type="hidden"
+                                                   name="tipo"
+                                                   value="En condominio">
+                                            <button class="btn btn-success" type="submit">
+                                                Reservar
+                                            </button>
+                                        </form>
+
                                     @endif
                                 </div>
                             </div>

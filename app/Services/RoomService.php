@@ -27,4 +27,16 @@ class RoomService
             ->get();
         return $rooms;
     }
+
+    public function getRoombyCondominio($condominioId, $roomId)
+    {
+        $rooms = DB::table('grupos')
+            ->join('rooms', 'rooms.id', '=', 'grupos.room_id')
+            ->where('grupos.condominio_id', $condominioId)
+            ->where('rooms.id', $roomId)
+            ->groupBy('rooms.id')
+            ->select('rooms.*')
+            ->get();
+        return $rooms;
+    }
 }

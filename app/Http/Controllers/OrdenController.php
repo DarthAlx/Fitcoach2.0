@@ -365,7 +365,8 @@ class OrdenController extends Controller
             }
             
             foreach ($coach->abonos as $abono) {
-              $abono->delete();
+              $abono->realizado = true;
+              $abono->save();
             }
             $this->sendpayment($guardar->id);
             Session::flash('mensaje', 'El pago se realizó con éxito.');
@@ -374,7 +375,8 @@ class OrdenController extends Controller
       }
       elseif ($request->monto==$pendiente) {
         foreach ($coach->abonos as $abono) {
-          $abono->delete();
+            $abono->realizado = true;
+            $abono->save();
         }
         $this->sendpayment($guardar->id);
         Session::flash('mensaje', 'El pago se realizó con éxito.');
@@ -382,7 +384,8 @@ class OrdenController extends Controller
         return redirect()->intended(url('/nomina'));
       }elseif ($request->monto<$pendiente) {
         foreach ($coach->abonos as $abono) {
-          $abono->delete();
+            $abono->realizado = true;
+            $abono->save();
 
         }
         $abono = new Abono();

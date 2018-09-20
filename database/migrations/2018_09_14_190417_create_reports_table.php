@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AbonoTable extends Migration
+class CreateReportsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,11 @@ class AbonoTable extends Migration
      */
     public function up()
     {
-        Schema::create('abonos', function (Blueprint $table) {
+        Schema::create('reports', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('reservacion_id');
-            $table->integer('abono');
+            $table->string('name');
+            $table->boolean('active')->defaults(true);
+            $table->string('view');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class AbonoTable extends Migration
      */
     public function down()
     {
-        Schema::drop('abonos');
+        Schema::drop('planes');
     }
 }

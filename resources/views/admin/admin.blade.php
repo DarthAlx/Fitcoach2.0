@@ -96,6 +96,12 @@
       </a>
     </div>
 
+    <div class="col-md-3 col-sm-4 col-xs-6 modulo" id="reportes" style="display:none;">
+      <a href="{{ url('/reportes') }}">
+        <img src="{{ url('images/zonas.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/zonas_b.png')}}'" onmouseout="this.src='{{ url('images/zonas.png')}}'" alt="">
+      </a>
+    </div>
+
   </div>
 
 

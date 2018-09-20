@@ -154,6 +154,8 @@ Route::get('/condominios', 'CondominioController@index');
 
 Route::get('/condominios/{name}', 'CondominioController@show');
 
+Route::get('/condominios/{name}/{roomId}', 'CondominioController@room');
+
 
 Route::get('/buscarresidencial', function () {
     $condominios = App\Condominio::where('identificador', 'like', '%%')->get();
@@ -368,6 +370,8 @@ Route::group(['middleware' => 'administradores'], function () {
     Route::get('verinvoice/{id}', 'OrdenController@verinvoice');
     Route::get('printinvoice/{id}', 'OrdenController@invoice');
     Route::get('nomina', 'OrdenController@nomina');
+    Route::get('reportes', 'Reports\ReportController@index');
+    Route::get('reportes/{id}', 'Reports\ReportController@show');
     Route::post('pagar', 'OrdenController@pago');
     Route::get('historialpagos/{id}', 'OrdenController@historialpagos');
     Route::get('clasesvista', 'OrdenController@clasesvista');
