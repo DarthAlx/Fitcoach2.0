@@ -3,7 +3,6 @@
         padding: 0 20px 0 20px;
     }
     .container{
-        height: 100%;
         border-right: 6px dashed #ec8617;
         padding: 10px;
     }
@@ -52,7 +51,6 @@
     }
     .notes{
         border: 1px solid;
-        margin-top: 27px;
         padding: 20px;
     }
 </style>

@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Reports;
 
+use App\Clase;
+use App\Condominio;
+use App\Http\Controllers\Controller;
 use App\Services\ReportService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\View;
 
 class ReportController extends Controller
 {
@@ -32,29 +31,50 @@ class ReportController extends Controller
      */
     public function show($id)
     {
-        return view('admin.reports.type' . $id . '.form');
+        switch ($id) {
+            case 1:
+            case 3:
+            case 4:
+            return view('admin.reports.type' . $id . '.form');
+                break;
+            case 5:
+            case 6:
+            $condominios = Condominio::all();
+                return view('admin.reports.type' . $id . '.form')
+                    ->with('condominios', $condominios);
+                break;
+            case 7:
+                $clases = Clase::orderBy('nombre')->get();
+                return view('admin.reports.type' . $id . '.form')
+                    ->with('clases', $clases);
+                break;
+
+        }
     }
 
     public function create($id, Request $request)
     {
         $input = $request->all();
-        $service = new ReportService();
+        $service = new ReportService($id);
         $now = Carbon::now();
         switch ($id) {
             case 1:
-                $date = Carbon::parse($input['date']);
-                $data = $service->clientsWithClassesDue($input['date']);
-                $view = View::make('admin.reports.type' . $id . '.show', compact('data', 'now', 'date'))->render();
+                $view = $service->clientsWithClassesDue($input);
                 break;
             case 3:
-                $startDate = Carbon::parse($input['from']);
-                $endDate = Carbon::parse($input['to']);
-                $data = $service->popularityOfClasses($startDate, $endDate);
-                $total = 0;
-                foreach ($data as $item){
-                    $total+=$item->total;
-                }
-                $view = View::make('admin.reports.type' . $id . '.show', compact('data', 'now', 'startDate', 'endDate','total'))->render();
+                $view = $service->popularityOfClasses($input);
+                break;
+            case 4:
+                $view = $service->useOfCoupons($input);
+                break;
+            case 5:
+                $view = $service->detailedCapacityPerGroup($input);
+                break;
+            case 6:
+                $view = $service->generalCapacityPerGroup($input);
+                break;
+            case 7:
+                $view = $service->classesOfUser($input);
                 break;
         }
         $pdf = App::make('dompdf.wrapper');

@@ -17,11 +17,22 @@
                     </div>
                 </div>
                 <br/>
-                <form method="POST" action="/reportes/1">
+                <form method="POST" action="/reportes/7">
                     {!! csrf_field() !!}
                     <div class="row" style="height: 300px">
                         <div class="col-sm-4">
-                            <input type="text" class="form-control datepicker" name="date" placeholder="Hasta..." value="">
+                            <input type="text" class="form-control datepicker" name="from" placeholder="Desde..." value="">
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control datepicker" name="to" placeholder="Hasta..." value="">
+                        </div>
+                        <div class="col-sm-4">
+                            <select name="clase_id" class="form-control" required>
+                                <option selected hidden>Seleccione...</option>
+                                @foreach($clases as $clase)
+                                    <option value="{{$clase->id}}">{!! $clase->nombre !!}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="col-lg-4">
                             <div class="dropdown">

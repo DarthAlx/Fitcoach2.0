@@ -26,13 +26,17 @@
 							<li><a href="/reportes/1">Clientes con clases por vencer</a></li>
 							<li><a href="/reportes/2">Popularidad individual de clases</a></li>
 							<li><a href="/reportes/3">Estatus de clases disponibles</a></li>
-							<li><a href="/reportes/3">Uso de cupones</a></li>
-							<li><a href="/reportes/3">Aforos detallados en Condominio</a></li>
-							<li><a href="/reportes/3">Aforos Generales en condominio</a></li>
-							<li><a href="/reportes/3">Cliente por clase</a></li>
-							<li><a href="/reportes/3">Detalle de Clase COACH</a></li>
+							<li><a href="/reportes/4">Uso de cupones</a></li>
+							<li><a href="/reportes/5">Aforos detallados en Condominio</a></li>
+							<li><a href="/reportes/6">Aforos Generales en condominio</a></li>
+							<li><a href="/reportes/7">Cliente por clase</a></li>
+							<li><a href="/reportes/8">Detalle de Clase COACH</a></li>
 							<li><a href="/reportes/3">Detalle Ventas en Condominio</a></li>
 							<li><a href="/reportes/3">Estado de cuenta cliente</a></li>
+							<li><a href="/reportes/3">Estado de cuenta coach</a></li>
+							<li><a href="/reportes/3">Reservaciones por cliente</a></li>
+							<li><a href="/reportes/3">Reservaciones por condominio</a></li>
+							<li><a href="/reportes/3">Ventas por periodo</a></li>
 						</ul>
 					</div>
 				</div>

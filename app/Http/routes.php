@@ -370,8 +370,9 @@ Route::group(['middleware' => 'administradores'], function () {
     Route::get('verinvoice/{id}', 'OrdenController@verinvoice');
     Route::get('printinvoice/{id}', 'OrdenController@invoice');
     Route::get('nomina', 'OrdenController@nomina');
-    Route::get('reportes', 'Reports\ReportController@index');
-    Route::get('reportes/{id}', 'Reports\ReportController@show');
+    Route::get('/reportes', 'Reports\ReportController@index');
+    Route::get('/reportes/{id}', 'Reports\ReportController@show');
+    Route::post('/reportes/{id}', 'Reports\ReportController@create');
     Route::post('pagar', 'OrdenController@pago');
     Route::get('historialpagos/{id}', 'OrdenController@historialpagos');
     Route::get('clasesvista', 'OrdenController@clasesvista');

@@ -6,37 +6,35 @@
 <body>
 <div class="container">
     @include('admin.reports.header')
-    <h2>CLIENTES CON CLASES POR VENCER</h2>
+    <h2>USO DE CUPONES</h2>
     <div class="info">
-        <p><span class="info-title">Hasta</span> {{$date->toDateString()}}</p>
+        <p><span class="info-title">Periodo</span> {{$startDate->toDateString()}} al {{$endDate->toDateString()}}</p>
     </div>
     <table style="width:100%">
         <tr class="table-header">
-            <th width="5%">#</th>
-            <th width="15%">Clases</th>
-            <th width="20%">Vencimiento</th>
-            <th width="20%">Nombre</th>
-            <th width="20%">Mail</th>
-            <th width="20%">Celular</th>
+            <th width="10%">#</th>
+            <th width="33%">Cupón</th>
+            <th width="33%">Nombre</th>
+            <th width="33%">Valor</th>
+            <th width="33%">Usos</th>
+            <th width="33%">Total</th>
         </tr>
         @foreach($data as $index=>$item)
             <tr>
                 <td>{{$index}}</td>
-                <td>{{$item->disponibles}}</td>
-                <td>{{$item->expiracion}}</td>
-                <td>{{$item->name}}</td>
-                <td>{{$item->email}}</td>
-                <td>{{$item->tel}}</td>
+                <td>{{$item->codigo}}</td>
+                <td>{{$item->descripcion}}</td>
+                <td>{{sprintf('%s', number_format(($item->monto),2))}} MXN</td>
+                <td>{{$item->usos}}</td>
+                <td>{{sprintf('%s', number_format(($item->monto*$item->usos), 2))}} MXN</td>
             </tr>
         @endforeach
     </table>
     <div class="notes">
         <b>Notas</b>
-        <p>Se acomoda la tabla por número de clases.</p>
+        <p>La tabla se acomoda por fecha de creación..</p>
     </div>
-    <div>
-        <p>Creado el : {{$now->toDateTimeString()}}</p>
-    </div>
+    <p>Creado el : {{$now->toDateTimeString()}}</p>
 </div>
 </body>
 </html>
