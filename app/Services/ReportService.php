@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Clase;
 use App\Condominio;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
@@ -202,5 +203,23 @@ class ReportService
             ->get();
         return View::make('admin.reports.type7.show',
             compact('data', 'now', 'startDate', 'endDate','clase'))->render();
+    }
+
+    public function classesOfCoach(array $input){
+        $now = Carbon::now();
+        $startDate = Carbon::parse($input['from']);
+        $endDate = Carbon::parse($input['to']);
+        $coach_id = $input['coach_id'];
+        $user = User::find($coach_id);
+        $data = DB::table('reservaciones')
+            ->join('abonos', 'abonos.reservacion_id', '=', 'reservaciones.id')
+            ->where('reservaciones.fecha', '>=', $startDate)
+            ->where('reservaciones.fecha', '<=', $endDate)
+            ->where('reservaciones.coach_id', '=', $user->id)
+            ->select('reservaciones.fecha','reservaciones.nombre','reservaciones.tipo','reservaciones.aforo','reservaciones.status','abonos.realizado')
+            ->groupBy('reservaciones.user_id')
+            ->get();
+        return View::make('admin.reports.type8.show',
+            compact('data', 'now', 'startDate', 'endDate','user'))->render();
     }
 }

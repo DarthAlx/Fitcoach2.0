@@ -6,6 +6,7 @@ use App\Clase;
 use App\Condominio;
 use App\Http\Controllers\Controller;
 use App\Services\ReportService;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -48,6 +49,12 @@ class ReportController extends Controller
                 return view('admin.reports.type' . $id . '.form')
                     ->with('clases', $clases);
                 break;
+            case 8:
+                $users = User::where('role','instructor')
+                    ->orderBy('name')->get();
+                return view('admin.reports.type' . $id . '.form')
+                    ->with('users', $users);
+                break;
 
         }
     }
@@ -75,6 +82,9 @@ class ReportController extends Controller
                 break;
             case 7:
                 $view = $service->classesOfUser($input);
+                break;
+            case 8:
+                $view = $service->classesOfCoach($input);
                 break;
         }
         $pdf = App::make('dompdf.wrapper');
