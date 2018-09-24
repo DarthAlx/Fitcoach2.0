@@ -31,7 +31,7 @@
 							<li><a href="/reportes/6">Aforos Generales en condominio</a></li>
 							<li><a href="/reportes/7">Cliente por clase</a></li>
 							<li><a href="/reportes/8">Detalle de Clase COACH</a></li>
-							<li><a href="/reportes/3">Detalle Ventas en Condominio</a></li>
+							<li><a href="/reportes/9">Detalle Ventas en Condominio</a></li>
 							<li><a href="/reportes/3">Estado de cuenta cliente</a></li>
 							<li><a href="/reportes/3">Estado de cuenta coach</a></li>
 							<li><a href="/reportes/3">Reservaciones por cliente</a></li>

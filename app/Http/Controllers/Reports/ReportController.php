@@ -40,6 +40,7 @@ class ReportController extends Controller
                 break;
             case 5:
             case 6:
+            case 9:
             $condominios = Condominio::all();
                 return view('admin.reports.type' . $id . '.form')
                     ->with('condominios', $condominios);
@@ -85,6 +86,9 @@ class ReportController extends Controller
                 break;
             case 8:
                 $view = $service->classesOfCoach($input);
+                break;
+            case 9:
+                $view = $service->salesOfGroup($input);
                 break;
         }
         $pdf = App::make('dompdf.wrapper');
