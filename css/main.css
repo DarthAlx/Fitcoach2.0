@@ -1078,3 +1078,7 @@ border: 0 !important;
     padding-bottom: 26px;
     border-bottom: 1px solid #cdcdcd;
 }
+.title-input{
+    color: #000000 !important;
+    font-weight: bold;
+}

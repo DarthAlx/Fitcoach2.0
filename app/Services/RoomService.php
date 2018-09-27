@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Horario;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -39,4 +40,21 @@ class RoomService
             ->get();
         return $rooms;
     }
+
+    public static function getHoursByCondominio($condominioId, $roomId)
+{
+    $horarios = Horario::with('clase')
+        ->with('user')
+        ->with('grupo.room')
+        ->where('tipo', 'En condominio')
+        ->where('condominio_id', $condominioId)
+        ->orderBy('hora', 'asc')->get();
+    $dataHours = [];
+    foreach ($horarios as $value) {
+        if ($value->grupo != null && $value->grupo->room != null && $value->grupo->room->id == $roomId) {
+            array_push($dataHours, $value);
+        }
+    }
+    return $dataHours;
+}
 }

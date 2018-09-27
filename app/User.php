@@ -153,5 +153,9 @@ class User extends Model implements AuthenticatableContract,
             ->count('disponibles');
     }
 
+    public function condominioAdmin(){
+        return $this->hasOne('App\Condominio','id','condominio_id');
+    }
+
 
 }

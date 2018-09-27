@@ -350,19 +350,18 @@ Route::group(['middleware' => 'administradores'], function () {
 
     Route::delete('eliminar-cliente', 'UserController@destroycliente');
 
-    Route::get('/coaches-admin', function () {
-        $usuarios = App\User::where('role', 'instructor')->get();
+    Route::get('/condominio-admins', 'Admin\CondominioAdminController@show');
+    Route::post('/agregar-condominio-admin','Admin\CondominioAdminController@create');
+    Route::put('actualizar-condominio-admin', 'Admin\CondominioAdminController@update');
+    Route::delete('eliminar-condominio-admin', 'Admin\CondominioAdminController@destroy');
 
-        return view('admin.coaches', ['usuarios' => $usuarios]);
-    });
-    Route::post('/coaches-admin', function (Illuminate\Http\Request $request) {
-        $usuarios = App\User::where('name', 'like', '%' . $request->busqueda . '%')->where('role', 'instructor')->get();
 
-        return view('admin.coaches', ['usuarios' => $usuarios]);
-    });
-    Route::post('agregar-coach', 'UserController@storecoach');
-    Route::put('actualizar-coach', 'UserController@updatecoach');
-    Route::delete('eliminar-coach', 'UserController@destroycoach');
+
+    Route::get('/coaches-admin', 'Admin\CoachAdmin@show');
+    Route::post('/coaches-admin', 'Admin\CoachAdmin@search');
+    Route::post('agregar-coach', 'Admin\CoachAdmin@storecoach');
+    Route::put('actualizar-coach', 'Admin\CoachAdmin@updatecoach');
+    Route::delete('eliminar-coach', 'Admin\CoachAdmin@destroycoach');
 
 
     Route::get('ventas', 'OrdenController@ventas');

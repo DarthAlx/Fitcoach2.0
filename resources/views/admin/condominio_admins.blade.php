@@ -14,10 +14,10 @@
                         @include('holders.notificaciones')
                     </div>
                     <div class="col-sm-12">
-                        <div class="title" style="font-size: 10vw; float: left; line-height: 0.8;">COACHES</div>
+                        <div class="title" style="font-size: 5vw; float: left; line-height: 0.8;">ADMINISTRADORES<br/>CONDOMINIO</div>
                     <!--div class="buscador hidden-xs" style="float: right; position: absolute; right: 0; bottom: 0;">
 					  <div class="footerSubscribe">
-					    <form action="{{url('coaches')}}" method="post">
+					    <form action="{{url('admins')}}" method="post">
 					      {!! csrf_field() !!}
                             <input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
                             <button class="btnSubscribe" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
@@ -29,7 +29,7 @@
                 <!--div class="col-sm-3 visible-xs">
 					<div class="buscador">
 						<div class="footerSubscribe">
-			  			<form action="{{url('coaches')}}" method="post">
+			  			<form action="{{url('admins')}}" method="post">
 								{!! csrf_field() !!}
                         <input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
                           <button class="btnSubscribe" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
@@ -58,13 +58,9 @@
                         <table class="display table table-bordered table-striped table-hover" id="dynamic-table">
                             <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Nombre</th>
-                                <th><i class="fa fa-picture-o"></i></th>
-
-
                                 <th>Email</th>
-                                <th>Teléfono</th>
+                                <th>Condominio</th>
                                 <th>Último acceso</th>
 
 
@@ -76,22 +72,14 @@
 
                                     <tr style="cursor: pointer;" data-toggle="modal"
                                         data-target="#admin{{$usuario->id}}">
-                                        <td>{{$usuario->id}}</td>
+
                                         <td>{{ucfirst($usuario->name)}}</td>
-                                        <td>
-                                            @if($usuario->detalles->photo!="")
-                                                <img src="{{ url('uploads/avatars') }}/{{ $usuario->detalles->photo }}"
-                                                     class="img-responsive" style="max-width: 50px;">
-                                            @else
-                                                <img src="{{ url('uploads/avatars') }}/dummy.png" alt=""
-                                                     class="img-responsive" style="max-width: 50px;">
-                                            @endif
-
-                                        </td>
-
-
                                         <td>{{$usuario->email}}</td>
-                                        <td>{{$usuario->tel}}</td>
+                                        <td>
+                                            @if(isset($usuario->condominioAdmin))
+                                                {{$usuario->condominioAdmin->identificador}}
+                                            @endif
+                                        </td>
                                         <td>{{$usuario->acceso}}</td>
 
 
@@ -107,13 +95,11 @@
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th>ID</th>
                                 <th>Nombre</th>
-                                <th><i class="fa fa-picture-o"></i></th>
 
 
                                 <th>Email</th>
-                                <th>Teléfono</th>
+                                <th>Rol</th>
                                 <th>Último acceso</th>
 
 
@@ -144,12 +130,11 @@
                                 src="{{url('/images/cross.svg')}}" alt=""></button>
 
                     <div>
-                        <h4>Agregar coach</h4>
-                        <form action="{{ url('/agregar-coach') }}" method="post" enctype="multipart/form-data">
+                        <h4>Agregar Administrador de condominio</h4>
+                        <form action="{{ url('/agregar-condominio-admin') }}" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="text" class="form-control" name="name" value="{{ old('name') }}"
                                    placeholder="Nombre" required>
-                            <input class="form-control" type="file" name="photo">
                             <input type="email" class="form-control" name="email" value="{{ old('email') }}"
                                    placeholder="Email" required>
                             <input class="form-control datepicker" type="text" value="{{ old('dob') }}"
@@ -162,20 +147,37 @@
                                 <option value="Femenino">Femenino</option>
                             </select>
 
-
-                            <div class="form-group permitidascont">
-                                <label class="control-label">Clases permitidas</label>
-                                <?php $clases = App\Clase::orderBy('nombre', 'asc')->get(); ?>
-                                @foreach ($clases as $clase)
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type='checkbox' class="permitidas" name="clases[]"
-                                                   value="{{$clase->id}}">{{ $clase->nombre }}
-                                        </label>
-                                    </div>
-                                @endforeach
+                            <div class="form-group" id="editor" style="display:none">
+                                <label class="control-label">Coordinador condominio</label>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type='checkbox' name="editor" value="1"> Habilitado
+                                    </label>
+                                </div>
                             </div>
+                            <div class="form-group">
+                                <label class="control-label">Administrador condominio</label>
+                                <select class="form-control" name="condominio_id" value="{{ old('condomio_id') }}" required>
+                                    <option value="" selected hidden>Condominio</option>
+                                    @foreach($condominios as $condominio)
+                                        <option value="{{$condominio->id}}">{{ $condominio->identificador }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <script>
+                                $(document).ready(function () {
 
+                                    $('#permisocondominios').change(function () {
+                                        if (this.checked) {
+                                            $('#editor').show();
+                                        }
+                                        else {
+                                            $('#editor').hide();
+                                        }
+
+                                    });
+                                });
+                            </script>
                             <input type="password" class="form-control" name="password" placeholder="Contraseña"
                                    required>
                             <input type="password" class="form-control" name="password_confirmation"
@@ -205,50 +207,13 @@
                                         src="{{url('/images/cross.svg')}}" alt=""></button>
 
                             <div>
-                                <h4>Actualizar coach</h4>
-                                @if($admin->documentacion)
-                                    @if($admin->documentacion->rfc!="")<a target="_blank" download
-                                                                          href="{{url('uploads/documentos')}}/{{$admin->documentacion->rfc}}"
-                                                                          class="btn btn-default">RFC</a> &nbsp; @endif
-                                    @if($admin->documentacion->ine!="")<a target="_blank" download
-                                                                          href="{{url('uploads/documentos')}}/{{$admin->documentacion->ine}}"
-                                                                          class="btn btn-default">INE</a> &nbsp; @endif
-                                    @if($admin->documentacion->curp!="")<a target="_blank" download
-                                                                           href="{{url('uploads/documentos')}}/{{$admin->documentacion->curp}}"
-                                                                           class="btn btn-default">CURP</a>
-                                    &nbsp; @endif
-                                    @if($admin->documentacion->acta!="")<a target="_blank" download
-                                                                           href="{{url('uploads/documentos')}}/{{$admin->documentacion->acta}}"
-                                                                           class="btn btn-default">Acta</a>
-                                    &nbsp; @endif
-                                    @if($admin->documentacion->domicilio!="")<a target="_blank" download
-                                                                                href="{{url('uploads/documentos')}}/{{$admin->documentacion->domicilio}}"
-                                                                                class="btn btn-default">Comprobante</a>
-                                    &nbsp; @endif
-                                    @if($admin->documentacion->certificaciones!="")<a target="_blank" download
-                                                                                      href="{{url('uploads/documentos')}}/{{$admin->documentacion->certificaciones}}"
-                                                                                      class="btn btn-default">Certificaciones</a>
-                                    &nbsp; @endif
-                                    @if($admin->documentacion->recomendacion1!="")<a target="_blank" download
-                                                                                     href="{{url('uploads/documentos')}}/{{$admin->documentacion->recomendacion1}}"
-                                                                                     class="btn btn-default">CR1</a>
-                                    &nbsp; @endif
-                                    @if($admin->documentacion->recomendacion2!="")<a target="_blank" download
-                                                                                     href="{{url('uploads/documentos')}}/{{$admin->documentacion->recomendacion2}}"
-                                                                                     class="btn btn-default">CR2</a>
-                                    &nbsp; @endif
-                                    <p>&nbsp;</p>
-                                @else
-                                    <p>El coach aún no envía documentación.</p>
-                                @endif
-                                <form action="{{ url('/actualizar-coach') }}" method="post"
+                                <h4>Actualizar admin</h4>
+                                <form action="{{ url('/actualizar-condominio-admin') }}" method="post"
                                       enctype="multipart/form-data">
                                     {{ method_field('PUT') }}
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <input type="text" class="form-control" name="name" value="{{$admin->name}}"
                                            placeholder="Nombre" required>
-                                    <label for="">Solo si se desea reemplazar</label>
-                                    <input class="form-control" type="file" name="photo">
                                     <input type="email" class="form-control" name="email" value="{{$admin->email}}"
                                            placeholder="Email" required>
                                     <input class="form-control datepicker" type="text" value="{{$admin->dob}}"
@@ -260,68 +225,54 @@
                                         <option value="Masculino">Masculino</option>
                                         <option value="Femenino">Femenino</option>
                                     </select>
+                                    <div class="form-group">
+                                        <label class="control-label">Administrador condominio</label>
+                                        <select class="form-control" name="condominio_id" required>
+                                            @foreach($condominios as $condominio)
+                                                <option value="{{$condominio->id}}"  {{$admin->condominio_id==$condominio->id?'selected':''}}>{{ $condominio->identificador }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <script type="text/javascript">
                                         if (document.getElementById('genero{{ $admin->id }}') != null) document.getElementById('genero{{ $admin->id }}').value = '{!! $admin->genero !!}';
                                     </script>
-                                    <label for="">Datos de cuenta</label>
-                                    @if(isset($admin->bancarios))
-                                        <div class="form-group">
-                                            <label for="bancarios_banco" class="title-input">Banco</label>
-                                            <input type="text" class="form-control" name="bancarios_banco" id="bancarios_banco"
-                                                   value="{{$admin->bancarios->banco}}"
-                                                   placeholder="Banco" disabled>
+                                    <div class="form-group" id="editor{{$admin->id}}" style="display:none">
+                                        <label class="control-label">Coordinador condominio</label>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type='checkbox' name="editor" value="1"> Habilitado
+                                            </label>
                                         </div>
-
-                                        <div class="form-group">
-                                            <label for="bancarios_banco" class="title-input">Cuenta</label>
-                                            <input type="text" class="form-control" name="bancarios_cta"
-                                                   value="{{$admin->bancarios->cta}}"
-                                                   placeholder="Banco" disabled>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="bancarios_banco" class="title-input">CLABE</label>
-                                            <input type="text" class="form-control" name="bancarios_clabe"
-                                                   value="{{$admin->bancarios->clabe}}"
-                                                   placeholder="Clabe" disabled>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="bancarios_banco" class="title-input">Tarjeta</label>
-                                            <input type="text" class="form-control" name="bancarios_tarjeta"
-                                                   value="{{$admin->bancarios->tarjeta}}"
-                                                   placeholder="Tarjeta" disabled>
-                                        </div>
-                                        @else
-                                        <p>Sin información</p>
-                                    @endif
-
-
-                                    <div class="form-group permitidascont{{ $admin->id }}">
-                                        <label class="control-label">Clases permitidas</label>
-                                        <?php $clases = App\Clase::orderBy('nombre', 'asc')->get(); ?>
-                                        @foreach ($clases as $clase)
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type='checkbox' class="permitidas"
-                                                           id="permitidas{{$admin->id}}{{$clase->id}}" name="clases[]"
-                                                           value="{{$clase->id}}">{{ $clase->nombre }}
-                                                </label>
-                                            </div>
-                                        @endforeach
                                     </div>
+
+                                    <script>
+                                        $(document).ready(function () {
+
+                                            $('#check{{$admin->id}}condominios').change(function () {
+                                                if (this.checked) {
+                                                    $('#editor{{$admin->id}}').show();
+                                                }
+                                                else {
+                                                    $('#editor{{$admin->id}}').hide();
+                                                }
+
+                                            });
+                                        });
+                                    </script>
 
 
                                     @if ($admin->detalles)
                                         <?php
-                                        $permitidas = explode(',', $admin->detalles->clases);
-
+                                        $permisos = explode(',', $admin->detalles->permisos);
                                         ?>
                                         <script type="text/javascript">
-                                            @foreach ($permitidas as $permitida)
-
-                                            document.getElementById('permitidas{{$admin->id}}{{$permitida}}').checked = true;
+                                            @foreach ($permisos as $permiso)
+                                            document.getElementById('check{{$admin->id}}{{$permiso}}').checked = true;
                                             @endforeach
                                         </script>
                                     @endif
+
+
                                     <input type="password" class="form-control" name="password"
                                            placeholder="Contraseña">
                                     <input type="password" class="form-control" name="password_confirmation"
@@ -337,7 +288,7 @@
                                            onclick="javascript: document.getElementById('botoneliminar{{ $admin->id }}').click();">Borrar</a>
                                     </div>
                                 </form>
-                                <form style="display: none;" action="{{ url('/eliminar-coach') }}" method="post">
+                                <form style="display: none;" action="{{ url('/eliminar-condominio-admin') }}" method="post">
                                     {!! csrf_field() !!}
                                     {{ method_field('DELETE') }}
                                     <input type="hidden" name="admin_id" value="{{ $admin->id }}">

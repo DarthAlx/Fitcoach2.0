@@ -25,7 +25,11 @@
         <img src="{{ url('images/coaches.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/coaches_b.png')}}'" onmouseout="this.src='{{ url('images/coaches.png')}}'" alt="">
       </a>
     </div>
-
+    <div class="col-md-3 col-sm-4 col-xs-6 modulo" id="coaches-admin" style="display:none;">
+      <a href="{{ url('/condominio-admins') }}">
+        <img src="{{ url('images/coaches.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/coaches_b.png')}}'" onmouseout="this.src='{{ url('images/coaches.png')}}'" alt="">
+      </a>
+    </div>
     <div class="col-md-3 col-sm-4 col-xs-6 modulo" id="condominios" style="display:none;">
       <a href="{{ url('/residenciales') }}">
         <img src="{{ url('images/condominios.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/condominios_b.png')}}'" onmouseout="this.src='{{ url('images/condominios.png')}}'" alt="">
