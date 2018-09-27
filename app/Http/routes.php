@@ -17,7 +17,7 @@ Route::get('/promo', function () {
 
 });
 
-Route::get('mail/{id}', 'OrdenController@create');
+Route::get('mail/{id}', 'Publico\OrdenController@create');
 Route::get('/', function () {
     $particulares = App\Paquete::where('tipo', 'A domicilio')->get();
     $residenciales = App\Paquete::where('tipo', 'En condominio')->get();
@@ -132,14 +132,9 @@ Route::get('/coaches', function () {
     return view('instructores', ['coaches' => $coaches]);
 });
 
-Route::get('/eventos', function () {
-    $eventos = App\Residencial::where('tipo', 'Evento')->orderBy('fecha', 'asc')->get();
-    return view('eventos', ['eventos' => $eventos]);
-});
-Route::post('/eventos', function (Illuminate\Http\Request $request) {
-    $eventos = App\Residencial::where('tipo', 'Evento')->where('nombreevento', 'like', '%' . $request->busqueda . '%')->orderBy('nombreevento', 'asc')->get();
-    return view('eventos', ['eventos' => $eventos]);
-});
+Route::get('/eventos', 'Publico\EventosController@index');
+Route::post('/eventos', 'Publico\EventosController@search');
+
 Route::get('/buscarcoach', function () {
     $coaches = App\User::where('name', 'like', '%%')->where('role', 'instructor')->get();
     return view('instructores', ['coaches' => $coaches]);
@@ -216,13 +211,13 @@ Route::post('/contacto', function (Illuminate\Http\Request $request) {
 });
 
 
-Route::post('carrito', 'OrdenController@cartinst');
+Route::post('carrito', 'Publico\OrdenController@cartinst');
 Route::get('/carrito', function () {
     $items = Cart::content();
     return view('cart.reservar', ['items' => $items]);
 });
-Route::post('reservar', 'OrdenController@reservar');
-Route::get('removefromcart/{rowId}', 'OrdenController@destroy');
+Route::post('reservar', 'Publico\OrdenController@reservar');
+Route::get('removefromcart/{rowId}', 'Publico\OrdenController@destroy');
 Route::post('descuento', 'CuponeraController@store');
 
 
@@ -351,10 +346,9 @@ Route::group(['middleware' => 'administradores'], function () {
     Route::delete('eliminar-cliente', 'UserController@destroycliente');
 
     Route::get('/condominio-admins', 'Admin\CondominioAdminController@show');
-    Route::post('/agregar-condominio-admin','Admin\CondominioAdminController@create');
+    Route::post('/agregar-condominio-admin', 'Admin\CondominioAdminController@create');
     Route::put('actualizar-condominio-admin', 'Admin\CondominioAdminController@update');
     Route::delete('eliminar-condominio-admin', 'Admin\CondominioAdminController@destroy');
-
 
 
     Route::get('/coaches-admin', 'Admin\CoachAdmin@show');
@@ -364,32 +358,32 @@ Route::group(['middleware' => 'administradores'], function () {
     Route::delete('eliminar-coach', 'Admin\CoachAdmin@destroycoach');
 
 
-    Route::get('ventas', 'OrdenController@ventas');
-    Route::post('ventas', 'OrdenController@ventaspost');
-    Route::get('verinvoice/{id}', 'OrdenController@verinvoice');
-    Route::get('printinvoice/{id}', 'OrdenController@invoice');
-    Route::get('nomina', 'OrdenController@nomina');
+    Route::get('ventas', 'Publico\OrdenController@ventas');
+    Route::post('ventas', 'Publico\OrdenController@ventaspost');
+    Route::get('verinvoice/{id}', 'Publico\OrdenController@verinvoice');
+    Route::get('printinvoice/{id}', 'Publico\OrdenController@invoice');
+    Route::get('nomina', 'Publico\OrdenController@nomina');
     Route::get('/reportes', 'Reports\ReportController@index');
     Route::get('/reportes/{id}', 'Reports\ReportController@show');
     Route::post('/reportes/{id}', 'Reports\ReportController@create');
-    Route::post('pagar', 'OrdenController@pago');
-    Route::get('historialpagos/{id}', 'OrdenController@historialpagos');
-    Route::get('clasesvista', 'OrdenController@clasesvista');
-    Route::post('clasesvista', 'OrdenController@clasesvistapost');
+    Route::post('pagar', 'Publico\OrdenController@pago');
+    Route::get('historialpagos/{id}', 'Publico\OrdenController@historialpagos');
+    Route::get('clasesvista', 'Publico\OrdenController@clasesvista');
+    Route::post('clasesvista', 'Publico\OrdenController@clasesvistapost');
 
     Route::get('cupones', 'CuponController@index');
     Route::post('agregar-cupon', 'CuponController@store');
     Route::put('actualizar-cupon', 'CuponController@update');
     Route::delete('eliminar-cupon', 'CuponController@destroy');
-    Route::put('comentarios', 'OrdenController@comentarios');
-    Route::post('abonar', 'OrdenController@abonar');
-    Route::post('cancelar', 'OrdenController@cancelar');
+    Route::put('comentarios', 'Publico\OrdenController@comentarios');
+    Route::post('abonar', 'Publico\OrdenController@abonar');
+    Route::post('cancelar', 'Publico\OrdenController@cancelar');
     Route::get('printlist/{id}', 'ResidencialController@printlist');
     Route::get('printeventlist/{id}', 'ResidencialController@printlistevent');
     Route::get('printgroups/{id}', 'ResidencialController@printgroups');
 
-    Route::post('tokenplus', 'OrdenController@tokenplus');
-    Route::post('tokenminus', 'OrdenController@tokenminus');
+    Route::post('tokenplus', 'Publico\OrdenController@tokenplus');
+    Route::post('tokenminus', 'Publico\OrdenController@tokenminus');
 
 
     Route::get('/rooms', function () {
@@ -421,18 +415,18 @@ Route::group(['middleware' => 'usuarios'], function () {
     Route::put('actualizar-tarjeta', 'TarjetaController@update');
     Route::delete('eliminar-tarjeta', 'TarjetaController@destroy');
 
-    Route::put('cancelar-orden', 'OrdenController@update');
+    Route::put('cancelar-orden', 'Publico\OrdenController@update');
 
 
-    Route::post('cargartarjeta', 'OrdenController@cargartarjeta');
+    Route::post('cargartarjeta', 'Publico\OrdenController@cargartarjeta');
 
-    Route::post('cargo', 'OrdenController@cargo');
+    Route::post('cargo', 'Publico\OrdenController@cargo');
 
-    Route::get('/recibo/{id}', 'OrdenController@receipt');
+    Route::get('/recibo/{id}', 'Publico\OrdenController@receipt');
 
-    Route::get('/completa', 'OrdenController@complete');
-    Route::get('/reservada', 'OrdenController@reservada');
-    Route::get('/probarcomplete', 'OrdenController@probarcomplete');
+    Route::get('/completa', 'Publico\OrdenController@complete');
+    Route::get('/reservada', 'Publico\OrdenController@reservada');
+    Route::get('/probarcomplete', 'Publico\OrdenController@probarcomplete');
 
     Route::post('rate', 'RatingController@store');
 
@@ -457,7 +451,7 @@ Route::group(['middleware' => 'instructores'], function () {
     Route::post('planear-clase', 'PlanController@store');
     Route::put('planear-clase', 'PlanController@update');
 
-    Route::put('terminar-orden', 'OrdenController@terminar');
+    Route::put('terminar-orden', 'Publico\OrdenController@terminar');
 
     Route::post('agregar-libre', 'ClaseController@libre');
     Route::delete('eliminar-libre', 'ClaseController@destroylibre');
