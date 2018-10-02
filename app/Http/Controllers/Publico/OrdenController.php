@@ -860,17 +860,23 @@ class OrdenController extends Controller
     public function tokenplus(Request $request)
     {
         $user = User::find($request->user_id);
-        $particular = PaqueteComprado::where('user_id', $user->id)->where('tipo', 'A domicilio')->orderBy('expiracion', 'desc')->first();
-        $residencial = PaqueteComprado::where('user_id', $user->id)->where('tipo', 'En condominio')->orderBy('expiracion', 'desc')->first();
-        if ($request->tipo == "En condominio" && $residencial) {
-            $residencial->disponibles = $residencial->disponibles + $request->tokens;
+        if ($request->tipo == "En condominio") {
+	        $residencial= new PaqueteComprado();
+	        $residencial->user_id = $user->id;
+	        $residencial->tipo = "En condominio";
+	        $residencial->comentario = $request->comentario;
+	        $residencial->disponibles = $residencial->disponibles + $request->tokens;
             $fecha = $residencial->expiracion;
             $nuevafecha = strtotime('+1 day', strtotime($fecha));
             $residencial->expiracion = date('Y-m-d', $nuevafecha);
             $residencial->save();
             Session::flash('mensaje', 'Token añadido.');
             Session::flash('class', 'success');
-        } elseif ($request->tipo == "A domicilio" && $particular) {
+        } elseif ($request->tipo == "A domicilio") {
+	        $particular= new PaqueteComprado();
+	        $particular->tipo = "A domicilio";
+	        $particular->user_id = $user->id;
+	        $particular->comentario = $request->comentario;
             $particular->disponibles = $particular->disponibles + $request->tokens;
             $fecha = $particular->expiracion;
             $nuevafecha = strtotime('+1 day', strtotime($fecha));

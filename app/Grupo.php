@@ -21,7 +21,7 @@ class Grupo extends Model
 		return $this->belongsTo('App\Room');
 	}
 	public function coach(){
-		return $this->belongsTo('App\User');
+		return $this->hasOne('App\User','id','user_id');
 	}
 	public function clase(){
 		return $this->belongsTo('App\Clase');

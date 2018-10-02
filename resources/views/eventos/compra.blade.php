@@ -27,18 +27,15 @@
             <div class="cart-header">
                 <div class="row">
                     <div class="col-xs-3 col-sm-1  col-md-1">
-                        <h1 class="title"><strong class="numofclass">{{$paquete->num_clases}}</strong></h1>
+                        <h1 class="title"><strong class="numofclass">1</strong></h1>
                     </div>
-                    <div class="col-xs-9 col-sm-4 col-md-4">
-                        <h1 class="title"> CLASES {{$paquete->tipo}}<strong class="numofclass">&nbsp;</strong></h1>
+                    <div class="col-xs-9 col-sm-4 col-md-6">
+                        <h1 class="title"> Evento<strong class="numofclass">&nbsp;</strong></h1>
+                        <small>{{$evento->nombre}}</small>
                     </div>
                     <div class="col-xs-3 col-sm-1 col-sm-offset-1 col-md-1 col-md-offset-1">
                         <h1 class="title"><strong
-                                    class="numofclass">&nbsp;</strong><strong>${{$paquete->precio}}</strong></h1>
-                    </div>
-                    <div class="col-xs-9 col-sm-5 col-md-5 text-right">
-                        <h1 class="title"><strong class="numofclass">&nbsp;</strong>Expiran en {{$paquete->dias}} días
-                        </h1>
+                                    class="numofclass">&nbsp;</strong><strong>${{$evento->precio}}</strong></h1>
                     </div>
                 </div>
             </div>
@@ -47,59 +44,10 @@
 
     <section class="container-bootstrap">
         <div class="row">
-            <div class="col-sm-12">
-				<?php $descuento = Cookie::get( 'descuentofc' );
-				$cuponera = App\Cuponera::find( $descuento );
-				?>
-                @if($descuento)
-                    <div class="collapse in" id="carrito">
-                        <div class="">
-                            <div class="panel-body">
-
-
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <h4 class="product-name"><strong>{{ $cuponera->descripcion }}</strong></h4>
-                                    </div>
-                                    <div class="col-xs-8">
-                                        <div class="col-xs-10 text-right gotham2">
-                                            <h6><strong>- ${{ $cuponera->monto }} <span
-                                                            class="text-muted"></span></strong></h6>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <hr>
-
-                            </div>
-                        </div>
-                    </div>
-                @endif
-
-            </div>
-            <p>&nbsp;</p>
-            @if(!$descuento)
-                <div class="">
-                    <div class="col-sm-6 col-sm-offset-3">
-                        <div class="coupon">
-
-                            <form action="{{url('descuento')}}" method="POST">
-                                {!! csrf_field() !!}
-                                <input class="" type="text" name="codigo" size="20" value=""
-                                       placeholder="Aplicar código de descuento" required>
-                                <button type="submit" class="applyCoupon"><i class="fa fa-arrow-right"
-                                                                             aria-hidden="true"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            @endif
-            <p>&nbsp;</p>
-
-            <form action="{{url('cargo')}}" method="POST" id="payment-form">
+            <form action="{{url('eventos/pagar')}}" method="POST" id="payment-form">
                 <input id="tokencsrf" type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="hidden" value="{{$paquete->id}}" name="paquete"/>
+                <input type="hidden" value="{{$evento->id}}" name="evento_id"/>
+                <input type="hidden" value="{{$evento->precio}}" name="precio"/>
                 <input type="hidden" id="token_id" name="token_id"/>
                 <div class="">
                     <div class="col-sm-6 col-sm-offset-3">

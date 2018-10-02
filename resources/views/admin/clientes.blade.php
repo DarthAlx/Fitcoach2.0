@@ -52,9 +52,10 @@
                                         <td>{{$usuario->created_at}}</td>
                                         <td style="cursor: pointer;" data-toggle="modal"
                                             data-target="#compras{{$usuario->id}}">{{$usuario->ordenes->count()}}</td>
-                                        <td>
+                                        <td style="font-size: x-small">
                                             Utilizados:{{$usuario->paquetesUsados()}}<br/>
-                                            Disponibles: {{$usuario->paquetesDisponibles()}}<br/>
+                                            Disponibles Domicilio: {{$usuario->paquetesDisponiblesDomicilio()}}<br/>
+                                            Disponibles Condominio: {{$usuario->paquetesDisponiblesCondominio()}}<br/>
                                             Por vencer: {{$usuario->paquetesporVencer()}}<br/>
                                             Vencidos: {{$usuario->paquetesVencidos()}}
                                         </td>
@@ -126,36 +127,36 @@
                             <div>
                                 @if(!$usuario->paquetes->isEmpty())
                                     <h4>Historial de compras</h4>
-                                    <?php
-                                    $user = $usuario;
-                                    $particulares = App\PaqueteComprado::where('user_id', $user->id)->where('tipo', 'A domicilio')->where('disponibles', '<>', 0)->orderBy('expiracion', 'asc')->get();
-                                    $residenciales = App\PaqueteComprado::where('user_id', $user->id)->where('tipo', 'En condominio')->where('disponibles', '<>', 0)->orderBy('expiracion', 'asc')->get();
-                                    $partdisp = 0;
-                                    $resdisp = 0;
-                                    $partexp = 0;
-                                    $resexp = 0;
-                                    $today = strtotime(date('Y-m-d'));
+									<?php
+									$user = $usuario;
+									$particulares = App\PaqueteComprado::where( 'user_id', $user->id )->where( 'tipo', 'A domicilio' )->where( 'disponibles', '<>', 0 )->orderBy( 'expiracion', 'asc' )->get();
+									$residenciales = App\PaqueteComprado::where( 'user_id', $user->id )->where( 'tipo', 'En condominio' )->where( 'disponibles', '<>', 0 )->orderBy( 'expiracion', 'asc' )->get();
+									$partdisp = 0;
+									$resdisp = 0;
+									$partexp = 0;
+									$resexp = 0;
+									$today = strtotime( date( 'Y-m-d' ) );
 
-                                    foreach ($particulares as $pd) {
+									foreach ( $particulares as $pd ) {
 
-                                        $expire = strtotime($pd->expiracion);
-                                        if ($expire >= $today) {
-                                            $partdisp = $partdisp + $pd->disponibles;
-                                        } else {
-                                            $partexp = $partexp + $pd->disponibles;
-                                        }
-                                    }
+										$expire = strtotime( $pd->expiracion );
+										if ( $expire >= $today ) {
+											$partdisp = $partdisp + $pd->disponibles;
+										} else {
+											$partexp = $partexp + $pd->disponibles;
+										}
+									}
 
-                                    foreach ($residenciales as $rd) {
+									foreach ( $residenciales as $rd ) {
 
-                                        $expire = strtotime($rd->expiracion);
-                                        if ($expire >= $today) {
-                                            $resdisp = $resdisp + $rd->disponibles;
-                                        } else {
-                                            $resexp = $resexp + $rd->disponibles;
-                                        }
-                                    }
-                                    ?>
+										$expire = strtotime( $rd->expiracion );
+										if ( $expire >= $today ) {
+											$resdisp = $resdisp + $rd->disponibles;
+										} else {
+											$resexp = $resexp + $rd->disponibles;
+										}
+									}
+									?>
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead>
@@ -175,7 +176,10 @@
                                                     <td>{{$paquete->tipo}}</td>
                                                     <td>{{$paquete->fecha}}</td>
                                                     <td>{{$paquete->expiracion}}</td>
-                                                    <td>${{$paquete->orden->cantidad-$paquete->orden->descuento}}MXN
+                                                    <td>
+                                                        @if(isset($paquete->orden))
+                                                            ${{$paquete->orden->cantidad-$paquete->orden->descuento}}MXN
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -222,6 +226,9 @@
                                     </select>
                                     <input type="number" name="tokens" class="form-control" value=""
                                            placeholder="Tokens" required>
+                                    <textarea class="form-control" name="comentario">
+
+                                    </textarea>
 
                                     <button class="btn btn-success" type="submit"
                                             style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
@@ -258,7 +265,9 @@
                                     </select>
                                     <input type="number" name="tokens" class="form-control" value=""
                                            placeholder="Tokens" required>
+                                    <textarea class="form-control" name="comentario">
 
+                                    </textarea>
                                     <button class="btn btn-success" type="submit"
                                             style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
                                         Quitar

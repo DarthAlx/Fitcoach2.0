@@ -13,9 +13,11 @@ function fnFormatDetails ( oTable, nTr )
 $(document).ready(function() {
 
     $('#dynamic-table').dataTable( {
+        stateSave: true,
         "aaSorting": [[ 0, "desc" ]]
     } );
     $('#dynamic-table2').dataTable( {
+        stateSave: true,
         "aaSorting": [[ 0, "desc" ]]
     } );
 
@@ -40,6 +42,7 @@ $(document).ready(function() {
      * Initialse DataTables, with no sorting on the 'details' column
      */
     var oTable = $('#hidden-table-info').dataTable( {
+        stateSave: true,
         "aoColumnDefs": [
             { "bSortable": false, "aTargets": [ 0 ] }
         ],

@@ -4,11 +4,37 @@
         <div class="topclear">
             &nbsp;
         </div>
+        <div class="row profile">
+            <div class="col-sm-12">
+                @include('holders.notificaciones')
+            </div>
+        </div>
         <div class="">
             <div class="container-bootstrap-fluid">
                 <div class="row">
                     <div class="col-sm-6">
                         <h2>Bienvenido a <span class="nombre">{{$condominio->identificador}}</span></h2>
+                    </div>
+                    <div class="col-sm-6">
+                        @if(Auth::user()!=null && Auth::user()->condominio_id == $condominio->id)
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-4">
+                                    <a class="btn btn-success btn-block" data-toggle="modal" data-target="#admin-condominios-eventos">
+                                        Editar eventos
+                                    </a>
+                                </div>
+                                <div class="col-lg-4 col-sm-4">
+                                    <a class="btn btn-success btn-block" data-toggle="modal" data-target="#admin-condominios-grupos">
+                                        Editar clases
+                                    </a>
+                                </div>
+                                <div class="col-lg-4 col-sm-4">
+                                    <button class="btn btn-success btn-block" type="submit">
+                                        Reportes
+                                    </button>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="row">
@@ -115,6 +141,12 @@
     @include('condominio.partials.clases')
     @include('condominio.partials.clases_room')
     @include('condominio.partials.eventos')
+    @include('admin_condominio.partials.eventos')
+    @include('admin_condominio.partials.crear_evento')
+    @include('admin_condominio.partials.editar_evento')
+    @include('admin_condominio.partials.grupos')
+    @include('admin_condominio.partials.crear_grupo')
+    @include('admin_condominio.partials.horarios')
     <script type="text/javascript">
         clasesseleccionadas = 0;
 
@@ -153,6 +185,40 @@
             $('.faselect').addClass('fa-square-o');
             document.getElementsByClassName('carritocheck').checked = false;
         }
+    </script>
+    <script type="application/javascript">
+        $('.btn-crear-grupo').click(function () {
+            $('#admin-condominios-grupos').modal('hide')
+            setTimeout(function () {
+                $('#crear-grupo').modal('show');
+            },500)
+            //
+        })
+        $('.ver-grupo').click(function () {
+            var id = $(this).attr("data-id");
+            $('#admin-condominios-grupos').modal('hide')
+            setTimeout(function () {
+                $('#admin-condominios-grupos-ver'+id).modal('show');
+            },500)
+            //
+        })
+        $('.btn-crear-horario').click(function () {
+            var id = $(this).attr("data-id");
+            $('#admin-condominios-grupos-ver'+id).modal('hide');
+            setTimeout(function () {
+                $('#admin-condominios-grupos-crear'+id).modal('show');
+            },500)
+            //
+        })
+        $('.btn-actualizar-grupo').click(function () {
+            var id = $(this).attr("data-id");
+            $('#admin-condominios-grupos-ver'+id).modal('hide');
+            setTimeout(function () {
+                $('#admin-condominios-grupos-actualizar'+id).modal('show');
+            },500)
+            //
+        })
+
     </script>
     @foreach ($condominio->residenciales as $residencial)
         @if ($residencial->tipo=="Residencial")

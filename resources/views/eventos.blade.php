@@ -98,20 +98,13 @@
                                         <div class="title pull-right" style="    line-height: 1;">
                                             ${{$evento->precio}}<br>
                                         </div>
-
-                                        <form action="{{url('carrito')}}" method="post">
-                                            {!! csrf_field() !!}
-                                            <input type="hidden" name="evento_id" value="{{$evento->id}}">
-                                            <input type="hidden" name="tipo" value="Evento">
-                                            <div class="row">
-                                                <div class="col-sm-8 col-sm-offset-4">
-                                                    <input type="submit" class="btn btn-success btn-lg" name=""
-                                                           value="Reservar">
-                                                </div>
+                                        <div class="row">
+                                            <div class="col-sm-8 col-sm-offset-4">
+                                                <a href="{{url('eventos/comprar?eventoId='.$evento->id)}}" type="submit" class="btn btn-success btn-lg" name="" >
+                                                    Reservar
+                                                </a>
                                             </div>
-                                        </form>
-
-
+                                        </div>
                                     </div>
                                 </div>
                                 <p>&nbsp;</p>
