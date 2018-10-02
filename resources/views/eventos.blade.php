@@ -83,12 +83,12 @@
                                     <div class="col-md-8 col-sm-12 sidebar">
                                         <div class="row">
                                             <div class="col-sm-3	hidden-xs hidden-sm">
-                                                <img src="{{ url('uploads/clases') }}/{{ $evento->imagenevento }}"
-                                                     alt="{{$evento->nombreevento}}" class="img-responsive hidden-xs">
+                                                <img src="{{ url('uploads/clases') }}/{{ $evento->imagen }}"
+                                                     alt="{{$evento->nombre}}" class="img-responsive hidden-xs">
                                             </div>
                                             <div class="col-sm-9">
                                                 <div class="title" style="    line-height: 1;">
-                                                    {{$evento->nombreevento}}
+                                                    {{$evento->nombre}}
 
                                                 </div>
                                             </div>
