@@ -32,7 +32,11 @@ class Administradores
         foreach ($modulos as $modulo) {
           $modulosarray[]=$modulo->nombre;
         }
-        $permisos=explode(",",$usuario->detalles->permisos);
+        if(isset($usuario->detalles)){
+	        $permisos=explode(",",$usuario->detalles->permisos);
+        }else{
+        	$permisos = [];
+        }
         $urlactual = str_replace(url()."/", "", $request->url());
         if (in_array($urlactual, $modulosarray)) {
           if (in_array($urlactual, $permisos)||$usuario->role=="superadmin") {
