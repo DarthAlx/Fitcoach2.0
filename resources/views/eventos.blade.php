@@ -64,7 +64,6 @@
 @section('modals')
     @if ($eventos)
         @foreach ($eventos as $evento)
-
             <div class="modal fade" id="evento{{$evento->id}}" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">

@@ -11,7 +11,7 @@ class Reservacion extends Model
 	protected $fillable = ['horario_id', 'grupo_id', 'user_id','coach_id','nombre', 'tipo','fecha','hora', 'direccion', 'aforo', 'status','metadata','tokens','comentarios'];
 
 	public function user(){
-		return $this->belongsTo('App\User');
+		return $this->hasOne('App\User','id','user_id');
 	}
 	public function horario(){
 		return $this->belongsTo('App\Horario');

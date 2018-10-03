@@ -816,9 +816,7 @@ class OrdenController extends Controller
                 $guardar->horario_id = $producto['metadata']['asociado'];
                 $grupo = Horario::find($producto['metadata']['asociado']);
                 $guardar->nombre = $grupo->clase->nombre;
-                if ($grupo->tipo == "Evento") {
-                    $guardar->direccion = $grupo->direccionevento;
-                } elseif ($grupo->tipo == "En condominio") {
+                if ($grupo->tipo == "En condominio") {
                     $guardar->direccion = $grupo->grupo->condominio->identificador . ". " . $grupo->grupo->condominio->direccion;
                 }
             }

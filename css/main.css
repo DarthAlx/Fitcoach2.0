@@ -1082,3 +1082,12 @@ border: 0 !important;
     color: #000000 !important;
     font-weight: bold;
 }
+
+.icon-classes-image{
+    width: 27px;
+    height: 27px;
+    padding: 6px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 50%;
+}

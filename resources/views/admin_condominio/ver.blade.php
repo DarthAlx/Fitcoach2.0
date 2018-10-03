@@ -73,7 +73,7 @@
                                     <p class="condominios-clases-text">{{$horario->hora}}</p>
                                 </div>
                                 <div class="col-lg-2">
-                                    <p class="condominios-clases-text">@if(isset($horario->tokens))
+                                    <p class="condominios-clases-text">@if(isset($horario->tokens) && $horario->tokens>0)
                                             {{$horario->tokens}}
                                         @else
                                             <span>Gratis</span>
@@ -81,6 +81,15 @@
                                     </p>
                                 </div>
                                 <div class="col-lg-2">
+                                    <i class="icon-classes-image fa fa-comments"></i>
+                                    <a data-toggle="modal" data-target="#admin-condominios-horarios-ver{{$horario->id}}">
+                                        <i class="icon-classes-image fa fa-list-ul"></i>
+                                    </a>
+                                    <a data-toggle="modal" data-target="#">
+                                        <i class="icon-classes-image fa fa-eye"></i>
+                                    </a>
+                                </div>
+                                {{--<div class="col-lg-2">
                                     @if($hour>$horario->hora)
                                         <button class="btn" style="background-color: #999; color:#fff">
                                             Impartida
@@ -102,7 +111,7 @@
                                         </form>
 
                                     @endif
-                                </div>
+                                </div>--}}
                             </div>
                         @endforeach
                         <div class="row condominios-clases">
@@ -147,6 +156,7 @@
     @include('admin_condominio.partials.grupos')
     @include('admin_condominio.partials.crear_grupo')
     @include('admin_condominio.partials.horarios')
+    @include('admin_condominio.partials.reservaciones')
     <script type="text/javascript">
         clasesseleccionadas = 0;
 
