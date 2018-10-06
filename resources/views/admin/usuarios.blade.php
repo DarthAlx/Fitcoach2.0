@@ -146,8 +146,6 @@
                                 <option value="Masculino">Masculino</option>
                                 <option value="Femenino">Femenino</option>
                             </select>
-
-
                             <div class="form-group permisoscont">
                                 <label class="control-label">Permisos</label>
                                 @foreach ($modulos as $modulo)
@@ -160,37 +158,6 @@
                                     </div>
                                 @endforeach
                             </div>
-                            <div class="form-group" id="editor" style="display:none">
-                                <label class="control-label">Coordinador condominio</label>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type='checkbox' name="editor" value="1"> Habilitado
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">Administrador condominio</label>
-                                <select class="form-control" name="condominio_id" value="{{ old('condomio_id') }}" required>
-                                    <option value="" selected hidden>Condominio</option>
-                                    @foreach($condominios as $condominio)
-                                        <option value="{{$condominio->id}}">{{ $condominio->identificador }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <script>
-                                $(document).ready(function () {
-
-                                    $('#permisocondominios').change(function () {
-                                        if (this.checked) {
-                                            $('#editor').show();
-                                        }
-                                        else {
-                                            $('#editor').hide();
-                                        }
-
-                                    });
-                                });
-                            </script>
                             <input type="password" class="form-control" name="password" placeholder="Contraseña"
                                    required>
                             <input type="password" class="form-control" name="password_confirmation"

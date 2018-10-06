@@ -62,7 +62,6 @@
                                 <th>Status</th>
                                 <th>Aforo</th>
                                 <th>Abono</th>
-                                <th width="100">Abono Hecho</th>
                                 <th>Acciones</th>
                             </tr>
                             </thead>
@@ -100,20 +99,12 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    @if($clase->abono && !$clase->abono->realizado)
+                                                    @if($clase->abono)
                                                         ${{$clase->abono->abono}} MXN
                                                     @else
                                                         -
                                                     @endif
                                                 </td>
-                                                <td>
-                                                    @if($clase->abono && $clase->abono->realizado)
-                                                        ${{$clase->abono->abono}} MXN
-                                                    @else
-                                                        -
-                                                    @endif
-                                                </td>
-
                                                 <td>
                                                     <button type="button" class="btn btn-default" name="button"
                                                             data-toggle="modal" data-target="#clase{{$clase->id}}">Clase

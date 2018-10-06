@@ -99,89 +99,42 @@
                         <div class="list-group">
                             @if (count($proximas)>0)
                                 @foreach ($proximas as $proxima)
-                                    @if ($proxima->tipo=="En condominio")
-                                        <div class="list-group-item row">
-                                            <div class="col-xs-2">
-                                                <strong>{{$proxima->nombre}}</strong>
-                                            </div>
-                                            <div class="col-xs-2">
-                                                {{$proxima->horario->grupo->condominio->identificador}}
-                                            </div>
-                                            <div class="col-xs-3">
-                                                {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
-                                            </div>
-                                            <div class="col-xs-2">
-                                                {{$proxima->horario->grupo->room->nombre}}
-                                            </div>
-                                            <div class="col-xs-3">
-                                                @if($proxima->status=='COMENZADA')
-                                                    <div class="pull-right" data-toggle="modal"
-                                                         data-target="#terminar{{$proxima->id}}">
-                                                        <a href="#"><i class="fa fa-check icopopup"></i> &nbsp;</a>
-                                                    </div>
-                                                @endif
+                                    <div class="list-group-item row">
+                                        <div class="col-xs-2">
+                                            <strong>{{$proxima->nombre}}</strong>
+                                        </div>
+                                        <div class="col-xs-2">
+                                            {{$proxima->direccion}}
+                                        </div>
+                                        <div class="col-xs-3">
+                                            {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
+                                        </div>
+                                        <div class="col-xs-2">
+                                            {{$proxima->room}}
+                                        </div>
+                                        <div class="col-xs-3">
+                                            @if($proxima->estado=='COMENZADA')
                                                 <div class="pull-right" data-toggle="modal"
-                                                     data-target="#plan{{$proxima->id}}"><a href="#"><i
-                                                                class="fa fa-check-square-o icopopup"></i>
-                                                        &nbsp;</a></div>
-                                                <div class="pull-right">
-                                                    <a href="{{url('/listainscritos')}}/{{$proxima->horario->id}}"
-                                                       target="_blank"><i class="fa fa-list icopopup"></i>
-                                                    </a>
+                                                     data-target="#terminar{{$proxima->id}}">
+                                                    <a href="#"><i class="fa fa-check icopopup"></i> &nbsp;</a>
                                                 </div>
-                                                <div class="pull-right" data-toggle="modal"
-                                                     data-target="#direccion{{$proxima->id}}"><a href="#"><i
-                                                                class="fa fa-map-marker icopopup"></i> &nbsp;</a>
-                                                </div>
+                                            @endif
+                                            <div class="pull-right" data-toggle="modal"
+                                                 data-target="#plan{{$proxima->id}}"><a href="#"><i
+                                                            class="fa fa-check-square-o icopopup"></i>
+                                                    &nbsp;</a></div>
+                                            <div class="pull-right">
+                                                <a href="{{url('/listainscritos')}}/{{$proxima->id}}?tipo={{$proxima->tipo}}"
+                                                   target="_blank"><i class="fa fa-list icopopup"></i>
+                                                </a>
                                             </div>
+                                            <div class="pull-right" data-toggle="modal"
+                                                 data-target="#direccion{{$proxima->id}}"><a href="#"><i
+                                                            class="fa fa-map-marker icopopup"></i> &nbsp;</a>
+                                            </div>
+                                        </div>
 
-                                        </div>
-                                    @elseif ($proxima->tipo=="A domicilio")
-                                        <div class="list-group-item row">
-                                            <div class="col-xs-2">
-                                                <strong>{{$proxima->nombre}}</strong>
-                                            </div>
-                                            <div class="col-xs-2">
-                                                <?php $nombre = explode(" ", $proxima->user->name);?>
-                                                <span data-toggle="tooltip" data-placement="bottom"
-                                                      title="{{$proxima->user->name}}">{{ucfirst($nombre[0])}}</span>
-                                            </div>
-                                            <div class="col-xs-3">
-                                                {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
-                                            </div>
-                                            <div class="col-xs-2">
-                                                @if ($proxima->tipo=="A domicilio")
-                                                    {{$proxima->horario->zona->identificador}}
-                                                @endif
-                                            </div>
-                                            <div class="col-xs-3">
-                                                @if($proxima->status=='COMENZADA')
-                                                    <div class="pull-right" data-toggle="modal"
-                                                         data-target="#terminar{{$proxima->id}}">
-                                                        <a href="#"><i class="fa fa-check icopopup"></i> &nbsp;</a>
-                                                    </div>
-                                                @endif
-                                                @if($proxima->active && $proxima->status!='COMENZADA')
-                                                    <div class="pull-right">
-                                                        <a href="/iniciar/{{$proxima->id}}"><i
-                                                                    class="fa fa-play icopopup"></i> &nbsp</a>
-                                                    </div>
-                                                @elseif(!$proxima->active)
-                                                    <div class="pull-right" data-toggle="modal"
-                                                         data-target="#plan{{$proxima->id}}"><a href="#"><i
-                                                                    class="fa fa-check-square-o icopopup"></i>
-                                                            &nbsp;</a>
-                                                    </div>
-                                                @endif
-                                                <div class="pull-right" data-toggle="modal"
-                                                     data-target="#telefono{{$proxima->id}}"><a href="#"><i
-                                                                class="fa fa-phone icopopup"></i> &nbsp;</a></div>
-                                                <div class="pull-right" data-toggle="modal"
-                                                     data-target="#direccion{{$proxima->id}}"><a href="#"><i
-                                                                class="fa fa-map-marker icopopup"></i> &nbsp;</a></div>
-                                            </div>
-                                        </div>
-                                    @endif
+                                    </div>
                                 @endforeach
                             @else
                                 <p class="text-center">No has dado ninguna clase.</p>
@@ -368,22 +321,21 @@
                     <div class="list-group">
                         @if(count($proximas)>0)
                             @foreach($proximas as $proxima)
-                                @if ($proxima->tipo=="En condominio")
                                     <div class="list-group-item row">
                                         <div class="col-xs-2">
                                             <strong>{{$proxima->nombre}}</strong>
                                         </div>
                                         <div class="col-xs-2">
-                                            {{$proxima->horario->grupo->condominio->identificador}}
+                                            {{$proxima->direccion}}
                                         </div>
                                         <div class="col-xs-3">
                                             {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
                                         </div>
                                         <div class="col-xs-2">
-                                            {{$proxima->horario->grupo->room->nombre}}
+                                            {{$proxima->room}}
                                         </div>
                                         <div class="col-xs-3">
-                                            @if($proxima->status=='COMENZADA')
+                                            @if($proxima->estado=='COMENZADA')
                                                 <div class="pull-right" data-toggle="modal"
                                                      data-target="#terminar{{$proxima->id}}">
                                                     <a href="#"><i class="fa fa-check icopopup"></i></a>
@@ -394,8 +346,8 @@
                                                 <a href="#"><i class="fa fa-check-square-o icopopup"></i> &nbsp;</a>
                                             </div>
                                             @if(!$proxima->active)
-                                                <div class="pull-right"><a
-                                                            href="{{url('/listainscritos')}}/{{$proxima->horario->id}}"
+                                                <div class="pull-right">
+                                                    <a href="{{url('/listainscritos')}}/{{$proxima->id}}?tipo={{$proxima->tipo}}"
                                                             target="_blank"><i class="fa fa-list icopopup"></i>
                                                         &nbsp;</a>
                                                 </div>
@@ -406,53 +358,6 @@
                                         </div>
 
                                     </div>
-                                @elseif ($proxima->tipo=="A domicilio")
-                                    <div class="list-group-item row">
-                                        <div class="col-xs-2">
-                                            <strong>{{$proxima->nombre}}</strong>
-                                        </div>
-                                        <div class="col-xs-2">
-
-                                            <?php $nombre = explode(" ", $proxima->user->name);?>
-                                            <span data-toggle="tooltip" data-placement="bottom"
-                                                  title="{{$proxima->user->name}}">{{ucfirst($nombre[0])}}</span>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
-                                        </div>
-                                        <div class="col-xs-2">
-                                            @if ($proxima->tipo=="A domicilio")
-                                                {{$proxima->horario->zona->identificador}}
-                                            @endif
-                                        </div>
-                                        <div class="col-xs-3">
-                                            @if($proxima->status=='COMENZADA')
-                                                <div class="pull-right" data-toggle="modal"
-                                                     data-target="#terminar{{$proxima->id}}">
-                                                    <a href="#"><i class="fa fa-check icopopup"></i> &nbsp</a>
-                                                </div>
-                                            @endif
-                                            @if($proxima->active && $proxima->status!='COMENZADA')
-                                                <div class="pull-right">
-                                                    <a href="/iniciar/{{$proxima->id}}"><i
-                                                                class="fa fa-play icopopup"></i> &nbsp</a>
-                                                </div>
-                                            @elseif(!$proxima->active)
-                                                <div class="pull-right" data-toggle="modal"
-                                                     data-target="#plan{{$proxima->id}}">
-                                                    <a href="#"><i class="fa fa-list icopopup"></i> &nbsp</a>
-                                                </div>
-                                            @endif
-                                            <div class="pull-right" data-toggle="modal"
-                                                 data-target="#telefono{{$proxima->id}}">
-                                                <a href="#"><i class="fa fa-phone icopopup"></i> &nbsp;</a></div>
-                                            <div class="pull-right" data-toggle="modal"
-                                                 data-target="#direccion{{$proxima->id}}"><a href="#"><i
-                                                            class="fa fa-map-marker icopopup"></i> &nbsp;</a></div>
-                                        </div>
-
-                                    </div>
-                                @endif
                             @endforeach
                         @else
                             <p class="text-center">No has dado ninguna clase.</p>
@@ -571,6 +476,8 @@
 @endsection
 
 @section('modals')
+    @include('partials.planes')
+
     <div class="modal fade" id="datosdeusuario" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -1054,314 +961,6 @@
     @endif
 
 
-
-
-
-    <?php
-    $proximas = App\Reservacion::where('coach_id', $user->id)
-        ->where('status', 'PROXIMA')
-        ->orWhere('status','COMENZADA')->orderBy('created_at', 'asc')->get();
-
-
-    if (!$proximas->isEmpty()) {
-    date_default_timezone_set('America/Mexico_City');
-    foreach ($proximas as $proxima) { ?>
-    <?php
-    $cliente = App\User::find($proxima->user_id);
-    if ($proxima->tipo == "En condominio") {
-        $dire = $proxima->direccion;
-    } else {
-        $direccion = App\Direccion::find($proxima->direccion);
-        $dire = $direccion->calle . " " .
-            $direccion->numero_ext . " " .
-            $direccion->numero_int . ", " .
-            $direccion->colonia . ", " .
-            $direccion->municipio_del . ", " .
-            $direccion->cp . ", " .
-            $direccion->estado;
-    }
-    $fecha = date_create($proxima->fecha);
-    setlocale(LC_TIME, "es-ES");
-
-    $horadeclase = new DateTime($proxima->fecha . ' ' . $proxima->hora);
-    $horaactual = new DateTime("now");
-    $dteDiff = $horaactual->diff($horadeclase);
-
-    $dias = intval($dteDiff->format("%R%d")) * 24;
-    $horas = intval($dteDiff->format("%R%h"));
-    $horastotales = $dias + $horas;
-
-
-    ?>
-
-
-
-
-    <div class="modal fade" id="plan{{$proxima->id}}" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-
-                <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img
-                                src="{{url('/images/cross.svg')}}" alt=""></button>
-                    <div class="container-bootstrap" style="width: 100%;">
-
-
-                        <h4>Planear clase</h4>
-                        <form action="{{ url('/planear-clase') }}" method="post" enctype="multipart/form-data">
-                            @if($proxima->plan)
-                                {{ method_field('PUT') }}
-                            @endif
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-
-                            @if(!$proxima->plan)
-
-                                <label>Fase inicial</label>
-                                <textarea name="inicio" class="form-control" required></textarea>
-                                <label>Minutos</label>
-                                <input type="number" class="form-control" name="minutosinicio" required>
-
-                                <label>Fase medular</label>
-                                <textarea name="medular" class="form-control" required></textarea>
-                                <label>Minutos</label>
-                                <input type="number" class="form-control" name="minutosmedular" required>
-
-                                <label>Fase final</label>
-                                <textarea name="final" class="form-control" required></textarea>
-                                <label>Minutos</label>
-                                <input type="number" class="form-control" name="minutosfinal" required>
-
-                                <label>Comentarios</label>
-                                <textarea name="comentarios" class="form-control" required></textarea>
-                                <input type="hidden" name="reservacion_id" value="{{$proxima->id}}">
-
-
-
-                            @else
-                                {{$proxima->plan}}
-
-                                <label>Fase inicial</label>
-                                <textarea name="inicio" class="form-control"
-                                          required>{{$proxima->plan->inicio}}</textarea>
-                                <label>Minutos</label>
-                                <input type="number" class="form-control" name="minutosinicio"
-                                       value="{{$proxima->plan->minutosinicio}}" required>
-
-                                <label>Fase medular</label>
-                                <textarea name="medular" class="form-control"
-                                          required>{{$proxima->plan->medular}}</textarea>
-                                <label>Minutos</label>
-                                <input type="number" class="form-control" name="minutosmedular"
-                                       value="{{$proxima->plan->minutosmedular}}" required>
-
-                                <label>Fase final</label>
-                                <textarea name="final" class="form-control"
-                                          required>{{$proxima->plan->final}}</textarea>
-                                <label>Minutos</label>
-                                <input type="number" class="form-control" name="minutosfinal"
-                                       value="{{$proxima->plan->minutosfinal}}" required>
-
-                                <label>Comentarios</label>
-                                <textarea name="comentarios" class="form-control"
-                                          required>{{$proxima->plan->comentarios}}</textarea>
-                                <input type="hidden" name="reservacion_id" value="{{$proxima->id}}">
-
-                            @endif
-
-                            <button class="btn btn-success" type="submit"
-                                    style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
-                                Guardar
-                            </button>
-
-
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-    <div class="modal fade" id="direccion{{$proxima->id}}" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-
-                <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img
-                                src="{{url('/images/cross.svg')}}" alt=""></button>
-                    <div class="container-bootstrap" style="width: 100%;">
-                        <h4>Dirección</h4>
-                        <h2 class="text-center">Lugar: {{ $dire }}</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="telefono{{$proxima->id}}" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-
-                <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img
-                                src="{{url('/images/cross.svg')}}" alt=""></button>
-                    <div class="container-bootstrap" style="width: 100%;">
-                        <h4>Contacto telefónico</h4>
-                        <h2 class="text-center">Teléfono: {{ $proxima->user->tel }}</h2>
-                        <div class="text-center">
-                            <a href="tel:{{ $proxima->user->tel }}" class="btn btn-primary">Llamar</a>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="terminar{{$proxima->id}}" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-
-                <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img
-                                src="{{url('/images/cross.svg')}}" alt=""></button>
-                    <div class="container-bootstrap" style="width: 100%;">
-                        <div class="row">
-                            <div class="col-sm-12">
-
-                                <div class="gotham2">
-                                    <h2 class="text-center">Terminar {{$proxima->nombre}} {{$proxima->fecha}}
-                                        - {{$proxima->hora}}</h2>
-
-
-                                </div>
-                            </div>
-                            <div class="col-sm-12 text-center">
-                                <p>&nbsp;</p>
-
-                                <form class="" action="{{url('/terminar-orden')}}" method="post">
-                                    {!! csrf_field() !!}
-                                    {{ method_field('PUT') }}
-                                    <input type="hidden" name="revision" value="{{$proxima->id}}">
-                                    <input type="text" id="taforo{{$proxima->id}}" name="aforo" class="form-control"
-                                           placeholder="Aforo" style="display:none; width: 30%" required><br>
-
-                                    <button type="submit" id="tbotonmandar{{$proxima->id}}"
-                                            class="btn btn-primary btn-lg" name="button" style="display:none;">¿Mandar a
-                                        revisión?
-                                    </button>
-                                </form>
-                                <button class="btn btn-primary btn-lg" id="tbotonmandar2{{$proxima->id}}" name="button"
-                                        onclick="javascript: document.getElementById('tbotonmandar2{{$proxima->id}}').style.display='none'; document.getElementById('tbotonmandar{{$proxima->id}}').style.display='inline-block'; document.getElementById('taforo{{$proxima->id}}').style.display='inline-block'; ">
-                                    Terminar
-                                </button>
-
-
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal contraseña -->
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class="modal fade" id="proximas{{$proxima->id}}" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-
-                <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img
-                                src="{{url('/images/cross.svg')}}" alt=""></button>
-                    <div class="container-bootstrap" style="width: 100%;">
-                        <div class="row">
-                            <div class="col-sm-4 sidebar">
-                                <div class="text-center">
-                                    <h1>{{$proxima->nombre}}</h1>
-                                    <?php $nombre = explode(" ", $cliente->name);
-                                    if ($proxima->tipo == "En condominio") {
-                                        $clientesporclase = App\Reservacion::where('nombre', $proxima->nombre)->where('fecha', $proxima->fecha)->orderBy('nombre', 'asc')->get();
-
-                                        foreach ($clientesporclase as $clienteporclase) {
-                                            echo $clienteporclase->user->name . "<br>";
-                                        }
-                                    }else{
-                                    ?>
-                                    <h2>{{ucfirst($nombre[0])}}</h2>
-                                    <?php
-                                    }
-
-                                    ?>
-
-
-                                </div>
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="title ">
-                                    {{Ucfirst($proxima->tipo)}}
-                                </div>
-                                <div class="gotham2">
-                                    <h2>Fecha: {{$proxima->fecha}}</h2>
-                                    <h2>Hora: {{$proxima->hora}}</h2>
-                                    <h2>Lugar: {{ $dire }}</h2>
-                                    <h2>Teléfono: {{ $proxima->user->tel }}</h2>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 text-center">
-                                <p>&nbsp;</p>
-
-                                <form class="" action="{{url('/terminar-orden')}}" method="post">
-                                    {!! csrf_field() !!}
-                                    {{ method_field('PUT') }}
-                                    <input type="hidden" name="revision" value="{{$proxima->id}}">
-                                    <input type="text" id="aforo{{$proxima->id}}" name="aforo" class="form-control"
-                                           placeholder="Aforo" style="display:none; width: 30%" required><br>
-
-                                    <button type="submit" id="botonmandar{{$proxima->id}}"
-                                            class="btn btn-primary btn-lg" name="button" style="display:none;">¿Mandar a
-                                        revisión?
-                                    </button>
-                                </form>
-                                <button class="btn btn-primary btn-lg" id="botonmandar2{{$proxima->id}}" name="button"
-                                        onclick="javascript: document.getElementById('botonmandar2{{$proxima->id}}').style.display='none'; document.getElementById('botonmandar{{$proxima->id}}').style.display='inline-block'; document.getElementById('aforo{{$proxima->id}}').style.display='inline-block'; ">
-                                    Terminar
-                                </button>
-
-
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal contraseña -->
-    <?php } }?>
-
-
-
-
-
-
     <?php
 
     $pasadas = App\Reservacion::where('coach_id', $user->id)->where('status', '<>', 'PROXIMA')->orderBy('created_at', 'desc')->get();
@@ -1534,6 +1133,5 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal detalles user -->
-
 
 @endsection

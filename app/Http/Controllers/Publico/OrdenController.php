@@ -820,7 +820,7 @@ class OrdenController extends Controller
                     $guardar->direccion = $grupo->grupo->condominio->identificador . ". " . $grupo->grupo->condominio->direccion;
                 }
             }
-            if ($producto['metadata']['tipo'] == "Evento") {
+            elseif ($producto['metadata']['tipo'] == "Evento") {
                 $guardar->horario_id = 0;
                 $guardar->evento_id = $producto['metadata']['asociado'];
                 $guardar->nombre = $producto['name'];
