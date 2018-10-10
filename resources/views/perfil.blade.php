@@ -242,7 +242,7 @@
                     <p>&nbsp;</p>
                     <div id="proximas" class="listadeclases">
                         <div class="list-group">
-                            @if ($user->reservaciones && false)
+                            @if ($user->reservaciones)
                                 <?php
                                 $proximas = App\Reservacion::where('user_id', $user->id)->where('status', 'PROXIMA')->orderBy('fecha', 'desc')->get();
                                 if (!$proximas->isEmpty()) {
@@ -322,7 +322,7 @@
                     </div>
                     <div id="pasadas" class="listadeclases" style="display:none;">
                         <div class="list-group">
-                            @if ($user->reservaciones && false)
+                            @if ($user->reservaciones)
                                 <?php
                                 $pasadas = App\Reservacion::where('user_id', $user->id)->where('status', '<>', 'PROXIMA')->orderBy('fecha', 'desc')->get();
                                 if (!$pasadas->isEmpty()) {
@@ -512,7 +512,7 @@
                     <p>&nbsp;</p>
                     <div id="proximaslg" class="listadeclases">
                         <div class="list-group">
-                            @if ($user->reservaciones && false)
+                            @if ($user->reservaciones)
                                 <?php
                                 $proximas = App\Reservacion::where('user_id', $user->id)->where('status', 'PROXIMA')->orderBy('fecha', 'asc')->get();
                                 if (!$proximas->isEmpty()) {
@@ -585,7 +585,7 @@
                     </div>
                     <div id="pasadaslg" class="listadeclases" style="display:none;">
                         <div class="list-group">
-                            @if ($user->reservaciones && false)
+                            @if ($user->reservaciones)
                                 <?php
                                 $pasadas = App\Reservacion::where('user_id', $user->id)->where('status', '<>', 'PROXIMA')->orderBy('fecha', 'desc')->get();
                                 if (!$pasadas->isEmpty()) {

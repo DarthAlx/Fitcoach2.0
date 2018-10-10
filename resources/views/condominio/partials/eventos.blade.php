@@ -1,5 +1,5 @@
-@if (isset($eventos))
-    @foreach ($eventos as $evento)
+@if ($condominio->eventos)
+    @foreach ($condominio->eventos as $evento)
         <div class="modal fade" id="evento{{$evento->id}}" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -22,10 +22,10 @@
                                                  alt="{{$evento->nombre}}" class="img-responsive hidden-xs">
                                         </div>
                                         <div class="col-sm-9">
-                                            <div class="title" style="    line-height: 1;">
+                                            <h3 style=" line-height: 1;">
                                                 {{$evento->nombre}}
 
-                                            </div>
+                                            </h3>
                                         </div>
                                     </div>
                                 </div>
@@ -54,10 +54,9 @@
                                             <span>Disponibilidad:</span> {{intval($evento->cupo)-intval($evento->ocupados)}}
                                             personas
                                         </p>
-                                        <p>&nbsp;</p>
-
-                                        <p style="line-height: 1;"><span>Ubicación:</span><br> <span
-                                                    class="menor">{!!$evento->direccionevento!!}</span></p>
+                                        <p style="line-height: 1;">
+                                            <span>Ubicación:</span> {!!$evento->direccion!!}
+                                        </p>
 
                                     </div>
                                 </div>

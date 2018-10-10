@@ -493,7 +493,6 @@ Route::group( [ 'middleware' => 'usuarios' ], function () {
 
 Route::group( [ 'middleware' => 'instructores' ], function () {
 	Route::get( '/perfilinstructor', 'Instructor\PerfilInstructor@index' );
-	Route::get( '/iniciar/{id}', 'Instructor\PerfilInstructor@iniciar' );
 
 	Route::post( 'actualizar-perfilcoach', 'DetalleController@storeinst' );
 	Route::put( 'actualizar-perfilcoach', 'DetalleController@updateinst' );
@@ -509,7 +508,10 @@ Route::group( [ 'middleware' => 'instructores' ], function () {
 	Route::post( 'planear-clase', 'PlanController@store' );
 	Route::put( 'planear-clase', 'PlanController@update' );
 
-	Route::put( 'terminar-orden', 'Publico\OrdenController@terminar' );
+	Route::post( 'terminar-orden', 'Instructor\PerfilInstructor@terminarClase' );
+	Route::get( '/iniciar/{id}', 'Instructor\PerfilInstructor@iniciarClase' );
+	Route::post('/crear-invitado', 'Instructor\PerfilInstructor@agregarInvitado');
+
 
 	Route::post( 'agregar-libre', 'ClaseController@libre' );
 	Route::delete( 'eliminar-libre', 'ClaseController@destroylibre' );
@@ -519,5 +521,6 @@ Route::group( [ 'middleware' => 'instructores' ], function () {
 	Route::put( 'subir-documentacion', 'BancariosController@update2' );
 
 	Route::get( 'listainscritos/{id}', 'ResidencialController@printlist' );
+
 
 } );

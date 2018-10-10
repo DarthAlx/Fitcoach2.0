@@ -24,6 +24,7 @@
                                 <th>Coach</th>
                                 <th>Room</th>
                                 <th>Costo</th>
+                                <th>Aforo promedio</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -57,6 +58,11 @@
                                                 <span>No</span>
                                             @else
                                                 <span>Si</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($grupo!=null)
+                                                {{$grupo->aforoPromedio()->promedio}}
                                             @endif
                                         </td>
                                     </tr>

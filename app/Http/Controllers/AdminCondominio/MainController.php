@@ -15,11 +15,13 @@ use App\Evento;
 use App\Grupo;
 use App\Horario;
 use App\Http\Controllers\Controller;
+use App\Plan;
 use App\Room;
 use App\Services\RoomService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class MainController extends Controller {
 
@@ -34,22 +36,32 @@ class MainController extends Controller {
 		$rooms        = $service->getRoomsbyCondominio( $condominio->id );
 		$horarios     = Horario::with( 'clase' )
 		                       ->with( 'user' )
+		                       ->with( 'condominio' )
 		                       ->with( 'grupo.room' )
-								->with('reservaciones')
+		                       ->with( 'reservaciones' )
 		                       ->where( 'tipo', 'En condominio' )
 		                       ->where( 'fecha', $now->toDateString() )
 		                       ->where( 'condominio_id', $condominio->id )->orderBy( 'hora', 'asc' )->get();
 
 		$eventos = Evento::where( 'condominio_id', '=', $condominioId )->get();
 		$grupos  = Grupo::with( 'coach' )
-		                ->with('horarios')
-						->with('horarios.clase')
-						->with('horarios.reservaciones')
-						->with('horarios.reservaciones.user')
-						->with( 'room' )
+		                ->with( 'horarios' )
+		                ->with( 'horarios.clase' )
+		                ->with( 'horarios.reservaciones' )
+		                ->with( 'horarios.invitados' )
+		                ->with( 'horarios.reservaciones.user' )
+		                ->with( 'room' )
 		                ->with( 'clase' )
 		                ->where( 'condominio_id', '=', $condominioId )
 		                ->get();
+		$planes=[];
+		foreach ( $horarios as $horario ) {
+			$plan = Plan::where( 'item_id', '=', $horario->id )
+			            ->where( 'tipo', 'clase' )
+			            ->get()
+			            ->first();
+			$planes[$horario->id] = $plan;
+		}
 
 		$coaches = User::where( 'role', 'instructor' )->get();
 		$rooms2  = Room::all();
@@ -65,6 +77,7 @@ class MainController extends Controller {
 			->with( 'grupos', $grupos )
 			->with( 'coaches', $coaches )
 			->with( 'clases', $clases )
-			->with( 'rooms2', $rooms2 );
+			->with( 'rooms2', $rooms2 )
+			->with( 'planes', $planes);
 	}
 }

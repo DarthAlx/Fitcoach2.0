@@ -1,5 +1,17 @@
 @extends('plantilla')
 @section('pagecontent')
+    <style>
+        table{
+            border: none !important;
+        }
+        td,th{
+            border-left: none !important;
+            border-right: none !important;
+        }
+        .table-striped > tbody > tr:nth-child(odd) {
+            background-color: #ffffff !important;
+        }
+    </style>
     <section class="container">
         <div class="topclear">
             &nbsp;
@@ -19,12 +31,14 @@
                         @if(Auth::user()!=null && Auth::user()->condominio_id == $condominio->id)
                             <div class="row">
                                 <div class="col-lg-4 col-sm-4">
-                                    <a class="btn btn-success btn-block" data-toggle="modal" data-target="#admin-condominios-eventos">
+                                    <a class="btn btn-success btn-block" data-toggle="modal"
+                                       data-target="#admin-condominios-eventos">
                                         Editar eventos
                                     </a>
                                 </div>
                                 <div class="col-lg-4 col-sm-4">
-                                    <a class="btn btn-success btn-block" data-toggle="modal" data-target="#admin-condominios-grupos">
+                                    <a class="btn btn-success btn-block" data-toggle="modal"
+                                       data-target="#admin-condominios-grupos">
                                         Editar clases
                                     </a>
                                 </div>
@@ -73,21 +87,23 @@
                                     <p class="condominios-clases-text">{{$horario->hora}}</p>
                                 </div>
                                 <div class="col-lg-2">
-                                    <p class="condominios-clases-text">@if(isset($horario->tokens) && $horario->tokens>0)
-                                            {{$horario->tokens}}
-                                        @else
-                                            <span>Gratis</span>
-                                        @endif
+                                    <p class="condominios-clases-text">
+                                        {{$horario->cupo-$horario->ocupados}}
                                     </p>
                                 </div>
                                 <div class="col-lg-2">
                                     <i class="icon-classes-image fa fa-comments"></i>
-                                    <a data-toggle="modal" data-target="#admin-condominios-horarios-ver{{$horario->id}}">
+                                    <a data-toggle="modal"
+                                       data-target="#admin-condominios-horarios-ver{{$horario->id}}">
                                         <i class="icon-classes-image fa fa-list-ul"></i>
                                     </a>
-                                    <a data-toggle="modal" data-target="#">
-                                        <i class="icon-classes-image fa fa-eye"></i>
-                                    </a>
+                                    @if(isset($planes[$horario->id]))
+                                        <a data-toggle="modal" data-target="#">
+                                            <i class="icon-classes-image fa fa-eye" data-toggle="modal"
+                                               data-target="#proximas{{$horario->id}}"></i>
+                                        </a>
+                                    @endif
+
                                 </div>
                                 {{--<div class="col-lg-2">
                                     @if($hour>$horario->hora)
@@ -121,15 +137,22 @@
                         </div>
                         <h3>PRÓXIMOS EVENTOS</h3>
                         <div class="row">
-                            @foreach($condominio->eventos as $evento)
-                                <div class="col-sm-3 col-md-3">
-                                    <a data-toggle="modal" data-target="#evento{{$evento->id}}">
-                                        <img src="{{ url('uploads/clases') }}/{{ $evento->imagen }}"
-                                             class="img-responsive">
-                                    </a>
+                            @if(count($condominio->eventos)>0)
+                                @foreach($condominio->eventos as $evento)
+                                    <div class="col-sm-3 col-md-3">
+                                        <a data-toggle="modal" data-target="#evento{{$evento->id}}">
+                                            <img src="{{ url('uploads/clases') }}/{{ $evento->imagen }}"
+                                                 class="img-responsive">
+                                        </a>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="row condominios-clases">
+                                    <div class="col-lg-12">
+                                        <p style="text-align: center">No hay más eventos disponibles</p>
+                                    </div>
                                 </div>
-                            @endforeach
-
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -201,31 +224,31 @@
             $('#admin-condominios-grupos').modal('hide')
             setTimeout(function () {
                 $('#crear-grupo').modal('show');
-            },500)
+            }, 500)
             //
         })
         $('.ver-grupo').click(function () {
             var id = $(this).attr("data-id");
             $('#admin-condominios-grupos').modal('hide')
             setTimeout(function () {
-                $('#admin-condominios-grupos-ver'+id).modal('show');
-            },500)
+                $('#admin-condominios-grupos-ver' + id).modal('show');
+            }, 500)
             //
         })
         $('.btn-crear-horario').click(function () {
             var id = $(this).attr("data-id");
-            $('#admin-condominios-grupos-ver'+id).modal('hide');
+            $('#admin-condominios-grupos-ver' + id).modal('hide');
             setTimeout(function () {
-                $('#admin-condominios-grupos-crear'+id).modal('show');
-            },500)
+                $('#admin-condominios-grupos-crear' + id).modal('show');
+            }, 500)
             //
         })
         $('.btn-actualizar-grupo').click(function () {
             var id = $(this).attr("data-id");
-            $('#admin-condominios-grupos-ver'+id).modal('hide');
+            $('#admin-condominios-grupos-ver' + id).modal('hide');
             setTimeout(function () {
-                $('#admin-condominios-grupos-actualizar'+id).modal('show');
-            },500)
+                $('#admin-condominios-grupos-actualizar' + id).modal('show');
+            }, 500)
             //
         })
 
@@ -250,7 +273,7 @@
                                                 <img src="{{ url('uploads/avatars') }}/{{ $residencial->user->detalles->photo }}"
                                                      class="img-responsive" alt="">
                                             </div>
-                                            <?php $nombre = explode(" ", $residencial->user->name); ?>
+											<?php $nombre = explode( " ", $residencial->user->name ); ?>
                                             <h2>{{ucfirst($nombre[0])}}</h2>
 
 

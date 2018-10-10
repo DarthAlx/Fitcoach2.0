@@ -86,15 +86,22 @@
                         </div>
                         <h3>PRÓXIMOS EVENTOS</h3>
                         <div class="row">
-                            @foreach($condominio->eventos as $evento)
-                                <div class="col-sm-3 col-md-3">
-                                    <a data-toggle="modal" data-target="#evento{{$evento->id}}">
-                                        <img src="{{ url('uploads/clases') }}/{{ $evento->imagen }}"
-                                             class="img-responsive">
-                                    </a>
+                            @if(count($condominio->eventos)>0)
+                                @foreach($condominio->eventos as $evento)
+                                    <div class="col-sm-3 col-md-3">
+                                        <a data-toggle="modal" data-target="#evento{{$evento->id}}">
+                                            <img src="{{ url('uploads/clases') }}/{{ $evento->imagen }}"
+                                                 class="img-responsive">
+                                        </a>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="row condominios-clases">
+                                    <div class="col-lg-12">
+                                        <p style="text-align: center">No hay más eventos disponibles</p>
+                                    </div>
                                 </div>
-                            @endforeach
-
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -174,7 +181,7 @@
                                                 <img src="{{ url('uploads/avatars') }}/{{ $residencial->user->detalles->photo }}"
                                                      class="img-responsive" alt="">
                                             </div>
-                                            <?php $nombre = explode(" ", $residencial->user->name); ?>
+											<?php $nombre = explode( " ", $residencial->user->name ); ?>
                                             <h2>{{ucfirst($nombre[0])}}</h2>
 
 
