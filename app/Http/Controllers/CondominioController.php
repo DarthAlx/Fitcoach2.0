@@ -41,6 +41,7 @@ class CondominioController extends Controller
         $rooms = $service->getRoomsbyCondominio($condominio->id);
         $horarios = Horario::with('clase')
             ->with('user')
+	        ->with('reservaciones')
             ->with('grupo.room')
             ->where('tipo', 'En condominio')
             ->where('fecha', $now->toDateString())

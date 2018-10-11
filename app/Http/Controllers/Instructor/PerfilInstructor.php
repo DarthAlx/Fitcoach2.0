@@ -10,7 +10,7 @@ namespace App\Http\Controllers\Instructor;
 
 
 use App\Clase;
-use App\ClaseHistorial;
+use App\ReservacionUsuario;
 use App\Direccion;
 use App\Horario;
 use App\Http\Controllers\Controller;
@@ -33,6 +33,7 @@ class PerfilInstructor extends Controller {
 
 		$user     = User::find( Auth::user()->id );
 		$data     = $repository->clasesDeCoach( Auth::user()->id );
+		$pasadas  = $repository->clasesPasadas( Auth::user()->id );
 		$array    = array();
 		$proximas = array();
 		$now      = Carbon::now();
@@ -66,29 +67,22 @@ class PerfilInstructor extends Controller {
 			$horas        = intval( $dteDiff->format( "%R%h" ) );
 			$horastotales = $dias + $horas;
 
-			if ( $item->tipo == 'clase' ) {
-				$plan = Plan::where( 'item_id', '=', $item->horarioId )
-				            ->where( 'tipo', 'clase' )
-				            ->get()
-				            ->first();
-			} else {
-				$plan = Plan::where( 'item_id', '=', $item->reservacionId )
-				            ->where( 'tipo', 'reserva' )
-				            ->get()
-				            ->first();
-			}
+			$plan = Plan::where( 'reservacion_id', '=', $item->reservacionId )
+			            ->get()
+			            ->first();
 
-			if($item->estado == 'COMENZADA'){
-				$reservaciones = Reservacion::with('user')->where('horario_id','=',$item->horarioId)
-					->get();
+			if ( $item->estado == 'COMENZADA' ) {
+				$reservaciones = ReservacionUsuario::with( 'usuario' )
+				                                   ->where( 'reservacion_id', '=', $item->id )
+				                                   ->get();
 
-				$invitados = Invitado::where('horario_id','=',$item->horarioId)
-				                     ->get();
-				$item->invitados = $invitados;
+				$invitados        = Invitado::where( 'reservacion_id', '=', $item->id )
+				                            ->get();
+				$item->invitados  = $invitados;
 				$item->asistentes = $reservaciones;
-			}else{
+			} else {
 				$item->asistentes = [];
-				$item->invitados = [];
+				$item->invitados  = [];
 			}
 
 			$item->tienePlan = $plan != null;
@@ -101,63 +95,73 @@ class PerfilInstructor extends Controller {
 			array_push( $proximas, $item );
 		}
 
+		foreach ( $pasadas as &$item ) {
+			date_default_timezone_set( 'America/Mexico_City' );
+			if ( $item->tipo == "clase" ) {
+				$horario     = Horario::with( 'condominio' )->where( 'id', '=', $item->horarioId )->get()->first();
+				$item->lugar = $horario->condominio->direccion;
+			} else {
+				$reservacion   = Reservacion::where( 'id', '=', $item->reservacionId )->get()->first();
+				$cliente       = User::with( 'detalles' )->find( $reservacion->user_id );
+				$direccion     = Direccion::find( $reservacion->direccion );
+				$item->lugar   = $direccion->calle . " " .
+				                 $direccion->numero_ext . " " .
+				                 $direccion->numero_int . ", " .
+				                 $direccion->colonia . ", " .
+				                 $direccion->municipio_del . ", " .
+				                 $direccion->cp . ", " .
+				                 $direccion->estado;
+				$item->usuario = $cliente;
+			}
+		}
+
+
 		return view( 'perfilinstructor' )
 			->with( 'proximas', $proximas )
+			->with( 'pasadas', $pasadas )
 			->with( 'user', $user );
 	}
 
 	public function iniciarClase( $id, Request $request ) {
-		$input                   = $request->all();
-		$claseHistorial          = new ClaseHistorial();
-		$claseHistorial->tipo    = $input['tipo'];
-		$claseHistorial->item_id = $id;
-		$claseHistorial->evento  = 'inicio';
-		$claseHistorial->save();
-		if ( $input['tipo'] == 'reserva' ) {
-			$reserva         = Reservacion::find( $id );
-			$reserva->status = 'COMENZADA';
-			$reserva->save();
-		} else {
-			Reservacion::where( 'horario_id', '=', $id )
-			           ->update( [ 'status' => 'COMENZADA' ] );
-		}
+		$input               = $request->all();
+		$reservacion         = Reservacion::find( $id );
+		$reservacion->status = 'COMENZADA';
+		$reservacion->inicio = Carbon::now();
+		$reservacion->save();
 
 		return redirect( url( '/perfilinstructor' ) );
 	}
 
 	public function terminarClase( Request $request ) {
-		$input                   = $request->all();
-		$claseHistorial          = new ClaseHistorial();
-		$claseHistorial->tipo    = $input['tipo'];
-		$claseHistorial->item_id = $input['item_id'];
-		$claseHistorial->evento  = 'fin';
-		$claseHistorial->save();
-		$reservations=  Input::get('reservations');
-		if ( $input['tipo'] == 'reserva' ) {
-			$reserva         = Reservacion::find( $input['item_id'] );
-			$reserva->status = 'EN REVISIÓN';
-			$reserva->save();
-		} else {
-			Reservacion::where( 'horario_id', '=', $input['item_id'] )
-			           ->update( [ 'status' => 'EN REVISIÓN' ] );
+		$input           = $request->all();
+		$reserva         = Reservacion::find( $input['item_id'] );
+		$reserva->status = 'EN REVISIÓN';
+		$reserva->fin    = Carbon::now();
+		$reserva->save();
+		$reservations = Input::get( 'reservations' );
+		if ( $input['tipo'] == 'clase' ) {
+			ReservacionUsuario::where( 'reservacion_id', '=', $input['item_id'] )
+			                  ->update( [ 'estado' => 'EN REVISIÓN' ] );
 		}
-		foreach ($reservations as $id){
-			$reservation = Reservacion::find($id);
-			$reservation->asistencia = true;
-			$reservation->save();
+		if ( $reservations != null ) {
+			foreach ( $reservations as $id ) {
+				$reservation             = Reservacion::find( $id );
+				$reservation->asistencia = true;
+				$reservation->save();
+			}
 		}
-
 		Session::flash( 'mensaje', '¡Orden en revisión!' );
 		Session::flash( 'class', 'success' );
 
 		return redirect()->intended( url( '/perfilinstructor' ) );
 	}
 
-	public function agregarInvitado(Request $request){
+	public function agregarInvitado( Request $request ) {
 
-		$invitado = Invitado::create($request->all());
+		$invitado = Invitado::create( $request->all() );
 		Session::flash( 'mensaje', '¡Participante añadido!' );
 		Session::flash( 'class', 'success' );
+
 		return redirect()->intended( url( '/perfilinstructor' ) );
 	}
 

@@ -8,7 +8,7 @@ class Invitado extends Model
 {
     protected $table = 'invitados';
 
-	protected $fillable = ['nombre','email','telefono','genero','horario_id'];
+	protected $fillable = ['nombre','email','telefono','genero','reservacion_id'];
 
   	public function reservacion(){
        	return $this->belongsTo('App\Reservacion');

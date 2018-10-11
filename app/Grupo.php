@@ -20,7 +20,6 @@ class Grupo extends Model {
 		'tokens'
 	];
 
-
 	public function condominio() {
 		return $this->belongsTo( 'App\Condominio' );
 	}

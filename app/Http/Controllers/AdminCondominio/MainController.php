@@ -10,18 +10,22 @@ namespace App\Http\Controllers\AdminCondominio;
 
 
 use App\Clase;
+use App\ReservacionUsuario;
 use App\Condominio;
 use App\Evento;
 use App\Grupo;
 use App\Horario;
 use App\Http\Controllers\Controller;
 use App\Plan;
+use App\Reservacion;
 use App\Room;
 use App\Services\RoomService;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class MainController extends Controller {
 
@@ -48,20 +52,13 @@ class MainController extends Controller {
 		                ->with( 'horarios' )
 		                ->with( 'horarios.clase' )
 		                ->with( 'horarios.reservaciones' )
-		                ->with( 'horarios.invitados' )
+		                ->with( 'horarios.reservaciones.plan' )
+		                ->with( 'horarios.reservaciones.invitados' )
 		                ->with( 'horarios.reservaciones.user' )
 		                ->with( 'room' )
 		                ->with( 'clase' )
 		                ->where( 'condominio_id', '=', $condominioId )
 		                ->get();
-		$planes=[];
-		foreach ( $horarios as $horario ) {
-			$plan = Plan::where( 'item_id', '=', $horario->id )
-			            ->where( 'tipo', 'clase' )
-			            ->get()
-			            ->first();
-			$planes[$horario->id] = $plan;
-		}
 
 		$coaches = User::where( 'role', 'instructor' )->get();
 		$rooms2  = Room::all();
@@ -77,7 +74,20 @@ class MainController extends Controller {
 			->with( 'grupos', $grupos )
 			->with( 'coaches', $coaches )
 			->with( 'clases', $clases )
-			->with( 'rooms2', $rooms2 )
-			->with( 'planes', $planes);
+			->with( 'rooms2', $rooms2 );
+	}
+
+	public function cancelar( $id, Request $request ) {
+		$input = $request->all();
+		Reservacion::where( 'horario_id', '=', $id )
+		           ->where( 'tipo', '=', 'En condominio' )
+		           ->update( [ 'status' => 'CANCELADA' ] );
+		$horario         = Horario::find( $id );
+		$horario->estado = 'CANCELADA';
+		$horario->save();
+		Session::flash( 'mensaje', '¡Clase cancelada!' );
+		Session::flash( 'class', 'success' );
+
+		return redirect()->intended( url( '/admin-condominio' ) );
 	}
 }

@@ -16,7 +16,7 @@
                 <p>&nbsp;</p>
                 <div class="row">
                     <div class="adv-table table-responsive" style="padding-left: 10px;padding-right: 10px;">
-                        <table class="display table table-bordered table-striped table-hover" id="dynamic-table">
+                        <table class="display table table-bordered table-striped table-hover" id="dynamic-table2">
                             <thead>
                             <tr>
                                 <th>Nombre</th>

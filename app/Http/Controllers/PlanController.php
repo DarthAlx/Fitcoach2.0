@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Session;
 class PlanController extends Controller {
 	public function store( Request $request ) {
 		$input = $request->all();
-		$plan  = Plan::create($input);
+		$plan  = Plan::create( $input );
 		Session::flash( 'mensaje', '¡Datos guardados!' );
 		Session::flash( 'class', 'success' );
+
 		return redirect()->intended( url( '/perfilinstructor' ) );
 	}
 

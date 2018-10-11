@@ -32,15 +32,9 @@
 
                                 <label>Comentarios</label>
                                 <textarea name="comentarios" class="form-control" required></textarea>
-                                @if($proxima->tipo=='clase')
-                                    <input type="hidden" name="item_id" value="{{$proxima->horarioId}}"/>
-                                @else
-                                    <input type="hidden" name="item_id" value="{{$proxima->reservacionId}}"/>
-                                @endif
-                                <input type="hidden" name="tipo" value="{{$proxima->tipo}}"/>
-                            @else
-                                {{$proxima->plan}}
 
+                                <input type="hidden" name="reservacion_id" value="{{$proxima->reservacionId}}"/>
+                            @else
                                 <label>Fase inicial</label>
                                 <textarea name="inicio" class="form-control"
                                           required>{{$proxima->plan->inicio}}</textarea>
@@ -66,12 +60,7 @@
                                 <textarea name="comentarios" class="form-control"
                                           required>{{$proxima->plan->comentarios}}</textarea>
 
-                                @if($proxima->tipo=='clase')
-                                    <input type="hidden" name="item_id" value="{{$proxima->horarioId}}"/>
-                                @else
-                                    <input type="hidden" name="item_id" value="{{$proxima->reservacionId}}"/>
-                                @endif
-                                <input type="hidden" name="tipo" value="{{$proxima->tipo}}"/>
+                                <input type="hidden" name="reservacion_id" value="{{$proxima->id}}"/>
                             @endif
                             <button class="btn btn-success" type="submit"
                                     style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
@@ -150,11 +139,7 @@
                                     {!! csrf_field() !!}
                                     {{ method_field('POST') }}
 
-                                    @if($proxima->tipo=='clase')
-                                        <input type="hidden" name="item_id" value="{{$proxima->horarioId}}"/>
-                                    @else
-                                        <input type="hidden" name="item_id" value="{{$proxima->reservacionId}}"/>
-                                    @endif
+                                    <input type="hidden" name="item_id" value="{{$proxima->reservacionId}}"/>
                                     <input type="hidden" name="tipo" value="{{$proxima->tipo}}"/>
                                     <button class="btn btn-primary btn-lg" name="button" type="submit">
                                         Terminar
@@ -210,7 +195,7 @@
                                         <option value="Masculino">Masculino</option>
                                         <option value="Femenino">Femenino</option>
                                     </select>
-                                    <input type="hidden" name="horario_id" value="{{$proxima->horarioId}}"
+                                    <input type="hidden" name="reservacion_id" value="{{$proxima->id}}"
                                            placeholder="nombres" required/>
                                     <button class="btn btn-success" type="submit"
                                             style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
@@ -250,14 +235,11 @@
                                     <p>{{$proxima->hora}}</p>
                                 </div>
                                 <div class="col-md-2">
-                                    @if($proxima->tipo=='clase')
-                                        <input type="hidden" name="item_id" value="{{$proxima->horarioId}}"/>
-                                    @else
-                                        <input type="hidden" name="item_id" value="{{$proxima->reservacionId}}"/>
-                                    @endif
+
+                                    <input type="hidden" name="item_id" value="{{$proxima->reservacionId}}"/>
                                     <input type="hidden" name="tipo" value="{{$proxima->tipo}}"/>
                                     <button class="btn btn-success" type="submit"
-                                       style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
+                                            style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
                                         Terminar
                                     </button>
 
@@ -271,9 +253,9 @@
                                     <div class="asistentes-scroll">
                                         @foreach($proxima->asistentes as $asistente)
                                             <label class="cool-check">
-                                                <span>{{$asistente->user->name}}</span>
+                                                <span>{{$asistente->usuario->name}}</span>
                                                 <input type="checkbox" name='reservations[]'
-                                                       value="{{$asistente->user->id}}">
+                                                       value="{{$asistente->usuario->id}}">
                                                 <span class="checkmark"></span>
                                             </label>
                                         @endforeach
@@ -343,19 +325,19 @@
 
             </div><!-- /.modal-dialog -->
 
-            <script type="application/javascript">
-                $('.agregar-invitado-btn').click(function () {
-                    var id = $(this).attr("data-id");
-                    $('#proximas' + id).modal('hide');
-                    setTimeout(function () {
-                        $('#invitado' + id).modal('show');
-                    }, 500)
-                    //
-                })
-            </script>
         </div><!-- /.modal contraseña -->
 
-
+    </div>
 
 
 @endforeach
+<script type="application/javascript">
+    $('.agregar-invitado-btn').click(function () {
+        var id = $(this).attr("data-id");
+        $('#proximas' + id).modal('hide');
+        setTimeout(function () {
+            $('#invitado' + id).modal('show');
+        }, 500)
+        //
+    })
+</script>

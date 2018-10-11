@@ -1,13 +1,15 @@
 @extends('plantilla')
 @section('pagecontent')
     <style>
-        table{
+        table {
             border: none !important;
         }
-        td,th{
+
+        td, th {
             border-left: none !important;
             border-right: none !important;
         }
+
         .table-striped > tbody > tr:nth-child(odd) {
             background-color: #ffffff !important;
         }
@@ -73,62 +75,46 @@
                     <div class="col-lg-8">
                         <h3>CLASES DE HOY</h3>
                         @foreach($horarios as $horario)
-                            <div class="row condominios-clases">
-                                <div class="col-lg-2">
-                                    <b class="condominios-clases-text">{{$horario->clase->nombre}}</b>
-                                </div>
-                                <div class="col-lg-2">
-                                    <p class="condominios-clases-text"> {{$horario->user->name}}</p>
-                                </div>
-                                <div class="col-lg-2">
-                                    <p class="condominios-clases-text">{{$horario->grupo->room->nombre}}</p>
-                                </div>
-                                <div class="col-lg-2">
-                                    <p class="condominios-clases-text">{{$horario->hora}}</p>
-                                </div>
-                                <div class="col-lg-2">
-                                    <p class="condominios-clases-text">
-                                        {{$horario->cupo-$horario->ocupados}}
-                                    </p>
-                                </div>
-                                <div class="col-lg-2">
-                                    <i class="icon-classes-image fa fa-comments"></i>
-                                    <a data-toggle="modal"
-                                       data-target="#admin-condominios-horarios-ver{{$horario->id}}">
-                                        <i class="icon-classes-image fa fa-list-ul"></i>
-                                    </a>
-                                    @if(isset($planes[$horario->id]))
-                                        <a data-toggle="modal" data-target="#">
-                                            <i class="icon-classes-image fa fa-eye" data-toggle="modal"
-                                               data-target="#proximas{{$horario->id}}"></i>
+                            @foreach($horario->reservaciones as $reservacion)
+                                <div class="row condominios-clases">
+                                    <div class="col-lg-2">
+                                        <b class="condominios-clases-text">{{$horario->clase->nombre}}</b>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="condominios-clases-text"> {{$horario->user->name}}</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="condominios-clases-text">{{$horario->grupo->room->nombre}}</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="condominios-clases-text">{{$horario->hora}}</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="condominios-clases-text">
+                                            {{$horario->cupo-$horario->ocupados}}
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <i class="icon-classes-image fa fa-comments"></i>
+                                        <a data-toggle="modal"
+                                           data-target="#admin-condominios-horarios-ver{{$horario->id}}">
+                                            <i class="icon-classes-image fa fa-list-ul"></i>
                                         </a>
-                                    @endif
+                                        @if(isset($reservacion->plan))
+                                            <a data-toggle="modal" data-target="#">
+                                                <i class="icon-classes-image fa fa-eye" data-toggle="modal"
+                                                   data-target="#proximas{{$reservacion->id}}"></i>
+                                            </a>
+                                        @endif
+                                        @if($reservacion->status=='PROXIMA')
+                                            <a href="/admin-condominio/cancelar/{{$reservacion->id}}">
+                                                <i class="icon-classes-image fa fa-times"></i>
+                                            </a>
+                                        @endif
 
+                                    </div>
                                 </div>
-                                {{--<div class="col-lg-2">
-                                    @if($hour>$horario->hora)
-                                        <button class="btn" style="background-color: #999; color:#fff">
-                                            Impartida
-                                        </button>
-                                    @else
-                                        <form action="{{url('carrito')}}" onsubmit="fbq('track', 'AddToCart');"
-                                              method="post">
-                                            {!! csrf_field() !!}
-                                            <input type="hidden" name="cantidad" value="1">
-                                            <input type="hidden"
-                                                   name="carrito[]"
-                                                   value="{{$horario->id}},{{$date}},{{$horario->tokens}}">
-                                            <input type="hidden"
-                                                   name="tipo"
-                                                   value="En condominio">
-                                            <button class="btn btn-success" type="submit">
-                                                Reservar
-                                            </button>
-                                        </form>
-
-                                    @endif
-                                </div>--}}
-                            </div>
+                            @endforeach
                         @endforeach
                         <div class="row condominios-clases">
                             <div class="col-lg-12">
@@ -173,10 +159,10 @@
     @include('condominio.partials.clases')
     @include('condominio.partials.clases_room')
     @include('condominio.partials.eventos')
+    @include('admin_condominio.partials.grupos')
     @include('admin_condominio.partials.eventos')
     @include('admin_condominio.partials.crear_evento')
     @include('admin_condominio.partials.editar_evento')
-    @include('admin_condominio.partials.grupos')
     @include('admin_condominio.partials.crear_grupo')
     @include('admin_condominio.partials.horarios')
     @include('admin_condominio.partials.reservaciones')

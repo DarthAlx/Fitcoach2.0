@@ -33,51 +33,58 @@
                     <div class="col-lg-8">
                         <h3>CLASES DE HOY</h3>
                         @foreach($horarios as $horario)
-                            <div class="row condominios-clases">
-                                <div class="col-lg-2">
-                                    <b class="condominios-clases-text">{{$horario->clase->nombre}}</b>
-                                </div>
-                                <div class="col-lg-2">
-                                    <p class="condominios-clases-text"> {{$horario->user->name}}</p>
-                                </div>
-                                <div class="col-lg-2">
-                                    <p class="condominios-clases-text">{{$horario->grupo->room->nombre}}</p>
-                                </div>
-                                <div class="col-lg-2">
-                                    <p class="condominios-clases-text">{{$horario->hora}}</p>
-                                </div>
-                                <div class="col-lg-2">
-                                    <p class="condominios-clases-text">@if(isset($horario->tokens))
-                                            {{$horario->tokens}}
-                                        @else
-                                            <span>Gratis</span>
-                                        @endif
-                                    </p>
-                                </div>
-                                <div class="col-lg-2">
-                                    @if($hour>$horario->hora)
-                                        <button class="btn" style="background-color: #999; color:#fff">
-                                            Impartida
-                                        </button>
-                                    @else
-                                        <form action="{{url('carrito')}}" onsubmit="fbq('track', 'AddToCart');"
-                                              method="post">
-                                            {!! csrf_field() !!}
-                                            <input type="hidden" name="cantidad" value="1">
-                                            <input type="hidden"
-                                                   name="carrito[]"
-                                                   value="{{$horario->id}},{{$date}},{{$horario->tokens}}">
-                                            <input type="hidden"
-                                                   name="tipo"
-                                                   value="En condominio">
-                                            <button class="btn btn-success" type="submit">
-                                                Reservar
+                            @foreach($horario->reservaciones as $reservacion)
+                                <div class="row condominios-clases">
+                                    <div class="col-lg-2">
+                                        <b class="condominios-clases-text">{{$horario->clase->nombre}}</b>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="condominios-clases-text"> {{$horario->user->name}}</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="condominios-clases-text">{{$horario->grupo->room->nombre}}</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="condominios-clases-text">{{$horario->hora}}</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="condominios-clases-text">@if(isset($horario->tokens))
+                                                {{$horario->tokens}}
+                                            @else
+                                                <span>Gratis</span>
+                                            @endif
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        @if($hour>$horario->hora)
+                                            <button class="btn" style="background-color: #999; color:#fff">
+                                                Impartida
                                             </button>
-                                        </form>
+                                        @elseif($reservacion->status!='PROXIMA')
+                                            <button class="btn" style="background-color: #999; color:#fff">
+                                                No disponible
+                                            </button>
+                                        @else
+                                            <form action="{{url('carrito')}}" onsubmit="fbq('track', 'AddToCart');"
+                                                  method="post">
+                                                {!! csrf_field() !!}
+                                                <input type="hidden" name="cantidad" value="1">
+                                                <input type="hidden"
+                                                       name="carrito[]"
+                                                       value="{{$horario->id}},{{$date}},{{$horario->tokens}}">
+                                                <input type="hidden"
+                                                       name="tipo"
+                                                       value="En condominio">
+                                                <button class="btn btn-success" type="submit">
+                                                    Reservar
+                                                </button>
+                                            </form>
 
-                                    @endif
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
+
+                            @endforeach
                         @endforeach
                         <div class="row condominios-clases">
                             <div class="col-lg-12">

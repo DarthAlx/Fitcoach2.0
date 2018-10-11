@@ -151,14 +151,14 @@ Route::get( '/eventos', 'Publico\EventosController@index' );
 
 
 
-Route::group( [ 'prefix' => 'admin-condominio', 'namespace' => 'AdminCondominio' ], function () {
+Route::group( [ 'prefix' => 'admin-condominio', 'namespace' => 'AdminCondominio' , 'middleware' => 'admin.condominio'], function () {
 	Route::get( '/', 'MainController@index' );
 	Route::post( '/agregar-evento', 'EventoController@crear' );
 	Route::put( '/actualizar-evento', 'EventoController@actualizar' );
 	Route::delete( '/eliminar-evento', 'EventoController@eliminar' );
 	Route::post( '/agregar-grupo', 'GrupoController@store' );
 	Route::post( '/grupos/agregar-horario', 'HorarioController@crear' );
-
+	Route::get( '/cancelar/{id}', 'MainController@cancelar' );
 });
 
 
@@ -419,8 +419,8 @@ Route::group( [ 'middleware' => 'administradores' ], function () {
 	Route::post( '/reportes/{id}', 'Reports\ReportController@create' );
 	Route::post( 'pagar', 'Publico\OrdenController@pago' );
 	Route::get( 'historialpagos/{id}', 'Publico\OrdenController@historialpagos' );
-	Route::get( 'clasesvista', 'Publico\OrdenController@clasesvista' );
-	Route::post( 'clasesvista', 'Publico\OrdenController@clasesvistapost' );
+	Route::get( 'clasesvista', 'Admin\ClaseController@clasesvista' );
+	Route::post( 'clasesvista', 'Admin\ClaseController@clasesvistapost' );
 
 	Route::get( 'cupones', 'CuponController@index' );
 	Route::post( 'agregar-cupon', 'CuponController@store' );

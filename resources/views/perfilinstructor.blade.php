@@ -125,7 +125,7 @@
                                             </div>
                                             @if(!$proxima->active && $proxima->tipo=='clase')
                                                 <div class="pull-right">
-                                                    <a href="{{url('/listainscritos')}}/{{$proxima->tipo=='clase'?$proxima->horarioId:$proxima->reservacionId}}?tipo={{$proxima->tipo}}"
+                                                    <a href="{{url('/listainscritos')}}/{{$proxima->id}}?tipo={{$proxima->tipo}}"
                                                        target="_blank"><i class="fa fa-list icopopup"></i>
                                                         &nbsp;</a>
                                                 </div>
@@ -150,70 +150,29 @@
                     </div>
                     <div id="pasadas" class="listadeclases" style="display:none;">
                         <div class="list-group">
-						<?php  $array = array();
-
-						$pasadas = App\Reservacion::where( 'coach_id', $user->id )->where( 'status', '<>', 'PROXIMA' )->orderBy( 'created_at', 'desc' )->get();
-						if (! $pasadas->isEmpty()) {
-						date_default_timezone_set( 'America/Mexico_City' );
-						foreach ($pasadas as $pasada) {
-						$fecha = date_create( $pasada->fecha );
-						setlocale( LC_TIME, "es-ES" );
-						?>
-
-                        @if ($pasada->tipo=="En condominio")
-                            @if (in_array($pasada->nombre.$pasada->fecha.$pasada->hora,$array))
-
-                                <!--clase ya mostrada, no se hace nada-->
-                                @else
-                                    <div class="list-group-item row">
-                                        <div class="col-xs-2">
-                                            <strong>{{$pasada->nombre}}</strong>
-                                        </div>
-                                        <div class="col-xs-2">
-                                            {{$pasada->horario->grupo->condominio->identificador}}
-                                        </div>
-                                        <div class="col-xs-3">
-                                            {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
-                                        </div>
-                                        <div class="col-xs-2">
-                                            {{$pasada->horario->grupo->room->nombre}}
-                                        </div>
-                                        <div class="col-xs-3">
-                                            {{$pasada->status}}
-                                        </div>
-
-                                    </div>
-
-									<?php $array[] = $pasada->nombre . $pasada->fecha . $pasada->hora; ?>
-                                @endif
-                            @else
+                            @if(count($pasadas)>0)
+                                @foreach ($pasadas as $pasada)
                                 <div class="list-group-item row">
                                     <div class="col-xs-2">
                                         <strong>{{$pasada->nombre}}</strong>
                                     </div>
                                     <div class="col-xs-2">
-
-										<?php $nombre = explode( " ", $pasada->user->name );?>
-                                        <span data-toggle="tooltip" data-placement="bottom"
-                                              title="{{$pasada->user->name}}">{{ucfirst($nombre[0])}}</span>
+                                        {{$pasada->direccion}}
                                     </div>
                                     <div class="col-xs-3">
                                         {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
                                     </div>
                                     <div class="col-xs-2">
-                                        @if ($pasada->tipo=="A domicilio")
-                                            {{$pasada->horario->zona->identificador}}
-                                        @endif
+                                        {{$pasada->room}}
                                     </div>
                                     <div class="col-xs-3">
-                                        {{$pasada->status}}
+                                        {{$pasada->estado}}
                                     </div>
                                 </div>
+                                @endforeach
+                            @else
+                                <p class="text-center">No has dado ninguna clase.</p>
                             @endif
-							<?php } } else{ ?>
-                            <p class="text-center">No has dado ninguna clase.</p>
-							<?php  } ?>
-
 
                         </div>
                     </div>
@@ -346,7 +305,7 @@
                                                  data-target="#proximas{{$proxima->id}}">
                                                 <a href="#"><i class="fa fa-eye icopopup"></i></a>
                                             </div>
-                                        @else
+                                        @elseif($proxima->estado=='PROXIMA')
                                             <div class="pull-right" data-toggle="modal"
                                                  data-target="#plan{{$proxima->id}}">
                                                 <a href="#"><i class="fa fa-check-square-o icopopup"></i> &nbsp;</a>
@@ -354,7 +313,7 @@
                                         @endif
                                         @if($proxima->estado=='PROXIMA' && $proxima->tipo=='clase')
                                             <div class="pull-right">
-                                                <a href="{{url('/listainscritos')}}/{{$proxima->tipo=='clase'?$proxima->horarioId:$proxima->reservacionId}}?tipo={{$proxima->tipo}}"
+                                                <a href="{{url('/listainscritos')}}/{{$proxima->id}}?tipo={{$proxima->tipo}}"
                                                    target="_blank"><i class="fa fa-list icopopup"></i>
                                                     &nbsp;</a>
                                             </div>
@@ -367,7 +326,7 @@
                                         @if($proxima->active && $proxima->estado=='PROXIMA')
                                             @if($proxima->tienePlan)
                                                 <div class="pull-right">
-                                                    <a href="/iniciar/{{$proxima->tipo=='clase'?$proxima->horarioId:$proxima->reservacionId}}?tipo={{$proxima->tipo}}"><i
+                                                    <a href="/iniciar/{{$proxima->id}}?tipo={{$proxima->tipo}}"><i
                                                                 class="fa fa-play icopopup"></i> &nbsp</a>
                                                 </div>
                                             @else
@@ -393,74 +352,29 @@
                 </div>
                 <div id="pasadaslg" class="listadeclases" style="display:none;">
                     <div class="list-group">
-						<?php $array = array();
-						$pasadas = App\Reservacion::where( 'coach_id', $user->id )->where( 'status', '<>', 'PROXIMA' )->orderBy( 'created_at', 'desc' )->get();
-						if (! $pasadas->isEmpty()) {
-						date_default_timezone_set( 'America/Mexico_City' );
-						foreach ($pasadas as $pasada) {
-						$fecha = date_create( $pasada->fecha );
-						setlocale( LC_TIME, "es-ES" );
-						?>
-                        <script>
-                            console.log('{{$pasada->tipo}}');
-                        </script>
-
-                        @if ($pasada->tipo=="En condominio")
-                            @if (in_array($pasada->nombre.$pasada->fecha.$pasada->hora,$array))
-
-                            <!--clase ya mostrada, no se hace nada-->
-                            @else
-
-                                <div class="list-group-item row">
-                                    <div class="col-xs-2">
-                                        <strong>{{$pasada->nombre}}</strong>
-                                    </div>
-                                    <div class="col-xs-2">
-                                        {{$pasada->horario->grupo->condominio->identificador}}
-                                    </div>
-                                    <div class="col-xs-3">
-                                        {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
-                                    </div>
-                                    <div class="col-xs-2">
-                                        {{$pasada->horario->grupo->room->nombre}}
-                                    </div>
-                                    <div class="col-xs-3">
-                                        {{$pasada->status}}
-                                    </div>
-
-                                </div>
-
-								<?php $array[] = $pasada->nombre . $pasada->fecha . $pasada->hora; ?>
-
-                            @endif
-                        @elseif ($pasada->tipo=="A domicilio")
+                        @if(count($pasadas)>0)
+                            @foreach ($pasadas as $pasada)
                             <div class="list-group-item row">
                                 <div class="col-xs-2">
                                     <strong>{{$pasada->nombre}}</strong>
                                 </div>
                                 <div class="col-xs-2">
-
-									<?php $nombre = explode( " ", $pasada->user->name );?>
-                                    <span data-toggle="tooltip" data-placement="bottom"
-                                          title="{{$pasada->user->name}}">{{ucfirst($nombre[0])}}</span>
+                                    {{$pasada->direccion}}
                                 </div>
                                 <div class="col-xs-3">
                                     {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
                                 </div>
                                 <div class="col-xs-2">
-                                    @if ($pasada->tipo=="A domicilio")
-                                        {{$pasada->horario->zona->identificador}}
-                                    @endif
-                                    <p>pff</p>
+                                    {{$pasada->room}}
                                 </div>
                                 <div class="col-xs-3">
-                                    {{$pasada->status}}
+                                    {{$pasada->estado}}
                                 </div>
                             </div>
+                            @endforeach
+                        @else
+                            <p class="text-center">No has dado ninguna clase.</p>
                         @endif
-						<?php } } else{ ?>
-                        <p class="text-center">No has dado ninguna clase.</p>
-						<?php  } ?>
 
 
                     </div>
@@ -1013,16 +927,16 @@
                             <div class="col-sm-4 sidebar">
                                 <div class="text-center">
                                     <h1>{{$pasada->nombre}}</h1>
-									<?php $nombre = explode( " ", $cliente->name );
+									<?php /*$nombre = explode( " ", $cliente->name );
 									if ($pasada->tipo == "En condominio") {
 
 									}else{
-									?>
+									*/?><!--
                                     <h2>{{ucfirst($nombre[0])}}</h2>
-									<?php
-									}
+									--><?php
+/*									}
 
-									?>
+									*/?>
 
                                 </div>
                             </div>

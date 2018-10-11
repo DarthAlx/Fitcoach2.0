@@ -18,7 +18,7 @@ class CreateInvitadosTable extends Migration
 		    $table->string( 'genero' );
 		    $table->string( 'email' );
 		    $table->string( 'telefono' );
-		    $table->integer( 'horario_id' );
+		    $table->integer( 'reservacion_id' );
 		    $table->timestamps();
 	    } );
     }
