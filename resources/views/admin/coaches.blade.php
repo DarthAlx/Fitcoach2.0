@@ -205,7 +205,7 @@
                                         src="{{url('/images/cross.svg')}}" alt=""></button>
 
                             <div>
-                                <h4>Actualizar coach</h4>
+                                <h4>Información coach</h4>
                                 @if($admin->documentacion)
                                     @if($admin->documentacion->rfc!="")<a target="_blank" download
                                                                           href="{{url('uploads/documentos')}}/{{$admin->documentacion->rfc}}"
@@ -241,102 +241,114 @@
                                 @else
                                     <p>El coach aún no envía documentación.</p>
                                 @endif
-                                <form action="{{ url('/actualizar-coach') }}" method="post"
-                                      enctype="multipart/form-data">
-                                    {{ method_field('PUT') }}
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                    <input type="text" class="form-control" name="name" value="{{$admin->name}}"
-                                           placeholder="Nombre" required>
-                                    <label for="">Solo si se desea reemplazar</label>
-                                    <input class="form-control" type="file" name="photo">
-                                    <input type="email" class="form-control" name="email" value="{{$admin->email}}"
-                                           placeholder="Email" required>
-                                    <input class="form-control datepicker" type="text" value="{{$admin->dob}}"
-                                           placeholder="Fecha de nacimiento" name="dob" required>
-                                    <input type="tel" class="form-control" name="tel" value="{{$admin->tel}}"
-                                           placeholder="Teléfono" required>
-                                    <select class="form-control" name="genero" id="genero{{ $admin->id }}" required>
-                                        <option value="">Genero</option>
-                                        <option value="Masculino">Masculino</option>
-                                        <option value="Femenino">Femenino</option>
-                                    </select>
-                                    <script type="text/javascript">
-                                        if (document.getElementById('genero{{ $admin->id }}') != null) document.getElementById('genero{{ $admin->id }}').value = '{!! $admin->genero !!}';
-                                    </script>
-                                    <label for="">Datos de cuenta</label>
-                                    @if(isset($admin->bancarios))
-                                        <div class="form-group">
-                                            <label for="bancarios_banco" class="title-input">Banco</label>
-                                            <input type="text" class="form-control" name="bancarios_banco" id="bancarios_banco"
-                                                   value="{{$admin->bancarios->banco}}"
-                                                   placeholder="Banco" disabled>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="bancarios_banco" class="title-input">Cuenta</label>
-                                            <input type="text" class="form-control" name="bancarios_cta"
-                                                   value="{{$admin->bancarios->cta}}"
-                                                   placeholder="Banco" disabled>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="bancarios_banco" class="title-input">CLABE</label>
-                                            <input type="text" class="form-control" name="bancarios_clabe"
-                                                   value="{{$admin->bancarios->clabe}}"
-                                                   placeholder="Clabe" disabled>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="bancarios_banco" class="title-input">Tarjeta</label>
-                                            <input type="text" class="form-control" name="bancarios_tarjeta"
-                                                   value="{{$admin->bancarios->tarjeta}}"
-                                                   placeholder="Tarjeta" disabled>
-                                        </div>
-                                        @else
-                                        <p>Sin información</p>
-                                    @endif
-
-
-                                    <div class="form-group permitidascont{{ $admin->id }}">
-                                        <label class="control-label">Clases permitidas</label>
-                                        <?php $clases = App\Clase::orderBy('nombre', 'asc')->get(); ?>
-                                        @foreach ($clases as $clase)
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type='checkbox' class="permitidas"
-                                                           id="permitidas{{$admin->id}}{{$clase->id}}" name="clases[]"
-                                                           value="{{$clase->id}}">{{ $clase->nombre }}
-                                                </label>
-                                            </div>
-                                        @endforeach
+                                <label for="">Datos de cuenta</label>
+                                @if(isset($admin->bancarios))
+                                    <div class="form-group">
+                                        <label for="bancarios_banco" class="title-input">Banco</label>
+                                        <input type="text" class="form-control" name="bancarios_banco" id="bancarios_banco"
+                                               value="{{$admin->bancarios->banco}}"
+                                               placeholder="Banco" disabled>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label for="bancarios_banco" class="title-input">Cuenta</label>
+                                        <input type="text" class="form-control" name="bancarios_cta"
+                                               value="{{$admin->bancarios->cta}}"
+                                               placeholder="Banco" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="bancarios_banco" class="title-input">CLABE</label>
+                                        <input type="text" class="form-control" name="bancarios_clabe"
+                                               value="{{$admin->bancarios->clabe}}"
+                                               placeholder="Clabe" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="bancarios_banco" class="title-input">Tarjeta</label>
+                                        <input type="text" class="form-control" name="bancarios_tarjeta"
+                                               value="{{$admin->bancarios->tarjeta}}"
+                                               placeholder="Tarjeta" disabled>
+                                    </div>
+                                @else
+                                    <p>Sin información</p>
+                                @endif
 
-                                    @if ($admin->detalles)
-                                        <?php
-                                        $permitidas = explode(',', $admin->detalles->clases);
 
-                                        ?>
+                                <button type="button" class="btn btn-info"
+                                        data-toggle="collapse" data-target="#actualiza-coach{{ $admin->id }}">
+                                    Actualizar coach
+                                </button>
+                                <div id="actualiza-coach{{ $admin->id }}" class="collapse">
+                                    <br/>
+                                    <form action="{{ url('/actualizar-coach') }}" method="post"
+                                          enctype="multipart/form-data">
+                                        {{ method_field('PUT') }}
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="text" class="form-control" name="name" value="{{$admin->name}}"
+                                               placeholder="Nombre" required>
+                                        <label for="">Solo si se desea reemplazar</label>
+                                        <input class="form-control" type="file" name="photo">
+                                        <input type="email" class="form-control" name="email" value="{{$admin->email}}"
+                                               placeholder="Email" required>
+                                        <input class="form-control datepicker" type="text" value="{{$admin->dob}}"
+                                               placeholder="Fecha de nacimiento" name="dob" required>
+                                        <input type="tel" class="form-control" name="tel" value="{{$admin->tel}}"
+                                               placeholder="Teléfono" required>
+                                        <select class="form-control" name="genero" id="genero{{ $admin->id }}" required>
+                                            <option value="">Genero</option>
+                                            <option value="Masculino">Masculino</option>
+                                            <option value="Femenino">Femenino</option>
+                                        </select>
                                         <script type="text/javascript">
-                                            @foreach ($permitidas as $permitida)
-
-                                            document.getElementById('permitidas{{$admin->id}}{{$permitida}}').checked = true;
-                                            @endforeach
+                                            if (document.getElementById('genero{{ $admin->id }}') != null) document.getElementById('genero{{ $admin->id }}').value = '{!! $admin->genero !!}';
                                         </script>
-                                    @endif
-                                    <input type="password" class="form-control" name="password"
-                                           placeholder="Contraseña">
-                                    <input type="password" class="form-control" name="password_confirmation"
-                                           placeholder="Repetir contraseña">
-                                    <input type="hidden" name="admin_id" value="{{ $admin->id }}">
-                                    <div class="text-center">
-                                        <button class="btn btn-success" type="submit"
-                                                style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important; width: 40%; display: inline-block;">
-                                            Actualizar
-                                        </button>
-                                        <a href="#" class="btn btn-success"
-                                           style="color: #fff !important; background-color: #d9534f !important; border-color: #d9534f !important; width: 40%; display: inline-block;"
-                                           onclick="javascript: document.getElementById('botoneliminar{{ $admin->id }}').click();">Borrar</a>
-                                    </div>
-                                </form>
+
+                                        <div class="form-group permitidascont{{ $admin->id }}">
+                                            <label class="control-label">Clases permitidas</label>
+                                            <?php $clases = App\Clase::orderBy('nombre', 'asc')->get(); ?>
+                                            @foreach ($clases as $clase)
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type='checkbox' class="permitidas"
+                                                               id="permitidas{{$admin->id}}{{$clase->id}}" name="clases[]"
+                                                               value="{{$clase->id}}">{{ $clase->nombre }}
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+
+
+                                        @if ($admin->detalles)
+                                            <?php
+                                            $permitidas = explode(',', $admin->detalles->clases);
+
+                                            ?>
+                                            <script type="text/javascript">
+                                                @foreach ($permitidas as $permitida)
+
+                                                document.getElementById('permitidas{{$admin->id}}{{$permitida}}').checked = true;
+                                                @endforeach
+                                            </script>
+                                        @endif
+                                        <input type="password" class="form-control" name="password"
+                                               placeholder="Contraseña">
+                                        <input type="password" class="form-control" name="password_confirmation"
+                                               placeholder="Repetir contraseña">
+                                        <input type="hidden" name="admin_id" value="{{ $admin->id }}">
+                                        <div class="text-center">
+                                            <button class="btn btn-success" type="submit"
+                                                    style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important; width: 40%; display: inline-block;">
+                                                Actualizar
+                                            </button>
+                                            <a href="#" class="btn btn-success"
+                                               style="color: #fff !important; background-color: #d9534f !important; border-color: #d9534f !important; width: 40%; display: inline-block;"
+                                               onclick="javascript: document.getElementById('botoneliminar{{ $admin->id }}').click();">Borrar</a>
+                                        </div>
+                                    </form>
+
+                                </div>
+
+
+
                                 <form style="display: none;" action="{{ url('/eliminar-coach') }}" method="post">
                                     {!! csrf_field() !!}
                                     {{ method_field('DELETE') }}

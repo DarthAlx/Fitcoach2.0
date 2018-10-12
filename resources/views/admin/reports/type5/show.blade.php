@@ -46,10 +46,6 @@
             @endforeach
         </table>
     @endforeach
-    <div class="notes">
-        <b>Notas</b>
-        <p>El aforo promedio es la suma de los aforos registrado por el coach entre el número de clases. </p>
-    </div>
     <div>
         <p>Creado el : {{$now->toDateTimeString()}}</p>
     </div>

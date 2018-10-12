@@ -438,8 +438,7 @@ if (isset( $_GET['fromemail'] )) {
 
 @yield('modals')
 <!--dynamic table-->
-<script type="text/javascript" language="javascript"
-        src="{{ url('js/data-tables/jquery.dataTables.js') }}"></script>
+<script type="text/javascript" language="javascript" src="{{ url('js/advanced-datatable/js/jquery.dataTables.js') }}"></script>
 <script type="text/javascript" src="{{ url('js/data-tables/DT_bootstrap.js') }}"></script>
 <!--dynamic table initialization -->
 <script src="{{ url('js/dynamic_table_init.js') }}"></script>

@@ -35,11 +35,17 @@
         <img src="{{ url('images/condominios.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/condominios_b.png')}}'" onmouseout="this.src='{{ url('images/condominios.png')}}'" alt="">
       </a>
     </div>
-    <div class="col-md-3 col-sm-4 col-xs-6 modulo" id="grupos" style="display:none;">
-      <a href="{{ url('/grupos') }}">
+    <div class="col-md-3 col-sm-4 col-xs-6 modulo" id="rooms" style="display:none;">
+      <a href="{{ url('/rooms') }}">
         <img src="{{ url('images/grupos.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/grupos_b.png')}}'" onmouseout="this.src='{{ url('images/grupos.png')}}'" alt="">
       </a>
     </div>
+
+    {{--<div class="col-md-3 col-sm-4 col-xs-6 modulo" id="grupos" style="display:none;">
+      <a href="{{ url('/grupos') }}">
+        <img src="{{ url('images/grupos.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/grupos_b.png')}}'" onmouseout="this.src='{{ url('images/grupos.png')}}'" alt="">
+      </a>
+    </div>--}}
     <div class="col-md-3 col-sm-4 col-xs-6 modulo" id="eventos-admin" style="display:none;">
       <a href="{{ url('/eventos-admin') }}">
         <img src="{{ url('images/eventos.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/eventos_b.png')}}'" onmouseout="this.src='{{ url('images/eventos.png')}}'" alt="">

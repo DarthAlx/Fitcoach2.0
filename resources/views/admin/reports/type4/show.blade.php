@@ -30,10 +30,6 @@
             </tr>
         @endforeach
     </table>
-    <div class="notes">
-        <b>Notas</b>
-        <p>La tabla se acomoda por fecha de creación..</p>
-    </div>
     <p>Creado el : {{$now->toDateTimeString()}}</p>
 </div>
 </body>
