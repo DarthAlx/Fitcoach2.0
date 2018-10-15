@@ -7417,3 +7417,6 @@
 127.0.0.1 - - [02/Oct/2018:21:28:45 -0500] "GET /images/rclases_b.png HTTP/1.1" 200 22316
 127.0.0.1 - - [02/Oct/2018:21:28:45 -0500] "GET /images/zonas_b.png HTTP/1.1" 200 19321
 127.0.0.1 - - [02/Oct/2018:21:28:45 -0500] "GET /images/nomina_b.png HTTP/1.1" 200 36242
+127.0.0.1 - - [15/Oct/2018:00:20:23 -0500] "GET /uploads/rooms/FUT%20room%C2%AE1533674323.jpg HTTP/1.1" 404 20392
+127.0.0.1 - - [15/Oct/2018:13:02:24 -0500] "GET /admin-condominio HTTP/1.1" 500 23001
+127.0.0.1 - - [15/Oct/2018:13:02:26 -0500] "GET /favicon.ico HTTP/1.1" 200 328

@@ -204,6 +204,14 @@
             },500)
             //
         })
+        $('.eliminar-grupo').click(function () {
+            var id = $(this).attr("data-id");
+            $('#admin-condominios-grupos').modal('hide');
+            setTimeout(function () {
+                $('#modal-eliminar-grupo'+id).modal('show');
+            },500)
+            //
+        });
         $('.ver-grupo').click(function () {
             var id = $(this).attr("data-id");
             $('#admin-condominios-grupos').modal('hide')
@@ -228,6 +236,16 @@
             },500)
             //
         })
+        $('.btn-actualizar-grupo').click(function () {
+            var id = $(this).attr("data-id");
+            $('#admin-condominios-grupos-ver'+id).modal('hide');
+            setTimeout(function () {
+                $('#admin-condominios-grupos-actualizar'+id).modal('show');
+            },500)
+            //
+        });
+
+
 
     </script>
     @foreach ($condominio->residenciales as $residencial)

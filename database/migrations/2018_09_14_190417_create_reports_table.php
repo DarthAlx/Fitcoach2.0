@@ -28,6 +28,6 @@ class CreateReportsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('planes');
+        Schema::drop('reports');
     }
 }

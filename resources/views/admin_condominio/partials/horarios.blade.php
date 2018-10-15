@@ -5,17 +5,20 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h4>{{$grupo->nombre}} <span style="color: #cdcdcd">{!! $condominio->identificador !!}</span></h4>
+                            <h4>{{$grupo->nombre}} <span
+                                        style="color: #cdcdcd">{!! $condominio->identificador !!}</span></h4>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4 text-right">
-                            <button class="btn btn-success btn-lg btn-crear-horario" data-id="{{$grupo->id}}" style="max-width: 200px;">
+                            <button class="btn btn-success btn-lg btn-crear-horario" data-id="{{$grupo->id}}"
+                                    style="max-width: 200px;">
                                 Agregar horario
                             </button>
                         </div>
                         <div class="col-sm-4 text-right">
-                        <button class="btn btn-success btn-lg btn-actualizar-grupo" data-id="{{$grupo->id}}" style="max-width: 200px;">
+                            <button class="btn btn-success btn-lg btn-actualizar-grupo" data-id="{{$grupo->id}}"
+                                    style="max-width: 200px;">
                                 Actualizar grupo
                             </button>
                         </div>
@@ -36,7 +39,8 @@
                                 </thead>
                                 <tbody>
                                 @foreach ($grupo->horarios as $horario)
-                                    <tr style="cursor: pointer;" data-toggle="modal" data-target="#grupo{{$horario->id}}">
+                                    <tr style="cursor: pointer;" data-toggle="modal"
+                                        data-target="#grupo{{$horario->id}}">
                                         <td>{{$horario->fecha}}</td>
                                         <td>{{$horario->hora}}</td>
                                         <td>{{$horario->cupo}}</td>
@@ -178,7 +182,7 @@
                                    onclick="javascript: document.getElementById('botoneliminargrupo{{ $grupo->id }}').click();">Borrar</a>
                             </div>
                         </form>
-                        <form style="display: none;" action="{{ url('/eliminar-grupo') }}" method="post">
+                        <form style="display: none;" action="{{ url('/admin-condominio/eliminar-grupo') }}" method="post">
                             {!! csrf_field() !!}
                             {{ method_field('DELETE') }}
                             <input type="hidden" name="grupo_id" value="{{ $grupo->id }}">

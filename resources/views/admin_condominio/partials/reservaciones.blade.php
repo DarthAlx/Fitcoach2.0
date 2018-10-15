@@ -36,13 +36,15 @@
                                 </thead>
                                 <tbody>
                                 @foreach ($horario->reservaciones as $reservacion)
-                                    <tr style="cursor: pointer;" data-toggle="modal" data-target="#grupo{{$horario->id}}">
-                                        <td>{{$reservacion->user->name}}</td>
-                                        <td>{{$reservacion->user->genero}}</td>
-                                        <td>{{$reservacion->user->email}}</td>
-                                        <td>{{$reservacion->user->tel}}</td>
-                                        <td></td>
-                                    </tr>
+                                    @if($reservacion->user!=null)
+                                        <tr style="cursor: pointer;" data-toggle="modal" data-target="#grupo{{$horario->id}}">
+                                            <td>{{$reservacion->user->name}}</td>
+                                            <td>{{$reservacion->user->genero}}</td>
+                                            <td>{{$reservacion->user->email}}</td>
+                                            <td>{{$reservacion->user->tel}}</td>
+                                            <td></td>
+                                        </tr>
+                                    @endif
                                 @endforeach
                                 </tbody>
                                 <tfoot>

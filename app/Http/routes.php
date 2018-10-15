@@ -151,13 +151,15 @@ Route::get( '/eventos', 'Publico\EventosController@index' );
 
 
 
-Route::group( [ 'prefix' => 'admin-condominio', 'namespace' => 'AdminCondominio' ], function () {
+Route::group( [ 'prefix' => 'admin-condominio', 'namespace' => 'AdminCondominio' , 'middleware' => 'admin.condominio'], function () {
 	Route::get( '/', 'MainController@index' );
 	Route::post( '/agregar-evento', 'EventoController@crear' );
 	Route::put( '/actualizar-evento', 'EventoController@actualizar' );
 	Route::delete( '/eliminar-evento', 'EventoController@eliminar' );
 	Route::post( '/agregar-grupo', 'GrupoController@store' );
 	Route::post( '/grupos/agregar-horario', 'HorarioController@crear' );
+	Route::delete( '/eliminar-grupo', 'GrupoController@remove' );
+	Route::get( '/cancelar/{id}', 'MainController@cancelar' );
 
 });
 
@@ -509,7 +511,10 @@ Route::group( [ 'middleware' => 'instructores' ], function () {
 	Route::post( 'planear-clase', 'PlanController@store' );
 	Route::put( 'planear-clase', 'PlanController@update' );
 
-	Route::put( 'terminar-orden', 'Publico\OrdenController@terminar' );
+	Route::post( 'terminar-orden', 'Instructor\PerfilInstructor@terminarClase' );
+	Route::get( '/iniciar/{id}', 'Instructor\PerfilInstructor@iniciarClase' );
+	Route::post('/crear-invitado', 'Instructor\PerfilInstructor@agregarInvitado');
+
 
 	Route::post( 'agregar-libre', 'ClaseController@libre' );
 	Route::delete( 'eliminar-libre', 'ClaseController@destroylibre' );

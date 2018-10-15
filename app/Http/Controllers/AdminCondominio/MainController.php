@@ -12,9 +12,9 @@ namespace App\Http\Controllers\AdminCondominio;
 use App\Clase;
 use App\Condominio;
 use App\Evento;
-use App\Grupo;
 use App\Horario;
 use App\Http\Controllers\Controller;
+use App\Models\Grupo;
 use App\Room;
 use App\Services\RoomService;
 use App\User;
@@ -41,12 +41,13 @@ class MainController extends Controller {
 		                       ->where( 'condominio_id', $condominio->id )->orderBy( 'hora', 'asc' )->get();
 
 		$eventos = Evento::where( 'condominio_id', '=', $condominioId )->get();
+		/*** use grupo with soft delete**/
 		$grupos  = Grupo::with( 'coach' )
 		                ->with('horarios')
-						->with('horarios.clase')
-						->with('horarios.reservaciones')
-						->with('horarios.reservaciones.user')
-						->with( 'room' )
+		                ->with('horarios.clase')
+		                ->with('horarios.reservaciones')
+		                ->with('horarios.reservaciones.user')
+		                ->with( 'room' )
 		                ->with( 'clase' )
 		                ->where( 'condominio_id', '=', $condominioId )
 		                ->get();
