@@ -14,6 +14,7 @@ use App\Pago;
 use App\Paquete;
 use App\PaqueteComprado;
 use App\Reservacion;
+use App\ReservacionUsuario;
 use App\Tarjeta;
 use App\User;
 use Cart;
@@ -301,26 +302,6 @@ class OrdenController extends Controller
     }
 
 
-    public function terminar(Request $request)
-    {
-        $orden = Reservacion::find($request->revision);
-
-        if ($orden->tipo == 'En condominio') {
-            $ordenes = Reservacion::where('nombre', $orden->nombre)->where('fecha', $orden->fecha)->where('hora', $orden->hora)->get();
-            foreach ($ordenes as $ordenr) {
-                $ordenr->status = 'EN REVISIÓN';
-                $ordenr->aforo = $request->aforo;
-                $ordenr->save();
-            }
-        } else {
-            $orden->status = 'EN REVISIÓN';
-            $orden->aforo = $request->aforo;
-            $orden->save();
-        }
-        Session::flash('mensaje', '¡Orden en revisión!');
-        Session::flash('class', 'success');
-        return redirect()->intended(url('/perfilinstructor'));
-    }
 
 
     public function nomina()
@@ -421,13 +402,22 @@ class OrdenController extends Controller
                     $nuevafecha = strtotime ( '+5 day' , strtotime ( $fecha ) ) ;
                     $residencial->expiracion = date ( 'Y-m-d' , $nuevafecha );*/
                     $residencial->save();
-                    $orden->status = 'CANCELADA';
-                    $orden->metadata = "token devuelto";
+	                $reservacionUsuario = ReservacionUsuario::where('reservacion_id','=',$orden->id)
+	                                                        ->orderby('created_at','desc')
+	                                                        ->get()->first();
+	                $reservacionUsuario->estado = 'CANCELADA';
+	                $reservacionUsuario->metadata ="token devuelto";
+	                $reservacionUsuario->save();
                     Session::flash('mensaje', 'Token devuelto.');
                     Session::flash('class', 'success');
                 } elseif ($orden->tipo == "En condominio" && $orden->tokens == 0) {
-                    $orden->status = 'CANCELADA';
-                    $orden->metadata = "token devuelto";
+	                $reservacionUsuario = ReservacionUsuario::where('reservacion_id','=',$orden->id)
+		                                                    ->orderby('created_at','desc')
+	                                                        ->get()
+	                                                        ->first();
+	                $reservacionUsuario->estado = 'CANCELADA';
+	                $reservacionUsuario->metadata ="token devuelto";
+	                $reservacionUsuario->save();
                     Session::flash('mensaje', 'Participación cancelada.');
                     Session::flash('class', 'success');
                 } elseif ($orden->tipo == "A domicilio" && $particular) {
@@ -459,9 +449,20 @@ class OrdenController extends Controller
 
         } else {
             $orden = Reservacion::find($request->ordencancelar);
-            $orden->status = 'CANCELADA';
-            $orden->metadata = $request->tipocancelacion;
-            $orden->save();
+            if($orden->tipo=='En condominio')
+            {
+            	$reservacionUsuario = ReservacionUsuario::where('reservacion_id','=',$orden->id)
+		            ->orderby('created_at','desc')
+		            ->get()
+		            ->first();
+	            $reservacionUsuario->estado = 'CANCELADA';
+	            $reservacionUsuario->metadata = $request->tipocancelacion;
+	            $reservacionUsuario->save();
+            }else{
+	            $orden->status = 'CANCELADA';
+	            $orden->metadata = $request->tipocancelacion;
+	            $orden->save();
+            }
             Session::flash('mensaje', '¡Reservación Cancelada!');
             Session::flash('class', 'success');
 
@@ -813,19 +814,34 @@ class OrdenController extends Controller
             $guardar->coach_id = $producto['metadata']['coach'];
             $guardar->tipo = $producto['metadata']['tipo'];
             if ($producto['metadata']['tipo'] == "En condominio") {
-                $guardar->horario_id = $producto['metadata']['asociado'];
-                $grupo = Horario::find($producto['metadata']['asociado']);
-                $guardar->nombre = $grupo->clase->nombre;
-                if ($grupo->tipo == "En condominio") {
-                    $guardar->direccion = $grupo->grupo->condominio->identificador . ". " . $grupo->grupo->condominio->direccion;
-                }
+            	$reservacion = Reservacion::where('tipo','En condominio')
+		            ->where('horario_id',$producto['metadata']['asociado'])
+		            ->get()
+		            ->first();
+
+            	$reservacionUsuario = new ReservacionUsuario();
+            	$reservacionUsuario->reservacion_id = $reservacion->id;
+	            $reservacionUsuario->usuario_id =  Auth::user()->id;
+	            $reservacionUsuario->usuario_id =  Auth::user()->id;
+	            $reservacionUsuario->estado = 'PROXIMA';
+	            $reservacionUsuario->tokens = $producto['unit_price'];
+	            $reservacionUsuario->save();
             }
             elseif ($producto['metadata']['tipo'] == "Evento") {
                 $guardar->horario_id = 0;
                 $guardar->evento_id = $producto['metadata']['asociado'];
                 $guardar->nombre = $producto['name'];
                 $guardar->direccion = $producto['metadata']['direccion'];
+	            $guardar->fecha = $producto['metadata']['fecha'];
+	            $guardar->hora = $producto['metadata']['hora'];
+	            $guardar->status = 'PROXIMA';
+	            $guardar->save();
             } else {
+	            $guardar = new Reservacion();
+	            $guardar->tokens = $producto['unit_price'];
+	            $guardar->user_id = Auth::user()->id;
+	            $guardar->coach_id = $producto['metadata']['coach'];
+	            $guardar->tipo = $producto['metadata']['tipo'];
                 $guardar->horario_id = $producto['metadata']['asociado'];
                 $guardar->nombre = $producto['name'];
                 if ($request->direccion == "" && $request->esresidencial != "true") {
@@ -833,18 +849,20 @@ class OrdenController extends Controller
                 } else {
                     $guardar->direccion = $request->direccion;
                 }
+	            $guardar->fecha = $producto['metadata']['fecha'];
+	            $guardar->hora = $producto['metadata']['hora'];
+	            $guardar->status = 'PROXIMA';
+	            $guardar->save();
             }
 
-            $guardar->fecha = $producto['metadata']['fecha'];
-            $guardar->hora = $producto['metadata']['hora'];
-            $guardar->status = 'PROXIMA';
-            $guardar->save();
+
             if ($producto['metadata']['tipo'] == "En condominio") {
                 $residencial = Horario::find($producto['metadata']['asociado']);
                 $residencial->ocupados++;
                 $residencial->save();
+            }else{
+	            $this->sendclassrequest($guardar->id);
             }
-            $this->sendclassrequest($guardar->id);
         }
 
         Cart::destroy();

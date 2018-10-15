@@ -151,14 +151,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                @if($clase->abono && !$clase->abono->realizado)
-                                                    ${{$clase->abono->abono}} MXN
-                                                @else
-                                                    -
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if($clase->abono && $clase->abono->realizado)
+                                                @if($clase->abono)
                                                     ${{$clase->abono->abono}} MXN
                                                 @else
                                                     -

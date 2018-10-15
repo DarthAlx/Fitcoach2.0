@@ -1,5 +1,19 @@
 @extends('plantilla')
 @section('pagecontent')
+    <style>
+        table {
+            border: none !important;
+        }
+
+        td, th {
+            border-left: none !important;
+            border-right: none !important;
+        }
+
+        .table-striped > tbody > tr:nth-child(odd) {
+            background-color: #ffffff !important;
+        }
+    </style>
     <section class="container">
         <div class="topclear">
             &nbsp;
@@ -19,12 +33,14 @@
                         @if(Auth::user()!=null && Auth::user()->condominio_id == $condominio->id)
                             <div class="row">
                                 <div class="col-lg-4 col-sm-4">
-                                    <a class="btn btn-success btn-block" data-toggle="modal" data-target="#admin-condominios-eventos">
+                                    <a class="btn btn-success btn-block" data-toggle="modal"
+                                       data-target="#admin-condominios-eventos">
                                         Editar eventos
                                     </a>
                                 </div>
                                 <div class="col-lg-4 col-sm-4">
-                                    <a class="btn btn-success btn-block" data-toggle="modal" data-target="#admin-condominios-grupos">
+                                    <a class="btn btn-success btn-block" data-toggle="modal"
+                                       data-target="#admin-condominios-grupos">
                                         Editar clases
                                     </a>
                                 </div>
@@ -59,60 +75,46 @@
                     <div class="col-lg-8">
                         <h3>CLASES DE HOY</h3>
                         @foreach($horarios as $horario)
-                            <div class="row condominios-clases">
-                                <div class="col-lg-2">
-                                    <b class="condominios-clases-text">{{$horario->clase->nombre}}</b>
-                                </div>
-                                <div class="col-lg-2">
-                                    <p class="condominios-clases-text"> {{$horario->user->name}}</p>
-                                </div>
-                                <div class="col-lg-2">
-                                    <p class="condominios-clases-text">{{$horario->grupo->room->nombre}}</p>
-                                </div>
-                                <div class="col-lg-2">
-                                    <p class="condominios-clases-text">{{$horario->hora}}</p>
-                                </div>
-                                <div class="col-lg-2">
-                                    <p class="condominios-clases-text">@if(isset($horario->tokens) && $horario->tokens>0)
-                                            {{$horario->tokens}}
-                                        @else
-                                            <span>Gratis</span>
+                            @foreach($horario->reservaciones as $reservacion)
+                                <div class="row condominios-clases">
+                                    <div class="col-lg-2">
+                                        <b class="condominios-clases-text">{{$horario->clase->nombre}}</b>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="condominios-clases-text"> {{$horario->user->name}}</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="condominios-clases-text">{{$horario->grupo->room->nombre}}</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="condominios-clases-text">{{$horario->hora}}</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="condominios-clases-text">
+                                            {{$horario->cupo-$horario->ocupados}}
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <i class="icon-classes-image fa fa-comments"></i>
+                                        <a data-toggle="modal"
+                                           data-target="#admin-condominios-horarios-ver{{$horario->id}}">
+                                            <i class="icon-classes-image fa fa-list-ul"></i>
+                                        </a>
+                                        @if(isset($reservacion->plan))
+                                            <a data-toggle="modal" data-target="#">
+                                                <i class="icon-classes-image fa fa-eye" data-toggle="modal"
+                                                   data-target="#proximas{{$reservacion->id}}"></i>
+                                            </a>
                                         @endif
-                                    </p>
-                                </div>
-                                <div class="col-lg-2">
-                                    <i class="icon-classes-image fa fa-comments"></i>
-                                    <a data-toggle="modal" data-target="#admin-condominios-horarios-ver{{$horario->id}}">
-                                        <i class="icon-classes-image fa fa-list-ul"></i>
-                                    </a>
-                                    <a data-toggle="modal" data-target="#">
-                                        <i class="icon-classes-image fa fa-eye"></i>
-                                    </a>
-                                </div>
-                                {{--<div class="col-lg-2">
-                                    @if($hour>$horario->hora)
-                                        <button class="btn" style="background-color: #999; color:#fff">
-                                            Impartida
-                                        </button>
-                                    @else
-                                        <form action="{{url('carrito')}}" onsubmit="fbq('track', 'AddToCart');"
-                                              method="post">
-                                            {!! csrf_field() !!}
-                                            <input type="hidden" name="cantidad" value="1">
-                                            <input type="hidden"
-                                                   name="carrito[]"
-                                                   value="{{$horario->id}},{{$date}},{{$horario->tokens}}">
-                                            <input type="hidden"
-                                                   name="tipo"
-                                                   value="En condominio">
-                                            <button class="btn btn-success" type="submit">
-                                                Reservar
-                                            </button>
-                                        </form>
+                                        @if($reservacion->status=='PROXIMA')
+                                            <a href="/admin-condominio/cancelar/{{$reservacion->id}}">
+                                                <i class="icon-classes-image fa fa-times"></i>
+                                            </a>
+                                        @endif
 
-                                    @endif
-                                </div>--}}
-                            </div>
+                                    </div>
+                                </div>
+                            @endforeach
                         @endforeach
                         <div class="row condominios-clases">
                             <div class="col-lg-12">
@@ -121,15 +123,22 @@
                         </div>
                         <h3>PRÓXIMOS EVENTOS</h3>
                         <div class="row">
-                            @foreach($condominio->eventos as $evento)
-                                <div class="col-sm-3 col-md-3">
-                                    <a data-toggle="modal" data-target="#evento{{$evento->id}}">
-                                        <img src="{{ url('uploads/clases') }}/{{ $evento->imagen }}"
-                                             class="img-responsive">
-                                    </a>
+                            @if(count($condominio->eventos)>0)
+                                @foreach($condominio->eventos as $evento)
+                                    <div class="col-sm-3 col-md-3">
+                                        <a data-toggle="modal" data-target="#evento{{$evento->id}}">
+                                            <img src="{{ url('uploads/clases') }}/{{ $evento->imagen }}"
+                                                 class="img-responsive">
+                                        </a>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="row condominios-clases">
+                                    <div class="col-lg-12">
+                                        <p style="text-align: center">No hay más eventos disponibles</p>
+                                    </div>
                                 </div>
-                            @endforeach
-
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -150,10 +159,10 @@
     @include('condominio.partials.clases')
     @include('condominio.partials.clases_room')
     @include('condominio.partials.eventos')
+    @include('admin_condominio.partials.grupos')
     @include('admin_condominio.partials.eventos')
     @include('admin_condominio.partials.crear_evento')
     @include('admin_condominio.partials.editar_evento')
-    @include('admin_condominio.partials.grupos')
     @include('admin_condominio.partials.crear_grupo')
     @include('admin_condominio.partials.horarios')
     @include('admin_condominio.partials.reservaciones')
@@ -201,7 +210,7 @@
             $('#admin-condominios-grupos').modal('hide')
             setTimeout(function () {
                 $('#crear-grupo').modal('show');
-            },500)
+            }, 500)
             //
         })
         $('.eliminar-grupo').click(function () {
@@ -216,24 +225,24 @@
             var id = $(this).attr("data-id");
             $('#admin-condominios-grupos').modal('hide')
             setTimeout(function () {
-                $('#admin-condominios-grupos-ver'+id).modal('show');
-            },500)
+                $('#admin-condominios-grupos-ver' + id).modal('show');
+            }, 500)
             //
         })
         $('.btn-crear-horario').click(function () {
             var id = $(this).attr("data-id");
-            $('#admin-condominios-grupos-ver'+id).modal('hide');
+            $('#admin-condominios-grupos-ver' + id).modal('hide');
             setTimeout(function () {
-                $('#admin-condominios-grupos-crear'+id).modal('show');
-            },500)
+                $('#admin-condominios-grupos-crear' + id).modal('show');
+            }, 500)
             //
         })
         $('.btn-actualizar-grupo').click(function () {
             var id = $(this).attr("data-id");
-            $('#admin-condominios-grupos-ver'+id).modal('hide');
+            $('#admin-condominios-grupos-ver' + id).modal('hide');
             setTimeout(function () {
-                $('#admin-condominios-grupos-actualizar'+id).modal('show');
-            },500)
+                $('#admin-condominios-grupos-actualizar' + id).modal('show');
+            }, 500)
             //
         })
         $('.btn-actualizar-grupo').click(function () {
@@ -268,7 +277,7 @@
                                                 <img src="{{ url('uploads/avatars') }}/{{ $residencial->user->detalles->photo }}"
                                                      class="img-responsive" alt="">
                                             </div>
-                                            <?php $nombre = explode(" ", $residencial->user->name); ?>
+											<?php $nombre = explode( " ", $residencial->user->name ); ?>
                                             <h2>{{ucfirst($nombre[0])}}</h2>
 
 

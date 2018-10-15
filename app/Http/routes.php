@@ -421,8 +421,8 @@ Route::group( [ 'middleware' => 'administradores' ], function () {
 	Route::post( '/reportes/{id}', 'Reports\ReportController@create' );
 	Route::post( 'pagar', 'Publico\OrdenController@pago' );
 	Route::get( 'historialpagos/{id}', 'Publico\OrdenController@historialpagos' );
-	Route::get( 'clasesvista', 'Publico\OrdenController@clasesvista' );
-	Route::post( 'clasesvista', 'Publico\OrdenController@clasesvistapost' );
+	Route::get( 'clasesvista', 'Admin\ClaseController@clasesvista' );
+	Route::post( 'clasesvista', 'Admin\ClaseController@clasesvistapost' );
 
 	Route::get( 'cupones', 'CuponController@index' );
 	Route::post( 'agregar-cupon', 'CuponController@store' );

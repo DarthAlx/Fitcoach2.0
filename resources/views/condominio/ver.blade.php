@@ -33,52 +33,58 @@
                     <div class="col-lg-8">
                         <h3>CLASES DE HOY</h3>
                         @foreach($horarios as $horario)
-                            <div class="row condominios-clases">
-                                <div class="col-lg-2">
-                                    <b class="condominios-clases-text">{{$horario->clase->nombre}}</b>
-                                </div>
-                                <div class="col-lg-2">
-                                    <p class="condominios-clases-text"> {{$horario->user->name}}</p>
-                                </div>
-                                <div class="col-lg-2">
-                                    <p class="condominios-clases-text">{{$horario->grupo->room->nombre}}</p>
-                                </div>
-                                <div class="col-lg-2">
-                                    <p class="condominios-clases-text">{{$horario->hora}}</p>
-                                </div>
-                                <div class="col-lg-2">
-                                    <p class="condominios-clases-text">
-                                        @if(isset($horario->tokens) && $horario->tokens>0)
-                                            <span>Con costo</span>
-                                        @else
-                                            <span>Incluida</span>
-                                        @endif
-                                    </p>
-                                </div>
-                                <div class="col-lg-2">
-                                    @if($hour>$horario->hora)
-                                        <button class="btn" style="background-color: #999; color:#fff">
-                                            Impartida
-                                        </button>
-                                    @else
-                                        <form action="{{url('carrito')}}" onsubmit="fbq('track', 'AddToCart');"
-                                              method="post">
-                                            {!! csrf_field() !!}
-                                            <input type="hidden" name="cantidad" value="1">
-                                            <input type="hidden"
-                                                   name="carrito[]"
-                                                   value="{{$horario->id}},{{$date}},{{$horario->tokens}}">
-                                            <input type="hidden"
-                                                   name="tipo"
-                                                   value="En condominio">
-                                            <button class="btn btn-success" type="submit">
-                                                Reservar
+                            @foreach($horario->reservaciones as $reservacion)
+                                <div class="row condominios-clases">
+                                    <div class="col-lg-2">
+                                        <b class="condominios-clases-text">{{$horario->clase->nombre}}</b>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="condominios-clases-text"> {{$horario->user->name}}</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="condominios-clases-text">{{$horario->grupo->room->nombre}}</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="condominios-clases-text">{{$horario->hora}}</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p class="condominios-clases-text">@if(isset($horario->tokens))
+                                                {{$horario->tokens}}
+                                            @else
+                                                <span>Gratis</span>
+                                            @endif
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        @if($hour>$horario->hora)
+                                            <button class="btn" style="background-color: #999; color:#fff">
+                                                Impartida
                                             </button>
-                                        </form>
+                                        @elseif($reservacion->status!='PROXIMA')
+                                            <button class="btn" style="background-color: #999; color:#fff">
+                                                No disponible
+                                            </button>
+                                        @else
+                                            <form action="{{url('carrito')}}" onsubmit="fbq('track', 'AddToCart');"
+                                                  method="post">
+                                                {!! csrf_field() !!}
+                                                <input type="hidden" name="cantidad" value="1">
+                                                <input type="hidden"
+                                                       name="carrito[]"
+                                                       value="{{$horario->id}},{{$date}},{{$horario->tokens}}">
+                                                <input type="hidden"
+                                                       name="tipo"
+                                                       value="En condominio">
+                                                <button class="btn btn-success" type="submit">
+                                                    Reservar
+                                                </button>
+                                            </form>
 
-                                    @endif
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
+
+                            @endforeach
                         @endforeach
                         <div class="row condominios-clases">
                             <div class="col-lg-12">
@@ -87,15 +93,22 @@
                         </div>
                         <h3>PRÓXIMOS EVENTOS</h3>
                         <div class="row">
-                            @foreach($condominio->eventos as $evento)
-                                <div class="col-sm-3 col-md-3">
-                                    <a data-toggle="modal" data-target="#evento{{$evento->id}}">
-                                        <img src="{{ url('uploads/clases') }}/{{ $evento->imagen }}"
-                                             class="img-responsive">
-                                    </a>
+                            @if(count($condominio->eventos)>0)
+                                @foreach($condominio->eventos as $evento)
+                                    <div class="col-sm-3 col-md-3">
+                                        <a data-toggle="modal" data-target="#evento{{$evento->id}}">
+                                            <img src="{{ url('uploads/clases') }}/{{ $evento->imagen }}"
+                                                 class="img-responsive">
+                                        </a>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="row condominios-clases">
+                                    <div class="col-lg-12">
+                                        <p style="text-align: center">No hay más eventos disponibles</p>
+                                    </div>
                                 </div>
-                            @endforeach
-
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -175,7 +188,7 @@
                                                 <img src="{{ url('uploads/avatars') }}/{{ $residencial->user->detalles->photo }}"
                                                      class="img-responsive" alt="">
                                             </div>
-                                            <?php $nombre = explode(" ", $residencial->user->name); ?>
+											<?php $nombre = explode( " ", $residencial->user->name ); ?>
                                             <h2>{{ucfirst($nombre[0])}}</h2>
 
 

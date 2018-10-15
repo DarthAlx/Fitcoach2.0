@@ -7,10 +7,10 @@
         <div class="row profile">
             <div class="col-sm-12">
                 @include('holders.notificaciones')
-                <?php $nombre = explode(" ", $user->name);
-                if (!isset($nombre[1])) {
-                    $nombre[1] = null;
-                }?>
+				<?php $nombre = explode( " ", $user->name );
+				if ( ! isset( $nombre[1] ) ) {
+					$nombre[1] = null;
+				}?>
                 <h2>Hola <span class="nombre">{{ucfirst($nombre[0])}} {{ucfirst($nombre[1])}}</span></h2>
                 <h4 style="text-align: right">código de referencia: <strong>{{$user->code}}</strong> <a href="#"
                                                                                                         style="color: #000;"
@@ -31,30 +31,30 @@
         </script>
         <div class="row">
             <div class="col-md-4 col-lg-3 sidebar">
-                <?php
-                $user = App\User::find(Auth::user()->id);
-                $particulares = App\PaqueteComprado::where('user_id', $user->id)->where('tipo', 'A domicilio')->where('disponibles', '<>', 0)->orderBy('expiracion', 'asc')->get();
-                $residenciales = App\PaqueteComprado::where('user_id', $user->id)->where('tipo', 'En condominio')->where('disponibles', '<>', 0)->orderBy('expiracion', 'asc')->get();
-                $partdisp = 0;
-                $resdisp = 0;
-                $today = strtotime(date('Y-m-d'));
+				<?php
+				$user = App\User::find( Auth::user()->id );
+				$particulares = App\PaqueteComprado::where( 'user_id', $user->id )->where( 'tipo', 'A domicilio' )->where( 'disponibles', '<>', 0 )->orderBy( 'expiracion', 'asc' )->get();
+				$residenciales = App\PaqueteComprado::where( 'user_id', $user->id )->where( 'tipo', 'En condominio' )->where( 'disponibles', '<>', 0 )->orderBy( 'expiracion', 'asc' )->get();
+				$partdisp = 0;
+				$resdisp = 0;
+				$today = strtotime( date( 'Y-m-d' ) );
 
-                foreach ($particulares as $pd) {
+				foreach ( $particulares as $pd ) {
 
-                    $expire = strtotime($pd->expiracion);
-                    if ($expire >= $today) {
-                        $partdisp = $partdisp + $pd->disponibles;
-                    }
-                }
+					$expire = strtotime( $pd->expiracion );
+					if ( $expire >= $today ) {
+						$partdisp = $partdisp + $pd->disponibles;
+					}
+				}
 
-                foreach ($residenciales as $rd) {
+				foreach ( $residenciales as $rd ) {
 
-                    $expire = strtotime($rd->expiracion);
-                    if ($expire >= $today) {
-                        $resdisp = $resdisp + $rd->disponibles;
-                    }
-                }
-                ?>
+					$expire = strtotime( $rd->expiracion );
+					if ( $expire >= $today ) {
+						$resdisp = $resdisp + $rd->disponibles;
+					}
+				}
+				?>
                 <div class="row">
                     <div class="col-md-12">
                         <h4>CLASES DISPONIBLES</h4>
@@ -108,12 +108,12 @@
                 <div class="claseanterior text-center">
                     <h4>CLASE ANTERIOR</h4>
                     @if ($user->reservaciones)
-                        <?php
-                        $ultima = App\Reservacion::where('user_id', $user->id)->where('status', 'COMPLETA')->orderBy('fecha', 'desc')->first();
-                        if ($ultima) {
-                        $coachu = App\User::find($ultima->coach_id);
-                        $nombre = explode(" ", $coachu->name);
-                        ?>
+						<?php
+						$ultima = App\Reservacion::where( 'user_id', $user->id )->where( 'status', 'COMPLETA' )->orderBy( 'fecha', 'desc' )->first();
+						if ($ultima) {
+						$coachu = App\User::find( $ultima->coach_id );
+						$nombre = explode( " ", $coachu->name );
+						?>
 
                         <h1>{{$ultima->nombre}}</h1>
                         <h2>{{ucfirst($nombre[0])}}</h2>
@@ -167,9 +167,9 @@
 
                             </script>
                         @endif
-                        <?php } else{ ?>
+						<?php } else{ ?>
                         <p>No has tomado ninguna clase.</p>
-                        <?php } ?>
+						<?php } ?>
                     @endif
                 </div>
 
@@ -242,97 +242,79 @@
                     <p>&nbsp;</p>
                     <div id="proximas" class="listadeclases">
                         <div class="list-group">
-                            @if ($user->reservaciones && false)
-                                <?php
-                                $proximas = App\Reservacion::where('user_id', $user->id)->where('status', 'PROXIMA')->orderBy('fecha', 'desc')->get();
-                                if (!$proximas->isEmpty()) {
-                                date_default_timezone_set('America/Mexico_City');
-                                foreach ($proximas as $proxima) {
+                            @if ($user->reservaciones)
+								<?php
+								$proximas = App\Reservacion::where( function ( $subquery ) use ( $user ) {
+                                                                $subquery->where( 'user_id', $user->id );
+                                                                $subquery->where( 'status', '=', 'PROXIMA' );
+                                                            } )
+								                           ->orWhereHas( 'asistentes', function ( $subquery ) use ( $user ) {
+									                           $subquery->where( 'usuario_id', $user->id );
+									                           $subquery->where( 'status', '=', 'PROXIMA' );
+								                           } )
+								                           ->orderBy( 'fecha', 'desc' )->get();
+								if (! $proximas->isEmpty()) {
+								date_default_timezone_set( 'America/Mexico_City' );
+								foreach ($proximas as $proxima) {
+								$fecha = date_create( $proxima->fecha );
+								?>
 
-
-                                $fecha = date_create($proxima->fecha);
-
-                                ?>
-
-
-
-                                @if ($proxima->tipo=="En condominio")
-                                    <div class="list-group-item row">
-                                        <div class="col-xs-2">
-                                            <strong>{{$proxima->nombre}}</strong>
-                                        </div>
-                                        <div class="col-xs-2">
-
-                                            <?php $nombre = explode(" ", $proxima->horario->user->name);?>
-                                            <span data-toggle="tooltip" data-placement="bottom"
-                                                  title="{{$proxima->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
-                                        </div>
-                                        <div class="col-xs-2">
-                                            <span data-toggle="tooltip" data-placement="bottom"
-                                                  title="{{$proxima->horario->grupo->condominio->direccion}}">{{$proxima->horario->grupo->condominio->identificador}}</span>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <div class="pull-right" data-toggle="modal"
-                                                 data-target="#cancelar{{$proxima->id}}"><a href="#"><i
-                                                            class="fa fa-times icopopup"></i> &nbsp;</a></div>
-                                        </div>
+                                <div class="list-group-item row">
+                                    <div class="col-xs-2">
+                                        <strong>{{$proxima->nombre}}</strong>
                                     </div>
-                                @else
-                                    <div class="list-group-item row">
-                                        <div class="col-xs-2">
-                                            <strong>{{$proxima->nombre}}</strong>
-                                        </div>
-                                        <div class="col-xs-2">
+                                    <div class="col-xs-2">
 
-                                            <?php $nombre = explode(" ", $proxima->horario->user->name);?>
-                                            <span data-toggle="tooltip" data-placement="bottom"
-                                                  title="{{$proxima->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
-                                        </div>
-                                        <div class="col-xs-2">
-                                            <?php $direccion = App\Direccion::find($proxima->direccion); ?>
-                                            @if($direccion)
-                                                {{$direccion->identificador}}
-                                            @endif
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <div class="pull-right" data-toggle="modal"
-                                                 data-target="#cancelar{{$proxima->id}}"><a href="#"><i
-                                                            class="fa fa-times icopopup"></i> &nbsp;</a></div>
-                                            <div class="pull-right" data-toggle="modal"
-                                                 data-target="#telefono{{$proxima->id}}"><a href="#"><i
-                                                            class="fa fa-phone icopopup"></i> &nbsp;</a></div>
-                                        </div>
+										<?php $nombre = explode( " ", $proxima->horario->user->name );?>
+                                        <span data-toggle="tooltip" data-placement="bottom"
+                                              title="{{$proxima->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
                                     </div>
-                                @endif <!--en condominio-->
-
-
-
-                                <?php } } else{ ?>
+                                    <div class="col-xs-3">
+                                        {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
+                                    </div>
+                                    <div class="col-xs-2">
+										<?php $direccion = App\Direccion::find( $proxima->direccion ); ?>
+                                        @if($direccion)
+                                            {{$direccion->identificador}}
+                                        @endif
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="pull-right" data-toggle="modal"
+                                             data-target="#cancelar{{$proxima->id}}"><a href="#"><i
+                                                        class="fa fa-times icopopup"></i> &nbsp;</a></div>
+                                        <div class="pull-right" data-toggle="modal"
+                                             data-target="#telefono{{$proxima->id}}"><a href="#"><i
+                                                        class="fa fa-phone icopopup"></i> &nbsp;</a></div>
+                                    </div>
+                                </div>
+								<?php } } else{ ?>
                                 <p class="text-center">No has tomado ninguna clase.</p>
-                                <?php  } ?>
+								<?php  } ?>
                             @endif
 
                         </div>
                     </div>
                     <div id="pasadas" class="listadeclases" style="display:none;">
                         <div class="list-group">
-                            @if ($user->reservaciones && false)
-                                <?php
-                                $pasadas = App\Reservacion::where('user_id', $user->id)->where('status', '<>', 'PROXIMA')->orderBy('fecha', 'desc')->get();
-                                if (!$pasadas->isEmpty()) {
-                                date_default_timezone_set('America/Mexico_City');
-                                foreach ($pasadas as $pasada) {
+                            @if ($user->reservaciones)
+								<?php
+								$pasadas = App\Reservacion::where( function ( $subquery ) use ( $user ) {
+                                                                $subquery->where( 'user_id', $user->id );
+                                                                $subquery->where( 'status', '<>', 'PROXIMA' );
+                                                            } )
+								                          ->orWhereHas( 'asistentes', function ( $subquery ) use ( $user ) {
+									                          $subquery->where( 'usuario_id', $user->id );
+									                          $subquery->where( 'estado', '<>', 'PROXIMA' );
+								                          } )
+								                          ->orderBy( 'fecha', 'desc' )->get();
+								if (! $pasadas->isEmpty()) {
+								date_default_timezone_set( 'America/Mexico_City' );
+								foreach ($pasadas as $pasada) {
 
 
-                                $fecha = date_create($pasada->fecha);
-                                setlocale(LC_TIME, "es-ES");
-                                ?>
+								$fecha = date_create( $pasada->fecha );
+								setlocale( LC_TIME, "es-ES" );
+								?>
                                 @if ($pasada->tipo=="En condominio")
                                     <div class="list-group-item row">
                                         <div class="col-xs-2">
@@ -340,7 +322,7 @@
                                         </div>
                                         <div class="col-xs-2">
 
-                                            <?php $nombre = explode(" ", $pasada->horario->user->name);?>
+											<?php $nombre = explode( " ", $pasada->horario->user->name );?>
                                             <span data-toggle="tooltip" data-placement="bottom"
                                                   title="{{$pasada->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
                                         </div>
@@ -352,10 +334,10 @@
                                                   title="{{$pasada->horario->grupo->condominio->direccion}}">{{$pasada->horario->grupo->condominio->identificador}}</span>
                                         </div>
                                         <div class="col-xs-3">
-                                            @if($pasada->status=="EN REVISIÓN")
+                                            @if(collect($pasada->asistentes)->first()->estado=="EN REVISIÓN")
                                                 TERMINADA
                                             @else
-                                                {{$pasada->status}}
+                                                {{collect($pasada->asistentes)->first()->estado}}
                                             @endif
                                         </div>
                                     </div>
@@ -366,7 +348,7 @@
                                         </div>
                                         <div class="col-xs-2">
 
-                                            <?php $nombre = explode(" ", $pasada->horario->user->name);?>
+											<?php $nombre = explode( " ", $pasada->horario->user->name );?>
                                             <span data-toggle="tooltip" data-placement="bottom"
                                                   title="{{$pasada->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
                                         </div>
@@ -374,7 +356,7 @@
                                             {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
                                         </div>
                                         <div class="col-xs-2">
-                                            <?php $direccion = App\Direccion::find($pasada->direccion); ?>
+											<?php $direccion = App\Direccion::find( $pasada->direccion ); ?>
                                             @if($direccion)
                                                 {{$direccion->identificador}}
                                             @endif
@@ -384,9 +366,9 @@
                                         </div>
                                     </div>
                                 @endif <!--en condominio-->
-                                <?php } } else{ ?>
+								<?php } } else{ ?>
                                 <p class="text-center">No has tomado ninguna clase.</p>
-                                <?php  } ?>
+								<?php  } ?>
                             @endif
 
                         </div>
@@ -396,14 +378,14 @@
                     <div id="historial" class="listadeclases" style="display:none;">
                         <div class="list-group">
 
-                            <?php
-                            $compradas = $user->paquetes;
+							<?php
+							$compradas = $user->paquetes;
 
-                            if (!$compradas->isEmpty()) {
-                            date_default_timezone_set('America/Mexico_City');
-                            foreach ($compradas as $comprada) {
+							if (! $compradas->isEmpty()) {
+							date_default_timezone_set( 'America/Mexico_City' );
+							foreach ($compradas as $comprada) {
 
-                            ?>
+							?>
                             <a href="#" class="list-group-item" data-toggle="modal"
                                data-target="#comprada{{$comprada->id}}">
                                 @if($comprada->tipo=="A domicilio")
@@ -411,16 +393,16 @@
                                 @else
                                     <i class="fa fa-building" aria-hidden="true"></i>
                                 @endif
-                                <?php setlocale(LC_TIME, "es_MX"); ?>
+								<?php setlocale( LC_TIME, "es_MX" ); ?>
                                 {{$comprada->clases}} Clases | Expira: {{$comprada->expiracion}}
                             <!--i class="fa fa-chevron-right pull-right" aria-hidden="true"></i-->
                             </a>
-                            <?php
-                            }
-                            } else{ ?>
+							<?php
+							}
+							} else{ ?>
                             <p class="text-center">No has comprado ningún paquete.</p>
-                            <?php  }
-                            ?>
+							<?php  }
+							?>
 
 
                         </div>
@@ -512,16 +494,24 @@
                     <p>&nbsp;</p>
                     <div id="proximaslg" class="listadeclases">
                         <div class="list-group">
-                            @if ($user->reservaciones && false)
-                                <?php
-                                $proximas = App\Reservacion::where('user_id', $user->id)->where('status', 'PROXIMA')->orderBy('fecha', 'asc')->get();
-                                if (!$proximas->isEmpty()) {
-                                date_default_timezone_set('America/Mexico_City');
-                                foreach ($proximas as $proxima) {
+                            @if ($user->reservaciones)
+								<?php
+								$proximas = App\Reservacion::where( function ( $subquery ) use ( $user ) {
+                                                                $subquery->where( 'user_id', $user->id );
+                                                                $subquery->where( 'status', '=', 'PROXIMA' );
+                                                            } )
+								                           ->orWhereHas( 'asistentes', function ( $subquery ) use ( $user ) {
+									                           $subquery->where( 'usuario_id', $user->id );
+									                           $subquery->where( 'estado', '=', 'PROXIMA' );
+								                           } )
+								                           ->orderBy( 'fecha', 'asc' )->get();
+								if (! $proximas->isEmpty()) {
+								date_default_timezone_set( 'America/Mexico_City' );
+								foreach ($proximas as $proxima) {
 
-                                $fecha = date_create($proxima->fecha);
-                                setlocale(LC_TIME, "es-ES");
-                                ?>
+								$fecha = date_create( $proxima->fecha );
+								setlocale( LC_TIME, "es-ES" );
+								?>
                                 @if ($proxima->tipo=="En condominio")
                                     <div class="list-group-item row">
                                         <div class="col-xs-2">
@@ -529,7 +519,7 @@
                                         </div>
                                         <div class="col-xs-2">
 
-                                            <?php $nombre = explode(" ", $proxima->horario->user->name);?>
+											<?php $nombre = explode( " ", $proxima->horario->user->name );?>
                                             <span data-toggle="tooltip" data-placement="bottom"
                                                   title="{{$proxima->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
                                         </div>
@@ -553,7 +543,7 @@
                                         </div>
                                         <div class="col-xs-2">
 
-                                            <?php $nombre = explode(" ", $proxima->horario->user->name);?>
+											<?php $nombre = explode( " ", $proxima->horario->user->name );?>
                                             <span data-toggle="tooltip" data-placement="bottom"
                                                   title="{{$proxima->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
                                         </div>
@@ -561,7 +551,7 @@
                                             {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
                                         </div>
                                         <div class="col-xs-2">
-                                            <?php $direccion = App\Direccion::find($proxima->direccion); ?>
+											<?php $direccion = App\Direccion::find( $proxima->direccion ); ?>
                                             @if($direccion)
                                                 {{$direccion->identificador}}
                                             @endif
@@ -576,25 +566,33 @@
                                         </div>
                                     </div>
                                 @endif <!--en condominio-->
-                                <?php } } else{ ?>
+								<?php } } else{ ?>
                                 <p class="text-center">No has tomado ninguna clase.</p>
-                                <?php  } ?>
+								<?php  } ?>
                             @endif
 
                         </div>
                     </div>
                     <div id="pasadaslg" class="listadeclases" style="display:none;">
                         <div class="list-group">
-                            @if ($user->reservaciones && false)
-                                <?php
-                                $pasadas = App\Reservacion::where('user_id', $user->id)->where('status', '<>', 'PROXIMA')->orderBy('fecha', 'desc')->get();
-                                if (!$pasadas->isEmpty()) {
-                                date_default_timezone_set('America/Mexico_City');
-                                foreach ($pasadas as $pasada) {
+                            @if ($user->reservaciones)
+								<?php
+								$pasadas = App\Reservacion::where( function ( $subquery ) use ( $user ) {
+                                                                $subquery->where( 'user_id', $user->id );
+                                                                $subquery->where( 'status', '<>', 'PROXIMA' );
+                                                            } )
+								                          ->orWhereHas( 'asistentes', function ( $subquery ) use ( $user ) {
+									                          $subquery->where( 'usuario_id', $user->id );
+									                          $subquery->where( 'estado', '<>', 'PROXIMA' );
+								                          } )
+								                          ->orderBy( 'fecha', 'desc' )->get();
+								if (! $pasadas->isEmpty()) {
+								date_default_timezone_set( 'America/Mexico_City' );
+								foreach ($pasadas as $pasada) {
 
-                                $fecha = date_create($pasada->fecha);
-                                setlocale(LC_TIME, "es-ES");
-                                ?>
+								$fecha = date_create( $pasada->fecha );
+								setlocale( LC_TIME, "es-ES" );
+								?>
                                 @if ($pasada->tipo=="En condominio")
                                     <div class="list-group-item row">
                                         <div class="col-xs-2">
@@ -602,7 +600,7 @@
                                         </div>
                                         <div class="col-xs-2">
 
-                                            <?php $nombre = explode(" ", $pasada->horario->user->name);?>
+											<?php $nombre = explode( " ", $pasada->horario->user->name );?>
                                             <span data-toggle="tooltip" data-placement="bottom"
                                                   title="{{$pasada->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
                                         </div>
@@ -614,10 +612,10 @@
                                                   title="{{$pasada->horario->grupo->condominio->direccion}}">{{$pasada->horario->grupo->condominio->identificador}}</span>
                                         </div>
                                         <div class="col-xs-3">
-                                            @if($pasada->status=="EN REVISIÓN")
+                                            @if(collect($pasada->asistentes)->first()->estado=="EN REVISIÓN")
                                                 TERMINADA
                                             @else
-                                                {{$pasada->status}}
+                                                {{collect($pasada->asistentes)->first()->estado}}
                                             @endif
                                         </div>
                                     </div>
@@ -628,7 +626,7 @@
                                         </div>
                                         <div class="col-xs-2">
 
-                                            <?php $nombre = explode(" ", $pasada->horario->user->name);?>
+											<?php $nombre = explode( " ", $pasada->horario->user->name );?>
                                             <span data-toggle="tooltip" data-placement="bottom"
                                                   title="{{$pasada->horario->user->name}}">{{ucfirst($nombre[0])}}</span>
                                         </div>
@@ -636,7 +634,7 @@
                                             {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
                                         </div>
                                         <div class="col-xs-2">
-                                            <?php $direccion = App\Direccion::find($pasada->direccion); ?>
+											<?php $direccion = App\Direccion::find( $pasada->direccion ); ?>
                                             @if($direccion)
                                                 {{$direccion->identificador}}
                                             @endif
@@ -646,9 +644,9 @@
                                         </div>
                                     </div>
                                 @endif <!--en condominio-->
-                                <?php } } else{ ?>
+								<?php } } else{ ?>
                                 <p class="text-center">No has tomado ninguna clase.</p>
-                                <?php  } ?>
+								<?php  } ?>
                             @endif
 
                         </div>
@@ -656,15 +654,15 @@
                     <div id="historiallg" class="listadeclases" style="display:none;">
                         <div class="list-group">
 
-                            <?php
-                            $compradas = $user->paquetes;
+							<?php
+							$compradas = $user->paquetes;
 
 
-                            if (!$compradas->isEmpty()) {
-                            date_default_timezone_set('America/Mexico_City');
-                            foreach ($compradas as $comprada) {
+							if (! $compradas->isEmpty()) {
+							date_default_timezone_set( 'America/Mexico_City' );
+							foreach ($compradas as $comprada) {
 
-                            ?>
+							?>
                             <a href="#" class="list-group-item" data-toggle="modal"
                                data-target="#comprada{{$comprada->id}}">
                                 @if($comprada->tipo=="A domicilio")
@@ -672,16 +670,16 @@
                                 @else
                                     <i class="fa fa-building" aria-hidden="true"></i>
                                 @endif
-                                <?php setlocale(LC_TIME, "es_MX"); ?>
+								<?php setlocale( LC_TIME, "es_MX" ); ?>
                                 {{$comprada->clases}} Clases | Expira: {{$comprada->expiracion}}
                             <!--i class="fa fa-chevron-right pull-right" aria-hidden="true"></i-->
                             </a>
-                            <?php
-                            }
-                            } else{ ?>
+							<?php
+							}
+							} else{ ?>
                             <p class="text-center">No has comprado ningún paquete.</p>
-                            <?php  }
-                            ?>
+							<?php  }
+							?>
 
 
                         </div>
@@ -1045,33 +1043,38 @@
 
 
 
-    <?php
-    $proximas = App\Reservacion::where('user_id', $user->id)->where('status', 'PROXIMA')->orderBy('fecha', 'asc')->get();
-    if (!$proximas->isEmpty()) {
-    date_default_timezone_set('America/Mexico_City');
-    foreach ($proximas as $proxima) {
-    $coach = App\User::find($proxima->coach_id);
-    if ($proxima->tipo == "En condominio") {
-        $dire = $proxima->direccion;
-    } else {
-        $direccion = App\Direccion::find($proxima->direccion);
-        $dire = $direccion->identificador;
-    }
+	<?php
+	$proximas = App\Reservacion::where( 'user_id', $user->id )
+	                           ->orWhereHas( 'asistentes', function ( $subquery ) use ( $user ) {
+		                           $subquery->where( 'usuario_id', $user->id );
+		                           $subquery->where( 'status', '=', 'PROXIMA' );
+	                           } )
+	                           ->where( 'status', 'PROXIMA' )->orderBy( 'fecha', 'asc' )->get();
+	if (! $proximas->isEmpty()) {
+	date_default_timezone_set( 'America/Mexico_City' );
+	foreach ($proximas as $proxima) {
+	$coach = App\User::find( $proxima->coach_id );
+	if ( $proxima->tipo == "En condominio" ) {
+		$dire = $proxima->direccion;
+	} else {
+		$direccion = App\Direccion::find( $proxima->direccion );
+		$dire      = $direccion->identificador;
+	}
 
 
-    $fecha = date_create($proxima->fecha);
-    setlocale(LC_TIME, "es-ES");
+	$fecha = date_create( $proxima->fecha );
+	setlocale( LC_TIME, "es-ES" );
 
-    $horadeclase = new DateTime($proxima->fecha . ' ' . $proxima->hora);
-    $horaactual = new DateTime("now");
-    $dteDiff = $horaactual->diff($horadeclase);
+	$horadeclase = new DateTime( $proxima->fecha . ' ' . $proxima->hora );
+	$horaactual = new DateTime( "now" );
+	$dteDiff = $horaactual->diff( $horadeclase );
 
-    $dias = intval($dteDiff->format("%R%d")) * 24;
-    $horas = intval($dteDiff->format("%R%h"));
-    $horastotales = $dias + $horas;
+	$dias = intval( $dteDiff->format( "%R%d" ) ) * 24;
+	$horas = intval( $dteDiff->format( "%R%h" ) );
+	$horastotales = $dias + $horas;
 
 
-    ?>
+	?>
     <!--div class="modal fade" id="proximas{{$proxima->id}}" tabindex="-1" role="dialog">
          <div class="modal-dialog" role="document">
            <div class="modal-content">
@@ -1086,7 +1089,7 @@
                             <div class="profile-userpic">
                               <img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" class="img-responsive" alt="">
                             </div>
-                            <?php $nombre = explode(" ", $coach->name); ?>
+                            <?php $nombre = explode( " ", $coach->name ); ?>
             <h2>{{ucfirst($nombre[0])}}</h2>
 
                      </div>
@@ -1220,31 +1223,31 @@ Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio 
 
 
 
-    <?php } }?>
+	<?php } }?>
 
 
 
 
 
 
-    <?php
-    $pasadas = App\Reservacion::where('user_id', $user->id)->where('status', '<>', 'PROXIMA')->orderBy('fecha', 'desc')->get();
-    if (!$pasadas->isEmpty()) {
-    date_default_timezone_set('America/Mexico_City');
-    foreach ($pasadas as $pasada) {
+	<?php
+	$pasadas = App\Reservacion::where( 'user_id', $user->id )->where( 'status', '<>', 'PROXIMA' )->orderBy( 'fecha', 'desc' )->get();
+	if (! $pasadas->isEmpty()) {
+	date_default_timezone_set( 'America/Mexico_City' );
+	foreach ($pasadas as $pasada) {
 
-    $coach = App\User::find($pasada->coach_id);
-    if ($pasada->tipo == "En condominio") {
-        $dire = $pasada->direccion;
-    } else {
-        $direccion = App\Direccion::find($pasada->direccion);
-        $dire = $direccion->identificador;
-    }
-    $fecha = date_create($pasada->fecha);
-    setlocale(LC_TIME, "es-ES");
+	$coach = App\User::find( $pasada->coach_id );
+	if ( $pasada->tipo == "En condominio" ) {
+		$dire = $pasada->direccion;
+	} else {
+		$direccion = App\Direccion::find( $pasada->direccion );
+		$dire      = $direccion->identificador;
+	}
+	$fecha = date_create( $pasada->fecha );
+	setlocale( LC_TIME, "es-ES" );
 
 
-    ?>
+	?>
     <div class="modal fade" id="pasadas{{$pasada->id}}" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -1261,7 +1264,7 @@ Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio 
                                         <img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}"
                                              class="img-responsive" alt="">
                                     </div>
-                                    <?php $nombre = explode(" ", $coach->name); ?>
+									<?php $nombre = explode( " ", $coach->name ); ?>
                                     <h2>{{ucfirst($nombre[0])}}</h2>
 
                                 </div>
@@ -1301,7 +1304,7 @@ Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio 
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal contraseña -->
-    <?php } }?>
+	<?php } }?>
 
 
 @endsection

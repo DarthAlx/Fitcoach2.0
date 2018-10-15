@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AdministradorCondominio;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -32,5 +33,6 @@ class Kernel extends HttpKernel
         'administradores'=> \App\Http\Middleware\Administradores::class,
         'instructores'=> \App\Http\Middleware\Instructores::class,
         'usuarios'=> \App\Http\Middleware\Usuarios::class,
+	    'admin.condominio' => AdministradorCondominio::class
     ];
 }

@@ -20,7 +20,10 @@ $(document).ready(function() {
         stateSave: true,
         "aaSorting": [[ 0, "desc" ]]
     } );
-
+    $('.dynamic-table3').dataTable( {
+        stateSave: true,
+        "aaSorting": [[ 0, "desc" ]]
+    } );
     /*
      * Insert a 'details' column to the table
      */

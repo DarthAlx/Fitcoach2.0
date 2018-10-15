@@ -118,10 +118,10 @@
                                                 <span>Disponibilidad:</span> {{intval($evento->cupo)-intval($evento->ocupados)}}
                                                 personas
                                             </p>
-                                            <p>&nbsp;</p>
+                                            <p style="line-height: 1;">
+                                                <span>Ubicación:</span> {!!$evento->direccion!!}
+                                            </p>
 
-                                            <p style="line-height: 1;"><span>Ubicación:</span><br> <span
-                                                        class="menor">{!!$evento->direccionevento!!}</span></p>
 
                                         </div>
                                     </div>
