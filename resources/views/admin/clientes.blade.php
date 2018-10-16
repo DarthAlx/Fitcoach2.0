@@ -34,7 +34,8 @@
                                 <th>Genero</th>
                                 <th>Fecha de creación</th>
                                 <th># Compradas</th>
-                                <th width="150">Tokens</th>
+                                <th width="150">Tokens Domicilios</th>
+                                <th width="150">Tokens Condominio</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -53,11 +54,16 @@
                                         <td style="cursor: pointer;" data-toggle="modal"
                                             data-target="#compras{{$usuario->id}}">{{$usuario->ordenes->count()}}</td>
                                         <td style="font-size: x-small">
-                                            Utilizados:{{$usuario->paquetesUsados()}}<br/>
-                                            Disponibles Domicilio: {{$usuario->paquetesDisponiblesDomicilio()}}<br/>
-                                            Disponibles Condominio: {{$usuario->paquetesDisponiblesCondominio()}}<br/>
-                                            Por vencer: {{$usuario->paquetesporVencer()}}<br/>
-                                            Vencidos: {{$usuario->paquetesVencidos()}}
+                                            Utilizados:{{$usuario->paquetesUsadosDomicilio()}}<br/>
+                                            Disponibles : {{$usuario->paquetesDisponiblesDomicilio()}}<br/>
+                                            Por vencer: {{$usuario->paquetesporVencerDomicilio()}}<br/>
+                                            Vencidos: {{$usuario->paquetesVencidosDomicilio()}}
+                                        </td>
+                                        <td style="font-size: x-small">
+                                            Utilizados:{{$usuario->paquetesUsadosCondominio()}}<br/>
+                                            Disponibles : {{$usuario->paquetesDisponiblesCondominio()}}<br/>
+                                            Por vencer: {{$usuario->paquetesporVencerCondominio()}}<br/>
+                                            Vencidos: {{$usuario->paquetesVencidosCondominio()}}
                                         </td>
                                         <td><a href="#" class="btn btn-danger"
                                                onclick="javascript: document.getElementById('botoneliminar{{ $usuario->id }}').click();">Borrar</a>
@@ -98,6 +104,8 @@
                                 <th>Genero</th>
                                 <th>Fecha de creación</th>
                                 <th># Compradas</th>
+                                <th width="150">Tokens Domicilios</th>
+                                <th width="150">Tokens Condominio</th>
                                 <th></th>
                             </tr>
                             </tfoot>
@@ -226,8 +234,9 @@
                                     </select>
                                     <input type="number" name="tokens" class="form-control" value=""
                                            placeholder="Tokens" required>
+                                    <input type="text" name="fecha" class="form-control datepicker" placeholder="Fecha de vencimiento"
+                                           required>
                                     <textarea class="form-control" name="comentario">
-
                                     </textarea>
 
                                     <button class="btn btn-success" type="submit"

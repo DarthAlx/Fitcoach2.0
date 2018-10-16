@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 class Grupo extends Model {
+
+	use SoftDeletes;
+
 	protected $table = 'grupos';
 
 	protected $fillable = [

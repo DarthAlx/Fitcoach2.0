@@ -10,14 +10,14 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-4 text-right">
-                            <button class="btn btn-success btn-lg btn-crear-horario" data-id="{{$grupo->id}}"
+                        <div class="col-sm-3 text-right">
+                            <button class="btn btn-block btn-success btn-lg btn-crear-horario" data-id="{{$grupo->id}}"
                                     style="max-width: 200px;">
                                 Agregar horario
                             </button>
                         </div>
-                        <div class="col-sm-4 text-right">
-                            <button class="btn btn-success btn-lg btn-actualizar-grupo" data-id="{{$grupo->id}}"
+                        <div class="col-sm-3 text-right">
+                            <button class="btn  btn-block btn-success btn-lg btn-actualizar-grupo" data-id="{{$grupo->id}}"
                                     style="max-width: 200px;">
                                 Actualizar grupo
                             </button>

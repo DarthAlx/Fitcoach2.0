@@ -48,10 +48,11 @@
                                         <p class="condominios-clases-text">{{$horario->hora}}</p>
                                     </div>
                                     <div class="col-lg-2">
-                                        <p class="condominios-clases-text">@if(isset($horario->tokens))
-                                                {{$horario->tokens}}
+                                        <p class="condominios-clases-text">
+                                            @if(isset($horario->tokens) && $horario->tokens>0)
+                                                <span>Con costo</span>
                                             @else
-                                                <span>Gratis</span>
+                                                <span>Incluida</span>
                                             @endif
                                         </p>
                                     </div>

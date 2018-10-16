@@ -44,7 +44,7 @@ class Horario extends Model {
 	}
 
 	public function reservaciones() {
-		return $this->hasMany( 'App\Reservacion' );
+		return $this->hasMany( 'App\Reservacion' )->orderby('created_at','desc');
 	}
 
 

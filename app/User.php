@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
@@ -16,6 +17,9 @@ class User extends Model implements AuthenticatableContract,
 	AuthorizableContract,
 	CanResetPasswordContract {
 	use Authenticatable, Authorizable, CanResetPassword;
+
+
+	use SoftDeletes;
 
 	/**
 	 * The database table used by the model.
@@ -128,6 +132,7 @@ class User extends Model implements AuthenticatableContract,
 
 	public function paquetesDisponiblesCondominio() {
 		$now = Carbon::now();
+
 		return PaqueteComprado::where( 'user_id', $this->attributes['id'] )
 		                      ->where( 'expiracion', '>', $now->toDateString() )
 		                      ->where( 'tipo', 'En condominio' )
@@ -135,28 +140,59 @@ class User extends Model implements AuthenticatableContract,
 		                      ->sum( 'disponibles' );
 	}
 
-	public function paquetesUsados() {
+	public function paquetesUsadosDomicilio() {
 		$now = Carbon::now();
 
 		return PaqueteComprado::where( 'user_id', $this->attributes['id'] )
 		                      ->where( 'expiracion', '>', $now->toDateString() )
+		                      ->where( 'tipo', 'A domicilio' )
 		                      ->where( 'disponibles', '=', '0' )
 		                      ->count( 'id' );
 	}
 
-	public function paquetesporVencer() {
+	public function paquetesporVencerDomicilio() {
 		$now = Carbon::now();
 
 		return PaqueteComprado::where( 'user_id', $this->attributes['id'] )
 		                      ->where( 'expiracion', '>', $now->toDateString() )
+		                      ->where( 'tipo', 'A domicilio' )
 		                      ->sum( 'disponibles' );
 	}
 
-	public function paquetesVencidos() {
+	public function paquetesVencidosDomicilio() {
 		$now = Carbon::now();
 
 		return PaqueteComprado::where( 'user_id', $this->attributes['id'] )
 		                      ->where( 'expiracion', '<', $now->toDateString() )
+		                      ->where( 'tipo', 'A domicilio' )
+		                      ->sum( 'disponibles' );
+	}
+
+	public function paquetesUsadosCondominio() {
+		$now = Carbon::now();
+
+		return PaqueteComprado::where( 'user_id', $this->attributes['id'] )
+		                      ->where( 'expiracion', '>', $now->toDateString() )
+		                      ->where( 'tipo', 'En condominio' )
+		                      ->where( 'disponibles', '=', '0' )
+		                      ->count( 'id' );
+	}
+
+	public function paquetesporVencerCondominio() {
+		$now = Carbon::now();
+
+		return PaqueteComprado::where( 'user_id', $this->attributes['id'] )
+		                      ->where( 'expiracion', '>', $now->toDateString() )
+		                      ->where( 'tipo', 'En condominio' )
+		                      ->sum( 'disponibles' );
+	}
+
+	public function paquetesVencidosCondominio() {
+		$now = Carbon::now();
+
+		return PaqueteComprado::where( 'user_id', $this->attributes['id'] )
+		                      ->where( 'expiracion', '<', $now->toDateString() )
+		                      ->where( 'tipo', 'En condominio' )
 		                      ->sum( 'disponibles' );
 	}
 

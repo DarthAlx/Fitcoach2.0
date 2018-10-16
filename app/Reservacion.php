@@ -57,4 +57,7 @@ class Reservacion extends Model {
 		return $this->hasMany( 'App\ReservacionUsuario', 'reservacion_id', 'id' )->orderby('created_at','desc');
 	}
 
+	public function mensajes(){
+		return $this->hasMany( 'App\Mensaje', 'reservacion_id', 'id' )->orderby('created_at','desc');
+	}
 }

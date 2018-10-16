@@ -113,6 +113,12 @@
                                             {{$proxima->room}}
                                         </div>
                                         <div class="col-xs-3">
+                                            <div class="pull-right" data-toggle="modal">
+                                                <a data-toggle="modal"
+                                                   data-target="#mensajes{{$proxima->id}}">
+                                                    <i class="icon-classes-image fa fa-comments"></i>
+                                                </a>
+                                            </div>
                                             @if($proxima->estado=='COMENZADA')
                                                 <div class="pull-right" data-toggle="modal"
                                                      data-target="#terminar{{$proxima->id}}">
@@ -300,6 +306,12 @@
                                         {{$proxima->room}}
                                     </div>
                                     <div class="col-xs-3">
+                                        <div class="pull-right" data-toggle="modal">
+                                            <a data-toggle="modal"
+                                               data-target="#mensajes{{$proxima->id}}">
+                                                <i class="icon-classes-image fa fa-comments"></i>
+                                            </a>
+                                        </div>
                                         @if($proxima->estado=='COMENZADA')
                                             <div class="pull-right" data-toggle="modal"
                                                  data-target="#proximas{{$proxima->id}}">

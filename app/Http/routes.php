@@ -160,6 +160,7 @@ Route::group( [ 'prefix' => 'admin-condominio', 'namespace' => 'AdminCondominio'
 	Route::post( '/grupos/agregar-horario', 'HorarioController@crear' );
 	Route::delete( '/eliminar-grupo', 'GrupoController@remove' );
 	Route::get( '/cancelar/{id}', 'MainController@cancelar' );
+	Route::post( '/agregar-mensaje', 'MensajeController@guardar' );
 
 });
 

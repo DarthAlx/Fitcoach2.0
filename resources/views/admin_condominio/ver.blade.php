@@ -95,9 +95,9 @@
                                         </p>
                                     </div>
                                     <div class="col-lg-2">
-                                        <i class="icon-classes-image fa fa-comments"></i>
+
                                         <a data-toggle="modal"
-                                           data-target="#admin-condominios-horarios-ver{{$horario->id}}">
+                                           data-target="#admin-condominios-horarios-ver{{$reservacion->id}}">
                                             <i class="icon-classes-image fa fa-list-ul"></i>
                                         </a>
                                         @if(isset($reservacion->plan))
@@ -107,6 +107,10 @@
                                             </a>
                                         @endif
                                         @if($reservacion->status=='PROXIMA')
+                                            <a data-toggle="modal"
+                                               data-target="#mensajes{{$reservacion->id}}">
+                                                <i class="icon-classes-image fa fa-comments"></i>
+                                            </a>
                                             <a href="/admin-condominio/cancelar/{{$reservacion->id}}">
                                                 <i class="icon-classes-image fa fa-times"></i>
                                             </a>

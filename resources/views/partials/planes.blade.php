@@ -328,6 +328,55 @@
         </div><!-- /.modal contraseña -->
 
     </div>
+    <div class="modal fade" id="mensajes{{$proxima->id}}" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img
+                                src="{{url('/images/cross.svg')}}" alt=""></button>
+                    <h4>MENSAJES
+                        <span style="color: #cdcdcd">{!! $proxima->nombre !!}</span>
+                    </h4>
+                    <div class="container-bootstrap" style="width: 100%;padding-top: 50px">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <b>Clase</b>:{{$proxima->nombre}}</b>
+                            </div>
+                            <div class="col-md-3">
+                                <b>Coach</b>:{{$user->name}}</b>
+                            </div>
+                            <div class="col-md-3">
+                                <b>Cliente</b>:{{$proxima->direccion}}</b>
+                            </div>
+                            <div class="col-md-3">
+                                <b>Fecha</b>:{{$proxima->fecha}}</b>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <?php
+                            $mensajes = \App\Mensaje::where('reservacion_id',$proxima->id)->get();
+                            ?>
+                            @if(count($mensajes)>0)
+                                <div class="col-md-12" style="height: 200px;overflow-y: scroll">
+                                    @foreach($mensajes as $mensaje)
+                                        <b>{{$mensaje->created_at}}</b><br/>
+                                        <p>
+                                            {{$mensaje->mensaje}}
+                                        </p>
+                                        <hr/>
+                                    @endforeach
+                                </div>
+                            @else
+                                <span>NO HAY MENSAJES</span>
+                            @endif
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal contraseña -->
+    </div>
 
 
 @endforeach

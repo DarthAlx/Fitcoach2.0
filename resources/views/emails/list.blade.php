@@ -59,12 +59,20 @@
 																<td style="width: 20%;"><span>Genero</span></td>
 														</tr>
 														<?php $grantotal=0; ?>
-														@foreach ($ordenes as $orden)
+														@foreach ($reservacion->asistentes as $asistente)
+															<tr class="text">
+																<td style="width: 30%;">{{$asistente->usuario->name}}</td>
+																<td style="width: 30%;">{{$asistente->usuario->email}}</td>
+																<td style="width: 20%;">{{$asistente->usuario->tel}}</td>
+																<td style="width: 20%;">{{$asistente->usuario->genero}}</td>
+															</tr>
+														@endforeach
+														@foreach ($reservacion->invitados as $invitados)
 														<tr class="text">
-																<td style="width: 30%;">{{$orden->user->name}}</td>
-																<td style="width: 30%;">{{$orden->user->email}}</td>
-																<td style="width: 20%;">{{$orden->user->tel}}</td>
-																<td style="width: 20%;">{{$orden->user->genero}}</td>
+																<td style="width: 30%;">{{$invitados->nombre}}</td>
+																<td style="width: 30%;">{{$invitados->email}}</td>
+																<td style="width: 20%;">{{$invitados->telefono}}</td>
+																<td style="width: 20%;">{{$invitados->genero}}</td>
 														</tr>
 														@endforeach
 												</tbody>

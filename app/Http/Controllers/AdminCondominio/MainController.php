@@ -35,18 +35,20 @@ class MainController extends Controller {
 		$horarios     = Horario::with( 'clase' )
 		                       ->with( 'user' )
 		                       ->with( 'grupo.room' )
-								->with('reservaciones')
+		                       ->with( 'reservaciones' )
 		                       ->where( 'tipo', 'En condominio' )
 		                       ->where( 'fecha', $now->toDateString() )
 		                       ->where( 'condominio_id', $condominio->id )->orderBy( 'hora', 'asc' )->get();
 
 		$eventos = Evento::where( 'condominio_id', '=', $condominioId )->get();
 		$grupos  = Grupo::with( 'coach' )
-		                ->with('horarios')
-						->with('horarios.clase')
-						->with('horarios.reservaciones')
-						->with('horarios.reservaciones.user')
-						->with( 'room' )
+		                ->with( 'horarios' )
+		                ->with( 'horarios.clase' )
+		                ->with( 'horarios.reservaciones' )
+		                ->with( 'horarios.reservaciones.asistentes' )
+		                ->with( 'horarios.reservaciones.user' )
+		                ->with( 'horarios.reservaciones.mensajes' )
+		                ->with( 'room' )
 		                ->with( 'clase' )
 		                ->where( 'condominio_id', '=', $condominioId )
 		                ->get();

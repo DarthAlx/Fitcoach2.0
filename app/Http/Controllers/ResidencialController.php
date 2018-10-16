@@ -159,11 +159,11 @@ class ResidencialController extends Controller {
 
 	public function printlist( $id, Request $request ) {
 		$input      = $request->all();
-		$horario    = Horario::find( $id );
-		$ordenes    = $horario->reservaciones;
+		$reservacion = Reservacion::with(['invitados','asistentes','asistentes.usuario'])->find($id);
+		$horario    = Horario::find( $reservacion->horario_id );
 		$condominio = $horario->condominio;
 
-		return view( 'emails.list', [ 'ordenes' => $ordenes, 'horario' => $horario, 'condominio' => $condominio ] );
+		return view( 'emails.list', [ 'reservacion' => $reservacion, 'horario' => $horario, 'condominio' => $condominio ] );
 		/*$view =  \View::make('emails.list', ['ordenes'=>$ordenes,'horario'=>$horario,'condominio'=>$condominio])->render();
 		$pdf = \App::make('dompdf.wrapper');
 		$pdf->loadHTML($view);
