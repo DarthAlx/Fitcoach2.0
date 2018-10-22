@@ -18,17 +18,7 @@ Route::get( '/promo', function () {
 } );
 
 Route::get( 'mail/{id}', 'Publico\OrdenController@create' );
-Route::get( '/', function () {
-	$particulares  = App\Paquete::where( 'tipo', 'A domicilio' )->get();
-	$residenciales = App\Paquete::where( 'tipo', 'En condominio' )->get();
-
-	$sliders = App\Slider::orderBy( 'order', 'asc' )->get();
-
-	return view( 'inicio', [ 'sliders'       => $sliders,
-	                         'particulares'  => $particulares,
-	                         'residenciales' => $residenciales
-	] );
-} );
+Route::get( '/', 'Publico\HomeController@index' );
 Route::get( '/home', function () {
 	return redirect()->intended( url( '/' ) );
 } );
@@ -157,6 +147,7 @@ Route::group( [ 'prefix' => 'admin-condominio', 'namespace' => 'AdminCondominio'
 	Route::put( '/actualizar-evento', 'EventoController@actualizar' );
 	Route::delete( '/eliminar-evento', 'EventoController@eliminar' );
 	Route::post( '/agregar-grupo', 'GrupoController@store' );
+	Route::put( '/actualizar-grupo', 'GrupoController@update' );
 	Route::post( '/grupos/agregar-horario', 'HorarioController@crear' );
 	Route::delete( '/eliminar-grupo', 'GrupoController@remove' );
 	Route::get( '/cancelar/{id}', 'MainController@cancelar' );
@@ -288,6 +279,7 @@ Route::group( [ 'middleware' => 'administradores' ], function () {
 
 		return view( 'admin.admin', [ 'user' => $user ] );
 	} );
+	Route::get( '/admins/condominio/{condominioId}', 'Admin\CondominioAdminController@admin' );
 	Route::get( '/admins', 'Admin\UserController@index' );
 	Route::post( '/admins', 'Admin\UserController@search' );
 	Route::post( 'agregar-admin', 'Admin\UserController@storeadmin' );
@@ -524,6 +516,6 @@ Route::group( [ 'middleware' => 'instructores' ], function () {
 	Route::post( 'subir-documentacion', 'BancariosController@store2' );
 	Route::put( 'subir-documentacion', 'BancariosController@update2' );
 
-	Route::get( 'listainscritos/{id}', 'ResidencialController@printlist' );
 
 } );
+Route::get( 'listainscritos/{id}', 'ResidencialController@printlist' );

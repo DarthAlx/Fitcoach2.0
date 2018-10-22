@@ -124,9 +124,11 @@ class User extends Model implements AuthenticatableContract,
 		$now = Carbon::now();
 
 		return PaqueteComprado::where( 'user_id', $this->attributes['id'] )
-		                      ->where( 'expiracion', '>', $now->toDateString() )
+		                      ->where( function ( $query ) use ( $now ) {
+			                      $query->where( 'expiracion', '>', $now->toDateString() );
+			                      $query->orWhere( 'expiracion', '=', null );
+		                      } )
 		                      ->where( 'tipo', 'A domicilio' )
-		                      ->where( 'disponibles', '>', '0' )
 		                      ->sum( 'disponibles' );
 	}
 
@@ -134,9 +136,11 @@ class User extends Model implements AuthenticatableContract,
 		$now = Carbon::now();
 
 		return PaqueteComprado::where( 'user_id', $this->attributes['id'] )
-		                      ->where( 'expiracion', '>', $now->toDateString() )
+		                      ->where( function ( $query ) use ( $now ) {
+			                      $query->where( 'expiracion', '>', $now->toDateString() );
+			                      $query->orWhere( 'expiracion', '=', null );
+		                      } )
 		                      ->where( 'tipo', 'En condominio' )
-		                      ->where( 'disponibles', '>', '0' )
 		                      ->sum( 'disponibles' );
 	}
 
@@ -144,7 +148,10 @@ class User extends Model implements AuthenticatableContract,
 		$now = Carbon::now();
 
 		return PaqueteComprado::where( 'user_id', $this->attributes['id'] )
-		                      ->where( 'expiracion', '>', $now->toDateString() )
+		                      ->where( function ( $query ) use ( $now ) {
+			                      $query->where( 'expiracion', '>', $now->toDateString() );
+			                      $query->orWhere( 'expiracion', '=', null );
+		                      } )
 		                      ->where( 'tipo', 'A domicilio' )
 		                      ->where( 'disponibles', '=', '0' )
 		                      ->count( 'id' );
@@ -154,7 +161,10 @@ class User extends Model implements AuthenticatableContract,
 		$now = Carbon::now();
 
 		return PaqueteComprado::where( 'user_id', $this->attributes['id'] )
-		                      ->where( 'expiracion', '>', $now->toDateString() )
+		                      ->where( function ( $query ) use ( $now ) {
+			                      $query->where( 'expiracion', '>', $now->toDateString() );
+			                      $query->orWhere( 'expiracion', '=', null );
+		                      } )
 		                      ->where( 'tipo', 'A domicilio' )
 		                      ->sum( 'disponibles' );
 	}
@@ -163,7 +173,10 @@ class User extends Model implements AuthenticatableContract,
 		$now = Carbon::now();
 
 		return PaqueteComprado::where( 'user_id', $this->attributes['id'] )
-		                      ->where( 'expiracion', '<', $now->toDateString() )
+		                      ->where( function ( $query ) use ( $now ) {
+			                      $query->where( 'expiracion', '<', $now->toDateString() );
+		                      } )
+		                      ->where( 'disponibles', '>', '0' )
 		                      ->where( 'tipo', 'A domicilio' )
 		                      ->sum( 'disponibles' );
 	}
@@ -172,9 +185,11 @@ class User extends Model implements AuthenticatableContract,
 		$now = Carbon::now();
 
 		return PaqueteComprado::where( 'user_id', $this->attributes['id'] )
-		                      ->where( 'expiracion', '>', $now->toDateString() )
+		                      ->where( function ( $query ) use ( $now ) {
+			                      $query->where( 'expiracion', '>', $now->toDateString() );
+			                      $query->orWhere( 'expiracion', '=', null );
+		                      } )
 		                      ->where( 'tipo', 'En condominio' )
-		                      ->where( 'disponibles', '=', '0' )
 		                      ->count( 'id' );
 	}
 
@@ -182,7 +197,10 @@ class User extends Model implements AuthenticatableContract,
 		$now = Carbon::now();
 
 		return PaqueteComprado::where( 'user_id', $this->attributes['id'] )
-		                      ->where( 'expiracion', '>', $now->toDateString() )
+		                      ->where( function ( $query ) use ( $now ) {
+			                      $query->where( 'expiracion', '>', $now->toDateString() );
+			                      $query->orWhere( 'expiracion', '=', null );
+		                      } )
 		                      ->where( 'tipo', 'En condominio' )
 		                      ->sum( 'disponibles' );
 	}
@@ -191,7 +209,10 @@ class User extends Model implements AuthenticatableContract,
 		$now = Carbon::now();
 
 		return PaqueteComprado::where( 'user_id', $this->attributes['id'] )
-		                      ->where( 'expiracion', '<', $now->toDateString() )
+		                      ->where( function ( $query ) use ( $now ) {
+			                      $query->where( 'expiracion', '<', $now->toDateString() );
+		                      } )
+		                      ->where( 'disponibles', '>', '0' )
 		                      ->where( 'tipo', 'En condominio' )
 		                      ->sum( 'disponibles' );
 	}

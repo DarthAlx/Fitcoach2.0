@@ -25,7 +25,9 @@
 						<?php
 						$cantidad = 0;
 						foreach ( $user->abonos as $pendiente ) {
-							$cantidad = $cantidad + $pendiente->abono;
+							if(!$pendiente->realizado){
+								$cantidad = $cantidad + $pendiente->abono;
+							}
 						}
 						?>
 
@@ -106,19 +108,29 @@
                                         <div class="col-xs-2">
                                             {{$proxima->direccion}}
                                         </div>
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-2">
                                             {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
                                         </div>
-                                        <div class="col-xs-2">
+                                        <div class="col-xs-3">
                                             {{$proxima->room}}
                                         </div>
                                         <div class="col-xs-3">
-                                            <div class="pull-right" data-toggle="modal">
-                                                <a data-toggle="modal"
-                                                   data-target="#mensajes{{$proxima->id}}">
-                                                    <i class="icon-classes-image fa fa-comments"></i>
-                                                </a>
-                                            </div>
+                                            @if($proxima->active && $proxima->estado=='PROXIMA')
+                                                @if($proxima->tienePlan)
+                                                    <div class="pull-right">
+                                                        <a href="/iniciar/{{$proxima->id}}?tipo={{$proxima->tipo}}"><i
+                                                                    class="fa fa-play icopopup"
+                                                                    style="background-color: #00ff00"></i> &nbsp</a>
+                                                    </div>
+                                                @else
+                                                    <div class="pull-right">
+                                                        <a href="#"><i
+                                                                    class="fa fa-play icopopup"
+                                                                    style="background-color: #727272"></i> &nbsp</a>
+                                                    </div>
+                                                @endif
+
+                                            @endif
                                             @if($proxima->estado=='COMENZADA')
                                                 <div class="pull-right" data-toggle="modal"
                                                      data-target="#terminar{{$proxima->id}}">
@@ -158,23 +170,23 @@
                         <div class="list-group">
                             @if(count($pasadas)>0)
                                 @foreach ($pasadas as $pasada)
-                                <div class="list-group-item row">
-                                    <div class="col-xs-2">
-                                        <strong>{{$pasada->nombre}}</strong>
+                                    <div class="list-group-item row">
+                                        <div class="col-xs-2">
+                                            <strong>{{$pasada->nombre}}</strong>
+                                        </div>
+                                        <div class="col-xs-2">
+                                            {{$pasada->direccion}}
+                                        </div>
+                                        <div class="col-xs-3">
+                                            {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
+                                        </div>
+                                        <div class="col-xs-2">
+                                            {{$pasada->room}}
+                                        </div>
+                                        <div class="col-xs-3">
+                                            {{$pasada->estado}}
+                                        </div>
                                     </div>
-                                    <div class="col-xs-2">
-                                        {{$pasada->direccion}}
-                                    </div>
-                                    <div class="col-xs-3">
-                                        {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
-                                    </div>
-                                    <div class="col-xs-2">
-                                        {{$pasada->room}}
-                                    </div>
-                                    <div class="col-xs-3">
-                                        {{$pasada->estado}}
-                                    </div>
-                                </div>
                                 @endforeach
                             @else
                                 <p class="text-center">No has dado ninguna clase.</p>
@@ -299,19 +311,29 @@
                                     <div class="col-xs-2">
                                         {{$proxima->direccion}}
                                     </div>
-                                    <div class="col-xs-3">
+                                    <div class="col-xs-2">
                                         {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
                                     </div>
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                         {{$proxima->room}}
                                     </div>
                                     <div class="col-xs-3">
-                                        <div class="pull-right" data-toggle="modal">
-                                            <a data-toggle="modal"
-                                               data-target="#mensajes{{$proxima->id}}">
-                                                <i class="icon-classes-image fa fa-comments"></i>
-                                            </a>
-                                        </div>
+                                        @if($proxima->active && $proxima->estado=='PROXIMA')
+                                            @if($proxima->tienePlan)
+                                                <div class="pull-right">
+                                                    <a href="/iniciar/{{$proxima->id}}?tipo={{$proxima->tipo}}"><i
+                                                                class="fa fa-play icopopup"
+                                                                style="background-color: #00ff00"></i> &nbsp</a>
+                                                </div>
+                                            @else
+                                                <div class="pull-right">
+                                                    <a href="#"><i
+                                                                class="fa fa-play icopopup"
+                                                                style="background-color: #727272"></i> &nbsp</a>
+                                                </div>
+                                            @endif
+
+                                        @endif
                                         @if($proxima->estado=='COMENZADA')
                                             <div class="pull-right" data-toggle="modal"
                                                  data-target="#proximas{{$proxima->id}}">
@@ -335,21 +357,6 @@
                                                  data-target="#telefono{{$proxima->id}}"><a href="#"><i
                                                             class="fa fa-phone icopopup"></i> &nbsp;</a></div>
                                         @endif
-                                        @if($proxima->active && $proxima->estado=='PROXIMA')
-                                            @if($proxima->tienePlan)
-                                                <div class="pull-right">
-                                                    <a href="/iniciar/{{$proxima->id}}?tipo={{$proxima->tipo}}"><i
-                                                                class="fa fa-play icopopup"></i> &nbsp</a>
-                                                </div>
-                                            @else
-                                                <div class="pull-right">
-                                                    <a href="#"><i
-                                                                class="fa fa-play icopopup"
-                                                                style="background-color: #727272"></i> &nbsp</a>
-                                                </div>
-                                            @endif
-
-                                        @endif
                                         <div class="pull-right" data-toggle="modal"
                                              data-target="#direccion{{$proxima->id}}"><a href="#"><i
                                                         class="fa fa-map-marker icopopup"></i> &nbsp;</a></div>
@@ -366,23 +373,23 @@
                     <div class="list-group">
                         @if(count($pasadas)>0)
                             @foreach ($pasadas as $pasada)
-                            <div class="list-group-item row">
-                                <div class="col-xs-2">
-                                    <strong>{{$pasada->nombre}}</strong>
+                                <div class="list-group-item row">
+                                    <div class="col-xs-2">
+                                        <strong>{{$pasada->nombre}}</strong>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        {{$pasada->direccion}}
+                                    </div>
+                                    <div class="col-xs-3">
+                                        {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
+                                    </div>
+                                    <div class="col-xs-2">
+                                        {{$pasada->room}}
+                                    </div>
+                                    <div class="col-xs-3">
+                                        {{$pasada->estado}}
+                                    </div>
                                 </div>
-                                <div class="col-xs-2">
-                                    {{$pasada->direccion}}
-                                </div>
-                                <div class="col-xs-3">
-                                    {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
-                                </div>
-                                <div class="col-xs-2">
-                                    {{$pasada->room}}
-                                </div>
-                                <div class="col-xs-3">
-                                    {{$pasada->estado}}
-                                </div>
-                            </div>
                             @endforeach
                         @else
                             <p class="text-center">No has dado ninguna clase.</p>
@@ -392,31 +399,7 @@
                     </div>
                 </div>
                 <div id="historiallg" class="listadeclases" style="display:none;">
-                    <div class="list-group">
-						<?php
-						$pagos = $user->pagos;
-
-						if (! $pagos->isEmpty()) {
-						date_default_timezone_set( 'America/Mexico_City' );
-
-						foreach ($pagos as $pago) {
-
-
-						?>
-                        <a href="#" class="list-group-item" data-toggle="modal" data-target="#abono{{$pago->id}}">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-							<?php setlocale( LC_TIME, "es_MX" ); ?>
-                            {{$pago->fecha}} | {{$pago->metodo}} | Pago: ${{$pago->monto-$pago->deducciones}}
-                        <!--i class="fa fa-chevron-right pull-right" aria-hidden="true"></i-->
-                        </a>
-						<?php
-						}
-						} else{ ?>
-                        <p class="text-center">No has recibido ningún pago.</p>
-						<?php  }
-						?>
-
-                    </div>
+                    @include('instructor.pagos')
                 </div>
 
             </div>
@@ -939,16 +922,16 @@
                             <div class="col-sm-4 sidebar">
                                 <div class="text-center">
                                     <h1>{{$pasada->nombre}}</h1>
-									<?php /*$nombre = explode( " ", $cliente->name );
+								<?php /*$nombre = explode( " ", $cliente->name );
 									if ($pasada->tipo == "En condominio") {
 
 									}else{
 									*/?><!--
                                     <h2>{{ucfirst($nombre[0])}}</h2>
 									--><?php
-/*									}
+									/*									}
 
-									*/?>
+                                                                        */?>
 
                                 </div>
                             </div>

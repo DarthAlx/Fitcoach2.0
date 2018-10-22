@@ -17,7 +17,8 @@
                             </button>
                         </div>
                         <div class="col-sm-3 text-right">
-                            <button class="btn  btn-block btn-success btn-lg btn-actualizar-grupo" data-id="{{$grupo->id}}"
+                            <button class="btn  btn-block btn-success btn-lg btn-actualizar-grupo"
+                                    data-id="{{$grupo->id}}"
                                     style="max-width: 200px;">
                                 Actualizar grupo
                             </button>
@@ -26,7 +27,7 @@
                     <p>&nbsp;</p>
                     <div class="row">
                         <div class="adv-table table-responsive" style="padding-left: 10px;padding-right: 10px;">
-                            <table class="display table table-bordered table-striped table-hover dynamic-table3" >
+                            <table class="display table table-bordered table-striped table-hover dynamic-table3">
                                 <thead>
                                 <tr>
                                     <th>Fecha</th>
@@ -46,7 +47,27 @@
                                         <td>{{$horario->cupo}}</td>
                                         <td>{{$horario->ocupados}}</td>
                                         <td>{{$horario->ocupados+$horario->cupo}}</td>
-                                        <td></td>
+                                        <td>
+                                            @if($horario->reservacion()!=null)
+                                                <a data-toggle="modal"
+                                                   data-target="#admin-condominios-horarios-ver{{$horario->reservacion()->id}}">
+                                                    <i class="icon-classes-image fa fa-list-ul"></i>
+                                                </a>
+                                                <a data-toggle="modal" data-target="#">
+                                                    <i class="icon-classes-image fa fa-eye" data-toggle="modal"
+                                                       data-target="#proximas{{$horario->reservacion()->id}}"></i>
+                                                </a>
+                                                @if($horario->reservacion()->status=='PROXIMA')
+                                                    <a data-toggle="modal"
+                                                       data-target="#mensajes{{$horario->reservacion()->id}}">
+                                                        <i class="icon-classes-image fa fa-comments"></i>
+                                                    </a>
+                                                    <a href="/admin-condominio/cancelar/{{$horario->reservacion()->id}}">
+                                                        <i class="icon-classes-image fa fa-times"></i>
+                                                    </a>
+                                                @endif
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -57,7 +78,8 @@
                                     <th>Cupo disponible</th>
                                     <th>Reservaciones</th>
                                     <th>Aforo</th>
-                                    <th></th>
+                                    <th>
+                                    </th>
                                 </tr>
                                 </tfoot>
                             </table>
@@ -76,26 +98,25 @@
                                 src="{{url('/images/cross.svg')}}" alt=""></button>
                     <div>
                         <h4>Agregar horario</h4>
-                        <form action="{{ url('/admin-condominio/grupos/agregar-horario') }}" method="post"
-                              enctype="multipart/form-data">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input class="form-control datepicker" type="text" value="{{ old('fecha') }}"
-                                   placeholder="Fecha" name="fecha" required>
-                            <input id="horarioNuevo" value="{{ old('hora') }}"
-                                   class="form-control xmitimepicker" placeholder="Hora" type="text" name="hora"
-                                   required/>
-                            <input type="hidden" name="user_id" value="{{$grupo->user_id}}">
-                            <input type="hidden" name="clase_id" value="{{$grupo->clase_id}}">
-                            <input type="hidden" name="grupo_id" value="{{$grupo->id}}">
-                            <input type="hidden" name="condominio_id" value="{{$grupo->condominio_id}}">
-                            <input type="hidden" name="audiencia" value="{{$grupo->audiencia}}">
-                            <input type="hidden" name="cupo" value="{{$grupo->cupo}}">
-                            <input type="hidden" name="tokens" value="{{$grupo->tokens}}">
-                            <button class="btn btn-success" type="submit"
-                                    style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
-                                Guardar
-                            </button>
-                        </form>
+                        {!! Form::open(['url' => '/admin-condominio/grupos/agregar-horario']) !!}
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input class="form-control datepicker" type="text" value="{{ old('fecha') }}"
+                               placeholder="Fecha" name="fecha" required>
+                        <input id="horarioNuevo" value="{{ old('hora') }}"
+                               class="form-control xmitimepicker" placeholder="Hora" type="text" name="hora"
+                               required/>
+                        <input type="hidden" name="user_id" value="{{$grupo->user_id}}">
+                        <input type="hidden" name="clase_id" value="{{$grupo->clase_id}}">
+                        <input type="hidden" name="grupo_id" value="{{$grupo->id}}">
+                        <input type="hidden" name="condominio_id" value="{{$grupo->condominio_id}}">
+                        <input type="hidden" name="audiencia" value="{{$grupo->audiencia}}">
+                        <input type="hidden" name="cupo" value="{{$grupo->cupo}}">
+                        <input type="hidden" name="tokens" value="{{$grupo->tokens}}">
+                        <button class="btn btn-success" type="submit"
+                                style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
+                            Guardar
+                        </button>
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div><!-- /.modal-content -->
@@ -109,7 +130,7 @@
                                 src="{{url('/images/cross.svg')}}" alt=""></button>
 
                     <div>
-                        <form action="{{ url('/actualizar-grupo') }}" method="post"
+                        <form action="{{ url('/admin-condominio/actualizar-grupo') }}" method="post"
                               enctype="multipart/form-data">
                             {{ method_field('PUT') }}
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -127,19 +148,20 @@
                                 @endforeach
                             </select>
                             <script type="text/javascript">
+
                                 if (document.getElementById('room_id{{ $grupo->id }}') != null) document.getElementById('room_id{{ $grupo->id }}').value = '{!! $grupo->room_id !!}';
                             </script>
 
-                            <select class="form-control" name="user_id" id="coach{ $grupo->id }}" required>
+                            <select class="form-control" name="user_id" id="coach{{ $grupo->id }}" required>
                                 <option value="">Selecciona un coach</option>
                                 @foreach ($coaches as $coach)
                                     <option value="{{ $coach->id }}">{{ $coach->name }}</option>
                                 @endforeach
                             </select>
                             <script type="text/javascript">
-                                if (document.getElementById('coach{ $grupo->id }}') != null) document.getElementById('coach{ $grupo->id }}').value = '{!! $grupo->user_id !!}';
+                                if (document.getElementById('coach{{ $grupo->id }}') != null) document.getElementById('coach{{ $grupo->id }}').value = '{!! $grupo->user_id !!}';
                             </script>
-                            <select class="form-control" name="clase_id" id="clases_id{ $grupo->id }}"
+                            <select class="form-control" name="clase_id" id="clases_id{{  $grupo->id }}"
                                     required>
                                 <option value="">Selecciona una clase</option>
                                 @foreach ($clases as $clase)
@@ -147,9 +169,9 @@
                                 @endforeach
                             </select>
                             <script type="text/javascript">
-                                if (document.getElementById('clases_id{ $grupo->id }}') != null) document.getElementById('clases_id{ $grupo->id }}').value = '{!! $grupo->clase_id !!}';
+                                if (document.getElementById('clases_id{{ $grupo->id }}') != null) document.getElementById('clases_id{{ $grupo->id }}').value = '{!! $grupo->clase_id !!}';
                             </script>
-                            <select class="form-control" name="audiencia" id="audiencia{ $grupo->id }}"
+                            <select class="form-control" name="audiencia" id="audiencia{{  $grupo->id }}"
                                     required>
                                 <option value="">Selecciona una audiencia</option>
                                 <option value="Todos">Todos</option>
@@ -159,7 +181,7 @@
                                 <option value="Bebés">Bebés</option>
                             </select>
                             <script type="text/javascript">
-                                if (document.getElementById('audiencia{ $grupo->id }}') != null) document.getElementById('audiencia{ $grupo->id }}').value = '{!! $grupo->audiencia !!}';
+                                if (document.getElementById('audiencia{{ $grupo->id }}') != null) document.getElementById('audiencia{{ $grupo->id }}').value = '{!! $grupo->audiencia !!}';
                             </script>
                             <input type="number" id="cupo" class="form-control" name="cupo"
                                    placeholder="Cupo" value="{{ $grupo->cupo }}" required>
@@ -182,7 +204,8 @@
                                    onclick="javascript: document.getElementById('botoneliminargrupo{{ $grupo->id }}').click();">Borrar</a>
                             </div>
                         </form>
-                        <form style="display: none;" action="{{ url('/admin-condominio/eliminar-grupo') }}" method="post">
+                        <form style="display: none;" action="{{ url('/admin-condominio/eliminar-grupo') }}"
+                              method="post">
                             {!! csrf_field() !!}
                             {{ method_field('DELETE') }}
                             <input type="hidden" name="grupo_id" value="{{ $grupo->id }}">

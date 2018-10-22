@@ -317,7 +317,47 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <hr/>
+                            <div class="row">
+                                <p>Mensajes</p>
+                                <div class="container-bootstrap" style="width: 100%;padding-top: 50px">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <b>Clase</b>:{{$proxima->nombre}}</b>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <b>Coach</b>:{{$user->name}}</b>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <b>Cliente</b>:{{$proxima->direccion}}</b>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <b>Fecha</b>:{{$proxima->fecha}}</b>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="row">
+			                            <?php
+			                            $mensajes = \App\Mensaje::with('user')->where('reservacion_id',$proxima->id)->get();
+			                            ?>
+                                        @if(count($mensajes)>0)
+                                            <div class="col-md-12" style="height: 100px;overflow-y: scroll">
+                                                @foreach($mensajes as $mensaje)
+                                                    <b>{{$mensaje->created_at}}</b>
+                                                    <b>Usuario: {{$mensaje->user->name}}</b>
+                                                    <br/>
+                                                    <p>
+                                                        {{$mensaje->mensaje}}
+                                                    </p>
+                                                    <hr/>
+                                                @endforeach
+                                            </div>
+                                        @else
+                                            <span>NO HAY MENSAJES</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                     </div><!-- /.modal-content -->

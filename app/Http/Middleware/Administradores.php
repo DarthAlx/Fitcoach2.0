@@ -48,9 +48,6 @@ class Administradores
             return redirect()->intended(url('/404'));
           }
         }
-
-
-
       }
       else {
         Session::flash('mensaje', 'No tienes permisos para ver esta página');

@@ -38,6 +38,6 @@ class HorarioController extends Controller {
 		Session::flash( 'mensaje', '¡Horario guardado!' );
 		Session::flash( 'class', 'success' );
 
-		return redirect()->intended( url( '/admin-condominio' ) );
+		return redirect()->back();
 	}
 }

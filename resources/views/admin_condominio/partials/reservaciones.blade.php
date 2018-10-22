@@ -8,7 +8,11 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <h4>RESERVACIONES Y ASISTENCIA
-                                        <span style="color: #cdcdcd">{!! $horario->clase->nombre !!}</span>
+                                        <span style="color: #cdcdcd">{!! $horario->clase->id !!}</span>
+                                        &nbsp;
+                                        <a target="_blank" href="{{url('/listainscritos')}}/{{$reservacion->id}}?tipo=clase">
+                                            <i style="color: #000000" class="fa fa-print"></i>
+                                        </a>
                                     </h4>
                                 </div>
                             </div>

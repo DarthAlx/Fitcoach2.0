@@ -58,7 +58,7 @@ class EventoController extends Controller {
 		}
 		Session::flash( 'class', 'success' );
 
-		return redirect()->intended( url( '/admin-condominio' ) );
+		return redirect()->back();
 	}
 
 
@@ -92,7 +92,7 @@ class EventoController extends Controller {
 		Session::flash( 'mensaje', '¡Evento actualizado!' );
 		Session::flash( 'class', 'success' );
 
-		return redirect()->intended( url( '/admin-condominio' ) );
+		return redirect()->back();
 	}
 
 	public function eliminar(Request $request)
@@ -103,7 +103,7 @@ class EventoController extends Controller {
 		$evento->delete();
 		Session::flash('mensaje', '¡Evento eliminado correctamente!');
 		Session::flash('class', 'success');
-		return redirect()->intended(url('/admin-condominio'));
+		return redirect()->back();
 	}
 
 

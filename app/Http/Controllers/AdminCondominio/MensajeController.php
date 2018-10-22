@@ -25,7 +25,7 @@ class MensajeController extends Controller {
 		$mensaje->save();
 		Session::flash('mensaje', '¡Mensaje guardado correctamente!');
 		Session::flash('class', 'success');
-		return redirect()->intended(url('/admin-condominio'));
+		return redirect()->back();
 	}
 
 }

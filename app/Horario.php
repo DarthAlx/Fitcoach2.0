@@ -44,7 +44,16 @@ class Horario extends Model {
 	}
 
 	public function reservaciones() {
-		return $this->hasMany( 'App\Reservacion' )->orderby('created_at','desc');
+		return $this->hasMany( 'App\Reservacion' )->orderby( 'created_at', 'desc' );
+	}
+
+
+	public function reservacion() {
+
+		return Reservacion::where( 'horario_id', $this->attributes['id'] )
+		                  ->orderby( 'created_at', 'desc' )
+		                  ->get()
+		                  ->first();
 	}
 
 

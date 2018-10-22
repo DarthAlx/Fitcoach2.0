@@ -13,4 +13,7 @@ class Mensaje extends Model
   	public function reservacion(){
        	return $this->belongsTo('App\Reservacion','id','reservacion_id');
     }
+    public function user(){
+  		return $this->hasOne('App\User','id','user_id');
+    }
 }

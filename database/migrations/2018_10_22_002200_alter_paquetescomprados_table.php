@@ -2,9 +2,8 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\Schema;
 
-class AlterGruposTable extends Migration
+class AlterPaquetescompradosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +12,8 @@ class AlterGruposTable extends Migration
      */
     public function up()
     {
-	    Schema::table('grupos', function (Blueprint $table) {
-		    $table->dateTime('deleted_at')->nullable();
+	    Schema::table('paquetescomprados', function (Blueprint $table) {
+		    $table->date('fecha')->nullable()->change();
 	    });
     }
 
@@ -25,8 +24,6 @@ class AlterGruposTable extends Migration
      */
     public function down()
     {
-	    Schema::table('grupos', function (Blueprint $table) {
-		    $table->dropColumn('deleted_at');
-	    });
+
     }
 }

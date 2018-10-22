@@ -30,27 +30,25 @@
                         <h2>Bienvenido a <span class="nombre">{{$condominio->identificador}}</span></h2>
                     </div>
                     <div class="col-sm-6">
-                        @if(Auth::user()!=null && Auth::user()->condominio_id == $condominio->id)
-                            <div class="row">
-                                <div class="col-lg-4 col-sm-4">
-                                    <a class="btn btn-success btn-block" data-toggle="modal"
-                                       data-target="#admin-condominios-eventos">
-                                        Editar eventos
-                                    </a>
-                                </div>
-                                <div class="col-lg-4 col-sm-4">
-                                    <a class="btn btn-success btn-block" data-toggle="modal"
-                                       data-target="#admin-condominios-grupos">
-                                        Editar clases
-                                    </a>
-                                </div>
-                                <div class="col-lg-4 col-sm-4">
-                                    <button class="btn btn-success btn-block" type="submit">
-                                        Reportes
-                                    </button>
-                                </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-4">
+                                <a class="btn btn-success btn-block" data-toggle="modal"
+                                   data-target="#admin-condominios-eventos">
+                                    Editar eventos
+                                </a>
                             </div>
-                        @endif
+                            <div class="col-lg-4 col-sm-4">
+                                <a class="btn btn-success btn-block" data-toggle="modal"
+                                   data-target="#admin-condominios-grupos">
+                                    Editar clases
+                                </a>
+                            </div>
+                            <div class="col-lg-4 col-sm-4">
+                                <button class="btn btn-success btn-block" type="submit">
+                                    Reportes
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -89,23 +87,20 @@
                                     <div class="col-lg-2">
                                         <p class="condominios-clases-text">{{$horario->hora}}</p>
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-1">
                                         <p class="condominios-clases-text">
                                             {{$horario->cupo-$horario->ocupados}}
                                         </p>
                                     </div>
-                                    <div class="col-lg-2">
-
+                                    <div class="col-lg-3">
                                         <a data-toggle="modal"
                                            data-target="#admin-condominios-horarios-ver{{$reservacion->id}}">
                                             <i class="icon-classes-image fa fa-list-ul"></i>
                                         </a>
-                                        @if(isset($reservacion->plan))
-                                            <a data-toggle="modal" data-target="#">
-                                                <i class="icon-classes-image fa fa-eye" data-toggle="modal"
-                                                   data-target="#proximas{{$reservacion->id}}"></i>
-                                            </a>
-                                        @endif
+                                        <a data-toggle="modal" data-target="#">
+                                            <i class="icon-classes-image fa fa-eye" data-toggle="modal"
+                                               data-target="#proximas{{$reservacion->id}}"></i>
+                                        </a>
                                         @if($reservacion->status=='PROXIMA')
                                             <a data-toggle="modal"
                                                data-target="#mensajes{{$reservacion->id}}">
@@ -221,8 +216,8 @@
             var id = $(this).attr("data-id");
             $('#admin-condominios-grupos').modal('hide');
             setTimeout(function () {
-                $('#modal-eliminar-grupo'+id).modal('show');
-            },500)
+                $('#modal-eliminar-grupo' + id).modal('show');
+            }, 500)
             //
         });
         $('.ver-grupo').click(function () {
@@ -251,13 +246,12 @@
         })
         $('.btn-actualizar-grupo').click(function () {
             var id = $(this).attr("data-id");
-            $('#admin-condominios-grupos-ver'+id).modal('hide');
+            $('#admin-condominios-grupos-ver' + id).modal('hide');
             setTimeout(function () {
-                $('#admin-condominios-grupos-actualizar'+id).modal('show');
-            },500)
+                $('#admin-condominios-grupos-actualizar' + id).modal('show');
+            }, 500)
             //
         });
-
 
 
     </script>

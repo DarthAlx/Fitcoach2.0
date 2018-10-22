@@ -15,11 +15,15 @@ use App\Evento;
 use App\Grupo;
 use App\Horario;
 use App\Http\Controllers\Controller;
+use App\Reservacion;
+use App\ReservacionUsuario;
 use App\Room;
 use App\Services\RoomService;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class MainController extends Controller {
 
@@ -70,17 +74,18 @@ class MainController extends Controller {
 			->with( 'rooms2', $rooms2 );
 	}
 
+
 	public function cancelar( $id, Request $request ) {
-		$input = $request->all();
-		Reservacion::where( 'horario_id', '=', $id )
-		           ->where( 'tipo', '=', 'En condominio' )
-		           ->update( [ 'status' => 'CANCELADA' ] );
-		$horario         = Horario::find( $id );
-		$horario->estado = 'CANCELADA';
-		$horario->save();
+		$input       = $request->all();
+		$reservacion = Reservacion::where( 'id', '=', $id )
+		                          ->where( 'tipo', '=', 'En condominio' )
+		                          ->update( [ 'status' => 'CANCELADA' ] );
+
+		ReservacionUsuario::where( 'reservacion_id', '=', $id )
+		                  ->update( [ 'estado' => 'EN REVISIÓN' ] );
 		Session::flash( 'mensaje', '¡Clase cancelada!' );
 		Session::flash( 'class', 'success' );
 
-		return redirect()->intended( url( '/admin-condominio' ) );
+		return redirect()->back();
 	}
 }
