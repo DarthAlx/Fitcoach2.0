@@ -25,7 +25,7 @@
 						<?php
 						$cantidad = 0;
 						foreach ( $user->abonos as $pendiente ) {
-							if(!$pendiente->realizado){
+							if ( ! $pendiente->realizado ) {
 								$cantidad = $cantidad + $pendiente->abono;
 							}
 						}
@@ -376,46 +376,61 @@
                     </div>
                 </div>
                 <div id="pasadaslg" class="listadeclases" style="display:none;">
-                    <div class="list-group">
+                    <td class="list-group">
                         @if(count($pasadas)>0)
-                            @foreach ($pasadas as $pasada)
-                                <div class="list-group-item row">
-                                    <div class="col-xs-2">
-                                        <strong>{{$pasada->nombre}}</strong>
-                                    </div>
-                                    <div class="col-xs-2">
-                                        {{$pasada->direccion}}
-                                    </div>
-                                    <div class="col-xs-2">
-                                        {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
-                                    </div>
-                                    <div class="col-xs-2">
-                                        {{$pasada->room}}
-                                    </div>
-                                    <div class="col-xs-2">
-                                        {{$pasada->estado}}
-                                    </div>
-                                    <div class="col-xs-2">
-                                        <div class="pull-right" data-toggle="modal"
-                                             data-target="#plan{{$pasada->id}}">
-                                            <a href="#"><i class="fa fa-check-square-o icopopup"></i> &nbsp;</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
+                            <table class="display table table-bordered table-striped table-hover"
+                                   id="dynamic-table">
+                                <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Dirección</th>
+                                    <th>Fecha</th>
+                                    <th>Room</th>
+                                    <th>Estado</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($pasadas as $pasada)
+                                    <tr>
+                                        <td>
+                                            <strong>{{$pasada->nombre}}</strong>
+                                        </td>
+                                        <td>
+                                            {{$pasada->direccion}}
+                                        </td>
+                                        <td>
+                                            {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
+                                        </td>
+                                        <td>
+                                            {{$pasada->room}}
+                                        </td>
+                                        <td>
+                                            <span>{{$pasada->estado}}</span>
+                                        </td>
+                                        <td>
+                                            <div class="pull-right" data-toggle="modal"
+                                                 data-target="#plan{{$pasada->id}}">
+                                                <a href="#"><i class="fa fa-check-square-o icopopup"></i> &nbsp;</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         @else
                             <p class="text-center">No has dado ninguna clase.</p>
-                        @endif
+                    @endif
 
 
-                    </div>
                 </div>
-                <div id="historiallg" class="listadeclases" style="display:none;">
-                    @include('instructor.pagos')
-                </div>
-
             </div>
+            <div id="historiallg" class="listadeclases" style="display:none;">
+                @include('instructor.pagos')
+            </div>
+
         </div>
+    </div>
 
     </div>
 
@@ -910,7 +925,7 @@
 
 	<?php
 
-	$pasadas = App\Reservacion::with('plan')->where( 'coach_id', $user->id )->where( 'status', '<>', 'PROXIMA' )->orderBy( 'created_at', 'desc' )->get();
+	$pasadas = App\Reservacion::with( 'plan' )->where( 'coach_id', $user->id )->where( 'status', '<>', 'PROXIMA' )->orderBy( 'created_at', 'desc' )->get();
 
 	if (! $pasadas->isEmpty()) {
 	date_default_timezone_set( 'America/Mexico_City' );
