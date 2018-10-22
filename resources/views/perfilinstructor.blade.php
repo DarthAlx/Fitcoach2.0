@@ -177,14 +177,20 @@
                                         <div class="col-xs-2">
                                             {{$pasada->direccion}}
                                         </div>
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-2">
                                             {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
                                         </div>
                                         <div class="col-xs-2">
                                             {{$pasada->room}}
                                         </div>
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-2">
                                             {{$pasada->estado}}
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <div class="pull-right" data-toggle="modal"
+                                                 data-target="#plan{{$pasada->id}}">
+                                                <a href="#"><i class="fa fa-check-square-o icopopup"></i> &nbsp;</a>
+                                            </div>
                                         </div>
                                     </div>
                                 @endforeach
@@ -380,14 +386,20 @@
                                     <div class="col-xs-2">
                                         {{$pasada->direccion}}
                                     </div>
-                                    <div class="col-xs-3">
+                                    <div class="col-xs-2">
                                         {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
                                     </div>
                                     <div class="col-xs-2">
                                         {{$pasada->room}}
                                     </div>
-                                    <div class="col-xs-3">
+                                    <div class="col-xs-2">
                                         {{$pasada->estado}}
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <div class="pull-right" data-toggle="modal"
+                                             data-target="#plan{{$pasada->id}}">
+                                            <a href="#"><i class="fa fa-check-square-o icopopup"></i> &nbsp;</a>
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach
@@ -898,7 +910,7 @@
 
 	<?php
 
-	$pasadas = App\Reservacion::where( 'coach_id', $user->id )->where( 'status', '<>', 'PROXIMA' )->orderBy( 'created_at', 'desc' )->get();
+	$pasadas = App\Reservacion::with('plan')->where( 'coach_id', $user->id )->where( 'status', '<>', 'PROXIMA' )->orderBy( 'created_at', 'desc' )->get();
 
 	if (! $pasadas->isEmpty()) {
 	date_default_timezone_set( 'America/Mexico_City' );
@@ -910,6 +922,77 @@
 
 
 	?>
+    <div class="modal fade" id="plan{{$pasada->id}}" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img
+                                src="{{url('/images/cross.svg')}}" alt=""></button>
+                    <div class="container-bootstrap" style="width: 100%;">
+                        <h4>Plan de la clase</h4>
+                        <form action="{{ url('/planear-clase') }}" method="post" enctype="multipart/form-data">
+                            @if($pasada->plan)
+                                {{ method_field('PUT') }}
+                            @endif
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            @if(!$pasada->plan)
+
+                                <label>Fase inicial</label>
+                                <textarea name="inicio" class="form-control" required></textarea>
+                                <label>Minutos</label>
+                                <input type="number" class="form-control" name="minutosinicio" required>
+
+                                <label>Fase medular</label>
+                                <textarea name="medular" class="form-control" required></textarea>
+                                <label>Minutos</label>
+                                <input type="number" class="form-control" name="minutosmedular" required>
+
+                                <label>Fase final</label>
+                                <textarea name="final" class="form-control" required></textarea>
+                                <label>Minutos</label>
+                                <input type="number" class="form-control" name="minutosfinal" required>
+
+                                <label>Comentarios</label>
+                                <textarea name="comentarios" class="form-control" required></textarea>
+
+                                <input type="hidden" name="reservacion_id" value="{{$pasada->reservacionId}}"/>
+                            @else
+                                <label>Fase inicial</label>
+                                <textarea name="inicio" class="form-control"
+                                          required>{{$pasada->plan->inicio}}</textarea>
+                                <label>Minutos</label>
+                                <input type="number" class="form-control" name="minutosinicio"
+                                       value="{{$pasada->plan->minutosinicio}}" required>
+
+                                <label>Fase medular</label>
+                                <textarea name="medular" class="form-control"
+                                          required>{{$pasada->plan->medular}}</textarea>
+                                <label>Minutos</label>
+                                <input type="number" class="form-control" name="minutosmedular"
+                                       value="{{$pasada->plan->minutosmedular}}" required>
+
+                                <label>Fase final</label>
+                                <textarea name="final" class="form-control"
+                                          required>{{$pasada->plan->final}}</textarea>
+                                <label>Minutos</label>
+                                <input type="number" class="form-control" name="minutosfinal"
+                                       value="{{$pasada->plan->minutosfinal}}" required>
+
+                                <label>Comentarios</label>
+                                <textarea name="comentarios" class="form-control"
+                                          required>{{$pasada->plan->comentarios}}</textarea>
+
+                                <input type="hidden" name="reservacion_id" value="{{$pasada->id}}"/>
+                            @endif
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="pasadas{{$pasada->id}}" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

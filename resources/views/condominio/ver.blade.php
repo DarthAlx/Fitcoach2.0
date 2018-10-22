@@ -66,20 +66,18 @@
                                                 No disponible
                                             </button>
                                         @else
-                                            <form action="{{url('carrito')}}" onsubmit="fbq('track', 'AddToCart');"
-                                                  method="post">
-                                                {!! csrf_field() !!}
-                                                <input type="hidden" name="cantidad" value="1">
-                                                <input type="hidden"
-                                                       name="carrito[]"
-                                                       value="{{$horario->id}},{{$date}},{{$horario->tokens}}">
-                                                <input type="hidden"
-                                                       name="tipo"
-                                                       value="En condominio">
-                                                <button class="btn btn-success" type="submit">
-                                                    Reservar
-                                                </button>
-                                            </form>
+                                            {!! Form::open(['url' => 'carrito']) !!}
+                                            <input type="hidden" name="cantidad" value="1">
+                                            <input type="hidden"
+                                                   name="carrito[]"
+                                                   value="{{$horario->id}},{{$date}},{{$horario->tokens}}">
+                                            <input type="hidden"
+                                                   name="tipo"
+                                                   value="En condominio">
+                                            <button class="btn btn-success" type="submit">
+                                                Reservar
+                                            </button>
+                                            {!! Form::close() !!}
 
                                         @endif
                                     </div>
