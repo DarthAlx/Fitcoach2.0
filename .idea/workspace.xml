@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6d48567-2ecf-4eab-a35a-1425948e2421" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Http/Controllers/AdminCondominio/InstructorController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/database/migrations/2018_10_22_234326_alter_grupos_table.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CondominioAdminController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CondominioAdminController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/AdminCondominio/MainController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/AdminCondominio/MainController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/User.php" afterPath="$PROJECT_DIR$/app/User.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/dynamic_table_init.js" afterPath="$PROJECT_DIR$/js/dynamic_table_init.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pub-access_log" afterPath="$PROJECT_DIR$/pub-access_log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin_condominio/partials/crear_grupo.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin_condominio/partials/crear_grupo.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin_condominio/partials/horarios.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin_condominio/partials/horarios.blade.php" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -24,7 +16,28 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="2018_10_22_002200_alter_paquetescomprados_table.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database/migrations/2018_10_22_002200_alter_paquetescomprados_table.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="288">
+              <caret line="17" column="5" lean-forward="true" selection-start-line="11" selection-start-column="4" selection-end-line="17" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="2018_10_22_234326_alter_grupos_table.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/database/migrations/2018_10_22_234326_alter_grupos_table.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="11" column="7" lean-forward="false" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -75,7 +88,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/resources/views/admin/reports/type5/show.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/reports/type4/show.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/reports/type3/show.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/reports/type1/show.blade.php" />
@@ -126,6 +138,7 @@
         <option value="$PROJECT_DIR$/js/dynamic_table_init.js" />
         <option value="$PROJECT_DIR$/app/User.php" />
         <option value="$PROJECT_DIR$/resources/views/admin_condominio/partials/horarios.blade.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2018_10_22_234326_alter_grupos_table.php" />
       </list>
     </option>
   </component>
@@ -408,7 +421,7 @@
       <workItem from="1539378077513" duration="3392000" />
       <workItem from="1539626857171" duration="8541000" />
       <workItem from="1540150570279" duration="16637000" />
-      <workItem from="1540250091972" duration="7156000" />
+      <workItem from="1540250091972" duration="8455000" />
     </task>
     <task id="LOCAL-00001" summary="Cambios">
       <created>1536781946411</created>
@@ -508,11 +521,18 @@
       <option name="project" value="LOCAL" />
       <updated>1540254073227</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Merge branches 'master' and 'workana' of https://bitbucket.org/andresdkm/fitacoach&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;app/Http/Controllers/AdminCondominio/MainController.php&#10;#&#9;app/Http/Middleware/AdministradorCondominio.php&#10;#&#9;app/Http/routes.php&#10;#&#9;database/migrations/2018_09_14_190417_create_reports_table.php&#10;#&#9;pub-access_log&#10;#&#9;resources/views/admin_condominio/partials/reservaciones.blade.php&#10;#&#9;resources/views/condominio/ver.blade.php">
+      <created>1540267340069</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1540267340069</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="169053000" />
+    <option name="totallyTimeSpent" value="170352000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1347" y="-2" width="1533" height="902" extended-state="6" />
@@ -585,14 +605,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Instructor/PerfilInstructor.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="143" column="72" lean-forward="true" selection-start-line="142" selection-start-column="8" selection-end-line="143" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AdminCondominio/HorarioController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -746,14 +758,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="21" column="25" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2018_10_22_002200_alter_paquetescomprados_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="15" column="55" lean-forward="false" selection-start-line="15" selection-start-column="55" selection-end-line="15" selection-end-column="55" />
           <folding />
         </state>
       </provider>
@@ -1016,6 +1020,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="160" column="59" lean-forward="true" selection-start-line="160" selection-start-column="59" selection-end-line="160" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2018_10_22_002200_alter_paquetescomprados_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="17" column="5" lean-forward="true" selection-start-line="11" selection-start-column="4" selection-end-line="17" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2018_10_22_234326_alter_grupos_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="11" column="7" lean-forward="false" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
           <folding />
         </state>
       </provider>
