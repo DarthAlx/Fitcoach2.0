@@ -44,7 +44,10 @@ class MainController extends Controller {
 		                       ->where( 'fecha', $now->toDateString() )
 		                       ->where( 'condominio_id', $condominio->id )->orderBy( 'hora', 'asc' )->get();
 
-		$eventos = Evento::where( 'condominio_id', '=', $condominioId )->get();
+		$eventos = Evento::with( 'condominio' )
+		                 ->with( 'asistentes' )
+		                 ->with( 'asistentes.usuario' )
+		                 ->where( 'condominio_id', '=', $condominioId )->get();
 		$grupos  = Grupo::with( 'coach' )
 		                ->with( 'horarios' )
 		                ->with( 'horarios.clase' )

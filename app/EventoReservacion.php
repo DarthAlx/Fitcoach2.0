@@ -10,4 +10,8 @@ class EventoReservacion extends Model
 
 	protected $fillable = ['evento_id', 'user_id', 'valor_pagado', 'estado'];
 
+	public function usuario()
+	{
+		return $this->hasOne('App\User','id','user_id');
+	}
 }

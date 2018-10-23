@@ -13,4 +13,8 @@ class Evento extends Model
     public function condominio(){
 		return $this->belongsTo('App\Condominio');
 	}
+
+	public function asistentes() {
+		return $this->hasMany( 'App\EventoReservacion', 'evento_id', 'id' )->orderby('created_at','desc');
+	}
 }
