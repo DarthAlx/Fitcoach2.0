@@ -72,4 +72,38 @@ $(document).ready(function() {
             oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
         }
     } );
+
+    $("#coachNuevo").change(function() {
+        var coachId = $(this).val();
+        $.get("/admin-condominio/clasesdeinstructor/"+coachId,
+            function(data){
+                var select = $('#clases_idNuevo').empty();
+                select.append( '<option value="">Selecciona una clase</option>' );
+                for(var i = 0;i< data.length;i++){
+                    select.append( '<option value="'
+                        + data[i].id
+                        + '">'
+                        + data[i].nombre
+                        + '</option>' );
+                }
+            }, "json");
+    });
+    $(".select-coach").change(function() {
+        var coachId = $(this).val();
+        $.get("/admin-condominio/clasesdeinstructor/"+coachId,
+            function(data){
+                var select = $('.select-class').empty();
+                select.append( '<option value="">Selecciona una clase</option>' );
+                for(var i = 0;i< data.length;i++){
+                    select.append( '<option value="'
+                        + data[i].id
+                        + '">'
+                        + data[i].nombre
+                        + '</option>' );
+                }
+            }, "json");
+    });
+
+
+
 } );

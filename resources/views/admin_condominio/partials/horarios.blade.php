@@ -152,7 +152,7 @@
                                 if (document.getElementById('room_id{{ $grupo->id }}') != null) document.getElementById('room_id{{ $grupo->id }}').value = '{!! $grupo->room_id !!}';
                             </script>
 
-                            <select class="form-control" name="user_id" id="coach{{ $grupo->id }}" required>
+                            <select class="form-control select-coach" name="user_id" id="coach{{ $grupo->id }}" required>
                                 <option value="">Selecciona un coach</option>
                                 @foreach ($coaches as $coach)
                                     <option value="{{ $coach->id }}">{{ $coach->name }}</option>
@@ -161,10 +161,10 @@
                             <script type="text/javascript">
                                 if (document.getElementById('coach{{ $grupo->id }}') != null) document.getElementById('coach{{ $grupo->id }}').value = '{!! $grupo->user_id !!}';
                             </script>
-                            <select class="form-control" name="clase_id" id="clases_id{{  $grupo->id }}"
+                            <select class="form-control select-class" name="clase_id" id="clases_id{{  $grupo->id }}"
                                     required>
                                 <option value="">Selecciona una clase</option>
-                                @foreach ($clases as $clase)
+                                @foreach ($grupo->coach->clasesInstructor() as $clase)
                                     <option value="{{ $clase->id }}">{{ $clase->nombre }}</option>
                                 @endforeach
                             </select>

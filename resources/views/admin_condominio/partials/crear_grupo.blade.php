@@ -28,9 +28,7 @@
                         </select>
                         <select class="form-control" name="clase_id" id="clases_idNuevo" required>
                             <option value="">Selecciona una clase</option>
-                            @foreach ($clases as $clase)
-                                <option value="{{ $clase->id }}">{{ $clase->nombre }}</option>
-                            @endforeach
+
                         </select>
                         <select class="form-control" name="audiencia" id="audiencia" required>
                             <option value="">Selecciona una audiencia</option>
@@ -60,3 +58,4 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal detalles user -->
+

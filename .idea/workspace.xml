@@ -2,15 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6d48567-2ecf-4eab-a35a-1425948e2421" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/uploads/clases/Evento-1540253360.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Http/Controllers/AdminCondominio/InstructorController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Evento.php" afterPath="$PROJECT_DIR$/app/Evento.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/EventoReservacion.php" afterPath="$PROJECT_DIR$/app/EventoReservacion.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CondominioAdminController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CondominioAdminController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/AdminCondominio/MainController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/AdminCondominio/MainController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/User.php" afterPath="$PROJECT_DIR$/app/User.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/dynamic_table_init.js" afterPath="$PROJECT_DIR$/js/dynamic_table_init.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pub-access_log" afterPath="$PROJECT_DIR$/pub-access_log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin_condominio/partials/eventos.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin_condominio/partials/eventos.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin_condominio/ver.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin_condominio/ver.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/perfilinstructor.blade.php" afterPath="$PROJECT_DIR$/resources/views/perfilinstructor.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin_condominio/partials/crear_grupo.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin_condominio/partials/crear_grupo.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin_condominio/partials/horarios.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin_condominio/partials/horarios.blade.php" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,94 +24,10 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ver.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/admin_condominio/ver.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="828">
-              <caret line="127" column="105" lean-forward="false" selection-start-line="127" selection-start-column="105" selection-end-line="127" selection-end-column="105" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="eventos.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/admin_condominio/partials/eventos.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="118" column="41" lean-forward="false" selection-start-line="118" selection-start-column="41" selection-end-line="118" selection-end-column="41" />
-              <folding>
-                <element signature="e#4520#4542#0#HTML" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AdminCondominio/MainController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="46" column="21" lean-forward="false" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Evento.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Evento.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="17" column="43" lean-forward="true" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Reservacion.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Reservacion.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="344">
-              <caret line="57" column="5" lean-forward="false" selection-start-line="55" selection-start-column="4" selection-end-line="57" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EventoReservacion.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/EventoReservacion.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="14" column="53" lean-forward="false" selection-start-line="14" selection-start-column="53" selection-end-line="14" selection-end-column="53" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ReservacionUsuario.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/ReservacionUsuario.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="14" column="5" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="14" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="357a4026cfe65d71a4de0f9cd47047ab" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/storage/framework/views/357a4026cfe65d71a4de0f9cd47047ab">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1944">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>room</find>
       <find>pr</find>
       <find>proxima</find>
       <find>$proxima</find>
@@ -140,6 +57,7 @@
       <find>pago</find>
       <find>sendpayment</find>
       <find>tokenminus</find>
+      <find>admi</find>
     </findStrings>
     <replaceStrings>
       <replace>$item</replace>
@@ -157,9 +75,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/resources/views/admin/reports/type8/show.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/admin/reports/type7/show.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/admin/reports/type6/show.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/reports/type5/show.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/reports/type4/show.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/reports/type3/show.blade.php" />
@@ -186,28 +101,31 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/AdminCondominio/HorarioController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/AdminCondominio/MensajeController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/AdminCondominio/EventoController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Admin/CondominioAdminController.php" />
         <option value="$PROJECT_DIR$/app/Horario.php" />
         <option value="$PROJECT_DIR$/app/Http/Middleware/Administradores.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/AdminCondominio/GrupoController.php" />
-        <option value="$PROJECT_DIR$/resources/views/admin_condominio/partials/horarios.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/instructores.blade.php" />
         <option value="$PROJECT_DIR$/app/Mensaje.php" />
         <option value="$PROJECT_DIR$/resources/views/partials/planes.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/instructor/pagos.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/admin_condominio/partials/reservaciones.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/routes.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/nomina.blade.php" />
         <option value="$PROJECT_DIR$/database/migrations/2018_10_22_002200_alter_paquetescomprados_table.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Publico/OrdenController.php" />
-        <option value="$PROJECT_DIR$/app/User.php" />
         <option value="$PROJECT_DIR$/resources/views/condominio/ver.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/perfilinstructor.blade.php" />
         <option value="$PROJECT_DIR$/app/Evento.php" />
         <option value="$PROJECT_DIR$/resources/views/admin_condominio/ver.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/admin_condominio/partials/eventos.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/AdminCondominio/MainController.php" />
         <option value="$PROJECT_DIR$/app/EventoReservacion.php" />
+        <option value="$PROJECT_DIR$/app/Http/routes.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/AdminCondominio/InstructorController.php" />
+        <option value="$PROJECT_DIR$/resources/views/admin_condominio/partials/crear_grupo.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/AdminCondominio/MainController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Admin/CondominioAdminController.php" />
+        <option value="$PROJECT_DIR$/js/dynamic_table_init.js" />
+        <option value="$PROJECT_DIR$/app/User.php" />
+        <option value="$PROJECT_DIR$/resources/views/admin_condominio/partials/horarios.blade.php" />
       </list>
     </option>
   </component>
@@ -231,10 +149,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1919" />
-    <option name="y" value="-1" />
-    <option name="width" value="1922" />
-    <option name="height" value="1085" />
+    <option name="x" value="1521" />
+    <option name="y" value="150" />
+    <option name="width" value="965" />
+    <option name="height" value="557" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -490,7 +408,7 @@
       <workItem from="1539378077513" duration="3392000" />
       <workItem from="1539626857171" duration="8541000" />
       <workItem from="1540150570279" duration="16637000" />
-      <workItem from="1540250091972" duration="3792000" />
+      <workItem from="1540250091972" duration="7156000" />
     </task>
     <task id="LOCAL-00001" summary="Cambios">
       <created>1536781946411</created>
@@ -583,24 +501,31 @@
       <option name="project" value="LOCAL" />
       <updated>1540252389531</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Merge branches 'master' and 'workana' of https://bitbucket.org/andresdkm/fitacoach&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;app/Http/Controllers/AdminCondominio/MainController.php&#10;#&#9;app/Http/Middleware/AdministradorCondominio.php&#10;#&#9;app/Http/routes.php&#10;#&#9;database/migrations/2018_09_14_190417_create_reports_table.php&#10;#&#9;pub-access_log&#10;#&#9;resources/views/admin_condominio/partials/reservaciones.blade.php&#10;#&#9;resources/views/condominio/ver.blade.php">
+      <created>1540254073227</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1540254073227</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="165689000" />
+    <option name="totallyTimeSpent" value="169053000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1919" y="-1" width="1299" height="743" extended-state="6" />
+    <frame x="1347" y="-2" width="1533" height="902" extended-state="6" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30327216" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30531272" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24164525" sideWeight="0.5096525" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32809225" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24183007" sideWeight="0.4903475" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24124514" sideWeight="0.4903475" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -660,37 +585,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/Usuarios.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/storage/logs/laravel.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-672944">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Kernel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="32" column="24" lean-forward="false" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CondominioController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="56" column="50" lean-forward="false" selection-start-line="56" selection-start-column="50" selection-end-line="56" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Instructor/PerfilInstructor.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="294">
@@ -733,14 +627,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Admin/CondominioAdminController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="58" column="0" lean-forward="false" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Grupo.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -771,34 +657,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-7551">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/admin_condominio/partials/grupos.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="41" lean-forward="true" selection-start-line="31" selection-start-column="41" selection-end-line="31" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/admin_condominio/partials/editar_evento.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/admin_condominio/partials/crear_grupo.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-95">
-          <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/admin_condominio/partials/crear_evento.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="58" lean-forward="false" selection-start-line="21" selection-start-column="58" selection-end-line="21" selection-end-column="58" />
         </state>
       </provider>
     </entry>
@@ -876,14 +734,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7596">
-          <caret line="431" column="66" lean-forward="false" selection-start-line="431" selection-start-column="56" selection-end-line="431" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2018_10_15_132743_alter_users_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="486">
@@ -928,14 +778,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3672">
-          <caret line="213" column="33" lean-forward="false" selection-start-line="213" selection-start-column="33" selection-end-line="213" selection-end-column="33" />
           <folding />
         </state>
       </provider>
@@ -1000,32 +842,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/ReservacionUsuario.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" column="5" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="14" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/admin_condominio/partials/reservaciones.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="94" column="31" lean-forward="false" selection-start-line="94" selection-start-column="31" selection-end-line="94" selection-end-column="31" />
-          <folding>
-            <element signature="e#141#4589#0#HTML" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/admin_condominio/partials/horarios.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1227">
-          <caret line="180" column="46" lean-forward="false" selection-start-line="180" selection-start-column="46" selection-end-line="180" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/admin_condominio/ver.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="828">
@@ -1052,22 +868,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Reservacion.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="57" column="5" lean-forward="false" selection-start-line="55" selection-start-column="4" selection-end-line="57" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AdminCondominio/MainController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="46" column="21" lean-forward="false" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Evento.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -1076,10 +876,146 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/EventoReservacion.php">
+    <entry file="file://$PROJECT_DIR$/app/ReservacionUsuario.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
-          <caret line="14" column="53" lean-forward="false" selection-start-line="14" selection-start-column="53" selection-end-line="14" selection-end-column="53" />
+          <caret line="14" column="5" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="14" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/EventoReservacion.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="15" column="5" lean-forward="true" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Reservacion.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="503">
+          <caret line="57" column="5" lean-forward="false" selection-start-line="55" selection-start-column="4" selection-end-line="57" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Controller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="9" column="15" lean-forward="false" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="427">
+          <caret line="154" column="16" lean-forward="false" selection-start-line="154" selection-start-column="16" selection-end-line="154" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Admin/CondominioAdminController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="76" column="39" lean-forward="false" selection-start-line="76" selection-start-column="39" selection-end-line="76" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/admin_condominio/partials/editar_evento.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-270">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/admin_condominio/partials/crear_evento.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="21" column="58" lean-forward="false" selection-start-line="21" selection-start-column="58" selection-end-line="21" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/admin_condominio/partials/grupos.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="31" column="41" lean-forward="false" selection-start-line="31" selection-start-column="41" selection-end-line="31" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/storage/framework/views/d69d87a3392dc759ba9c99f5d811dfb6">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2738">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/admin_condominio/partials/reservaciones.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="85" column="0" lean-forward="false" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
+          <folding>
+            <element signature="e#141#4589#0#HTML" expanded="false" />
+            <element signature="e#4602#9225#0#HTML" expanded="false" />
+            <element signature="e#9238#13326#0#HTML" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/admin_condominio/partials/crear_grupo.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="407">
+          <caret line="60" column="0" lean-forward="false" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AdminCondominio/InstructorController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="407">
+          <caret line="33" column="5" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="33" selection-end-column="5" />
+          <folding>
+            <element signature="e#144#158#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="223" column="36" lean-forward="false" selection-start-line="223" selection-start-column="20" selection-end-line="223" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AdminCondominio/MainController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="684">
+          <caret line="73" column="37" lean-forward="false" selection-start-line="73" selection-start-column="37" selection-end-line="73" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/dynamic_table_init.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="94" column="45" lean-forward="true" selection-start-line="94" selection-start-column="33" selection-end-line="94" selection-end-column="45" />
+          <folding>
+            <marker date="1540266785965" expanded="true" signature="157:175" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/admin_condominio/partials/horarios.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="160" column="59" lean-forward="true" selection-start-line="160" selection-start-column="59" selection-end-line="160" selection-end-column="59" />
           <folding />
         </state>
       </provider>

@@ -66,7 +66,6 @@ class CondominioAdminController extends Controller {
 
 		$coaches = User::where( 'role', 'instructor' )->get();
 		$rooms2  = Room::all();
-		$clases  = Clase::all();
 
 		return view( 'admin_condominio.ver' )
 			->with( 'condominio', $condominio )
@@ -77,7 +76,6 @@ class CondominioAdminController extends Controller {
 			->with( 'eventos', $eventos )
 			->with( 'grupos', $grupos )
 			->with( 'coaches', $coaches )
-			->with( 'clases', $clases )
 			->with( 'rooms2', $rooms2 );
 	}
 

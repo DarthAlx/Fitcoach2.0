@@ -221,5 +221,18 @@ class User extends Model implements AuthenticatableContract,
 		return $this->hasOne( 'App\Condominio', 'id', 'condominio_id' );
 	}
 
+	public function clasesInstructor() {
+		$detalles = Detalle::where( 'user_id', $this->attributes['id'] )
+		                   ->get()
+		                   ->first();
+		if ( $detalles != null ) {
+			$clasesIds = explode( ",", $detalles->clases );
+
+			return Clase::whereIn( 'id', $detalles )->get();
+		} else {
+			return [];
+		}
+
+	}
 
 }

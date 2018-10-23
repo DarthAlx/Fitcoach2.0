@@ -152,6 +152,7 @@ Route::group( [ 'prefix' => 'admin-condominio', 'namespace' => 'AdminCondominio'
 	Route::delete( '/eliminar-grupo', 'GrupoController@remove' );
 	Route::get( '/cancelar/{id}', 'MainController@cancelar' );
 	Route::post( '/agregar-mensaje', 'MensajeController@guardar' );
+	Route::get('clasesdeinstructor/{coachId}','InstructorController@clases');
 
 });
 
@@ -519,3 +520,4 @@ Route::group( [ 'middleware' => 'instructores' ], function () {
 
 } );
 Route::get( 'listainscritos/{id}', 'ResidencialController@printlist' );
+
