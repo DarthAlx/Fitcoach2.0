@@ -78,7 +78,6 @@
         </div>
     </div>
 </div>
-count($condominio->eventos)>0)
 @foreach($condominio->eventos as $evento)
     <div class="modal fade" id="admin-condominios-evento-ver{{$evento->id}}" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">

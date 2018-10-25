@@ -12,54 +12,88 @@
                             @if($proxima->plan)
                                 {{ method_field('PUT') }}
                             @endif
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
                             @if(!$proxima->plan)
-
-                                <label>Fase inicial</label>
-                                <textarea name="inicio" class="form-control" required></textarea>
-                                <label>Minutos</label>
-                                <input type="number" class="form-control" name="minutosinicio" required>
-
-                                <label>Fase medular</label>
-                                <textarea name="medular" class="form-control" required></textarea>
-                                <label>Minutos</label>
-                                <input type="number" class="form-control" name="minutosmedular" required>
-
-                                <label>Fase final</label>
-                                <textarea name="final" class="form-control" required></textarea>
-                                <label>Minutos</label>
-                                <input type="number" class="form-control" name="minutosfinal" required>
-
-                                <label>Comentarios</label>
-                                <textarea name="comentarios" class="form-control" required></textarea>
-
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>Objetivos</label>
+                                        <textarea name="objetivos" class="form-control" required rows="4"></textarea>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>Materiales</label>
+                                        <textarea name="materiales" class="form-control" required rows="4"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>Fase inicial</label>
+                                        <textarea name="inicio" class="form-control" required rows="4"></textarea>
+                                        <label>Minutos</label>
+                                        <input type="number" class="form-control" name="minutosinicio" required>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label>Fase medular</label>
+                                        <textarea name="medular" class="form-control" required rows="4"></textarea>
+                                        <label>Minutos</label>
+                                        <input type="number" class="form-control" name="minutosmedular" required>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label>Fase final</label>
+                                        <textarea name="final" class="form-control" required rows="4"></textarea>
+                                        <label>Minutos</label>
+                                        <input type="number" class="form-control" name="minutosfinal" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label>Comentarios</label>
+                                        <textarea name="comentarios" class="form-control" required rows="4"></textarea>
+                                    </div>
+                                </div>
                                 <input type="hidden" name="reservacion_id" value="{{$proxima->reservacionId}}"/>
                             @else
-                                <label>Fase inicial</label>
-                                <textarea name="inicio" class="form-control"
-                                          required>{{$proxima->plan->inicio}}</textarea>
-                                <label>Minutos</label>
-                                <input type="number" class="form-control" name="minutosinicio"
-                                       value="{{$proxima->plan->minutosinicio}}" required>
-
-                                <label>Fase medular</label>
-                                <textarea name="medular" class="form-control"
-                                          required>{{$proxima->plan->medular}}</textarea>
-                                <label>Minutos</label>
-                                <input type="number" class="form-control" name="minutosmedular"
-                                       value="{{$proxima->plan->minutosmedular}}" required>
-
-                                <label>Fase final</label>
-                                <textarea name="final" class="form-control"
-                                          required>{{$proxima->plan->final}}</textarea>
-                                <label>Minutos</label>
-                                <input type="number" class="form-control" name="minutosfinal"
-                                       value="{{$proxima->plan->minutosfinal}}" required>
-
-                                <label>Comentarios</label>
-                                <textarea name="comentarios" class="form-control"
-                                          required>{{$proxima->plan->comentarios}}</textarea>
-
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>Objetivos</label>
+                                        <textarea name="objetivos" class="form-control" required rows="4">{{$proxima->plan->objetivos}}
+                                        </textarea>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>Materiales</label>
+                                        <textarea name="materiales" class="form-control" required rows="4">{{$proxima->plan->materiales}}
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>Fase inicial</label>
+                                        <textarea name="inicio" class="form-control" required rows="4">{{$proxima->plan->inicio}}</textarea>
+                                        <label>Minutos</label>
+                                        <input type="number" class="form-control" name="minutosinicio" required
+                                               value="{{$proxima->plan->minutosinicio}}">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label>Fase medular</label>
+                                        <textarea name="medular" class="form-control" required rows="4">{{$proxima->plan->medular}}</textarea>
+                                        <label>Minutos</label>
+                                        <input type="number" class="form-control" name="minutosmedular" required
+                                               value="{{$proxima->plan->minutosmedular}}">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label>Fase final</label>
+                                        <textarea name="final" class="form-control" required rows="4">{{$proxima->plan->final}}</textarea>
+                                        <label>Minutos</label>
+                                        <input type="number" class="form-control" name="minutosfinal" value="{{$proxima->plan->minutosfinal}}" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label>Comentarios</label>
+                                        <textarea name="comentarios" class="form-control" required rows="4">{{$proxima->plan->comentarios}}</textarea>
+                                    </div>
+                                </div>
                                 <input type="hidden" name="reservacion_id" value="{{$proxima->id}}"/>
                             @endif
                             <button class="btn btn-success" type="submit"
@@ -374,9 +408,9 @@
                                 <p>Mensajes</p>
                                 <div class="container-bootstrap" style="width: 100%;padding-top: 50px">
                                     <div class="row">
-										<?php
-										$mensajes = \App\Mensaje::with( 'user' )->where( 'reservacion_id', $proxima->id )->get();
-										?>
+                                        <?php
+                                        $mensajes = \App\Mensaje::with('user')->where('reservacion_id', $proxima->id)->get();
+                                        ?>
                                         @if(count($mensajes)>0)
                                             <div class="col-md-12" style="height: 100px;overflow-y: scroll">
                                                 @foreach($mensajes as $mensaje)
@@ -431,9 +465,9 @@
                         </div>
                         <hr/>
                         <div class="row">
-							<?php
-							$mensajes = \App\Mensaje::where( 'reservacion_id', $proxima->id )->get();
-							?>
+                            <?php
+                            $mensajes = \App\Mensaje::where('reservacion_id', $proxima->id)->get();
+                            ?>
                             @if(count($mensajes)>0)
                                 <div class="col-md-12" style="height: 200px;overflow-y: scroll">
                                     @foreach($mensajes as $mensaje)
