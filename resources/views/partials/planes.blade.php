@@ -180,30 +180,82 @@
                             </div>
                         </div>
                         <br/>
-                        <form method="POST" action="/crear-invitado">
-                            {!! csrf_field() !!}
-                            <div class="row">
-                                <div class="col-md-8 col-md-offset-2">
-                                    <input type="text" class="form-control" name="nombre"
-                                           placeholder="Nombre" required>
-                                    <input type="email" class="form-control" name="email"
-                                           placeholder="Email" required>
-                                    <input type="tel" class="form-control" name="telefono"
-                                           placeholder="Teléfono" required>
-                                    <select class="form-control" name="genero" required>
-                                        <option value="">Genero</option>
-                                        <option value="Masculino">Masculino</option>
-                                        <option value="Femenino">Femenino</option>
-                                    </select>
-                                    <input type="hidden" name="reservacion_id" value="{{$proxima->id}}"
-                                           placeholder="nombres" required/>
-                                    <button class="btn btn-success" type="submit"
-                                            style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
-                                        Añadir
-                                    </button>
-                                </div>
+                        <div class="row buttons-select">
+                            <div class="col-md-4 col-md-offset-2">
+                                <button class="btn btn-success add-person" type="submit"
+                                        style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
+                                    AÑADIR ADULTO
+                                </button>
                             </div>
-                        </form>
+                            <div class="col-md-4 ">
+                                <button class="btn btn-success add-child" type="submit"
+                                        style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
+                                    AÑADIR NIÑO
+                                </button>
+                            </div>
+                        </div>
+                        <div class="add-child-form">
+                            <form method="POST" action="/crear-invitado">
+                                {!! csrf_field() !!}
+                                <div class="row">
+                                    <div class="col-md-8 col-md-offset-2">
+                                        <input type="text" class="form-control" name="nombre"
+                                               placeholder="Nombre" required>
+                                        <input type="hidden" class="form-control" name="email"
+                                               placeholder="Email" value=""/>
+                                        <input type="hidden" class="form-control" name="telefono"
+                                               placeholder="Teléfono" value=""/>
+                                        <input type="hidden" class="form-control" name="genero" required value=""/>
+                                        <input type="hidden" name="reservacion_id" value="{{$proxima->id}}"
+                                               placeholder="nombres" required/>
+                                        <button class="btn btn-success" type="submit"
+                                                style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
+                                            Añadir
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="add-adult-form-1">
+                            <form method="POST" action="#" class="add-adult-form">
+                                <div class="row">
+                                    <div class="col-md-8 col-md-offset-2">
+                                        <input type="text" class="form-control" name="telefono"
+                                               placeholder="Teléfono" required/>
+                                        <button class="btn btn-success" type="submit"
+                                                style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
+                                            Añadir
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="add-adult-form-2">
+                            <form method="POST" action="/crear-invitado">
+                                {!! csrf_field() !!}
+                                <div class="row">
+                                    <div class="col-md-8 col-md-offset-2">
+                                        <input type="text" class="form-control add-adult-form-nombre" name="nombre"
+                                               placeholder="Nombre" required>
+                                        <input type="email" class="form-control add-adult-form-email" name="email"
+                                               placeholder="Email" required>
+                                        <input type="tel" class="form-control add-adult-form-telefono" name="telefono"
+                                               placeholder="Teléfono" required>
+                                        <select class="form-control  add-adult-form-genero" name="genero" required>
+                                            <option value="">Genero</option>
+                                            <option value="Masculino">Masculino</option>
+                                            <option value="Femenino">Femenino</option>
+                                        </select>
+                                        <input type="hidden" name="reservacion_id" value="{{$proxima->id}}"
+                                               placeholder="nombres" required/>
+                                        <button class="btn btn-success" type="submit"
+                                                style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
+                                            Añadir
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
 
                     </div>
                 </div><!-- /.modal-content -->
@@ -322,24 +374,9 @@
                                 <p>Mensajes</p>
                                 <div class="container-bootstrap" style="width: 100%;padding-top: 50px">
                                     <div class="row">
-                                        <div class="col-md-3">
-                                            <b>Clase</b>:{{$proxima->nombre}}</b>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <b>Coach</b>:{{$user->name}}</b>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <b>Cliente</b>:{{$proxima->direccion}}</b>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <b>Fecha</b>:{{$proxima->fecha}}</b>
-                                        </div>
-                                    </div>
-                                    <hr/>
-                                    <div class="row">
-			                            <?php
-			                            $mensajes = \App\Mensaje::with('user')->where('reservacion_id',$proxima->id)->get();
-			                            ?>
+										<?php
+										$mensajes = \App\Mensaje::with( 'user' )->where( 'reservacion_id', $proxima->id )->get();
+										?>
                                         @if(count($mensajes)>0)
                                             <div class="col-md-12" style="height: 100px;overflow-y: scroll">
                                                 @foreach($mensajes as $mensaje)
@@ -394,9 +431,9 @@
                         </div>
                         <hr/>
                         <div class="row">
-                            <?php
-                            $mensajes = \App\Mensaje::where('reservacion_id',$proxima->id)->get();
-                            ?>
+							<?php
+							$mensajes = \App\Mensaje::where( 'reservacion_id', $proxima->id )->get();
+							?>
                             @if(count($mensajes)>0)
                                 <div class="col-md-12" style="height: 200px;overflow-y: scroll">
                                     @foreach($mensajes as $mensaje)

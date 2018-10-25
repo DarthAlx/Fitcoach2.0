@@ -40,7 +40,7 @@
             @elseif($pago->metodo=='Efectivo')
                 <b>Monto :</b> $ {{$pago->monto}}
             @elseif($pago->metodo=='Transferencia')
-                <b>Monto :</b> $ {{$pago->monto}}
+                <b>Monto :</b> $ {{$pago->monto}}<br/>
                 <b>Iva :</b> $ {{$pago->monto*0.16}}
             @endif
 

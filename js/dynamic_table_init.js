@@ -103,7 +103,43 @@ $(document).ready(function() {
                 }
             }, "json");
     });
+    $(".add-child-form").hide();
+    $(".add-adult-form-1").hide();
+    $(".add-adult-form-2").hide();
+    $(".add-child").click(function () {
+        $(".buttons-select").hide();
+        $(".add-child-form").show();
+    })
 
+    $(".add-person").click(function () {
+        $(".buttons-select").hide();
+        $(".add-adult-form-1").show();
+    })
+    $(".add-adult-form").submit(function(e){
+        e.preventDefault();
+        var value = $(this).serializeArray();
+        var tel = value[0]['value'];
+        $.get("/busquedaporcelular?tel="+tel,
+            function(data){
+                $(".add-adult-form-1").hide();
+                if(data['name']){
+                    $('.add-adult-form-2').show();
+                    $(".add-adult-form-nombre").val(data['name']);
+                    $(".add-adult-form-email").val(data['email']);
+                    $(".add-adult-form-telefono").val(data['tel']);
+                    $(".add-adult-form-genero").val(data['genero']);
 
+                    $(".add-adult-form-nombre").attr('readonly', true);
+                    $(".add-adult-form-email").attr('readonly', true);
+                    $(".add-adult-form-telefono").attr('readonly', true);
+                    $(".add-adult-form-genero").attr('readonly', true);
 
+                }else{
+                    $('.add-adult-form-2').show();
+                    $(".add-adult-form-telefono").attr('readonly', true);
+                    $(".add-adult-form-telefono").val(tel);
+
+                }
+            }, "json");
+    });
 } );

@@ -362,7 +362,8 @@
                                         @if($proxima->estado=='COMENZADA')
                                             <div class="pull-right" data-toggle="modal"
                                                  data-target="#proximas{{$proxima->id}}">
-                                                <a href="#"><i class="fa fa-eye icopopup"></i></a>
+                                                <a href="#"><i   class="fa fa-play icopopup"
+                                                                 style="background-color: #00ff00"></i> &nbsp</a>
                                             </div>
                                         @elseif($proxima->estado=='PROXIMA')
                                             <div class="pull-right" data-toggle="modal"

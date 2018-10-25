@@ -520,4 +520,5 @@ Route::group( [ 'middleware' => 'instructores' ], function () {
 
 } );
 Route::get( 'listainscritos/{id}', 'ResidencialController@printlist' );
+Route::get( 'busquedaporcelular', 'Publico\HomeController@busqueda' );
 
