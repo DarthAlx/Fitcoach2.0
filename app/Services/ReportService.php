@@ -15,7 +15,6 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
-use Symfony\Component\HttpKernel\Tests\Controller;
 
 class ReportService
 {
@@ -30,30 +29,42 @@ class ReportService
     public function clientsWithClassesDue(array $input)
     {
         $now = Carbon::now();
-        $date = Carbon::parse($input['date']);
-        $data = DB::table('paquetescomprados')
-            ->join('users', 'users.id', '=', 'paquetescomprados.user_id')
-            ->where('expiracion', '<=', $date)
-            ->where('paquetescomprados.disponibles', '>', 0)
+        $startDate = null;
+        $endDate = null;
+        $query = DB::table('paquetescomprados')
+            ->join('users', 'users.id', '=', 'paquetescomprados.user_id');
+        if (isset($input['from'])) {
+            $startDate = $input['from'];
+            $query->where('expiracion', '>=', $startDate);
+        }
+        if (isset($input['to'])) {
+            $endDate = $input['to'];
+            $query->where('expiracion', '<=', $endDate);
+        }
+        $query->where('paquetescomprados.disponibles', '>', 0)
             ->select('users.*', DB::raw('SUM(paquetescomprados.disponibles) as disponibles'), 'paquetescomprados.expiracion')
-            ->groupBy('users.id')
-            ->get();
-        return View::make('admin.reports.type' . $this->id . '.show', compact('data', 'now', 'date'))->render();
+            ->groupBy('users.id');
+        $data = $query->get();
+        return View::make('admin.reports.type' . $this->id . '.show', compact('data', 'now', 'endDate', 'startDate'))->render();
     }
 
     public function popularityOfClasses(array $input)
     {
         $now = Carbon::now();
-        $startDate = Carbon::parse($input['from']);
-        $endDate = Carbon::parse($input['to']);
-        $data = DB::table('clases')
-            ->join('horarios', 'horarios.clase_id', '=', 'clases.id')
-            ->where('fecha', '>=', $startDate)
-            ->where('fecha', '<=', $endDate)
-            ->select('clases.*', DB::raw('SUM(horarios.ocupados) as total'))
-            ->groupBy('clases.id')
-            ->get();
+        $startDate = $input['from'];
+        $endDate = $input['to'];
+        $query = DB::table('clases')
+            ->join('horarios', 'horarios.clase_id', '=', 'clases.id');
+        if (isset($input['from'])) {
+            $query->where('fecha', '>=', $startDate);
+        }
+        if (isset($input['to'])) {
+            $query->where('fecha', '<=', $endDate);
+        }
+        $query->select('clases.*', DB::raw('SUM(horarios.ocupados) as total'))
+            ->groupBy('clases.id');
         $total = 0;
+        $data = $query->get();
         foreach ($data as $item) {
             $total += $item->total;
         }
@@ -64,13 +75,17 @@ class ReportService
     public function useOfCoupons(array $input)
     {
         $now = Carbon::now();
-        $startDate = Carbon::parse($input['from']);
-        $endDate = Carbon::parse($input['to']);
-        $data = DB::table('cupones')
-            ->where('expiracion', '>=', $startDate)
-            ->where('expiracion', '<=', $endDate)
-            ->select('cupones.*')
-            ->get();
+        $startDate = $input['from'];
+        $endDate = $input['to'];
+        $query = DB::table('cupones');
+        if (isset($input['from'])) {
+            $query->where('expiracion', '>=', $startDate);
+        }
+        if (isset($input['to'])) {
+            $query->where('expiracion', '<=', $endDate);
+        };
+        $query->select('cupones.*');
+        $data = $query->get();
         return View::make('admin.reports.type4.show', compact('data', 'now', 'startDate', 'endDate'))->render();
     }
 
@@ -259,11 +274,11 @@ class ReportService
             ->join('clases', 'horarios.clase_id', '=', 'clases.id')
             ->where('horarios.fecha', '>=', $startDate)
             ->where('horarios.fecha', '<=', $endDate)
-            ->select('clases.nombre','horarios.hora',DB::raw('sum(horarios.ocupados) as total'))
+            ->select('clases.nombre', 'horarios.hora', DB::raw('sum(horarios.ocupados) as total'))
             ->groupBy(DB::raw('horarios.clase_id,horarios.hora'))
             ->get();
 
         return View::make('admin.reports.type9.show',
-            compact( 'now', 'startDate', 'endDate', 'condominio','groups','clases','reservaciones','details' ))->render();
+            compact('now', 'startDate', 'endDate', 'condominio', 'groups', 'clases', 'reservaciones', 'details'))->render();
     }
 }

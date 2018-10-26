@@ -8,7 +8,15 @@
     @include('admin.reports.header')
     <h2>CLIENTES CON CLASES POR VENCER</h2>
     <div class="info">
-        <p><span class="info-title">Hasta</span> {{$date->toDateString()}}</p>
+        <p><span class="info-title">Periodo</span>
+            @if($startDate!=null)
+                <span>Desde </span>
+                {{$startDate->toDateTimeString()}}
+            @endif
+            @if($endDate!=null)
+                <span>Hasta </span>
+                {{$endDate->toDateTimeString()}}</p>
+        @endif
     </div>
     <table style="width:100%">
         <tr class="table-header">

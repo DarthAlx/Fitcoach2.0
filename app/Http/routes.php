@@ -411,8 +411,7 @@ Route::group( [ 'middleware' => 'administradores' ], function () {
 	Route::get( 'printinvoice/{id}', 'Publico\OrdenController@invoice' );
 	Route::get( 'nomina', 'Publico\OrdenController@nomina' );
 	Route::get( '/reportes', 'Reports\ReportController@index' );
-	Route::get( '/reportes/{id}', 'Reports\ReportController@show' );
-	Route::post( '/reportes/{id}', 'Reports\ReportController@create' );
+	Route::post( '/crear-reporte', 'Reports\ReportController@create' );
 	Route::post( 'pagar', 'Publico\OrdenController@pago' );
 	Route::get( 'historialpagos/{id}', 'Publico\OrdenController@historialpagos' );
 	Route::get( 'clasesvista', 'Admin\ClaseController@clasesvista' );

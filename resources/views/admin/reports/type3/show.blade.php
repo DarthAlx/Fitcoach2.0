@@ -8,7 +8,15 @@
     @include('admin.reports.header')
     <h2>POPULARIDAD DE CLASES</h2>
     <div class="info">
-        <p><span class="info-title">Periodo</span> {{$startDate->toDateString()}} al {{$endDate->toDateString()}}</p>
+        <p><span class="info-title">Periodo</span>
+            @if($startDate!=null)
+                <span>Desde </span>
+                {{$startDate->toDateTimeString()}}
+            @endif
+            @if($endDate!=null)
+                <span>Hasta </span>
+                {{$endDate->toDateTimeString()}}</p>
+        @endif
     </div>
     <table style="width:100%">
         <tr class="table-header">
@@ -20,7 +28,11 @@
             <tr>
                 <td>{{$item->nombre}}</td>
                 <td>{{$item->total}}</td>
-                <td>{{sprintf('%s', number_format(($item->total/$total)*100, 0))}} %</td>
+                <td>
+                    @if($total>0)
+                        {{sprintf('%s', number_format(($item->total/$total)*100, 0))}} %
+                    @endif
+                </td>
             </tr>
         @endforeach
     </table>

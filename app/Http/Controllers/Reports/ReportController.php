@@ -10,6 +10,8 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ReportController extends Controller
 {
@@ -20,7 +22,21 @@ class ReportController extends Controller
      */
     public function index()
     {
-        return view('admin.reports.index');
+        $condominios = Condominio::all();
+        $clases = Clase::orderBy('nombre')->get();
+        $types = Collect(DB::table('clases')
+            ->select('tipo')
+            ->groupBy('tipo')
+            ->get())
+            ->pluck('tipo');
+        $users = User::where('role', 'instructor')
+            ->orderBy('name')->get();
+
+        return view('admin.reports.index')
+            ->with('condominios', $condominios)
+            ->with('clases', $clases)
+            ->with('types', $types)
+            ->with('users', $users);
     }
 
 
@@ -36,12 +52,12 @@ class ReportController extends Controller
             case 1:
             case 3:
             case 4:
-            return view('admin.reports.type' . $id . '.form');
+                return view('admin.reports.type' . $id . '.form');
                 break;
             case 5:
             case 6:
             case 9:
-            $condominios = Condominio::all();
+                $condominios = Condominio::all();
                 return view('admin.reports.type' . $id . '.form')
                     ->with('condominios', $condominios);
                 break;
@@ -51,7 +67,7 @@ class ReportController extends Controller
                     ->with('clases', $clases);
                 break;
             case 8:
-                $users = User::where('role','instructor')
+                $users = User::where('role', 'instructor')
                     ->orderBy('name')->get();
                 return view('admin.reports.type' . $id . '.form')
                     ->with('users', $users);
@@ -60,10 +76,33 @@ class ReportController extends Controller
         }
     }
 
-    public function create($id, Request $request)
+    public function create(Request $request)
     {
         $input = $request->all();
-        $service = new ReportService($id);
+        $id = $input['report_type'];
+        $service = new ReportService($input['report_type']);
+        if (isset($input['desde']) && $input['desde']!= '' && isset($input['hora_inicio']) && $input['hora_inicio']!= '') {
+            $from = Carbon::parse($input['desde'] . ' ' . $input['hora_inicio']);
+            $input['from'] = $from;
+        } else if (isset($input['desde']) && $input['desde']!= '') {
+            $from = Carbon::parse($input['desde']);
+            $input['from'] = $from;
+        }else{
+            $input['from'] = null;
+        }
+
+        if (isset($input['hasta']) && $input['hasta']!= '' && isset($input['hora_fin']) && $input['hora_fin']!= '') {
+            $from = Carbon::parse($input['hasta'] . ' ' . $input['hora_fin']);
+            $input['to'] = $from;
+        } else if (isset($input['hasta']) && $input['hasta']!= '') {
+            $from = Carbon::parse($input['hasta']);
+            $input['to'] = $from;
+        }else{
+            $input['to'] = null;
+
+        }
+
+        Log::debug("esta es la request",['$request'=>$input]);
         $now = Carbon::now();
         switch ($id) {
             case 1:
@@ -72,22 +111,22 @@ class ReportController extends Controller
             case 3:
                 $view = $service->popularityOfClasses($input);
                 break;
-            case 4:
+            case 5:
                 $view = $service->useOfCoupons($input);
                 break;
-            case 5:
+            case 6:
                 $view = $service->detailedCapacityPerGroup($input);
                 break;
-            case 6:
+            case 7:
                 $view = $service->generalCapacityPerGroup($input);
                 break;
-            case 7:
+            case 8:
                 $view = $service->classesOfUser($input);
                 break;
-            case 8:
+            case 9:
                 $view = $service->classesOfCoach($input);
                 break;
-            case 9:
+            case 10:
                 $view = $service->salesOfGroup($input);
                 break;
         }

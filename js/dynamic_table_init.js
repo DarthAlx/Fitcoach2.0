@@ -1,8 +1,7 @@
-function fnFormatDetails ( oTable, nTr )
-{
-    var aData = oTable.fnGetData( nTr );
+function fnFormatDetails(oTable, nTr) {
+    var aData = oTable.fnGetData(nTr);
     var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
-    sOut += '<tr><td>Rendering engine:</td><td>'+aData[1]+' '+aData[4]+'</td></tr>';
+    sOut += '<tr><td>Rendering engine:</td><td>' + aData[1] + ' ' + aData[4] + '</td></tr>';
     sOut += '<tr><td>Link to source:</td><td>Could provide a link here</td></tr>';
     sOut += '<tr><td>Extra info:</td><td>And any further details here (images etc)</td></tr>';
     sOut += '</table>';
@@ -10,44 +9,44 @@ function fnFormatDetails ( oTable, nTr )
     return sOut;
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
 
-    $('#dynamic-table').dataTable( {
+    $('#dynamic-table').dataTable({
         stateSave: true,
-        "aaSorting": [[ 0, "desc" ]]
-    } );
-    $('#dynamic-table2').dataTable( {
+        "aaSorting": [[0, "desc"]]
+    });
+    $('#dynamic-table2').dataTable({
         stateSave: true,
-        "aaSorting": [[ 0, "desc" ]]
-    } );
-    $('.dynamic-table3').dataTable( {
+        "aaSorting": [[0, "desc"]]
+    });
+    $('.dynamic-table3').dataTable({
         stateSave: true,
-        "aaSorting": [[ 0, "desc" ]]
-    } );
+        "aaSorting": [[0, "desc"]]
+    });
     /*
      * Insert a 'details' column to the table
      */
-    var nCloneTh = document.createElement( 'th' );
-    var nCloneTd = document.createElement( 'td' );
+    var nCloneTh = document.createElement('th');
+    var nCloneTd = document.createElement('td');
     /*nCloneTd.innerHTML = '<img src="images/details_open.png">';*/
     nCloneTd.innerHTML = '<img src="">';
     nCloneTd.className = "center";
 
-    $('#hidden-table-info thead tr').each( function () {
-        this.insertBefore( nCloneTh, this.childNodes[0] );
-    } );
+    $('#hidden-table-info thead tr').each(function () {
+        this.insertBefore(nCloneTh, this.childNodes[0]);
+    });
 
-    $('#hidden-table-info tbody tr').each( function () {
-        this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
-    } );
+    $('#hidden-table-info tbody tr').each(function () {
+        this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
+    });
 
     /*
      * Initialse DataTables, with no sorting on the 'details' column
      */
-    var oTable = $('#hidden-table-info').dataTable( {
+    var oTable = $('#hidden-table-info').dataTable({
         stateSave: true,
         "aoColumnDefs": [
-            { "bSortable": false, "aTargets": [ 0 ] }
+            {"bSortable": false, "aTargets": [0]}
         ],
         "aaSorting": [[0, 'asc']]
     });
@@ -56,50 +55,48 @@ $(document).ready(function() {
      * Note that the indicator for showing which row is open is not controlled by DataTables,
      * rather it is done here
      */
-    $(document).on('click','#hidden-table-info tbody td img',function () {
+    $(document).on('click', '#hidden-table-info tbody td img', function () {
         var nTr = $(this).parents('tr')[0];
-        if ( oTable.fnIsOpen(nTr) )
-        {
+        if (oTable.fnIsOpen(nTr)) {
             /* This row is already open - close it */
             /*this.src = "images/details_open.png";*/
             this.src = "";
-            oTable.fnClose( nTr );
+            oTable.fnClose(nTr);
         }
-        else
-        {
+        else {
             /* Open this row */
             this.src = "images/details_close.png";
-            oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
+            oTable.fnOpen(nTr, fnFormatDetails(oTable, nTr), 'details');
         }
-    } );
+    });
 
-    $("#coachNuevo").change(function() {
+    $("#coachNuevo").change(function () {
         var coachId = $(this).val();
-        $.get("/admin-condominio/clasesdeinstructor/"+coachId,
-            function(data){
+        $.get("/admin-condominio/clasesdeinstructor/" + coachId,
+            function (data) {
                 var select = $('#clases_idNuevo').empty();
-                select.append( '<option value="">Selecciona una clase</option>' );
-                for(var i = 0;i< data.length;i++){
-                    select.append( '<option value="'
+                select.append('<option value="">Selecciona una clase</option>');
+                for (var i = 0; i < data.length; i++) {
+                    select.append('<option value="'
                         + data[i].id
                         + '">'
                         + data[i].nombre
-                        + '</option>' );
+                        + '</option>');
                 }
             }, "json");
     });
-    $(".select-coach").change(function() {
+    $(".select-coach").change(function () {
         var coachId = $(this).val();
-        $.get("/admin-condominio/clasesdeinstructor/"+coachId,
-            function(data){
+        $.get("/admin-condominio/clasesdeinstructor/" + coachId,
+            function (data) {
                 var select = $('.select-class').empty();
-                select.append( '<option value="">Selecciona una clase</option>' );
-                for(var i = 0;i< data.length;i++){
-                    select.append( '<option value="'
+                select.append('<option value="">Selecciona una clase</option>');
+                for (var i = 0; i < data.length; i++) {
+                    select.append('<option value="'
                         + data[i].id
                         + '">'
                         + data[i].nombre
-                        + '</option>' );
+                        + '</option>');
                 }
             }, "json");
     });
@@ -115,14 +112,14 @@ $(document).ready(function() {
         $(".buttons-select").hide();
         $(".add-adult-form-1").show();
     })
-    $(".add-adult-form").submit(function(e){
+    $(".add-adult-form").submit(function (e) {
         e.preventDefault();
         var value = $(this).serializeArray();
         var tel = value[0]['value'];
-        $.get("/busquedaporcelular?tel="+tel,
-            function(data){
+        $.get("/busquedaporcelular?tel=" + tel,
+            function (data) {
                 $(".add-adult-form-1").hide();
-                if(data['name']){
+                if (data['name']) {
                     $('.add-adult-form-2').show();
                     $(".add-adult-form-nombre").val(data['name']);
                     $(".add-adult-form-email").val(data['email']);
@@ -134,7 +131,7 @@ $(document).ready(function() {
                     $(".add-adult-form-telefono").attr('readonly', true);
                     $(".add-adult-form-genero").attr('readonly', true);
 
-                }else{
+                } else {
                     $('.add-adult-form-2').show();
                     $(".add-adult-form-telefono").attr('readonly', true);
                     $(".add-adult-form-telefono").val(tel);
@@ -142,4 +139,35 @@ $(document).ready(function() {
                 }
             }, "json");
     });
-} );
+
+
+    $("#report_type").change(function () {
+        var type = $(this).val();
+        $("#condominio_id").hide();
+        $("#clase_id").hide();
+        $("#coach_id").hide();
+        $("#client_id").hide();
+        $("#type_id").hide();
+        switch (type) {
+            case '2':
+                $("#type_id").show();
+                break;
+            case '6':
+            case '7':
+            case '10':
+            case '14':
+                $("#condominio_id").show();
+                break;
+            case '8':
+                $("#clase_id").show();
+                break;
+            case '9':
+                $("#coach_id").show();
+                break;
+            case '13':
+                $("#client_id").show();
+                break;
+        }
+    });
+
+});
