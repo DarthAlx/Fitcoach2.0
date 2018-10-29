@@ -137,8 +137,8 @@
                                     <h4>Historial de compras</h4>
 									<?php
 									$user = $usuario;
-									$particulares = App\PaqueteComprado::where( 'user_id', $user->id )->where( 'tipo', 'A domicilio' )->where( 'disponibles', '<>', 0 )->orderBy( 'expiracion', 'asc' )->get();
-									$residenciales = App\PaqueteComprado::where( 'user_id', $user->id )->where( 'tipo', 'En condominio' )->where( 'disponibles', '<>', 0 )->orderBy( 'expiracion', 'asc' )->get();
+									$particulares = App\PaqueteComprado::where( 'user_id', $user->id )->where( 'tipo', 'A domicilio' )->orderBy( 'expiracion', 'asc' )->get();
+									$residenciales = App\PaqueteComprado::where( 'user_id', $user->id )->where( 'tipo', 'En condominio' )->orderBy( 'expiracion', 'asc' )->get();
 									$partdisp = 0;
 									$resdisp = 0;
 									$partexp = 0;
@@ -174,6 +174,7 @@
                                                 <th>Fecha</th>
                                                 <th>Expiración</th>
                                                 <th>Pagado</th>
+                                                <th>Comentario</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -189,6 +190,7 @@
                                                             ${{$paquete->orden->cantidad-$paquete->orden->descuento}}MXN
                                                         @endif
                                                     </td>
+                                                    <th>{{$paquete->comentario}}</th>
                                                 </tr>
                                             @endforeach
 

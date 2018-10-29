@@ -43,7 +43,7 @@
 									<?php
 									$pendiente = 0;
 									foreach ( $coach->abonos as $abono ) {
-										if(!$abono->realizado){
+										if ( ! $abono->realizado ) {
 											$pendiente = $pendiente + $abono->abono;
 										}
 									}
@@ -155,18 +155,24 @@
                                     <input type="hidden" name="user_id" value="{{ $coach->id }}">
                                     <input class="form-control datepicker" type="text" placeholder="Fecha" name="fecha"
                                            required>
-                                    <select class="form-control" name="metodo" required>
+                                    <select class="form-control nomina-metodo-pago" name="metodo" required>
                                         <option value="">Seleccionar método de pago</option>
                                         <option value="Transferencia">Transferencia</option>
                                         <option value="Asimilados">Asimilados</option>
                                         <option value="Efectivo">Efectivo</option>
                                     </select>
-                                    <input type="text" name="referencia" class="form-control" value=""
-                                           placeholder="Referencia" required>
+                                    <input type="text" name="referencia" class="form-control"
+                                           placeholder="Referencia"  required>
                                     <input type="text" name="monto" class="form-control" value="{{$pendiente}}"
-                                           placeholder="Monto" required>
-                                    <input type="text" name="deducciones" class="form-control" placeholder="Deducciones"
-                                           required>
+                                           placeholder="Monto" >
+                                    <input type="text" name="deducciones" class="form-control nomina-deducciones"
+                                           placeholder="Deducciones"
+                                            style="display: none">
+                                    <input type="text" name="iva" class="form-control nomina-iva" placeholder="Iva"
+                                            style="display: none">
+                                    <input type="text" name="factura" class="form-control nomina-factura"
+                                           placeholder="Factura"
+                                            style="display: none">
                                     <input type="hidden" name="ordenes" class="form-control" placeholder="Referencia"
                                            required>
                                     <button class="btn btn-success" type="submit"
@@ -205,6 +211,7 @@
                                         <th>Fecha</th>
                                         <th>Método</th>
                                         <th>Referencia</th>
+                                        <th>Información</th>
                                         <th>Balance</th>
                                     </tr>
                                     </thead>
@@ -216,8 +223,38 @@
                                             <tr style="cursor: pointer;">
                                                 <td>{{$pago->fecha}}</td>
                                                 <td>{{$pago->metodo}}</td>
-                                                <td>{{$pago->referencia}}</td>
-                                                <td>${{$pago->monto}}</td>
+                                                <td>
+                                                    @if($pago->metodo=='Transferencia')
+                                                        <p>
+                                                            <b>Referencia :</b> {{$pago->referencia}}<br/>
+                                                            <b>Factura :</b> {{$pago->factura}}
+                                                        </p>
+                                                    @else
+                                                        {{$pago->referencia}}
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($pago->metodo=='Asimilados')
+                                                        <p>
+                                                            <b>Monto :</b> $ {{$pago->monto}}<br/>
+                                                            <b>Deducciones :</b> ${{$pago->deducciones}}
+                                                        </p>
+                                                    @elseif($pago->metodo=='Efectivo')
+                                                        <b>Monto :</b> $ {{$pago->monto}}
+                                                    @elseif($pago->metodo=='Transferencia')
+                                                        <b>Monto :</b> $ {{$pago->monto}}<br/>
+                                                        <b>Iva :</b> $ {{$pago->iva}}
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($pago->metodo=='Asimilados')
+                                                        <span>$ {{$pago->monto-$pago->deducciones}}</span>
+                                                    @elseif($pago->metodo=='Efectivo')
+                                                        <span>$ {{$pago->monto}}</span>
+                                                    @elseif($pago->metodo=='Transferencia')
+                                                        <span>$ {{$pago->monto+$pago->iva }}</span>
+                                                    @endif
+                                                </td>
                                             </tr>
                                         @endforeach
                                     @endif

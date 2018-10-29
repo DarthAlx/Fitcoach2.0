@@ -1187,3 +1187,15 @@ border: 0 !important;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
     background-color: #D62929;
 }
+
+.applyCoupon{
+    background-color: #ffffff;
+}
+.coupon input[type="text"]{
+    border-radius: 31px;
+    padding: 0 62px 0 22px;
+    border: 1px solid #7f7f7f;
+    color: #7f7f7f;
+    font-size: 12px;
+    font-family: 'Lato', sans-serif;
+}

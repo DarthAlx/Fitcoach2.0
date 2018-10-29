@@ -341,7 +341,7 @@
                                             <label class="cool-check">
                                                 <span>{{$asistente->usuario->name}}</span>
                                                 <input type="checkbox" name='reservations[]'
-                                                       value="{{$asistente->usuario->id}}">
+                                                       value="{{$asistente->id}}">
                                                 <span class="checkmark"></span>
                                             </label>
                                         @endforeach

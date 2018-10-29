@@ -123,25 +123,35 @@ class User extends Model implements AuthenticatableContract,
 	public function paquetesDisponiblesDomicilio() {
 		$now = Carbon::now();
 
-		return PaqueteComprado::where( 'user_id', $this->attributes['id'] )
+		$sum = PaqueteComprado::where( 'user_id', $this->attributes['id'] )
 		                      ->where( function ( $query ) use ( $now ) {
 			                      $query->where( 'expiracion', '>', $now->toDateString() );
 			                      $query->orWhere( 'expiracion', '=', null );
 		                      } )
 		                      ->where( 'tipo', 'A domicilio' )
 		                      ->sum( 'disponibles' );
+		if ( $sum > 0 ) {
+			return $sum;
+		} else {
+			return 0;
+		}
 	}
 
 	public function paquetesDisponiblesCondominio() {
 		$now = Carbon::now();
 
-		return PaqueteComprado::where( 'user_id', $this->attributes['id'] )
+		$sum = PaqueteComprado::where( 'user_id', $this->attributes['id'] )
 		                      ->where( function ( $query ) use ( $now ) {
 			                      $query->where( 'expiracion', '>', $now->toDateString() );
 			                      $query->orWhere( 'expiracion', '=', null );
 		                      } )
 		                      ->where( 'tipo', 'En condominio' )
 		                      ->sum( 'disponibles' );
+		if ( $sum > 0 ) {
+			return $sum;
+		} else {
+			return 0;
+		}
 	}
 
 	public function paquetesUsadosDomicilio() {

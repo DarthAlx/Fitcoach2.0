@@ -907,6 +907,7 @@ class OrdenController extends Controller {
 			$residencial->tipo        = "En condominio";
 			$residencial->comentario  = $request->comentario;
 			$residencial->disponibles = $request->tokens;
+			$residencial->clases      = $request->tokens;
 			$residencial->fecha       = Carbon::now();
 			$residencial->expiracion  = Carbon::parse( $request->fecha );
 			$residencial->save();
@@ -918,6 +919,7 @@ class OrdenController extends Controller {
 			$particular->user_id     = $user->id;
 			$particular->comentario  = $request->comentario;
 			$particular->disponibles = $request->tokens;
+			$particular->clases      = $request->tokens;
 			$particular->fecha       = Carbon::now();
 			$particular->expiracion  = Carbon::parse( $request->fecha );
 			$particular->save();
@@ -936,28 +938,38 @@ class OrdenController extends Controller {
 	}
 
 	public function tokenminus( Request $request ) {
-		$user        = User::find( $request->user_id );
-		if ( $request->tipo == "En condominio"  ) {
-			$residencial = new PaqueteComprado();
-			$residencial->user_id =  $user->id;
-			$residencial->orden_id = 0;
-			$residencial->clases = 0;
+		$user = User::find( $request->user_id );
+		if ( $request->tipo == "En condominio" ) {
+			if($user->paquetesDisponiblesCondominio()<=0){
+				Session::flash( 'mensaje', 'Usuario no dispone te tokens suficientes a eliminar.' );
+				Session::flash( 'class', 'success' );
+				return back();
+			}
+			$residencial              = new PaqueteComprado();
+			$residencial->user_id     = $user->id;
+			$residencial->orden_id    = 0;
+			$residencial->clases      = - $request->tokens;
 			$residencial->disponibles = - $request->tokens;
-			$residencial->tipo = "En condominio";
-			$residencial->fecha = null;
-			$residencial->comentario = $request->comentario;
+			$residencial->tipo        = "En condominio";
+			$residencial->fecha       = null;
+			$residencial->comentario  = $request->comentario;
 			$residencial->save();
 			Session::flash( 'mensaje', 'Token eliminado.' );
 			Session::flash( 'class', 'success' );
 		} elseif ( $request->tipo == "A domicilio" ) {
-			$particular = new PaqueteComprado();
-			$particular->user_id =  $user->id;
-			$particular->orden_id = 0;
-			$particular->clases = 0;
-			$particular->tipo = "A domicilio";
+			if($user->paquetesDisponiblesDomicilio()<=0){
+				Session::flash( 'mensaje', 'Usuario no dispone te tokens suficientes a eliminar.' );
+				Session::flash( 'class', 'success' );
+				return back();
+			}
+			$particular              = new PaqueteComprado();
+			$particular->user_id     = $user->id;
+			$particular->orden_id    = 0;
+			$particular->tipo        = "A domicilio";
 			$particular->disponibles = - $request->tokens;
-			$particular->fecha = null;
-			$particular->comentario = $request->comentario;
+			$particular->clases      = - $request->tokens;
+			$particular->fecha       = null;
+			$particular->comentario  = $request->comentario;
 			$particular->save();
 			Session::flash( 'mensaje', 'Token eliminado.' );
 			Session::flash( 'class', 'success' );

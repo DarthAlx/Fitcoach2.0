@@ -158,12 +158,20 @@ class ResidencialController extends Controller {
 	}
 
 	public function printlist( $id, Request $request ) {
-		$input      = $request->all();
-		$reservacion = Reservacion::with(['invitados','asistentes','asistentes.usuario'])->find($id);
-		$horario    = Horario::find( $reservacion->horario_id );
-		$condominio = $horario->condominio;
+		if($request->tipo=='evento'){
+			$evento = Evento::with( 'asistentes' )
+			                 ->with( 'asistentes.usuario' )
+			                 ->where( 'id', '=', $id )->get()->first();
+			return view( 'emails.event', [ 'evento' => $evento] );
+		}else{
+			$input      = $request->all();
+			$reservacion = Reservacion::with(['invitados','asistentes','asistentes.usuario'])->find($id);
+			$horario    = Horario::find( $reservacion->horario_id );
+			$condominio = $horario->condominio;
 
-		return view( 'emails.list', [ 'reservacion' => $reservacion, 'horario' => $horario, 'condominio' => $condominio ] );
+			return view( 'emails.list', [ 'reservacion' => $reservacion, 'horario' => $horario, 'condominio' => $condominio ] );
+		}
+
 		/*$view =  \View::make('emails.list', ['ordenes'=>$ordenes,'horario'=>$horario,'condominio'=>$condominio])->render();
 		$pdf = \App::make('dompdf.wrapper');
 		$pdf->loadHTML($view);

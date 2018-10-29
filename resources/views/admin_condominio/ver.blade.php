@@ -89,7 +89,7 @@
                                     </div>
                                     <div class="col-lg-1">
                                         <p class="condominios-clases-text">
-                                            {{$horario->cupo-$horario->ocupados}}
+                                            {{$horario->aforo()->aforo}}
                                         </p>
                                     </div>
                                     <div class="col-lg-3">
@@ -165,96 +165,6 @@
     @include('admin_condominio.partials.crear_grupo')
     @include('admin_condominio.partials.horarios')
     @include('admin_condominio.partials.reservaciones')
-    <script type="text/javascript">
-        clasesseleccionadas = 0;
-
-        function agregaracarrito(valor, valor2, valor3) {
-            if (document.getElementById('carrito' + valor).checked) {
-                document.getElementById('carrito' + valor).checked = false;
-                $('#carrito' + valor).removeClass('seleccionada');
-                $('.fa' + valor).removeClass('fa-square');
-                $('.fa' + valor).addClass('fa-square-o');
-                if (clasesseleccionadas > 0) {
-                    clasesseleccionadas--;
-                }
-                $('#cantidad' + valor3).val(clasesseleccionadas);
-                $('#clasesseleccionadas' + valor3).html(clasesseleccionadas + " clases seleccionadas.");
-                if (clasesseleccionadas <= 0) {
-                    $('#reservar' + valor3).prop("disabled", true);
-                }
-            }
-            else {
-                document.getElementById('carrito' + valor).checked = true;
-                $('#carrito' + valor).addClass('seleccionada');
-                $('.fa' + valor).removeClass('fa-square-o');
-                $('.fa' + valor).addClass('fa-square');
-                clasesseleccionadas++;
-                $('#cantidad' + valor3).val(clasesseleccionadas);
-                $('#clasesseleccionadas' + valor3).html(clasesseleccionadas + " clases seleccionadas.");
-                $('#reservar' + valor3).prop("disabled", false);
-            }
-        }
-
-        function acero() {
-            clasesseleccionadas = 0;
-            $('.clasesseleccionadas').html("0 clases seleccionadas.");
-            $('.faselect').removeClass('fa-square');
-            $('.faselect').removeClass('fa-square-o');
-            $('.faselect').addClass('fa-square-o');
-            document.getElementsByClassName('carritocheck').checked = false;
-        }
-    </script>
-    <script type="application/javascript">
-        $('.btn-crear-grupo').click(function () {
-            $('#admin-condominios-grupos').modal('hide')
-            setTimeout(function () {
-                $('#crear-grupo').modal('show');
-            }, 500)
-            //
-        })
-        $('.eliminar-grupo').click(function () {
-            var id = $(this).attr("data-id");
-            $('#admin-condominios-grupos').modal('hide');
-            setTimeout(function () {
-                $('#modal-eliminar-grupo' + id).modal('show');
-            }, 500)
-            //
-        });
-        $('.ver-grupo').click(function () {
-            var id = $(this).attr("data-id");
-            $('#admin-condominios-grupos').modal('hide')
-            setTimeout(function () {
-                $('#admin-condominios-grupos-ver' + id).modal('show');
-            }, 500)
-            //
-        })
-        $('.btn-crear-horario').click(function () {
-            var id = $(this).attr("data-id");
-            $('#admin-condominios-grupos-ver' + id).modal('hide');
-            setTimeout(function () {
-                $('#admin-condominios-grupos-crear' + id).modal('show');
-            }, 500)
-            //
-        })
-        $('.btn-actualizar-grupo').click(function () {
-            var id = $(this).attr("data-id");
-            $('#admin-condominios-grupos-ver' + id).modal('hide');
-            setTimeout(function () {
-                $('#admin-condominios-grupos-actualizar' + id).modal('show');
-            }, 500)
-            //
-        })
-        $('.btn-actualizar-grupo').click(function () {
-            var id = $(this).attr("data-id");
-            $('#admin-condominios-grupos-ver' + id).modal('hide');
-            setTimeout(function () {
-                $('#admin-condominios-grupos-actualizar' + id).modal('show');
-            }, 500)
-            //
-        });
-
-
-    </script>
     @foreach ($condominio->residenciales as $residencial)
         @if ($residencial->tipo=="Residencial")
             <div class="modal fade" id="residencial{{$condominio->id}}{{$residencial->id}}" tabindex="-1" role="dialog">

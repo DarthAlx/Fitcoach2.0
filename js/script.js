@@ -303,3 +303,4 @@ $('#myCarousel').on('slid', '', function() {
   }
 
 });
+

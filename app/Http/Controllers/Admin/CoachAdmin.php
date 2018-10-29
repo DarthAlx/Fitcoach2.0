@@ -88,7 +88,7 @@ class CoachAdmin extends Controller
 
     }
 
-    public function updatecoach(UpdateCoachRequest $request)
+    public function updatecoach(Request $request)
     {
 
         $guardar = User::find($request->admin_id);

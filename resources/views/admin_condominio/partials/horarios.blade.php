@@ -3,6 +3,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
+                    <button type="button" class="close close-modal-horarios" data-id="{{$grupo->id}}"  aria-label="Close"><img
+                                src="{{url('/images/cross.svg')}}" alt=""></button>
                     <div class="row">
                         <div class="col-sm-12">
                             <h4>{{$grupo->nombre}} <span
@@ -44,9 +46,9 @@
                                         data-target="#grupo{{$horario->id}}">
                                         <td>{{$horario->fecha}}</td>
                                         <td>{{$horario->hora}}</td>
-                                        <td>{{$horario->cupo}}</td>
+                                        <td>{{$horario->cupo-$horario->ocupados}}</td>
                                         <td>{{$horario->ocupados}}</td>
-                                        <td>{{$horario->ocupados+$horario->cupo}}</td>
+                                        <td>{{$horario->aforo()->aforo}}</td>
                                         <td>
                                             @if($horario->reservacion()!=null)
                                                 <a data-toggle="modal"

@@ -52,6 +52,9 @@
                                         <td>{{$evento->cupo}}</td>
                                         <td>{{$evento->ocupados}}</td>
                                         <td>
+                                            <button type="button" name="button" class="btn btn-info"
+                                                    data-toggle="modal" data-target="#admin-evento-ver{{$evento->id}}">Ver
+                                            </button>
                                             <button type="button" name="button" class="btn btn-primary"
                                                     data-toggle="modal" data-target="#evento{{$evento->id}}">Editar
                                             </button>
@@ -196,6 +199,61 @@
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal pago-->
+            <div class="modal fade" id="admin-evento-ver{{$evento->id}}" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h4>RESERVACIONES Y ASISTENCIA
+                                            <span style="color: #cdcdcd">{!! $evento->id !!}</span>
+                                            &nbsp;
+                                            <a target="_blank" href="{{url('/listainscritos')}}/{{$evento->id}}?tipo=evento">
+                                                <i style="color: #000000" class="fa fa-print"></i>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                </div>
+                                <p>&nbsp;</p>
+                                <div class="row">
+                                    <div class="col-lg-3 col-sm-3">
+                                        <b>Fecha:</b> {{$evento->fecha}}
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3">
+                                        <b>Hora:</b> {{$evento->hora}}
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3">
+                                        <b>Precio:</b> {{$evento->precio}}
+                                    </div>
+
+                                </div>
+                                <p></p>
+                                <b>RESERVACIONES</b>
+                                <br/>
+                                <br/>
+                                @foreach ($evento->asistentes as $asistente)
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            {{$asistente->usuario->name}}
+                                        </div>
+                                        <div class="col-sm-2">
+                                            {{$asistente->usuario->genero}}
+                                        </div>
+                                        <div class="col-sm-3">
+                                            {{$asistente->usuario->email}}
+                                        </div>
+                                        <div class="col-sm-1">
+                                            {{$asistente->usuario->tel}}
+                                        </div>
+                                    </div>
+                                @endforeach
+                                <br/>
+                                <br/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
         @endforeach
     @endif
 

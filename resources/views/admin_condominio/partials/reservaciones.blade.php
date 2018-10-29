@@ -10,7 +10,8 @@
                                     <h4>RESERVACIONES Y ASISTENCIA
                                         <span style="color: #cdcdcd">{!! $horario->clase->id !!}</span>
                                         &nbsp;
-                                        <a target="_blank" href="{{url('/listainscritos')}}/{{$reservacion->id}}?tipo=clase">
+                                        <a target="_blank"
+                                           href="{{url('/listainscritos')}}/{{$reservacion->id}}?tipo=clase">
                                             <i style="color: #000000" class="fa fa-print"></i>
                                         </a>
                                     </h4>
@@ -115,39 +116,53 @@
                                             <br/>
                                             <br/>
                                             <div class="row">
-                                                <div class="col-md-3">
-                                                    Fase Inicial
+                                                <div class="col-sm-6">
+                                                    <label>Objetivos</label>
+                                                    <textarea name="objetivos" class="form-control" required rows="4"
+                                                              readonly>{{$reservacion->plan->objetivos}}
+                                        </textarea>
                                                 </div>
-                                                <div class="col-md-3">
-                                                    {{$reservacion->plan->minutosinicio}}
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>{{$reservacion->plan->inicio}}</p>
-                                                </div>
-                                            </div>
-                                            <hr/>
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    Fase medular
-                                                </div>
-                                                <div class="col-md-3">
-                                                    {{$reservacion->plan->minutosmedular}}
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>{{$reservacion->plan->medular}}</p>
+                                                <div class="col-sm-6">
+                                                    <label>Materiales</label>
+                                                    <textarea name="materiales" class="form-control" required rows="4"
+                                                              readonly>{{$reservacion->plan->materiales}}
+                                        </textarea>
                                                 </div>
                                             </div>
-                                            <hr/>
-
                                             <div class="row">
-                                                <div class="col-md-3">
-                                                    Fase Final
+                                                <div class="col-sm-4">
+                                                    <label>Fase inicial</label>
+                                                    <textarea name="inicio" class="form-control" required rows="4"
+                                                              readonly>{{$reservacion->plan->inicio}}</textarea>
+                                                    <label>Minutos</label>
+                                                    <input type="number" class="form-control" name="minutosinicio"
+                                                           required
+                                                           value="{{$reservacion->plan->minutosinicio}}">
                                                 </div>
-                                                <div class="col-md-3">
-                                                    {{$reservacion->plan->minutosfinal}}
+                                                <div class="col-sm-4">
+                                                    <label>Fase medular</label>
+                                                    <textarea name="medular" class="form-control" required rows="4"
+                                                              readonly>{{$reservacion->plan->medular}}</textarea>
+                                                    <label>Minutos</label>
+                                                    <input type="number" class="form-control" name="minutosmedular"
+                                                           required
+                                                           value="{{$reservacion->plan->minutosmedular}}">
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <p>{{$reservacion->plan->final}}</p>
+                                                <div class="col-sm-4">
+                                                    <label>Fase final</label>
+                                                    <textarea name="final" class="form-control" required rows="4"
+                                                              readonly>{{$reservacion->plan->final}}</textarea>
+                                                    <label>Minutos</label>
+                                                    <input type="number" class="form-control" name="minutosfinal"
+                                                           value="{{$reservacion->plan->minutosfinal}}" required
+                                                           readonly>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <label>Comentarios</label>
+                                                    <textarea name="comentarios" class="form-control" required rows="4"
+                                                              readonly>{{$reservacion->plan->comentarios}}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -191,12 +206,12 @@
                                             @foreach($reservacion->mensajes as $mensaje)
                                                 <b>{{$mensaje->created_at}}</b><br/>
                                                 <p>
-                                                 {{$mensaje->mensaje}}
+                                                    {{$mensaje->mensaje}}
                                                 </p>
                                                 <hr/>
                                             @endforeach
                                         </div>
-                                        @else
+                                    @else
                                         <span>NO HAY MENSAJES</span>
                                     @endif
                                 </div>
@@ -206,7 +221,8 @@
                                         <form action="{{ url('/admin-condominio/agregar-mensaje') }}" method="post"
                                               enctype="multipart/form-data">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <textarea name="mensaje" class="form-control" placeholder="Mensaje" ></textarea>
+                                            <textarea name="mensaje" class="form-control"
+                                                      placeholder="Mensaje"></textarea>
                                             <input type="hidden" name="reservacion_id" value="{{$reservacion->id}}">
                                             <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                                             <button class="btn btn-success" type="submit"

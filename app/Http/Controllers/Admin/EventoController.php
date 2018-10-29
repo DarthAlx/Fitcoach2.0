@@ -19,10 +19,11 @@ use Illuminate\Support\Facades\Session;
 class EventoController extends Controller {
 
 	public function index() {
-		$eventos     = Evento::where( 'condominio_id', '=', 0 )->get();
 		$coaches     = User::where( 'role', 'instructor' )->get();
 		$condominios = Condominio::all();
-
+		$eventos = Evento::with( 'asistentes' )
+		                 ->with( 'asistentes.usuario' )
+		                 ->where( 'condominio_id', '=', 0 )->get();
 		return view( 'admin.eventos', [ 'eventos' => $eventos, 'coaches' => $coaches, 'condominios' => $condominios ] );
 	}
 

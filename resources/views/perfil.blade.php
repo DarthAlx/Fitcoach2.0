@@ -31,30 +31,6 @@
         </script>
         <div class="row">
             <div class="col-md-4 col-lg-3 sidebar">
-				<?php
-				$user = App\User::find( Auth::user()->id );
-				$particulares = App\PaqueteComprado::where( 'user_id', $user->id )->where( 'tipo', 'A domicilio' )->where( 'disponibles', '<>', 0 )->orderBy( 'expiracion', 'asc' )->get();
-				$residenciales = App\PaqueteComprado::where( 'user_id', $user->id )->where( 'tipo', 'En condominio' )->where( 'disponibles', '<>', 0 )->orderBy( 'expiracion', 'asc' )->get();
-				$partdisp = 0;
-				$resdisp = 0;
-				$today = strtotime( date( 'Y-m-d' ) );
-
-				foreach ( $particulares as $pd ) {
-
-					$expire = strtotime( $pd->expiracion );
-					if ( $expire >= $today ) {
-						$partdisp = $partdisp + $pd->disponibles;
-					}
-				}
-
-				foreach ( $residenciales as $rd ) {
-
-					$expire = strtotime( $rd->expiracion );
-					if ( $expire >= $today ) {
-						$resdisp = $resdisp + $rd->disponibles;
-					}
-				}
-				?>
                 <div class="row">
                     <div class="col-md-12">
                         <h4>CLASES DISPONIBLES</h4>
@@ -69,7 +45,7 @@
                                 A DOMICILIO
                             </p>
                             <p>
-                                {{$partdisp}}
+                                {{$user->paquetesDisponiblesDomicilio()}}
                             </p>
                         </div>
 
@@ -81,7 +57,7 @@
                                 EN CONDOMINIO
                             </p>
                             <p>
-                                {{$resdisp}}
+                                {{$user->paquetesDisponiblesCondominio()}}
                             </p>
                         </div>
 
@@ -334,10 +310,10 @@
                                                   title="{{$pasada->horario->grupo->condominio->direccion}}">{{$pasada->horario->grupo->condominio->identificador}}</span>
                                         </div>
                                         <div class="col-xs-3">
-                                            @if(collect($pasada->asistentes)->first()->estado=="EN REVISIÓN")
+                                            @if($pasada->status=="EN REVISIÓN")
                                                 TERMINADA
                                             @else
-                                                {{collect($pasada->asistentes)->first()->estado}}
+                                                {{$pasada->status}}
                                             @endif
                                         </div>
                                     </div>
@@ -612,10 +588,10 @@
                                                   title="{{$pasada->horario->grupo->condominio->direccion}}">{{$pasada->horario->grupo->condominio->identificador}}</span>
                                         </div>
                                         <div class="col-xs-3">
-                                            @if(collect($pasada->asistentes)->first()->estado=="EN REVISIÓN")
+                                            @if($pasada->status=="EN REVISIÓN")
                                                 TERMINADA
                                             @else
-                                                {{collect($pasada->asistentes)->first()->estado}}
+                                                {{$pasada->status}}
                                             @endif
                                         </div>
                                     </div>

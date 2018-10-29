@@ -16,11 +16,11 @@ use App\Grupo;
 use App\Horario;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateAdministradorCondominioRequest;
-use App\Http\Requests\Request;
 use App\Room;
 use App\Services\RoomService;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class CondominioAdminController extends Controller {
@@ -116,7 +116,7 @@ class CondominioAdminController extends Controller {
 		return redirect()->intended( url( '/condominio-admins' ) );
 	}
 
-	public function destroy( Request $request ) {
+	public function destroy(Request $request ) {
 		$guardar           = User::find( $request->admin_id );
 		$guardar->email    = "banned" . "-" . time();
 		$guardar->role     = "banned";

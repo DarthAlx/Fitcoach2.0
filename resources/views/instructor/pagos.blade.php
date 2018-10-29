@@ -9,7 +9,7 @@
         <div class="col-sm-3">
         </div>
         <div class="col-sm-2">
-           <b>CANTIDAD DEPOSITADA</b>
+            <b>CANTIDAD DEPOSITADA</b>
         </div>
     </div>
 	<?php
@@ -41,7 +41,7 @@
                 <b>Monto :</b> $ {{$pago->monto}}
             @elseif($pago->metodo=='Transferencia')
                 <b>Monto :</b> $ {{$pago->monto}}<br/>
-                <b>Iva :</b> $ {{$pago->monto*0.16}}
+                <b>Iva :</b> $ {{$pago->iva}}
             @endif
 
         </div>
@@ -51,7 +51,7 @@
             @elseif($pago->metodo=='Efectivo')
                 <span>$ {{$pago->monto}}</span>
             @elseif($pago->metodo=='Transferencia')
-                <span>$ {{$pago->monto+$pago->monto*0.16 }}</span>
+                <span>$ {{$pago->monto+$pago->iva }}</span>
             @endif
         </div>
     </div>

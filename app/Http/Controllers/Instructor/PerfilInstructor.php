@@ -145,7 +145,8 @@ class PerfilInstructor extends Controller {
 		}
 		if ( $reservations != null ) {
 			foreach ( $reservations as $id ) {
-				$reservation             = Reservacion::find( $id );
+				Log::debug("fin reservacion usuario",['id'=>$id]);
+				$reservation             = ReservacionUsuario::find( $id );
 				$reservation->asistencia = true;
 				$reservation->save();
 			}

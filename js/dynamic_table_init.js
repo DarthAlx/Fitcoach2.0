@@ -170,4 +170,124 @@ $(document).ready(function () {
         }
     });
 
+    $('.btn-crear-grupo').click(function () {
+        $('#admin-condominios-grupos').modal('hide')
+        setTimeout(function () {
+            $('#crear-grupo').modal('show');
+        }, 500)
+        //
+    })
+    $('.eliminar-grupo').click(function () {
+        var id = $(this).attr("data-id");
+        $('#admin-condominios-grupos').modal('hide');
+        setTimeout(function () {
+            $('#modal-eliminar-grupo' + id).modal('show');
+        }, 500)
+        //
+    });
+    $('.ver-grupo').click(function () {
+        var id = $(this).attr("data-id");
+        window.sessionStorage['GRUPO_ID'] = id;
+        $('#admin-condominios-grupos').modal('hide')
+        setTimeout(function () {
+            $('#admin-condominios-grupos-ver' + id).modal({
+                backdrop: 'static',
+                keyboard: false,
+                show: true
+            });
+        }, 500)
+        //
+    })
+
+    $('.btn-crear-horario').click(function () {
+        var id = $(this).attr("data-id");
+        $('#admin-condominios-grupos-ver' + id).modal('hide');
+        setTimeout(function () {
+            $('#admin-condominios-grupos-crear' + id).modal('show');
+        }, 500)
+        //
+    })
+    $('.btn-actualizar-grupo').click(function () {
+        var id = $(this).attr("data-id");
+        $('#admin-condominios-grupos-ver' + id).modal('hide');
+        setTimeout(function () {
+            $('#admin-condominios-grupos-actualizar' + id).modal('show');
+        }, 500)
+        //
+    })
+    $('.btn-actualizar-grupo').click(function () {
+        var id = $(this).attr("data-id");
+        $('#admin-condominios-grupos-ver' + id).modal('hide');
+        setTimeout(function () {
+            $('#admin-condominios-grupos-actualizar' + id).modal('show');
+        }, 500)
+        //
+    });
+
+    clasesseleccionadas = 0;
+
+    function agregaracarrito(valor, valor2, valor3) {
+        if (document.getElementById('carrito' + valor).checked) {
+            document.getElementById('carrito' + valor).checked = false;
+            $('#carrito' + valor).removeClass('seleccionada');
+            $('.fa' + valor).removeClass('fa-square');
+            $('.fa' + valor).addClass('fa-square-o');
+            if (clasesseleccionadas > 0) {
+                clasesseleccionadas--;
+            }
+            $('#cantidad' + valor3).val(clasesseleccionadas);
+            $('#clasesseleccionadas' + valor3).html(clasesseleccionadas + " clases seleccionadas.");
+            if (clasesseleccionadas <= 0) {
+                $('#reservar' + valor3).prop("disabled", true);
+            }
+        }
+        else {
+            document.getElementById('carrito' + valor).checked = true;
+            $('#carrito' + valor).addClass('seleccionada');
+            $('.fa' + valor).removeClass('fa-square-o');
+            $('.fa' + valor).addClass('fa-square');
+            clasesseleccionadas++;
+            $('#cantidad' + valor3).val(clasesseleccionadas);
+            $('#clasesseleccionadas' + valor3).html(clasesseleccionadas + " clases seleccionadas.");
+            $('#reservar' + valor3).prop("disabled", false);
+        }
+    }
+
+    function acero() {
+        clasesseleccionadas = 0;
+        $('.clasesseleccionadas').html("0 clases seleccionadas.");
+        $('.faselect').removeClass('fa-square');
+        $('.faselect').removeClass('fa-square-o');
+        $('.faselect').addClass('fa-square-o');
+        document.getElementsByClassName('carritocheck').checked = false;
+    }
+
+    if(window.sessionStorage['GRUPO_ID']){
+        var grupoId = window.sessionStorage['GRUPO_ID'];
+        if($('#admin-condominios-grupos-ver' + grupoId)!=null){
+            $('#admin-condominios-grupos-ver' + grupoId).modal({
+                backdrop: 'static',
+                keyboard: false,
+                show: true
+            });
+
+        }
+    }
+    $('.close-modal-horarios').click(function () {
+        var id = $(this).attr("data-id");
+        $('#admin-condominios-grupos-ver' + id).modal('hide');
+        delete window.sessionStorage['GRUPO_ID'];
+    })
+    $('.nomina-metodo-pago').change(function () {
+        $('.nomina-deducciones').hide();
+        $('.nomina-iva').hide();
+        $('.nomina-factura').hide();
+        var val = $(this).val();
+        if(val=='Transferencia'){
+            $('.nomina-iva').show();
+            $('.nomina-factura').show();
+        }else if(val=='Asimilados'){
+            $('.nomina-deducciones').show();
+        }
+    })
 });

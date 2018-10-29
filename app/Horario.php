@@ -56,6 +56,13 @@ class Horario extends Model {
 		                  ->first();
 	}
 
+	public function aforo() {
+		return collect( DB::select( DB::raw( "SELECT COUNT(*) as aforo FROM reservacion_usuarios 
+		INNER JOIN reservaciones ON(reservaciones.id=reservacion_usuarios.reservacion_id)
+		WHERE reservacion_usuarios.asistencia = 1 AND reservaciones.horario_id =:horario_id;" ), [
+			'horario_id' => $this->attributes['id']
+		] ) )->first();
+	}
 
 	public function user() {
 		return $this->belongsTo( 'App\User' );
