@@ -89,7 +89,15 @@
                                     </div>
                                     <div class="col-lg-1">
                                         <p class="condominios-clases-text">
-                                            {{$horario->aforo()->aforo}}
+                                            @if($reservacion->status=='PROXIMA')
+                                                @if($horario->esCancelable())
+                                                    <span>FALTA</span>
+                                                @else
+                                                <span>&nbsp;</span>
+                                                @endif
+                                            @else
+                                                {{$horario->aforo()}}
+                                            @endif
                                         </p>
                                     </div>
                                     <div class="col-lg-3">
@@ -106,9 +114,11 @@
                                                data-target="#mensajes{{$reservacion->id}}">
                                                 <i class="icon-classes-image fa fa-comments"></i>
                                             </a>
-                                            <a href="/admin-condominio/cancelar/{{$reservacion->id}}">
-                                                <i class="icon-classes-image fa fa-times"></i>
-                                            </a>
+                                            @if($horario->esCancelable())
+                                                <a href="/admin-condominio/cancelar/{{$reservacion->id}}">
+                                                    <i class="icon-classes-image fa fa-times"></i>
+                                                </a>
+                                            @endif
                                         @endif
 
                                     </div>
@@ -125,7 +135,8 @@
                             @if(count($condominio->eventos)>0)
                                 @foreach($condominio->eventos as $evento)
                                     <div class="col-sm-3 col-md-3">
-                                        <a data-toggle="modal" data-target="#admin-condominios-evento-ver{{$evento->id}}">
+                                        <a data-toggle="modal"
+                                           data-target="#admin-condominios-evento-ver{{$evento->id}}">
                                             <img src="{{ url('uploads/clases') }}/{{ $evento->imagen }}"
                                                  class="img-responsive">
                                         </a>
@@ -185,7 +196,7 @@
                                                 <img src="{{ url('uploads/avatars') }}/{{ $residencial->user->detalles->photo }}"
                                                      class="img-responsive" alt="">
                                             </div>
-											<?php $nombre = explode( " ", $residencial->user->name ); ?>
+                                            <?php $nombre = explode(" ", $residencial->user->name); ?>
                                             <h2>{{ucfirst($nombre[0])}}</h2>
 
 

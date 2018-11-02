@@ -14,6 +14,7 @@ use App\Detalle;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class InstructorController extends Controller {
 
@@ -24,9 +25,8 @@ class InstructorController extends Controller {
 		                   ->first();
 		if ( $detalles != null ) {
 			$clasesIds = explode( ",", $detalles->clases );
-			$clases    = Clase::whereIn( 'id', $detalles )->get();
-
-			return response()->json( $clases->toArray() );
+			$clases    = Clase::whereIn( 'id', $clasesIds )->get();
+            return response()->json( $clases->toArray() );
 		} else {
 			return response()->json( [] );
 

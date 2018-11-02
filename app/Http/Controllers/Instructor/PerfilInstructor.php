@@ -128,7 +128,9 @@ class PerfilInstructor extends Controller {
 		$reservacion->status = 'COMENZADA';
 		$reservacion->inicio = Carbon::now();
 		$reservacion->save();
-
+        ReservacionUsuario::where( 'reservacion_id', '=', $id)
+            ->where( 'estado', '=', 'PROXIMA')
+            ->update( [ 'estado' => 'COMENZADA' ] );
 		return redirect( url( '/perfilinstructor' ) );
 	}
 
@@ -141,7 +143,8 @@ class PerfilInstructor extends Controller {
 		$reservations = Input::get( 'reservations' );
 		if ( $input['tipo'] == 'clase' ) {
 			ReservacionUsuario::where( 'reservacion_id', '=', $input['item_id'] )
-			                  ->update( [ 'estado' => 'EN REVISIÓN' ] );
+                ->where( 'estado', '=', 'COMENZADA')
+                ->update( [ 'estado' => 'EN REVISIÓN' ] );
 		}
 		if ( $reservations != null ) {
 			foreach ( $reservations as $id ) {
@@ -159,7 +162,27 @@ class PerfilInstructor extends Controller {
 
 	public function agregarInvitado( Request $request ) {
 
-		$invitado = Invitado::create( $request->all() );
+	    if($request->has('email')){
+	        $input = $request->all();
+            $user = User::create([
+                'name' => ucfirst($input['nombre']),
+                'email' => $input['email'],
+                'password' => bcrypt($input['password']),
+                'dob' => '',
+                'tel' => $input['telefono'],
+                'genero' => $input['genero'],
+                'code'=>str_random(6),
+                'referencia' => '',
+            ]);
+            $reservacionUsuario = new ReservacionUsuario();
+            $reservacionUsuario->reservacion_id = $input['reservacion_id'];
+            $reservacionUsuario->usuario_id = $user->id;
+            $reservacionUsuario->asistencia = true;
+            $reservacionUsuario->estado='COMENZADA';
+            $reservacionUsuario->save();
+        }else{
+            $invitado = Invitado::create( $request->all() );
+        }
 		Session::flash( 'mensaje', '¡Participante añadido!' );
 		Session::flash( 'class', 'success' );
 

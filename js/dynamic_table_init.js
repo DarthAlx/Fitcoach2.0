@@ -23,6 +23,11 @@ $(document).ready(function () {
         stateSave: true,
         "aaSorting": [[0, "desc"]]
     });
+    $('.dynamic-table4').dataTable({
+        stateSave: true,
+        "ordering": false,
+        aaSorting: []
+    });
     /*
      * Insert a 'details' column to the table
      */

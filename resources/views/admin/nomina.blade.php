@@ -40,22 +40,22 @@
 
                             @if ($coaches)
                                 @foreach ($coaches as $coach)
-									<?php
-									$pendiente = 0;
-									foreach ( $coach->abonos as $abono ) {
-										if ( ! $abono->realizado ) {
-											$pendiente = $pendiente + $abono->abono;
-										}
-									}
+                                    <?php
+                                    $pendiente = 0;
+                                    foreach ($coach->abonos as $abono) {
+                                        if (!$abono->realizado) {
+                                            $pendiente = $pendiente + $abono->abono;
+                                        }
+                                    }
 
-									$ultimo = App\Pago::where( 'user_id', $coach->id )->orderBy( 'created_at', 'desc' )->first();
-									if ( ! $ultimo ) {
-										$fecha = "No se han realizado pagos.";
-									} else {
-										$fecha = $ultimo->fecha;
-									}
-									$referencias = App\User::where( 'referencia', $coach->code . '-ganado' )->count();
-									?>
+                                    $ultimo = App\Pago::where('user_id', $coach->id)->orderBy('created_at', 'desc')->first();
+                                    if (!$ultimo) {
+                                        $fecha = "No se han realizado pagos.";
+                                    } else {
+                                        $fecha = $ultimo->fecha;
+                                    }
+                                    $referencias = App\User::where('referencia', $coach->code . '-ganado')->count();
+                                    ?>
                                     <tr style="cursor: pointer;">
                                         <td>
 
@@ -118,15 +118,15 @@
 
     @if ($coaches)
         @foreach ($coaches as $coach)
-			<?php
-			$ordenes = App\Reservacion::where( 'coach_id', $coach->id )->where( 'status', 'COMPLETO' )->get();
-			$pendiente = 0;
-			foreach ( $coach->abonos as $abono ) {
-				$pendiente = $pendiente + $abono->abono;
-			}
+            <?php
+            $ordenes = App\Reservacion::where('coach_id', $coach->id)->where('status', 'COMPLETO')->get();
+            $pendiente = 0;
+            foreach ($coach->abonos as $abono) {
+                $pendiente = $pendiente + $abono->abono;
+            }
 
 
-			?>
+            ?>
             <div class="modal fade" id="pagar{{$coach->id}}" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -162,17 +162,17 @@
                                         <option value="Efectivo">Efectivo</option>
                                     </select>
                                     <input type="text" name="referencia" class="form-control"
-                                           placeholder="Referencia"  required>
+                                           placeholder="Referencia" required>
                                     <input type="text" name="monto" class="form-control" value="{{$pendiente}}"
-                                           placeholder="Monto" >
+                                           placeholder="Monto">
                                     <input type="text" name="deducciones" class="form-control nomina-deducciones"
                                            placeholder="Deducciones"
-                                            style="display: none">
+                                           style="display: none">
                                     <input type="text" name="iva" class="form-control nomina-iva" placeholder="Iva"
-                                            style="display: none">
+                                           style="display: none">
                                     <input type="text" name="factura" class="form-control nomina-factura"
                                            placeholder="Factura"
-                                            style="display: none">
+                                           style="display: none">
                                     <input type="hidden" name="ordenes" class="form-control" placeholder="Referencia"
                                            required>
                                     <button class="btn btn-success" type="submit"
@@ -190,92 +190,172 @@
 
     @if ($coaches)
         @foreach ($coaches as $coach)
-			<?php
-			$pagos = App\Pago::where( 'user_id', $coach->id )->get();
-			?>
+            <?php
+            $pagos = App\Pago::where('user_id', $coach->id)->get();
+            ?>
             <div class="modal fade" id="historial{{$coach->id}}" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
 
                         <div class="modal-body">
-
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img
                                         src="{{url('/images/cross.svg')}}" alt=""></button>
 
                             <div id="historialpagos{{$coach->id}}">
                                 <h4>Historial de pagos de {{Ucfirst($coach->name)}}</h4>
-                                <table class="display table table-bordered table-striped table-hover"
-                                       id="dynamic-table">
+
+                                <table class="display table table-bordered table-striped table-hover dynamic-table4">
                                     <thead>
                                     <tr>
                                         <th>Fecha</th>
-                                        <th>Método</th>
-                                        <th>Referencia</th>
-                                        <th>Información</th>
-                                        <th>Balance</th>
+                                        <th>Descripcion</th>
+                                        <th>Entradas</th>
+                                        <th>Salidas</th>
+                                        <th>Saldo</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-
-
-                                    @if ($coach->pagos)
-                                        @foreach ($coach->pagos as $pago)
-                                            <tr style="cursor: pointer;">
-                                                <td>{{$pago->fecha}}</td>
-                                                <td>{{$pago->metodo}}</td>
+                                    @foreach($coach->nomina() as $pago)
+                                        <?php
+                                        $count = 0;
+                                        ?>
+                                        @foreach($pago->abonos as $abono)
+                                            <tr>
                                                 <td>
-                                                    @if($pago->metodo=='Transferencia')
-                                                        <p>
-                                                            <b>Referencia :</b> {{$pago->referencia}}<br/>
-                                                            <b>Factura :</b> {{$pago->factura}}
-                                                        </p>
+                                                    <?php
+                                                    echo \Carbon\Carbon::parse($abono->created_at)->toDateTimeString();
+                                                    $count += $abono->abono;
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    @if($abono->reservacion!=null)
+                                                        {{$abono->reservacion->horario->clase->nombre}} - {{$abono->reservacion->id}}
                                                     @else
-                                                        {{$pago->referencia}}
+                                                        <span>-</span>
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    @if($pago->metodo=='Asimilados')
-                                                        <p>
-                                                            <b>Monto :</b> $ {{$pago->monto}}<br/>
-                                                            <b>Deducciones :</b> ${{$pago->deducciones}}
-                                                        </p>
-                                                    @elseif($pago->metodo=='Efectivo')
-                                                        <b>Monto :</b> $ {{$pago->monto}}
-                                                    @elseif($pago->metodo=='Transferencia')
-                                                        <b>Monto :</b> $ {{$pago->monto}}<br/>
-                                                        <b>Iva :</b> $ {{$pago->iva}}
-                                                    @endif
+                                                    $ {{$abono->abono}}
                                                 </td>
                                                 <td>
-                                                    @if($pago->metodo=='Asimilados')
-                                                        <span>$ {{$pago->monto-$pago->deducciones}}</span>
-                                                    @elseif($pago->metodo=='Efectivo')
-                                                        <span>$ {{$pago->monto}}</span>
-                                                    @elseif($pago->metodo=='Transferencia')
-                                                        <span>$ {{$pago->monto+$pago->iva }}</span>
-                                                    @endif
+                                                    -
+                                                </td>
+                                                <td>
+                                                    ${{$count}}
                                                 </td>
                                             </tr>
                                         @endforeach
-                                    @endif
+                                        @if($pago->metodo=='Asimilados')
+                                            <tr>
+                                                <td>
+                                                    <?php
+                                                    echo \Carbon\Carbon::parse($pago->created_at)->toDateTimeString();
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <span>Deduccion por asimilados</span>
+                                                </td>
+                                                <td>
+                                                    -
+                                                </td>
+                                                <td>
+                                                    ${{$pago->deducciones}}
+                                                </td>
+                                                <td>
+                                                    ${{$count-$pago->deducciones}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <?php
+                                                    echo \Carbon\Carbon::parse($pago->created_at)->toDateTimeString();
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <span>Pago a cuenta propia - {{$pago->id}}</span>
+                                                </td>
+                                                <td>
+                                                    -
+                                                </td>
+                                                <td>
+                                                    ${{$pago->monto}}
+                                                </td>
+                                                <td>
+                                                   -
+                                                </td>
+                                            </tr>
+                                        @elseif($pago->metodo=='Efectivo')
+                                            <tr>
+                                                <td>
+                                                    <?php
+                                                    echo \Carbon\Carbon::parse($pago->created_at)->toDateTimeString();
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <span>Pago en efectivo</span>
+                                                </td>
+                                                <td>
+                                                    -
+                                                </td>
+                                                <td>
+                                                    ${{$pago->monto}}
+                                                </td>
+                                                <td>
+                                                   -
+                                                </td>
+                                            </tr>
+                                        @elseif($pago->metodo=='Transferencia')
+                                            <tr>
+                                                <td>
+                                                    <?php
+                                                    echo \Carbon\Carbon::parse($pago->created_at)->toDateTimeString();
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <span>Iva por factura</span>
+                                                </td>
+                                                <td>
+                                                    ${{$pago->iva}}
+                                                </td>
+                                                <td>
+                                                    -
+                                                </td>
+                                                <td>
+                                                    ${{$count+$pago->iva}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <?php
+                                                    echo \Carbon\Carbon::parse($pago->created_at)->toDateTimeString();
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <span>Pago a cuenta propia - {{$pago->id}}</span>
+                                                </td>
+                                                <td>
+                                                    -
+                                                </td>
+                                                <td>
+                                                    ${{$pago->monto+$pago->iva}}
+                                                </td>
+                                                <td>
+                                                    -
+                                                </td>
+                                            </tr>
+                                        @endif
 
+                                    @endforeach
 
                                     </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <th>Fecha</th>
-                                        <th>Método</th>
-                                        <th>Referencia</th>
-                                        <th>Balance</th>
-                                    </tr>
-                                    </tfoot>
                                 </table>
-                                <a href="{{url('historialpagos')}}/{{$coach->id}}" class="btn btn-success"
-                                   target="_blank"
-                                   style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Imprimir</a>
                             </div>
-
-
+                            <br/>
+                            <br/>
+                            <br/>
+                            <a href="{{url('historialpagos')}}/{{$coach->id}}" class="btn btn-success"
+                               target="_blank"
+                               style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">Imprimir</a>
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->

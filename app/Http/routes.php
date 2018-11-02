@@ -427,6 +427,7 @@ Route::group( [ 'middleware' => 'administradores' ], function () {
 	Route::get( 'printlist/{id}', 'ResidencialController@printlist' );
 	Route::get( 'printeventlist/{id}', 'ResidencialController@printlistevent' );
 	Route::get( 'printgroups/{id}', 'ResidencialController@printgroups' );
+    Route::get( 'printplan/{id}', 'ResidencialController@printplan' );
 
 	Route::post( 'tokenplus', 'Publico\OrdenController@tokenplus' );
 	Route::post( 'tokenminus', 'Publico\OrdenController@tokenminus' );
