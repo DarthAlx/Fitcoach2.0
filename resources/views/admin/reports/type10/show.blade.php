@@ -9,7 +9,15 @@
     <h2>DETALLE DE RESERVACIONES</h2>
     <p style="text-align: center">{!! $condominio->identificador !!}</p>
     <div class="info">
-        <p><span class="info-title">Periodo</span> {{$startDate->toDateString()}} al {{$endDate->toDateString()}}</p>
+        <p><span class="info-title">Periodo</span>
+            @if($startDate!=null)
+                <span>Desde </span>
+                {{$startDate->toDateTimeString()}}
+            @endif
+            @if($endDate!=null)
+                <span>Hasta </span>
+                {{$endDate->toDateTimeString()}}</p>
+        @endif
     </div>
 
     <table style="width:100%">
@@ -19,9 +27,9 @@
             <th width="33%">Reservaciones</th>
         </tr>
         <tr>
-            <td>{{$groups->total}}</td>
-            <td>{{$clases->total}}</td>
-            <td>{{$reservaciones->total}}</td>
+            <td>{{$groups!=null?$groups->total:0}}</td>
+            <td>{{$clases!=null?$clases->total:0}}</td>
+            <td>{{$reservaciones!=null?$reservaciones->total:0}}</td>
         </tr>
     </table>
     <table style="width:100%">

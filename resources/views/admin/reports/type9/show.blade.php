@@ -9,7 +9,15 @@
     <h2>DETALLE DE CLASES</h2>
     <p style="text-align: center">{!! $user->name !!}</p>
     <div class="info">
-        <p><span class="info-title">Periodo</span> {{$startDate->toDateString()}} al {{$endDate->toDateString()}}</p>
+        <p><span class="info-title">Periodo</span>
+            @if($startDate!=null)
+                <span>Desde </span>
+                {{$startDate->toDateTimeString()}}
+            @endif
+            @if($endDate!=null)
+                <span>Hasta </span>
+                {{$endDate->toDateTimeString()}}</p>
+        @endif
     </div>
     <table style="width:100%">
         <tr class="table-header">

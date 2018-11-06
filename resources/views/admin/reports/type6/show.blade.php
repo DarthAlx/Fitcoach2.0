@@ -9,7 +9,15 @@
     <h2>AFOROS DETALLADOS POR GRUPO</h2>
     <p style="text-align: center">{!! $condominio->identificador !!}</p>
     <div class="info">
-        <p><span class="info-title">Periodo</span> {{$startDate->toDateString()}} al {{$endDate->toDateString()}}</p>
+        <p><span class="info-title">Periodo</span>
+            @if($startDate!=null)
+                <span>Desde </span>
+                {{$startDate->toDateTimeString()}}
+            @endif
+            @if($endDate!=null)
+                <span>Hasta </span>
+                {{$endDate->toDateTimeString()}}</p>
+        @endif
     </div>
     @foreach($data as $item)
         <table style="width:100%">
