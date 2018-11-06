@@ -31,8 +31,7 @@ class MainController extends Controller {
 		$condominioId = Auth::user()->condominio_id;
 		$now          = Carbon::now();
 		$service      = new RoomService();
-		$condominio   = Condominio::with( 'eventos' )
-		                          ->where( 'id', '=', $condominioId )
+		$condominio   = Condominio::where( 'id', '=', $condominioId )
 		                          ->get()
 		                          ->first();
 		$rooms        = $service->getRoomsbyCondominio( $condominio->id );
@@ -47,7 +46,10 @@ class MainController extends Controller {
 		$eventos = Evento::with( 'condominio' )
 		                 ->with( 'asistentes' )
 		                 ->with( 'asistentes.usuario' )
+		                 ->where( 'fecha', '>=', $now->toDateString() )
+		                 ->where( 'hora', '>=', $now->toTimeString() )
 		                 ->where( 'condominio_id', '=', $condominioId )->get();
+
 		$grupos  = Grupo::with( 'coach' )
 		                ->with( 'horarios' )
 		                ->with( 'horarios.clase' )

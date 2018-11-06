@@ -6,49 +6,39 @@
 <body>
 <div class="container">
     @include('admin.reports.header')
-    <h2>AFOROS DETALLADOS POR GRUPO</h2>
-    <p style="text-align: center">{!! $condominio->identificador !!}</p>
+    <h2>USO DE CUPONES</h2>
     <div class="info">
-        <p><span class="info-title">Periodo</span> {{$startDate->toDateString()}} al {{$endDate->toDateString()}}</p>
+        <p><span class="info-title">Periodo</span>
+            @if($startDate!=null)
+                <span>Desde </span>
+                {{$startDate->toDateTimeString()}}
+            @endif
+            @if($endDate!=null)
+                <span>Hasta </span>
+                {{$endDate->toDateTimeString()}}</p>
+        @endif
     </div>
-    @foreach($data as $item)
-        <table style="width:100%">
-            <tr class="table-header">
-                <th width="20%">Grupo</th>
-                <th width="20%">Horario</th>
-                <th width="20%">Coach</th>
-                <th width="20%">Num. de clases</th>
-                <th width="20%">Aforo Promedio</th>
-            </tr>
+    <table style="width:100%">
+        <tr class="table-header">
+            <th width="10%">#</th>
+            <th width="33%">Cupón</th>
+            <th width="33%">Nombre</th>
+            <th width="33%">Valor</th>
+            <th width="33%">Usos</th>
+            <th width="33%">Total</th>
+        </tr>
+        @foreach($data as $index=>$item)
             <tr>
-                <td>{{$item->nombre}}</td>
-                <td>{{$item->hora}}</td>
-                <td>{{$item->name}}</td>
-                <td>{{$item->total}}</td>
-                <td>{{sprintf('%s', number_format(($item->promedio), 0))}}</td>
-                <td></td>
+                <td>{{$index}}</td>
+                <td>{{$item->codigo}}</td>
+                <td>{{$item->descripcion}}</td>
+                <td>{{sprintf('%s', number_format(($item->monto),2))}} MXN</td>
+                <td>{{$item->usos}}</td>
+                <td>{{sprintf('%s', number_format(($item->monto*$item->usos), 2))}} MXN</td>
             </tr>
-        </table>
-        <table style="width:100%">
-            <tr>
-                <td width="10%"><b>#</b></td>
-                <td width="30%"><b>Fecha</b></td>
-                <td width="30%"><b>Reservadas</b></td>
-                <td width="30%"><b>Aforo</b></td>
-            </tr>
-            @foreach($item->horarios as $index=>$horario)
-                <tr>
-                    <td>{{$index}}</td>
-                    <td>{{$horario->fecha}}</td>
-                    <td>{{$horario->ocupados}}</td>
-                    <td>{{$horario->cupo}}</td>
-                </tr>
-            @endforeach
-        </table>
-    @endforeach
-    <div>
-        <p>Creado el : {{$now->toDateTimeString()}}</p>
-    </div>
+        @endforeach
+    </table>
+    <p>Creado el : {{$now->toDateTimeString()}}</p>
 </div>
 </body>
 </html>

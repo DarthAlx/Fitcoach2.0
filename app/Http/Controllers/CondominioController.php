@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Detalle;
+use App\Evento;
 use App\Horario;
 use App\Room;
 use App\Services\RoomService;
@@ -33,22 +34,26 @@ class CondominioController extends Controller {
 	public function show( $name ) {
 		$now         = Carbon::now();
 		$description = urldecode( $name );
-		$condominio  = Condominio::with( 'eventos' )
-		                         ->whereRaw( "lower(identificador) = '$description'" )
+		$condominio  = Condominio::whereRaw( "lower(identificador) = '$description'" )
 		                         ->get()->first();
 		if ( ! Auth::guest() && ( Auth::user()->role == 'superadmin' || Auth::user()->role == 'admin' ) ) {
 			if ( Auth::user()->role == 'superadmin' ) {
-				return redirect( '/admins/condominio/'.$condominio->id );
+				return redirect( '/admins/condominio/' . $condominio->id );
 			} else {
 				$detalles = Detalle::where( 'user_id', Auth::user()->id )->get()->fisrt();
 				if ( $detalles ) {
 					if ( in_array( 'condominios', explode( ",", $detalles ) ) ) {
-						return redirect( '/admins/condominio/'.$condominio->id );
+						return redirect( '/admins/condominio/' . $condominio->id );
 					}
 				}
 			}
 		}
 
+		$eventos = Evento::with( 'asistentes' )
+		                 ->with( 'asistentes.usuario' )
+		                 ->where( 'fecha', '>=', $now->toDateString() )
+		                 ->where( 'hora', '>=', $now->toTimeString() )
+		                 ->where( 'condominio_id', '=', $condominio->id )->get();
 		$service = new RoomService();
 
 		$rooms    = $service->getRoomsbyCondominio( $condominio->id );
@@ -65,6 +70,7 @@ class CondominioController extends Controller {
 			->with( 'hour', $now->hour )
 			->with( 'date', $now->toDateString() )
 			->with( 'rooms', $rooms )
+			->with( 'eventos', $eventos )
 			->with( 'horarios', $horarios );
 	}
 

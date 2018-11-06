@@ -6,37 +6,44 @@
 <body>
 <div class="container">
     @include('admin.reports.header')
-    <h2>USO DE CUPONES</h2>
+    <h2>ESTATUS DE CLASES</h2>
     <div class="info">
-        <p><span class="info-title">Periodo</span>
-            @if($startDate!=null)
-                <span>Desde </span>
-                {{$startDate->toDateTimeString()}}
-            @endif
-            @if($endDate!=null)
-                <span>Hasta </span>
-                {{$endDate->toDateTimeString()}}</p>
-        @endif
+        <p><span class="info-title">Fecha</span>
+            {{$now->toDateTimeString()}}
+        </p>
     </div>
+    <b>TOTAL :</b>
     <table style="width:100%">
-        <tr class="table-header">
-            <th width="10%">#</th>
-            <th width="33%">Cupón</th>
-            <th width="33%">Nombre</th>
-            <th width="33%">Valor</th>
-            <th width="33%">Usos</th>
-            <th width="33%">Total</th>
-        </tr>
-        @foreach($data as $index=>$item)
             <tr>
-                <td>{{$index}}</td>
-                <td>{{$item->codigo}}</td>
-                <td>{{$item->descripcion}}</td>
-                <td>{{sprintf('%s', number_format(($item->monto),2))}} MXN</td>
-                <td>{{$item->usos}}</td>
-                <td>{{sprintf('%s', number_format(($item->monto*$item->usos), 2))}} MXN</td>
+                <td width="50%" class="orange">Clases disponibles</td>
+                <td width="50%">{{$response->classesAvailable}}</td>
             </tr>
-        @endforeach
+    </table>
+    <b>POR VENCER EN LOS PRÓXIMOS :</b>
+    <table style="width:100%">
+        <tr>
+            <td width="50%" class="orange">7 DIAS</td>
+            <td width="50%">{{$response->expiracionIn7}}</td>
+        </tr>
+        <tr>
+            <td width="50%" class="orange">14 DIAS</td>
+            <td width="50%">{{$response->expiracionIn14}}</td>
+        </tr>
+        <tr>
+            <td width="50%" class="orange">21 DIAS</td>
+            <td width="50%">{{$response->expiracionIn21}}</td>
+        </tr>
+    </table>
+    <b>VENCIDAS :</b>
+    <table style="width:100%">
+        <tr>
+            <td width="50%" class="orange">En el Mes</td>
+            <td width="50%">{{$response->expiredInTheMonth}}</td>
+        </tr>
+        <tr>
+            <td width="50%" class="orange">Histórico</td>
+            <td width="50%">{{$response->expiredTotal}}</td>
+        </tr>
     </table>
     <p>Creado el : {{$now->toDateTimeString()}}</p>
 </div>

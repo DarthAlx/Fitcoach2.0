@@ -17,25 +17,11 @@
                     </div>
                 </div>
                 <br/>
-                <p style="text-align: center;color: #cdcdcd;margin-bottom: 15px;">Aforo detallado en condominios</p>
-                <form method="POST" action="/reportes/5">
+                <form method="POST" action="/reportes/1">
                     {!! csrf_field() !!}
                     <div class="row" style="height: 300px">
                         <div class="col-sm-4">
-                            <input type="text" class="form-control datepicker" name="from" placeholder="Desde..."
-                                   value="">
-                        </div>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control datepicker" name="to" placeholder="Hasta..."
-                                   value="">
-                        </div>
-                        <div class="col-sm-4">
-                            <select name="condominio_id" class="form-control" required>
-                                <option selected hidden>Seleccione...</option>
-                                @foreach($condominios as $condominio)
-                                    <option value="{{$condominio->id}}">{!! $condominio->identificador !!}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" class="form-control datepicker" name="date" placeholder="Hasta..." value="">
                         </div>
                         <div class="col-lg-4">
                             <div class="dropdown">

@@ -12,6 +12,12 @@
     .table-header{
         background-color: #ec8617;
     }
+    .orange{
+        padding: 10px;
+        background-color: #ec8617;
+        color: #ffffff;
+        font-size: x-large;
+    }
     .table-header th{
         padding: 6px;
         text-align: center;

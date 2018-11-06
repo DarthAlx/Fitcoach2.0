@@ -6,40 +6,30 @@
 <body>
 <div class="container">
     @include('admin.reports.header')
-    <h2>DETALLE DE RESERVACIONES</h2>
-    <p style="text-align: center">{!! $condominio->identificador !!}</p>
+    <h2>DETALLE DE CLASES</h2>
+    <p style="text-align: center">{!! $user->name !!}</p>
     <div class="info">
         <p><span class="info-title">Periodo</span> {{$startDate->toDateString()}} al {{$endDate->toDateString()}}</p>
     </div>
-
     <table style="width:100%">
         <tr class="table-header">
-            <th width="33%">Grupos Disponibles</th>
-            <th width="33%">Clases Impartidas</th>
-            <th width="33%">Reservaciones</th>
+            <th width="20%">Fecha</th>
+            <th width="10%">Clase</th>
+            <th width="20%">Tipo</th>
+            <th width="20%">Aforo</th>
+            <th width="20%">Status</th>
+            <th width="20%">Abonado</th>
         </tr>
-        <tr>
-            <td>{{$groups->total}}</td>
-            <td>{{$clases->total}}</td>
-            <td>{{$reservaciones->total}}</td>
-        </tr>
-    </table>
-    <table style="width:100%">
-        <tr>
-            <td width="10%">#</td>
-            <td width="30%">Grupo</td>
-            <td width="30%">Horario</td>
-            <td width="30%">Reservaciones</td>
-        </tr>
-        @foreach($details as $index=>$detail)
+        @foreach($data as $item)
             <tr>
-                <td>{{$index}}</td>
-                <td>{{$detail->nombre}}</td>
-                <td>{{$detail->hora}}</td>
-                <td>{{$detail->total}}</td>
+                <td>{{$item->fecha}}</td>
+                <td>{{$item->nombre}}</td>
+                <td>{{$item->tipo}}</td>
+                <td>{{$item->aforo}}</td>
+                <td>{{$item->status}}</td>
+                <td>{{$item->realizado}}</td>
             </tr>
         @endforeach
-
     </table>
     <div>
         <p>Creado el : {{$now->toDateTimeString()}}</p>

@@ -17,22 +17,21 @@
                     </div>
                 </div>
                 <br/>
-                <form method="POST" action="/reportes/9">
+                <p style="text-align: center;color: #cdcdcd;margin-bottom: 15px;">Detalle de Clase COACH</p>
+                <form method="POST" action="/reportes/8">
                     {!! csrf_field() !!}
                     <div class="row" style="height: 300px">
                         <div class="col-sm-4">
-                            <input type="text" class="form-control datepicker" name="from" placeholder="Desde..."
-                                   value="">
+                            <input type="text" class="form-control datepicker" name="from" placeholder="Desde..." value="">
                         </div>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control datepicker" name="to" placeholder="Hasta..."
-                                   value="">
+                            <input type="text" class="form-control datepicker" name="to" placeholder="Hasta..." value="">
                         </div>
                         <div class="col-sm-4">
-                            <select name="condominio_id" class="form-control" required>
-                                <option selected hidden>Seleccione condominio...</option>
-                                @foreach($condominios as $condominio)
-                                    <option value="{{$condominio->id}}">{!! $condominio->identificador !!}</option>
+                            <select name="coach_id" class="form-control" required>
+                                <option selected hidden>Seleccione un coach...</option>
+                                @foreach($users as $user)
+                                    <option value="{{$user->id}}">{!! $user->name !!}</option>
                                 @endforeach
                             </select>
                         </div>

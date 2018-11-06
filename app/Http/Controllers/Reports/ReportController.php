@@ -111,6 +111,9 @@ class ReportController extends Controller
             case 3:
                 $view = $service->popularityOfClasses($input);
                 break;
+	        case 4:
+		        $view = $service->classStatus($input);
+		        break;
             case 5:
                 $view = $service->useOfCoupons($input);
                 break;
@@ -130,9 +133,11 @@ class ReportController extends Controller
                 $view = $service->salesOfGroup($input);
                 break;
         }
-        $pdf = App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-        return $pdf->download('reporte_' . $now->getTimestamp() . '.pdf');
+        //return $view;
+	    $pdf = App::make( 'dompdf.wrapper' );
+	    $pdf->loadHTML( $view );
+
+	    return $pdf->download( 'reporte_' . $now->getTimestamp() . '.pdf' );
     }
 
 }

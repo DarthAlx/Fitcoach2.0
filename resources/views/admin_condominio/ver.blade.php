@@ -122,8 +122,8 @@
                         </div>
                         <h3>PRÓXIMOS EVENTOS</h3>
                         <div class="row">
-                            @if(count($condominio->eventos)>0)
-                                @foreach($condominio->eventos as $evento)
+                            @if(count($eventos)>0)
+                                @foreach($eventos as $evento)
                                     <div class="col-sm-3 col-md-3">
                                         <a data-toggle="modal" data-target="#admin-condominios-evento-ver{{$evento->id}}">
                                             <img src="{{ url('uploads/clases') }}/{{ $evento->imagen }}"

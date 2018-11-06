@@ -159,7 +159,7 @@ $(document).ready(function () {
                 $("#condominio_id").show();
                 break;
             case '8':
-                $("#clase_id").show();
+                $("#type_id").show();
                 break;
             case '9':
                 $("#coach_id").show();

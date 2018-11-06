@@ -38,8 +38,7 @@ class CondominioAdminController extends Controller {
 	public function admin( $condominioId ) {
 		$now        = Carbon::now();
 		$service    = new RoomService();
-		$condominio = Condominio::with( 'eventos' )
-		                        ->where( 'id', '=', $condominioId )
+		$condominio = Condominio::where( 'id', '=', $condominioId )
 		                        ->get()
 		                        ->first();
 		$rooms      = $service->getRoomsbyCondominio( $condominio->id );
@@ -51,7 +50,13 @@ class CondominioAdminController extends Controller {
 		                     ->where( 'fecha', $now->toDateString() )
 		                     ->where( 'condominio_id', $condominio->id )->orderBy( 'hora', 'asc' )->get();
 
-		$eventos = Evento::where( 'condominio_id', '=', $condominioId )->get();
+		$eventos = Evento::with( 'condominio' )
+		                 ->with( 'asistentes' )
+		                 ->with( 'asistentes.usuario' )
+		                 ->where( 'fecha', '>=', $now->toDateString() )
+		                 ->where( 'hora', '>=', $now->toTimeString() )
+		                 ->where( 'condominio_id', '=', $condominioId )->get();
+
 		$grupos  = Grupo::with( 'coach' )
 		                ->with( 'horarios' )
 		                ->with( 'horarios.clase' )
