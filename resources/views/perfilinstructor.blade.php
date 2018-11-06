@@ -7,10 +7,10 @@
         <div class="row profile">
             <div class="col-sm-12">
                 @include('holders.notificaciones')
-				<?php $nombre = explode( " ", $user->name );
-				if ( ! isset( $nombre[1] ) ) {
-					$nombre[1] = null;
-				}?>
+                <?php $nombre = explode(" ", $user->name);
+                if (!isset($nombre[1])) {
+                    $nombre[1] = null;
+                }?>
                 <h2>Hola <span class="nombre">{{ucfirst($nombre[0])}} {{ucfirst($nombre[1])}}</span></h2>
                 <h4 style="text-align: right">código de referencia: <strong>{{$user->code}}</strong></h4>
             </div>
@@ -22,14 +22,14 @@
                     <h4>PENDIENTE POR PAGAR</h4>
                     @if ($user->abonos)
 
-						<?php
-						$cantidad = 0;
-						foreach ( $user->abonos as $pendiente ) {
-							if ( ! $pendiente->realizado ) {
-								$cantidad = $cantidad + $pendiente->abono;
-							}
-						}
-						?>
+                        <?php
+                        $cantidad = 0;
+                        foreach ($user->abonos as $pendiente) {
+                            if (!$pendiente->realizado) {
+                                $cantidad = $cantidad + $pendiente->abono;
+                            }
+                        }
+                        ?>
 
                         <h1>${{$cantidad}}</h1>
 
@@ -222,28 +222,25 @@
 
                     <div id="historial" class="listadeclases" style="display:none;">
                         <div class="list-group">
-							<?php
-							$pagos = $user->pagos;
+                            <?php
+                            $pagos = $user->pagos;
+                            if (!$pagos->isEmpty()) {
+                            date_default_timezone_set('America/Mexico_City');
+                            foreach ($pagos as $pago) {
 
-							if (! $pagos->isEmpty()) {
-							date_default_timezone_set( 'America/Mexico_City' );
-
-							foreach ($pagos as $pago) {
-
-
-							?>
+                            ?>
                             <a href="#" class="list-group-item" data-toggle="modal" data-target="#abono{{$pago->id}}">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
-								<?php setlocale( LC_TIME, "es_MX" ); ?>
+                                <?php setlocale(LC_TIME, "es_MX"); ?>
                                 {{$pago->fecha}} | {{$pago->metodo}} | Pago: ${{$pago->monto-$pago->deducciones}}
                             <!--i class="fa fa-chevron-right pull-right" aria-hidden="true"></i-->
                             </a>
-							<?php
-							}
-							} else{ ?>
+                            <?php
+                            }
+                            } else{ ?>
                             <p class="text-center">No has recibido ningún pago.</p>
-							<?php  }
-							?>
+                            <?php  }
+                            ?>
 
                         </div>
                     </div>
@@ -362,8 +359,8 @@
                                         @if($proxima->estado=='COMENZADA')
                                             <div class="pull-right" data-toggle="modal"
                                                  data-target="#proximas{{$proxima->id}}">
-                                                <a href="#"><i   class="fa fa-play icopopup"
-                                                                 style="background-color: #00ff00"></i> &nbsp</a>
+                                                <a href="#"><i class="fa fa-play icopopup"
+                                                               style="background-color: #00ff00"></i> &nbsp</a>
                                             </div>
                                         @elseif($proxima->estado=='PROXIMA')
                                             <div class="pull-right" data-toggle="modal"
@@ -595,11 +592,11 @@
 
 
     <div class="modal fade" id="horarionuevo" tabindex="-1" role="dialog">
-		<?php $permitidas = explode( ",", $user->detalles->clases );
+        <?php $permitidas = explode(",", $user->detalles->clases);
 
-		$clases = App\Clase::whereIn( 'id', $permitidas )->get();
-		$particulares = App\Horario::where( 'user_id', $user->id )->where( 'tipo', 'A domicilio' )->get();
-		?>
+        $clases = App\Clase::whereIn('id', $permitidas)->get();
+        $particulares = App\Horario::where('user_id', $user->id)->where('tipo', 'A domicilio')->get();
+        ?>
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -617,9 +614,9 @@
                                         data-target="#horario{{$particular->id}}" aria-expanded="false"
                                         aria-controls="horario{{$particular->id}}">
 
-									<?php
-									$recurrencias = explode( ",", $particular->recurrencia );
-									?>
+                                    <?php
+                                    $recurrencias = explode(",", $particular->recurrencia);
+                                    ?>
                                     {{$particular->nombre}} -
                                     @if ($particular->recurrencia)
 
@@ -704,7 +701,7 @@
                                         <select class="form-control" name="zona_id" id="zona{{$particular->id}}"
                                                 required>
                                             <option value="">Selecciona una zona</option>
-											<?php $zonas = App\Zona::all(); ?>
+                                            <?php $zonas = App\Zona::all(); ?>
                                             @foreach ($zonas as $zona)
                                                 <option value="{{ $zona->id }}">{{ ucfirst($zona->identificador) }}</option>
                                             @endforeach
@@ -778,7 +775,7 @@
                                 </div>
                                 <select class="form-control" name="zona_id" required>
                                     <option value="">Selecciona una zona</option>
-									<?php $zonas = App\Zona::all(); ?>
+                                    <?php $zonas = App\Zona::all(); ?>
                                     @foreach ($zonas as $zona)
                                         <option value="{{ $zona->id }}">{{ ucfirst($zona->identificador) }}</option>
                                     @endforeach
@@ -943,20 +940,20 @@
     @endif
 
 
-	<?php
+    <?php
 
-	$pasadas = App\Reservacion::with( 'plan' )->where( 'coach_id', $user->id )->where( 'status', '<>', 'PROXIMA' )->orderBy( 'created_at', 'desc' )->get();
+    $pasadas = App\Reservacion::with('plan')->where('coach_id', $user->id)->where('status', '<>', 'PROXIMA')->orderBy('created_at', 'desc')->get();
 
-	if (! $pasadas->isEmpty()) {
-	date_default_timezone_set( 'America/Mexico_City' );
-	foreach ($pasadas as $pasada) {
-	$cliente = App\User::find( $pasada->user_id );
-	$direccion = App\Direccion::find( $pasada->direccion );
-	$fecha = date_create( $pasada->fecha );
-	setlocale( LC_TIME, "es-ES" );
+    if (!$pasadas->isEmpty()) {
+    date_default_timezone_set('America/Mexico_City');
+    foreach ($pasadas as $pasada) {
+    $cliente = App\User::find($pasada->user_id);
+    $direccion = App\Direccion::find($pasada->direccion);
+    $fecha = date_create($pasada->fecha);
+    setlocale(LC_TIME, "es-ES");
 
 
-	?>
+    ?>
     <div class="modal fade" id="plan{{$pasada->id}}" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -966,59 +963,60 @@
                                 src="{{url('/images/cross.svg')}}" alt=""></button>
                     <div class="container-bootstrap" style="width: 100%;">
                         <h4>Plan de la clase</h4>
+                        @if(isset($pasada->plan))
+                            <a target="_blank"
+                               href="{{url('/printplan')}}/{{$pasada->id}}?tipo=clase">
+                                <i style="color: #000000" class="fa fa-print"></i>
+                            </a>
+                        @endif
                         <form action="{{ url('/planear-clase') }}" method="post" enctype="multipart/form-data">
                             @if($pasada->plan)
                                 {{ method_field('PUT') }}
                             @endif
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             @if(!$pasada->plan)
-
-                                <label>Fase inicial</label>
-                                <textarea name="inicio" class="form-control" required></textarea>
-                                <label>Minutos</label>
-                                <input type="number" class="form-control" name="minutosinicio" required>
-
-                                <label>Fase medular</label>
-                                <textarea name="medular" class="form-control" required></textarea>
-                                <label>Minutos</label>
-                                <input type="number" class="form-control" name="minutosmedular" required>
-
-                                <label>Fase final</label>
-                                <textarea name="final" class="form-control" required></textarea>
-                                <label>Minutos</label>
-                                <input type="number" class="form-control" name="minutosfinal" required>
-
-                                <label>Comentarios</label>
-                                <textarea name="comentarios" class="form-control" required></textarea>
-
-                                <input type="hidden" name="reservacion_id" value="{{$pasada->reservacionId}}"/>
+                                <span>No existe plan</span>
                             @else
-                                <label>Fase inicial</label>
-                                <textarea name="inicio" class="form-control"
-                                          required>{{$pasada->plan->inicio}}</textarea>
-                                <label>Minutos</label>
-                                <input type="number" class="form-control" name="minutosinicio"
-                                       value="{{$pasada->plan->minutosinicio}}" required>
-
-                                <label>Fase medular</label>
-                                <textarea name="medular" class="form-control"
-                                          required>{{$pasada->plan->medular}}</textarea>
-                                <label>Minutos</label>
-                                <input type="number" class="form-control" name="minutosmedular"
-                                       value="{{$pasada->plan->minutosmedular}}" required>
-
-                                <label>Fase final</label>
-                                <textarea name="final" class="form-control"
-                                          required>{{$pasada->plan->final}}</textarea>
-                                <label>Minutos</label>
-                                <input type="number" class="form-control" name="minutosfinal"
-                                       value="{{$pasada->plan->minutosfinal}}" required>
-
-                                <label>Comentarios</label>
-                                <textarea name="comentarios" class="form-control"
-                                          required>{{$pasada->plan->comentarios}}</textarea>
-
-                                <input type="hidden" name="reservacion_id" value="{{$pasada->id}}"/>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label>Objetivos</label>
+                                            <textarea name="objetivos" class="form-control" required rows="4">{{$pasada->plan->objetivos}}
+                                        </textarea>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>Materiales</label>
+                                            <textarea name="materiales" class="form-control" required rows="4">{{$pasada->plan->materiales}}
+                                        </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label>Fase inicial</label>
+                                            <textarea name="inicio" class="form-control" required rows="4">{{$pasada->plan->inicio}}</textarea>
+                                            <label>Minutos</label>
+                                            <input type="number" class="form-control" name="minutosinicio" required
+                                                   value="{{$pasada->plan->minutosinicio}}">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label>Fase medular</label>
+                                            <textarea name="medular" class="form-control" required rows="4">{{$pasada->plan->medular}}</textarea>
+                                            <label>Minutos</label>
+                                            <input type="number" class="form-control" name="minutosmedular" required
+                                                   value="{{$pasada->plan->minutosmedular}}">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label>Fase final</label>
+                                            <textarea name="final" class="form-control" required rows="4">{{$pasada->plan->final}}</textarea>
+                                            <label>Minutos</label>
+                                            <input type="number" class="form-control" name="minutosfinal" value="{{$pasada->plan->minutosfinal}}" required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label>Comentarios</label>
+                                            <textarea name="comentarios" class="form-control" required rows="4">{{$pasada->plan->comentarios}}</textarea>
+                                        </div>
+                                    </div>
                             @endif
                         </form>
 
@@ -1040,14 +1038,14 @@
                             <div class="col-sm-4 sidebar">
                                 <div class="text-center">
                                     <h1>{{$pasada->nombre}}</h1>
-								<?php /*$nombre = explode( " ", $cliente->name );
+                                <?php /*$nombre = explode( " ", $cliente->name );
 									if ($pasada->tipo == "En condominio") {
 
 									}else{
 									*/?><!--
                                     <h2>{{ucfirst($nombre[0])}}</h2>
 									--><?php
-									/*									}
+                                    /*									}
 
                                                                         */?>
 
@@ -1079,7 +1077,7 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal contraseña -->
-	<?php } }?>
+    <?php } }?>
 
 
 

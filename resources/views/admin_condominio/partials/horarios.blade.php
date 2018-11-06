@@ -3,7 +3,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <button type="button" class="close close-modal-horarios" data-id="{{$grupo->id}}"  aria-label="Close"><img
+                    <button type="button" class="close close-modal-horarios" data-id="{{$grupo->id}}"
+                            aria-label="Close"><img
                                 src="{{url('/images/cross.svg')}}" alt=""></button>
                     <div class="row">
                         <div class="col-sm-12">
@@ -48,7 +49,19 @@
                                         <td>{{$horario->hora}}</td>
                                         <td>{{$horario->cupo-$horario->ocupados}}</td>
                                         <td>{{$horario->ocupados}}</td>
-                                        <td>{{$horario->aforo()->aforo}}</td>
+                                        <td>
+                                            @if($horario->reservacion()!=null)
+                                                @if($horario->reservacion()->status=='PROXIMA')
+                                                    @if($horario->esCancelable())
+                                                        <span>FALTA</span>
+                                                    @else
+                                                        <span>&nbsp;</span>
+                                                    @endif
+                                                @else
+                                                    {{$horario->aforo()}}
+                                                @endif</td>
+                                            @endif
+
                                         <td>
                                             @if($horario->reservacion()!=null)
                                                 <a data-toggle="modal"
@@ -64,9 +77,12 @@
                                                        data-target="#mensajes{{$horario->reservacion()->id}}">
                                                         <i class="icon-classes-image fa fa-comments"></i>
                                                     </a>
-                                                    <a href="/admin-condominio/cancelar/{{$horario->reservacion()->id}}">
-                                                        <i class="icon-classes-image fa fa-times"></i>
-                                                    </a>
+                                                    @if($horario->esCancelable())
+                                                        <a href="/admin-condominio/cancelar/{{$horario->reservacion()->id}}">
+                                                            <i class="icon-classes-image fa fa-times"></i>
+                                                        </a>
+                                                    @endif
+
                                                 @endif
                                             @endif
                                         </td>
@@ -154,7 +170,8 @@
                                 if (document.getElementById('room_id{{ $grupo->id }}') != null) document.getElementById('room_id{{ $grupo->id }}').value = '{!! $grupo->room_id !!}';
                             </script>
 
-                            <select class="form-control select-coach" name="user_id" id="coach{{ $grupo->id }}" required>
+                            <select class="form-control select-coach" name="user_id" id="coach{{ $grupo->id }}"
+                                    required>
                                 <option value="">Selecciona un coach</option>
                                 @foreach ($coaches as $coach)
                                     <option value="{{ $coach->id }}">{{ $coach->name }}</option>

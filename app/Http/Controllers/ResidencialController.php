@@ -178,6 +178,14 @@ class ResidencialController extends Controller {
 		return $pdf->stream('list.pdf');*/
 	}
 
+	public function printplan($id, Request $request ){
+        $input      = $request->all();
+        $reservacion = Reservacion::with('plan')->where('id',$id)->get()->first();
+        $horario    = Horario::find( $reservacion->horario_id );
+        $condominio = $horario->condominio;
+        return view( 'emails.plan', [ 'reservacion' => $reservacion, 'horario' => $horario, 'condominio' => $condominio ] );
+    }
+
 	public function printgroups( $id ) {
 		$condominio    = Condominio::where( 'id', $id )->first();
 		$residenciales = $condominio->residenciales;

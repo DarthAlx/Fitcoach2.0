@@ -273,6 +273,8 @@
                                                placeholder="Nombre" required>
                                         <input type="email" class="form-control add-adult-form-email" name="email"
                                                placeholder="Email" required>
+                                        <input type="password" class="form-control add-adult-form-password" name="password"
+                                               placeholder="Contraseña" required>
                                         <input type="tel" class="form-control add-adult-form-telefono" name="telefono"
                                                placeholder="Teléfono" required>
                                         <select class="form-control  add-adult-form-genero" name="genero" required>
@@ -338,12 +340,14 @@
                                     <br>
                                     <div class="asistentes-scroll">
                                         @foreach($proxima->asistentes as $asistente)
-                                            <label class="cool-check">
-                                                <span>{{$asistente->usuario->name}}</span>
-                                                <input type="checkbox" name='reservations[]'
-                                                       value="{{$asistente->id}}">
-                                                <span class="checkmark"></span>
-                                            </label>
+                                            @if($asistente->estado=='COMENZADA')
+                                                <label class="cool-check">
+                                                    <span>{{$asistente->usuario->name}}</span>
+                                                    <input type="checkbox" name='reservations[]'
+                                                           value="{{$asistente->id}}">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            @endif
                                         @endforeach
                                         @foreach($proxima->invitados as $invitado)
                                             <label class="cool-check">

@@ -92,6 +92,13 @@
                                         src="{{url('/images/cross.svg')}}" alt=""></button>
                             <h4>PLAN DE SESIÓN
                                 <span style="color: #cdcdcd">{!! $horario->clase->nombre !!}</span>
+                                @if(isset($reservacion->plan))
+                                    <a target="_blank"
+                                       href="{{url('/printplan')}}/{{$reservacion->id}}?tipo=clase">
+                                        <i style="color: #000000" class="fa fa-print"></i>
+                                    </a>
+                                @endif
+
                             </h4>
                             <div class="container-bootstrap" style="width: 100%;padding-top: 50px">
                                 <div class="row">
