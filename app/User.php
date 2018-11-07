@@ -148,6 +148,7 @@ class User extends Model implements AuthenticatableContract,
                     ->with('reservacion.horario')
                     ->with('reservacion.horario.clase')
                     ->where('realizado',true)
+	                ->where('user_id',$this->attributes['id'])
                     ->where('created_at','<=',$pago->created_at);
                 if($lastDate!=null){
                     $query->where('created_at','>',$lastDate);
