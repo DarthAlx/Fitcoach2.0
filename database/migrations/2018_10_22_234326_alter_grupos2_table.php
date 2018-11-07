@@ -14,7 +14,6 @@ class AlterGrupos2Table extends Migration
 	{
 		Schema::table('grupos', function (Blueprint $table) {
 			$table->string('audiencia',100)->nullable()->change();
-			$table->date('deleted_at')->nullable();
 		});
 	}
 
@@ -26,7 +25,6 @@ class AlterGrupos2Table extends Migration
     public function down()
     {
 	    Schema::table('grupos', function (Blueprint $table) {
-		    $table->dropColumn('deleted_at');
 	    });
     }
 }
