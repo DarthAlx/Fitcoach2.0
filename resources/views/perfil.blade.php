@@ -1030,10 +1030,7 @@
 
 	<?php
 	$proximas = App\Reservacion::where( 'user_id', $user->id )
-	                           ->orWhereHas( 'asistentes', function ( $subquery ) use ( $user ) {
-		                           $subquery->where( 'usuario_id', $user->id );
-		                           $subquery->where( 'estado', '=', 'PROXIMA' );
-	                           } )
+
 	                           ->where( 'status', 'PROXIMA' )->orderBy( 'fecha', 'asc' )->get();
 	if (! $proximas->isEmpty()) {
 	date_default_timezone_set( 'America/Mexico_City' );
