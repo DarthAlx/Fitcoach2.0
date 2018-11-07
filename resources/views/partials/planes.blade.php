@@ -69,29 +69,34 @@
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <label>Fase inicial</label>
-                                        <textarea name="inicio" class="form-control" required rows="4">{{$proxima->plan->inicio}}</textarea>
+                                        <textarea name="inicio" class="form-control" required
+                                                  rows="4">{{$proxima->plan->inicio}}</textarea>
                                         <label>Minutos</label>
                                         <input type="number" class="form-control" name="minutosinicio" required
                                                value="{{$proxima->plan->minutosinicio}}">
                                     </div>
                                     <div class="col-sm-4">
                                         <label>Fase medular</label>
-                                        <textarea name="medular" class="form-control" required rows="4">{{$proxima->plan->medular}}</textarea>
+                                        <textarea name="medular" class="form-control" required
+                                                  rows="4">{{$proxima->plan->medular}}</textarea>
                                         <label>Minutos</label>
                                         <input type="number" class="form-control" name="minutosmedular" required
                                                value="{{$proxima->plan->minutosmedular}}">
                                     </div>
                                     <div class="col-sm-4">
                                         <label>Fase final</label>
-                                        <textarea name="final" class="form-control" required rows="4">{{$proxima->plan->final}}</textarea>
+                                        <textarea name="final" class="form-control" required
+                                                  rows="4">{{$proxima->plan->final}}</textarea>
                                         <label>Minutos</label>
-                                        <input type="number" class="form-control" name="minutosfinal" value="{{$proxima->plan->minutosfinal}}" required>
+                                        <input type="number" class="form-control" name="minutosfinal"
+                                               value="{{$proxima->plan->minutosfinal}}" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <label>Comentarios</label>
-                                        <textarea name="comentarios" class="form-control" required rows="4">{{$proxima->plan->comentarios}}</textarea>
+                                        <textarea name="comentarios" class="form-control" required
+                                                  rows="4">{{$proxima->plan->comentarios}}</textarea>
                                     </div>
                                 </div>
                                 <input type="hidden" name="reservacion_id" value="{{$proxima->id}}"/>
@@ -273,7 +278,8 @@
                                                placeholder="Nombre" required>
                                         <input type="email" class="form-control add-adult-form-email" name="email"
                                                placeholder="Email" required>
-                                        <input type="password" class="form-control add-adult-form-password" name="password"
+                                        <input type="password" class="form-control add-adult-form-password"
+                                               name="password"
                                                placeholder="Contraseña">
                                         <input type="tel" class="form-control add-adult-form-telefono" name="telefono"
                                                placeholder="Teléfono" required>
@@ -340,7 +346,7 @@
                                     <br>
                                     <div class="asistentes-scroll">
                                         @foreach($proxima->asistentes as $asistente)
-                                            @if($asistente->estado=='COMENZADA')
+                                            @if($asistente->estado=='COMENZADA' && !$asistente->reserva)
                                                 <label class="cool-check">
                                                     <span>{{$asistente->usuario->name}}</span>
                                                     <input type="checkbox" name='reservations[]'
@@ -356,13 +362,22 @@
                                                 <span class="checkmark"></span>
                                             </label>
                                         @endforeach
+                                        @foreach($proxima->asistentes as $asistente)
+                                            @if($asistente->estado=='COMENZADA' && $asistente->reserva)
+                                                <label class="cool-check">
+                                                    <span>{{$asistente->usuario->name}}</span>
+                                                    <input type="checkbox" checked="" disabled>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            @endif
+                                        @endforeach
                                         <br/>
                                     </div>
-                                        <a class="btn btn-success agregar-invitado-btn"
-                                           data-id="{{$proxima->id}}"
-                                           style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
-                                            Añadir
-                                        </a>
+                                    <a class="btn btn-success agregar-invitado-btn"
+                                       data-id="{{$proxima->id}}"
+                                       style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
+                                        Añadir
+                                    </a>
                                 </div>
                                 <div class="col-md-8">
                                     <p>PLAN DE LA CLASE</p>
@@ -410,9 +425,9 @@
                                 <p>Mensajes</p>
                                 <div class="container-bootstrap" style="width: 100%;padding-top: 50px">
                                     <div class="row">
-                                        <?php
-                                        $mensajes = \App\Mensaje::with('user')->where('reservacion_id', $proxima->id)->get();
-                                        ?>
+										<?php
+										$mensajes = \App\Mensaje::with( 'user' )->where( 'reservacion_id', $proxima->id )->get();
+										?>
                                         @if(count($mensajes)>0)
                                             <div class="col-md-12" style="height: 100px;overflow-y: scroll">
                                                 @foreach($mensajes as $mensaje)
@@ -467,9 +482,9 @@
                         </div>
                         <hr/>
                         <div class="row">
-                            <?php
-                            $mensajes = \App\Mensaje::where('reservacion_id', $proxima->id)->get();
-                            ?>
+							<?php
+							$mensajes = \App\Mensaje::where( 'reservacion_id', $proxima->id )->get();
+							?>
                             @if(count($mensajes)>0)
                                 <div class="col-md-12" style="height: 200px;overflow-y: scroll">
                                     @foreach($mensajes as $mensaje)
