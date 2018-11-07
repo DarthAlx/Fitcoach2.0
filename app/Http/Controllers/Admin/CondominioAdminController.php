@@ -54,7 +54,6 @@ class CondominioAdminController extends Controller {
 		                 ->with( 'asistentes' )
 		                 ->with( 'asistentes.usuario' )
 		                 ->where( 'fecha', '>=', $now->toDateString() )
-		                 ->where( 'hora', '>=', $now->toTimeString() )
 		                 ->where( 'condominio_id', '=', $condominioId )->get();
 
 		$grupos  = Grupo::with( 'coach' )
