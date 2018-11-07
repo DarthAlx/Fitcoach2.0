@@ -31,19 +31,19 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="row">
-                            <div class="col-lg-4 col-sm-4">
+                            <div class="col-lg-4 col-sm-4 col-xs-12">
                                 <a class="btn btn-success btn-block" data-toggle="modal"
                                    data-target="#admin-condominios-eventos">
                                     Editar eventos
                                 </a>
                             </div>
-                            <div class="col-lg-4 col-sm-4">
+                            <div class="col-lg-4 col-sm-4 col-xs-12">
                                 <a class="btn btn-success btn-block" data-toggle="modal"
                                    data-target="#admin-condominios-grupos">
                                     Editar clases
                                 </a>
                             </div>
-                            <div class="col-lg-4 col-sm-4">
+                            <div class="col-lg-4 col-sm-4 col-xs-12">
                                 <button class="btn btn-success btn-block" type="submit">
                                     Reportes
                                 </button>
@@ -61,7 +61,7 @@
                         </div>
                         <div class="row">
                             @foreach($rooms as $room)
-                                <div class="col-lg-6">
+                                <div class="col-xs-6">
                                     <a data-toggle="modal" data-target="#calendario-room{{$room->id}}">
                                         <img src="{{ url('uploads/rooms') }}/{{ $room->imagen }}"
                                              class="img-responsive">
@@ -70,24 +70,24 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-8 col-xs-12">
                         <h3>CLASES DE HOY</h3>
                         @foreach($horarios as $horario)
                             @foreach($horario->reservaciones as $reservacion)
                                 <div class="row condominios-clases">
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-2 col-xs-4">
                                         <b class="condominios-clases-text">{{$horario->clase!=null?$horario->clase->nombre:''}}</b>
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-2 col-xs-4">
                                         <p class="condominios-clases-text"> {{$horario->user->name}}</p>
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-2 col-xs-4">
                                         <p class="condominios-clases-text">{{$horario->grupo->room->nombre}}</p>
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-2 col-xs-4">
                                         <p class="condominios-clases-text">{{$horario->hora}}</p>
                                     </div>
-                                    <div class="col-lg-1">
+                                    <div class="col-lg-1 col-xs-2">
                                         <p class="condominios-clases-text">
                                             @if($reservacion->status=='PROXIMA')
                                                 @if($horario->esCancelable())
@@ -100,7 +100,7 @@
                                             @endif
                                         </p>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-3 col-xs-10">
                                         <a data-toggle="modal"
                                            data-target="#admin-condominios-horarios-ver{{$reservacion->id}}">
                                             <i class="icon-classes-image fa fa-list-ul"></i>
@@ -126,7 +126,7 @@
                             @endforeach
                         @endforeach
                         <div class="row condominios-clases">
-                            <div class="col-lg-12">
+                            <div class="col-lg-12 col-xs-12">
                                 <p style="text-align: center">No hay más clases disponibles hoy</p>
                             </div>
                         </div>
@@ -134,7 +134,7 @@
                         <div class="row">
                             @if(count($eventos)>0)
                                 @foreach($eventos as $evento)
-                                    <div class="col-sm-3 col-md-3">
+                                    <div class="col-sm-3 col-md-3 col-xs-3">
                                         <a data-toggle="modal"
                                            data-target="#admin-condominios-evento-ver{{$evento->id}}">
                                             <img src="{{ url('uploads/clases') }}/{{ $evento->imagen }}"
@@ -275,5 +275,45 @@
             </div><!-- /.modal contraseña -->
         @endif
     @endforeach
+    <script type="text/javascript">
+        clasesseleccionadas = 0;
 
+        function agregaracarrito(valor, valor2, valor3) {
+            if (document.getElementById('carrito' + valor).checked) {
+                document.getElementById('carrito' + valor).checked = false;
+                $('#carrito' + valor).removeClass('seleccionada');
+                $('.fa' + valor).removeClass('fa-square');
+                $('.fa' + valor).addClass('fa-square-o');
+                if (clasesseleccionadas > 0) {
+                    clasesseleccionadas--;
+                }
+                $('#cantidad' + valor3).val(clasesseleccionadas);
+                $('#clasesseleccionadas' + valor3).html(clasesseleccionadas + " clases seleccionadas.");
+                if (clasesseleccionadas <= 0) {
+                    $('#reservar' + valor3).prop("disabled", true);
+                    $('.reservar' + valor3).prop("disabled", true);
+                }
+            }
+            else {
+                document.getElementById('carrito' + valor).checked = true;
+                $('#carrito' + valor).addClass('seleccionada');
+                $('.fa' + valor).removeClass('fa-square-o');
+                $('.fa' + valor).addClass('fa-square');
+                clasesseleccionadas++;
+                $('#cantidad' + valor3).val(clasesseleccionadas);
+                $('#clasesseleccionadas' + valor3).html(clasesseleccionadas + " clases seleccionadas.");
+                $('#reservar' + valor3).prop("disabled", false);
+                $('.reservar' + valor3).prop("disabled", false);
+            }
+        }
+
+        function acero() {
+            clasesseleccionadas = 0;
+            $('.clasesseleccionadas').html("0 clases seleccionadas.");
+            $('.faselect').removeClass('fa-square');
+            $('.faselect').removeClass('fa-square-o');
+            $('.faselect').addClass('fa-square-o');
+            document.getElementsByClassName('carritocheck').checked = false;
+        }
+    </script>
 @endsection
