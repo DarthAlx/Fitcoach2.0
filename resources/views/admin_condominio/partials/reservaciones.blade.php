@@ -82,6 +82,20 @@
                                             {{$invitado->telefono}}
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-sm-1">
+                                                <i class="fa fa-check-circle"></i>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            {{$invitado->nombre}}
+                                        </div>
+                                        <div class="col-sm-2">
+                                        </div>
+                                        <div class="col-sm-3">
+                                        </div>
+                                        <div class="col-sm-1">
+                                        </div>
+                                    </div>
                                 @endforeach
                                 @foreach ($reservacion->asistentes as $asistente)
                                     @if(!$asistente->reserva)
