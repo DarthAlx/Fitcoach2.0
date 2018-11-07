@@ -412,6 +412,7 @@ class OrdenController extends Controller {
 
 		if ( $request->tipocancelacion == "24 horas antes" ) {
 			$orden = Reservacion::find( $request->ordencancelar );
+			$horario = Horario::find($orden->reservacion_id);
 			if ( $orden->status != "CANCELADA" ) {
 				$particular  = PaqueteComprado::where( 'user_id', $user->id )->where( 'tipo', 'A domicilio' )->orderBy( 'expiracion', 'desc' )->first();
 				$residencial = PaqueteComprado::where( 'user_id', $user->id )->where( 'tipo', 'En condominio' )->orderBy( 'expiracion', 'desc' )->first();
@@ -427,6 +428,8 @@ class OrdenController extends Controller {
 					$reservacionUsuario->estado   = 'CANCELADA';
 					$reservacionUsuario->metadata = "token devuelto";
 					$reservacionUsuario->save();
+					$horario->cupo = $horario->cupo-1;
+					$horario->save();
 					Session::flash( 'mensaje', 'Token devuelto.' );
 					Session::flash( 'class', 'success' );
 				} elseif ( $orden->tipo == "En condominio" && $orden->tokens == 0 ) {
@@ -437,6 +440,8 @@ class OrdenController extends Controller {
 					$reservacionUsuario->estado   = 'CANCELADA';
 					$reservacionUsuario->metadata = "token devuelto";
 					$reservacionUsuario->save();
+					$horario->cupo = $horario->cupo-1;
+					$horario->save();
 					Session::flash( 'mensaje', 'Participación cancelada.' );
 					Session::flash( 'class', 'success' );
 				} elseif ( $orden->tipo == "A domicilio" && $particular ) {
