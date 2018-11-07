@@ -1035,7 +1035,7 @@
 	} )
 	                           ->orWhereHas( 'asistentes', function ( $subquery ) use ( $user ) {
 		                           $subquery->where( 'usuario_id', $user->id );
-		                           $subquery->where( 'status', '=', 'PROXIMA' );
+		                           $subquery->where( 'estado', '=', 'PROXIMA' );
 	                           } )
 	                           ->orderBy( 'fecha', 'desc' )->get();
 	if (! $proximas->isEmpty()) {
@@ -1063,74 +1063,8 @@
 
 
 	?>
-    <!--div class="modal fade" id="proximas{{$proxima->id}}" tabindex="-1" role="dialog">
-         <div class="modal-dialog" role="document">
-           <div class="modal-content">
 
-             <div class="modal-body">
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{url('/images/cross.svg')}}" alt=""></button>
-               <div class="container-bootstrap" style="width: 100%;">
-                 <div class="row">
-                   <div class="col-sm-4 sidebar">
-                     <div class="text-center">
-                            <h1>{{$proxima->nombre}}</h1>
-                            <div class="profile-userpic">
-                              <img src="{{ url('uploads/avatars') }}/{{ $coach->detalles->photo }}" class="img-responsive" alt="">
-                            </div>
-                            <?php $nombre = explode( " ", $coach->name ); ?>
-            <h2>{{ucfirst($nombre[0])}}</h2>
-
-                     </div>
-                   </div>
-                   <div class="col-sm-8 text-center">
-                     <div class="title ">
-                       {{Ucfirst($proxima->tipo)}}
-            </div>
-            <div class="gotham2">
-              <h2>Fecha: {{$proxima->fecha}}</h2>
-                       <h2>Hora: {{$proxima->hora}}</h2>
-                       <h2>Lugar: {!!$dire!!}</h2>
-                     </div>
-                   </div>
-                   <div class="col-sm-12 text-center">
-                     <p>&nbsp;</p>
-
-                       <form class="" action="{{url('/cancelar-orden')}}" method="post">
-                         {!! csrf_field() !!}
-    {{ method_field('PUT') }}
-    @if ($horastotales>=24)
-        <p class="text-center"><strong>IMPORTANTE</strong><br>
-Si cancelas se va a restaurar el token de tu clase.<br>
-¿Estás seguro que deseas continuar?</p>
-        <input type="hidden" name="tipocancelacion" value="24 horas antes">
-@else
-        <p class="text-center"><strong>IMPORTANTE</strong><br>
-Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio o devolución por el servicio.<br>
-¿Estás seguro que deseas continuar?</p>
-        <input type="hidden" name="tipocancelacion" value="sin devolución">
-@endif
-            <input type="hidden" name="ordencancelar" value="{{$proxima->id}}">
-                         <button type="submit" id="botoncancelar{{$proxima->id}}" class="btn btn-danger btn-lg" name="button" style="display:none;">Confirmar cancelación</button>
-                       </form>
-                       <button class="btn btn-danger btn-lg" id="botoncancelar2{{$proxima->id}}" name="button" onclick="javascript: document.getElementById('botoncancelar2{{$proxima->id}}').style.display='none'; document.getElementById('botoncancelar{{$proxima->id}}').style.display='inline-block'; ">Cancelar</button>
-
-
-
-                   </div>
-                 </div>
-               </div>
-
-
-
-             </div>
-           </div>
-         </div>
-       </div--><!-- /.modal contraseña -->
-
-
-
-
-
+    {{json_encode($proximas)}}
     <div class="modal fade" id="cancelar{{$proxima->id}}" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -1181,10 +1115,6 @@ Tu clase va a ser en menos de 24 horas. Si la cancelas no habrá ningún cambio 
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal contraseña -->
-
-
-
-
 
 
     <div class="modal fade" id="telefono{{$proxima->id}}" tabindex="-1" role="dialog">
