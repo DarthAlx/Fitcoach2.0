@@ -14,6 +14,7 @@
 
                         <textarea name="descripcion" class="form-control" placeholder="Descripción"
                                   required>{{ old('descripcion') }}</textarea>
+                        <input type="hidden" name="condominio_id" value="{{$condominio->id}}"/>
 
                         <input type="text" name="fecha" class="form-control datepicker" placeholder="Fecha"
                                required>
