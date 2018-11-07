@@ -142,7 +142,6 @@ class ReportController extends Controller
 		        $view = $service->reservacionesPorCondominio($input);
 		        break;
         }
-        return $view;
 	    $pdf = App::make( 'dompdf.wrapper' );
 	    $pdf->loadHTML( $view );
 
