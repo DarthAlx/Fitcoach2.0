@@ -412,7 +412,7 @@ class OrdenController extends Controller {
 
 		if ( $request->tipocancelacion == "24 horas antes" ) {
 			$orden   = Reservacion::find( $request->ordencancelar );
-			$horario = Horario::find( $orden->reservacion_id );
+			$horario = Horario::find( $orden->hoario_id );
 			if ( $orden->status != "CANCELADA" ) {
 				$particular  = PaqueteComprado::where( 'user_id', $user->id )->where( 'tipo', 'A domicilio' )->orderBy( 'expiracion', 'desc' )->first();
 				$residencial = PaqueteComprado::where( 'user_id', $user->id )->where( 'tipo', 'En condominio' )->orderBy( 'expiracion', 'desc' )->first();
@@ -475,7 +475,7 @@ class OrdenController extends Controller {
 
 		} else {
 			$orden   = Reservacion::find( $request->ordencancelar );
-			$horario = Horario::find( $orden->reservacion_id );
+			$horario = Horario::find( $orden->hoario_id );
 			if ( $orden->tipo == 'En condominio' ) {
 				$reservacionUsuario           = ReservacionUsuario::where( 'reservacion_id', '=', $orden->id )
 				                                                  ->where( 'usuario_id', Auth::user()->id )
