@@ -429,7 +429,7 @@ class OrdenController extends Controller {
 					$reservacionUsuario->estado   = 'CANCELADA';
 					$reservacionUsuario->metadata = "token devuelto";
 					$reservacionUsuario->save();
-					$horario->cupo = $horario->cupo - 1;
+					$horario->ocupados = $horario->ocupados - 1;
 					$horario->save();
 					Session::flash( 'mensaje', 'Token devuelto.' );
 					Session::flash( 'class', 'success' );
@@ -442,7 +442,7 @@ class OrdenController extends Controller {
 					$reservacionUsuario->estado   = 'CANCELADA';
 					$reservacionUsuario->metadata = "token devuelto";
 					$reservacionUsuario->save();
-					$horario->cupo = $horario->cupo - 1;
+					$horario->ocupados = $horario->ocupados - 1;
 					$horario->save();
 					Session::flash( 'mensaje', 'Participación cancelada.' );
 					Session::flash( 'class', 'success' );
@@ -485,7 +485,7 @@ class OrdenController extends Controller {
 				$reservacionUsuario->estado   = 'CANCELADA';
 				$reservacionUsuario->metadata = $request->tipocancelacion;
 				$reservacionUsuario->save();
-				$horario->cupo = $horario->cupo - 1;
+				$horario->ocupados = $horario->ocupados - 1;
 				$horario->save();
 			} else {
 				$orden->status   = 'CANCELADA';
