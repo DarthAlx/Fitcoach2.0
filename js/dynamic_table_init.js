@@ -130,7 +130,7 @@ $(document).ready(function () {
                     $(".add-adult-form-email").val(data['email']);
                     $(".add-adult-form-telefono").val(data['tel']);
                     $(".add-adult-form-genero").val(data['genero']);
-
+                    $(".add-adult-form-password").hide();
                     $(".add-adult-form-nombre").attr('readonly', true);
                     $(".add-adult-form-email").attr('readonly', true);
                     $(".add-adult-form-telefono").attr('readonly', true);
