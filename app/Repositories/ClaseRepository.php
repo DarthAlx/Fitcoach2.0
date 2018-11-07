@@ -36,7 +36,7 @@ class ClaseRepository
                     where h.user_id = :coach_id 
                     AND (r.status = 'PROXIMA' or r.status = 'COMENZADA')
                     group by fecha,hora
-                    order by fecha desc, hora  desc";
+                    order by fecha asc, hora  asc";
 
 	private static $CLASES_PASADAS_COACH = "SELECT 
                     r.fecha as fecha,
@@ -61,7 +61,7 @@ class ClaseRepository
                     where h.user_id = :coach_id 
                     AND (r.status = 'FINALIZADA' or r.status = 'CANCELADA' OR r.status = 'EN REVISIÓN' OR r.status = 'COMPLETA')
                     group by fecha,hora
-                    order by fecha desc, hora  desc";
+                    order by fecha asc, hora  asc";
 
 
 	private static $CLASES = "SELECT 
