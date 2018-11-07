@@ -45,7 +45,7 @@ class Grupo extends Model {
 	}
 
 	public function aforoPromedio() {
-		return collect(DB::select( DB::raw( "SELECT AVG(ocupados) as promedio FROM horarios WHERE horarios.grupo_id =:grupo_id;" ), [
+		return collect(DB::select( DB::raw( "SELECT AVG(ocupados) as promedio FROM horarios INNER JOIN reservaciones ON (horarios.id=reservaciones.horario_id) WHERE horarios.grupo_id =:grupo_id AND reservaciones.status='COMPLETA';" ), [
 			'grupo_id' => $this->attributes['id']
 		] ))->first();
 	}
