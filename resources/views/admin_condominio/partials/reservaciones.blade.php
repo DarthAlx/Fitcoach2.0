@@ -69,20 +69,6 @@
                                 <br/>
                                 @foreach ($reservacion->invitados as $invitado)
                                     <div class="row">
-                                        <div class="col-sm-4">
-                                            {{$invitado->nombre}}
-                                        </div>
-                                        <div class="col-sm-2">
-                                            {{$invitado->genero}}
-                                        </div>
-                                        <div class="col-sm-3">
-                                            {{$invitado->email}}
-                                        </div>
-                                        <div class="col-sm-2">
-                                            {{$invitado->telefono}}
-                                        </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-sm-1">
                                                 <i class="fa fa-check-circle"></i>
                                         </div>
