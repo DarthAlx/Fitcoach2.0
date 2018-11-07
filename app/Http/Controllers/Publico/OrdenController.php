@@ -411,8 +411,8 @@ class OrdenController extends Controller {
 		$user = User::find( Auth::user()->id );
 
 		if ( $request->tipocancelacion == "24 horas antes" ) {
-			$orden = Reservacion::find( $request->ordencancelar );
-			$horario = Horario::find($orden->reservacion_id);
+			$orden   = Reservacion::find( $request->ordencancelar );
+			$horario = Horario::find( $orden->reservacion_id );
 			if ( $orden->status != "CANCELADA" ) {
 				$particular  = PaqueteComprado::where( 'user_id', $user->id )->where( 'tipo', 'A domicilio' )->orderBy( 'expiracion', 'desc' )->first();
 				$residencial = PaqueteComprado::where( 'user_id', $user->id )->where( 'tipo', 'En condominio' )->orderBy( 'expiracion', 'desc' )->first();
@@ -423,24 +423,26 @@ class OrdenController extends Controller {
 					$residencial->expiracion = date ( 'Y-m-d' , $nuevafecha );*/
 					$residencial->save();
 					$reservacionUsuario           = ReservacionUsuario::where( 'reservacion_id', '=', $orden->id )
+					                                                  ->where( 'usuario_id', Auth::user()->id )
 					                                                  ->orderby( 'created_at', 'desc' )
 					                                                  ->get()->first();
 					$reservacionUsuario->estado   = 'CANCELADA';
 					$reservacionUsuario->metadata = "token devuelto";
 					$reservacionUsuario->save();
-					$horario->cupo = $horario->cupo-1;
+					$horario->cupo = $horario->cupo - 1;
 					$horario->save();
 					Session::flash( 'mensaje', 'Token devuelto.' );
 					Session::flash( 'class', 'success' );
 				} elseif ( $orden->tipo == "En condominio" && $orden->tokens == 0 ) {
 					$reservacionUsuario           = ReservacionUsuario::where( 'reservacion_id', '=', $orden->id )
+					                                                  ->where( 'usuario_id', Auth::user()->id )
 					                                                  ->orderby( 'created_at', 'desc' )
 					                                                  ->get()
 					                                                  ->first();
 					$reservacionUsuario->estado   = 'CANCELADA';
 					$reservacionUsuario->metadata = "token devuelto";
 					$reservacionUsuario->save();
-					$horario->cupo = $horario->cupo-1;
+					$horario->cupo = $horario->cupo - 1;
 					$horario->save();
 					Session::flash( 'mensaje', 'Participación cancelada.' );
 					Session::flash( 'class', 'success' );
@@ -472,19 +474,25 @@ class OrdenController extends Controller {
 
 
 		} else {
-			$orden = Reservacion::find( $request->ordencancelar );
+			$orden   = Reservacion::find( $request->ordencancelar );
+			$horario = Horario::find( $orden->reservacion_id );
 			if ( $orden->tipo == 'En condominio' ) {
 				$reservacionUsuario           = ReservacionUsuario::where( 'reservacion_id', '=', $orden->id )
+				                                                  ->where( 'usuario_id', Auth::user()->id )
 				                                                  ->orderby( 'created_at', 'desc' )
 				                                                  ->get()
 				                                                  ->first();
 				$reservacionUsuario->estado   = 'CANCELADA';
 				$reservacionUsuario->metadata = $request->tipocancelacion;
 				$reservacionUsuario->save();
+				$horario->cupo = $horario->cupo - 1;
+				$horario->save();
 			} else {
 				$orden->status   = 'CANCELADA';
 				$orden->metadata = $request->tipocancelacion;
 				$orden->save();
+				$horario->cupo = $horario->cupo - 1;
+				$horario->save();
 			}
 			Session::flash( 'mensaje', '¡Reservación Cancelada!' );
 			Session::flash( 'class', 'success' );
@@ -945,9 +953,10 @@ class OrdenController extends Controller {
 	public function tokenminus( Request $request ) {
 		$user = User::find( $request->user_id );
 		if ( $request->tipo == "En condominio" ) {
-			if($user->paquetesDisponiblesCondominio()<=0){
+			if ( $user->paquetesDisponiblesCondominio() <= 0 ) {
 				Session::flash( 'mensaje', 'Usuario no dispone te tokens suficientes a eliminar.' );
 				Session::flash( 'class', 'success' );
+
 				return back();
 			}
 			$residencial              = new PaqueteComprado();
@@ -962,9 +971,10 @@ class OrdenController extends Controller {
 			Session::flash( 'mensaje', 'Token eliminado.' );
 			Session::flash( 'class', 'success' );
 		} elseif ( $request->tipo == "A domicilio" ) {
-			if($user->paquetesDisponiblesDomicilio()<=0){
+			if ( $user->paquetesDisponiblesDomicilio() <= 0 ) {
 				Session::flash( 'mensaje', 'Usuario no dispone te tokens suficientes a eliminar.' );
 				Session::flash( 'class', 'success' );
+
 				return back();
 			}
 			$particular              = new PaqueteComprado();
