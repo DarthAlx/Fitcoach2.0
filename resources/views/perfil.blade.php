@@ -220,15 +220,15 @@
                         <div class="list-group">
                             @if ($user->reservaciones)
 								<?php
-								$proximas = App\Reservacion::where( function ( $subquery ) use ( $user ) {
-									$subquery->where( 'user_id', $user->id );
-									$subquery->where( 'status', '=', 'PROXIMA' );
-								} )
-								                           ->orWhereHas( 'asistentes', function ( $subquery ) use ( $user ) {
-									                           $subquery->where( 'usuario_id', $user->id );
-									                           $subquery->where( 'status', '=', 'PROXIMA' );
-								                           } )
-								                           ->orderBy( 'fecha', 'desc' )->get();
+		                        $proximas = App\Reservacion::where( function ( $subquery ) use ( $user ) {
+			                        $subquery->where( 'user_id', $user->id );
+			                        $subquery->where( 'status', '=', 'PROXIMA' );
+		                        } )
+		                                                   ->orWhereHas( 'asistentes', function ( $subquery ) use ( $user ) {
+			                                                   $subquery->where( 'usuario_id', $user->id );
+			                                                   $subquery->where( 'status', '=', 'PROXIMA' );
+		                                                   } )
+		                                                   ->orderBy( 'fecha', 'desc' )->get();
 								if (! $proximas->isEmpty()) {
 								date_default_timezone_set( 'America/Mexico_City' );
 								foreach ($proximas as $proxima) {
@@ -1029,11 +1029,15 @@
 
 
 	<?php
-	$proximas = App\Reservacion::whereHas( 'asistentes', function ( $subquery ) use ( $user ) {
+	$proximas = App\Reservacion::where( function ( $subquery ) use ( $user ) {
+		$subquery->where( 'user_id', $user->id );
+		$subquery->where( 'status', '=', 'PROXIMA' );
+	} )
+	                           ->orWhereHas( 'asistentes', function ( $subquery ) use ( $user ) {
 		                           $subquery->where( 'usuario_id', $user->id );
-		                           $subquery->where( 'estado', '=', 'PROXIMA' );
+		                           $subquery->where( 'status', '=', 'PROXIMA' );
 	                           } )
-	                           ->where( 'status', 'PROXIMA' )->orderBy( 'fecha', 'asc' )->get();
+	                           ->orderBy( 'fecha', 'desc' )->get();
 	if (! $proximas->isEmpty()) {
 	date_default_timezone_set( 'America/Mexico_City' );
 	foreach ($proximas as $proxima) {
