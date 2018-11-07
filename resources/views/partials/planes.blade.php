@@ -346,7 +346,7 @@
                                     <br>
                                     <div class="asistentes-scroll">
                                         @foreach($proxima->asistentes as $asistente)
-                                            @if($asistente->estado=='COMENZADA' && !$asistente->reserva)
+                                            @if($asistente->estado=='COMENZADA' && $asistente->reserva)
                                                 <label class="cool-check">
                                                     <span>{{$asistente->usuario->name}}</span>
                                                     <input type="checkbox" name='reservations[]'
@@ -363,7 +363,7 @@
                                             </label>
                                         @endforeach
                                         @foreach($proxima->asistentes as $asistente)
-                                            @if($asistente->estado=='COMENZADA' && $asistente->reserva)
+                                            @if($asistente->estado=='COMENZADA' && !$asistente->reserva)
                                                 <label class="cool-check">
                                                     <span>{{$asistente->usuario->name}}</span>
                                                     <input type="checkbox" checked="" disabled>
