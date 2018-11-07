@@ -376,8 +376,7 @@ Route::group( [ 'middleware' => 'administradores' ], function () {
 	} );
 
 	Route::get( '/clientes', function () {
-		$usuarios = App\User::where( 'role', 'usuario' )->get();
-
+		$usuarios = App\User::where( 'role', 'usuario' )->where( 'condominio_id', null )->get();
 		return view( 'admin.clientes', [ 'usuarios' => $usuarios ] );
 	} );
 

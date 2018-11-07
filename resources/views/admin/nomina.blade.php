@@ -281,7 +281,7 @@
                                                     ${{$pago->monto}}
                                                 </td>
                                                 <td>
-                                                   -
+                                                    ${{$count-$pago->monto}}
                                                 </td>
                                             </tr>
                                         @elseif($pago->metodo=='Efectivo')
@@ -301,7 +301,7 @@
                                                     ${{$pago->monto}}
                                                 </td>
                                                 <td>
-                                                   -
+                                                    ${{$count-$pago->monto}}
                                                 </td>
                                             </tr>
                                         @elseif($pago->metodo=='Transferencia')
@@ -340,7 +340,7 @@
                                                     ${{$pago->monto+$pago->iva}}
                                                 </td>
                                                 <td>
-                                                    -
+                                                    ${{$count-($pago->monto+$pago->iva)}}
                                                 </td>
                                             </tr>
                                         @endif
