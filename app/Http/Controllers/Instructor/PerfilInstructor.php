@@ -165,7 +165,7 @@ class PerfilInstructor extends Controller {
 	    if($request->has('email')){
 		    $input = $request->all();
 		    $user = User::where('email', $input['email'])->get()->first();
-	    	if(empty($usuario)){
+	    	if(empty($user)){
 			    $user = User::create([
 				    'name' => ucfirst($input['nombre']),
 				    'email' => $input['email'],
