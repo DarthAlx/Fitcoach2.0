@@ -33,7 +33,7 @@ class EventoController extends Controller {
 
 	public function crear( Request $request ) {
 		$evento                = new Evento( $request->all() );
-		$evento->condominio_id = Auth::user()->condominio_id;
+		$evento->condominio_id = $request->condominio_id;
 		$evento->ocupados      = 0;
 		if ( $request->hasFile( 'imagen' ) ) {
 			$file = $request->file( 'imagen' );
