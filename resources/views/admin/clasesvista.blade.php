@@ -90,7 +90,7 @@
 
 
                                                 </td>
-                                                <td style="text-transform: capitalize">{{$clase->status}} {{$clase->metadata}}</td>
+                                                <td style="text-transform:uppercase">{{$clase->status}} {{$clase->metadata}}</td>
                                                 <td>
                                                     @if($clase->aforo!=null)
                                                         {{$clase->aforo}}

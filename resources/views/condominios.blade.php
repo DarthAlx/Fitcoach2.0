@@ -165,7 +165,7 @@
                                                                                                         <input type="hidden"
                                                                                                                name="tipo"
                                                                                                                value="En condominio">
-                                                                                                        {{$residencial->clase->nombre}}
+                                                                                                        {{$residencial->clase!=null?$residencial->clase->nombre:''}}
                                                                                                         <br>{{ucfirst($nombre[0])}}
                                                                                                         <br>{{$residencial->hora}}
                                                                                                         <i class="fa fa-square-o faselect pull-right fa{{$x}}{{$residencial->id}}{{$i}}"
@@ -233,7 +233,7 @@
                                                                                                         <input type="hidden"
                                                                                                                name="tipo"
                                                                                                                value="En condominio">
-                                                                                                        {{$residencial->clase->nombre}}
+                                                                                                        {{$residencial->clase!=null?$residencial->clase->nombre:''}}
                                                                                                         <br>{{ucfirst($nombre[0])}}
                                                                                                         <br>{{$residencial->hora}}
                                                                                                         <i class="fa fa-square-o faselect pull-right fa{{$x}}{{$residencial->id}}{{$i}}mini"

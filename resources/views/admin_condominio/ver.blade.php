@@ -76,7 +76,7 @@
                             @foreach($horario->reservaciones as $reservacion)
                                 <div class="row condominios-clases">
                                     <div class="col-lg-2">
-                                        <b class="condominios-clases-text">{{$horario->clase->nombre}}</b>
+                                        <b class="condominios-clases-text">{{$horario->clase!=null?$horario->clase->nombre:''}}</b>
                                     </div>
                                     <div class="col-lg-2">
                                         <p class="condominios-clases-text"> {{$horario->user->name}}</p>
