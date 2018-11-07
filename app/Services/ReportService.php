@@ -11,6 +11,10 @@ namespace App\Services;
 
 use App\Clase;
 use App\Condominio;
+use App\Grupo;
+use App\Horario;
+use App\Reservacion;
+use App\ReservacionUsuario;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -260,9 +264,9 @@ class ReportService {
 	}
 
 	public function salesOfGroup( array $input ) {
-		$now = Carbon::now();
+		$now       = Carbon::now();
 		$startDate = Carbon::now();
-		$endDate = Carbon::now();
+		$endDate   = Carbon::now();
 		if ( isset( $input['from'] ) ) {
 			$startDate = $input['from'];
 		}
@@ -301,5 +305,139 @@ class ReportService {
 
 		return View::make( 'admin.reports.type10.show',
 			compact( 'now', 'startDate', 'endDate', 'condominio', 'groups', 'clases', 'reservaciones', 'details' ) )->render();
+	}
+
+	public function estadoCoach( array $input ) {
+		$now       = Carbon::now();
+		$coach_id  = $input['coach_id'];
+		$user      = User::find( $coach_id );
+		$reports   = $user->nomina();
+		$startDate = null;
+		$endDate   = null;
+		if ( isset( $input['from'] ) ) {
+			$startDate = $input['from'];
+		}
+		if ( isset( $input['to'] ) ) {
+			$endDate = $input['to'];
+		}
+		$pagos = [];
+		foreach ( $reports as $report ) {
+			if ( $startDate != null && $endDate != null ) {
+				if ( Carbon::parse( $report->created_at )->greaterThanOrEqualTo( $startDate ) && Carbon::parse( $report->created_at )->lessThanOrEqualTo( $endDate ) ) {
+					array_push( $pagos, $report );
+				}
+			} else if ( $startDate != null ) {
+				if ( Carbon::parse( $report->created_at )->greaterThanOrEqualTo( $startDate ) ) {
+					array_push( $pagos, $report );
+				}
+			} else if ( $endDate != null ) {
+				if ( Carbon::parse( $report->created_at )->lessThanOrEqualTo( $endDate ) ) {
+					array_push( $pagos, $report );
+				}
+			} else {
+				array_push( $pagos, $report );
+			}
+		}
+
+		return View::make( 'admin.reports.type12.show',
+			compact( 'now', 'startDate', 'endDate', 'user', 'pagos' ) )->render();
+	}
+
+	public function reservacionesPorCliente( array $input ) {
+		$now       = Carbon::now();
+		$email     = $input['client_id'];
+		$user      = User::where( 'email', $email )->get()->first();
+		$startDate = null;
+		$endDate   = null;
+		if ( $user == null ) {
+			return null;
+		}
+		$query = DB::table( 'reservacion_usuarios' )
+		           ->join( 'reservaciones', 'reservacion_usuarios.reservacion_id', '=', 'reservaciones.id' )
+		           ->join( 'horarios', 'reservaciones.horario_id', '=', 'horarios.id' )
+		           ->join( 'clases', 'clases.id', '=', 'horarios.clase_id' );
+
+		if ( isset( $input['from'] ) ) {
+			$startDate = $input['from'];
+			$query->where( 'reservacion_usuarios.created_at', '>=', $startDate );
+		}
+		if ( isset( $input['to'] ) ) {
+			$endDate = $input['to'];
+			$query->where( 'reservacion_usuarios.created_at', '<=', $endDate );
+		}
+		$query->where( 'reservacion_usuarios.usuario_id', '=', $user->id );
+		$query->select( 'reservacion_usuarios.*', 'reservaciones.*', 'horarios.*', 'clases.nombre' );
+		$data1 = $query->get();
+
+
+		$query = DB::table( 'reservaciones' )
+		           ->join( 'horarios', 'reservaciones.horario_id', '=', 'horarios.id' )
+		           ->join( 'clases', 'clases.id', '=', 'horarios.clase_id' );
+
+		if ( isset( $input['from'] ) ) {
+			$startDate = $input['from'];
+			$query->where( 'reservacion_usuarios.created_at', '>=', $startDate );
+		}
+		if ( isset( $input['to'] ) ) {
+			$endDate = $input['to'];
+			$query->where( 'reservacion_usuarios.created_at', '<=', $endDate );
+		}
+		$query->where( 'reservaciones.user_id', '=', $user->id );
+		$query->select( 'reservaciones.*', 'horarios.*', 'clases.nombre' );
+		$data2 = $query->get();
+
+		if ( isset( $input['from'] ) ) {
+			$startDate = $input['from'];
+		}
+		if ( isset( $input['to'] ) ) {
+			$endDate = $input['to'];
+		}
+
+
+		return View::make( 'admin.reports.type13.show',
+			compact( 'now', 'startDate', 'endDate', 'user', 'data1', 'data2' ) )->render();
+	}
+
+	public function reservacionesPorCondominio( array $input ) {
+		$now          = Carbon::now();
+		$condominioId = $input['condominio_id'];
+		$condominio   = Condominio::find( $condominioId );
+		$startDate = null;
+		$endDate   = null;
+		if ( $condominio == null ) {
+			return null;
+		}
+		$grupos = Grupo::where( 'condominio_id', $condominio->id )->get()->count();
+
+		$query = Horario::where( 'condominio_id', $condominio->id );
+		if ( isset( $input['from'] ) ) {
+			$startDate = $input['from'];
+			$query->where( 'created_at', '>=', $startDate );
+		}
+		if ( isset( $input['to'] ) ) {
+			$endDate = $input['to'];
+			$query->where( 'created_at', '<=', $endDate );
+		}
+		$horarios = $query->get()->count();
+		$query    = Horario::where( 'condominio_id', $condominio->id );
+		if ( isset( $input['from'] ) ) {
+			$startDate = $input['from'];
+			$query->where( 'created_at', '>=', $startDate );
+		}
+		if ( isset( $input['to'] ) ) {
+			$endDate = $input['to'];
+			$query->where( 'created_at', '<=', $endDate );
+		}
+		$horarioIds = $query->get()->pluck( 'id' );
+
+		$reservacionesIds = Reservacion::whereIn( 'horario_id', $horarioIds->toArray() )->get()->pluck( 'id' );
+
+		$reservaciones = ReservacionUsuario::whereIn( 'reservacion_id', $reservacionesIds->toArray() )->get()->count();
+
+		$promedio = $reservaciones/$horarios;
+
+		return View::make( 'admin.reports.type14.show',
+			compact( 'now', 'startDate', 'endDate', 'condominio', 'horarios', 'reservaciones', 'grupos' ,'promedio') )->render();
+
 	}
 }

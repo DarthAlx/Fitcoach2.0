@@ -169,6 +169,9 @@ $(document).ready(function () {
             case '9':
                 $("#coach_id").show();
                 break;
+            case '12':
+                $("#coach_id").show();
+                break;
             case '13':
                 $("#client_id").show();
                 break;
@@ -267,9 +270,9 @@ $(document).ready(function () {
         document.getElementsByClassName('carritocheck').checked = false;
     }
 
-    if(window.sessionStorage['GRUPO_ID']){
+    if (window.sessionStorage['GRUPO_ID']) {
         var grupoId = window.sessionStorage['GRUPO_ID'];
-        if($('#admin-condominios-grupos-ver' + grupoId)!=null){
+        if ($('#admin-condominios-grupos-ver' + grupoId) != null) {
             $('#admin-condominios-grupos-ver' + grupoId).modal({
                 backdrop: 'static',
                 keyboard: false,
@@ -288,10 +291,10 @@ $(document).ready(function () {
         $('.nomina-iva').hide();
         $('.nomina-factura').hide();
         var val = $(this).val();
-        if(val=='Transferencia'){
+        if (val == 'Transferencia') {
             $('.nomina-iva').show();
             $('.nomina-factura').show();
-        }else if(val=='Asimilados'){
+        } else if (val == 'Asimilados') {
             $('.nomina-deducciones').show();
         }
     })

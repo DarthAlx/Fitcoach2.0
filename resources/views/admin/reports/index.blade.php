@@ -74,7 +74,7 @@
                             @endforeach
                         </select>
                         <input type="text" class="form-control " name="client_id" id="client_id"
-                               placeholder="Correo cliente" style="display:none ">
+                               placeholder="Correo cliente" style="display:none " >
                     </div>
                     <div class="col-sm-4">
                         <label class="cool-check" style="display: inline-block;margin-right: 15px;">
@@ -117,10 +117,10 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="row">
-                                    <div class="col-sm-2" style="padding-top: 3px">
+                                    <div class="col-sm-4" style="padding-top: 3px">
                                         De
                                     </div>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-8">
                                         <input type="text" name="hora_inicio" class="form-control mitimepicker"
                                                placeholder="Hora"/>
                                     </div>
@@ -128,10 +128,10 @@
 
                             </div>
                             <div class="col-sm-6">
-                                <div class="col-sm-2" style="padding-top: 3px">
+                                <div class="col-sm-4" style="padding-top: 3px">
                                     A
                                 </div>
-                                <div class="col-sm-10">
+                                <div class="col-sm-8">
                                     <input type="text" name="hora_fin" class="form-control mitimepicker"
                                            placeholder="Hora"/>
                                 </div>

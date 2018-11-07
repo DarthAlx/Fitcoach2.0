@@ -132,8 +132,17 @@ class ReportController extends Controller
             case 10:
                 $view = $service->salesOfGroup($input);
                 break;
+	        case 12:
+		        $view = $service->estadoCoach($input);
+		        break;
+	        case 13:
+		        $view = $service->reservacionesPorCliente($input);
+		        break;
+	        case 14:
+		        $view = $service->reservacionesPorCondominio($input);
+		        break;
         }
-        //return $view;
+        return $view;
 	    $pdf = App::make( 'dompdf.wrapper' );
 	    $pdf->loadHTML( $view );
 
