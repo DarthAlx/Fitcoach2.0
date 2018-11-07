@@ -1064,7 +1064,6 @@
 
 	?>
 
-    {{json_encode($proximas)}}
     <div class="modal fade" id="cancelar{{$proxima->id}}" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
