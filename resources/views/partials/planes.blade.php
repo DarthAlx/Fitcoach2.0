@@ -358,13 +358,11 @@
                                         @endforeach
                                         <br/>
                                     </div>
-                                    @if($proxima->aforo>0)
                                         <a class="btn btn-success agregar-invitado-btn"
                                            data-id="{{$proxima->id}}"
                                            style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
                                             Añadir
                                         </a>
-                                    @endif
                                 </div>
                                 <div class="col-md-8">
                                     <p>PLAN DE LA CLASE</p>
