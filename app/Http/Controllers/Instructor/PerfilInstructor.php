@@ -163,22 +163,26 @@ class PerfilInstructor extends Controller {
 	public function agregarInvitado( Request $request ) {
 
 	    if($request->has('email')){
-	        $input = $request->all();
-            $user = User::create([
-                'name' => ucfirst($input['nombre']),
-                'email' => $input['email'],
-                'password' => bcrypt($input['password']),
-                'dob' => '',
-                'tel' => $input['telefono'],
-                'genero' => $input['genero'],
-                'code'=>str_random(6),
-                'referencia' => '',
-            ]);
+		    $input = $request->all();
+		    $user = User::where('email', $input['email'])->get()->first();
+	    	if(empty($usuario)){
+			    $user = User::create([
+				    'name' => ucfirst($input['nombre']),
+				    'email' => $input['email'],
+				    'password' => bcrypt($input['password']),
+				    'dob' => '',
+				    'tel' => $input['telefono'],
+				    'genero' => $input['genero'],
+				    'code'=>str_random(6),
+				    'referencia' => '',
+			    ]);
+		    }
             $reservacionUsuario = new ReservacionUsuario();
             $reservacionUsuario->reservacion_id = $input['reservacion_id'];
             $reservacionUsuario->usuario_id = $user->id;
             $reservacionUsuario->asistencia = true;
             $reservacionUsuario->estado='COMENZADA';
+		    $reservacionUsuario->reserva = false;
             $reservacionUsuario->save();
         }else{
             $invitado = Invitado::create( $request->all() );

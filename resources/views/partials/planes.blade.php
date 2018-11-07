@@ -274,7 +274,7 @@
                                         <input type="email" class="form-control add-adult-form-email" name="email"
                                                placeholder="Email" required>
                                         <input type="password" class="form-control add-adult-form-password" name="password"
-                                               placeholder="Contraseña" required>
+                                               placeholder="Contraseña">
                                         <input type="tel" class="form-control add-adult-form-telefono" name="telefono"
                                                placeholder="Teléfono" required>
                                         <select class="form-control  add-adult-form-genero" name="genero" required>
