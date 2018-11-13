@@ -8,7 +8,7 @@
             <div class="container-bootstrap-fluid">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>Bienvenido a <span class="nombre">{{$condominio->identificador}}</span></h2>
+                        <h2 style="margin-top: 0">Bienvenido a <span class="nombre">{{$condominio->identificador}}</span></h2>
                     </div>
                 </div>
                 <div class="row">
@@ -21,7 +21,7 @@
                         </div>
                         <div class="row">
                             @foreach($rooms as $room)
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <div class="col-xs-6" style="padding: 0 !important;">
                                     <a data-toggle="modal" data-target="#calendario-room{{$room->id}}">
                                         <img src="{{ url('uploads/rooms') }}/{{ $room->imagen }}"
                                              class="img-responsive">

@@ -28,6 +28,13 @@ $(document).ready(function () {
         "ordering": false,
         aaSorting: []
     });
+
+    setTimeout(function () {
+        $('#dynamic-table5').dataTable({
+            stateSave: true,
+            "aaSorting": [[0, "desc"]]
+        });
+    },1000);
     /*
      * Insert a 'details' column to the table
      */
@@ -131,12 +138,11 @@ $(document).ready(function () {
                     $(".add-adult-form-telefono").val(data['tel']);
                     $(".add-adult-form-genero").val(data['genero']);
                     $(".add-adult-form-password").hide();
-
-
-                    $(".add-adult-form-nombre").attr('readonly', true);
+                    $(".add-adult-form-nombre").hide();
                     $(".add-adult-form-email").attr('readonly', true);
-                    $(".add-adult-form-telefono").attr('readonly', true);
-                    $(".add-adult-form-genero").attr('readonly', true);
+                    $(".add-adult-form-telefono").hide();
+                    $(".add-adult-form-genero").hide();
+                    $(".add-adult-form-dob").hide();
 
                 } else {
                     $('.add-adult-form-2').show();
@@ -207,7 +213,7 @@ $(document).ready(function () {
             });
         }, 500)
         //
-    })
+    });
 
     $('.btn-crear-horario').click(function () {
         var id = $(this).attr("data-id");

@@ -243,12 +243,11 @@ class OrdenController extends Controller {
 
 
 			if ( $orden->status != "CANCELADA" ) {
-				if ( $orden->tipo == "En condominio" && $residencial ) {
+				if ( $orden->tipo == "En condominio" ) {
 
-					$ordenes = Reservacion::where( 'nombre', $orden->nombre )->where( 'fecha', $orden->fecha )->where( 'hora', $orden->hora )->get();
+					$ordenes = ReservacionUsuario::where( 'reservacion_id', $orden->id )->get();
 					foreach ( $ordenes as $ordenr ) {
-						$residencial = PaqueteComprado::where( 'user_id', $ordenr->user_id )->where( 'tipo', 'En condominio' )->orderBy( 'expiracion', 'desc' )->first();
-
+						$residencial = PaqueteComprado::where( 'user_id', $ordenr->usuario_id )->where( 'tipo', 'En condominio' )->orderBy( 'expiracion', 'desc' )->first();
 						$residencial->disponibles = $residencial->disponibles + $orden->tokens;
 						$residencial->save();
 						$ordenr->status   = 'CANCELADA';
@@ -257,9 +256,10 @@ class OrdenController extends Controller {
 						Session::flash( 'class', 'success' );
 						$ordenr->save();
 					}
+					$orden->status   = 'CANCELADA';
+					$orden->save();
 
-
-				} elseif ( $orden->tipo == "A domicilio" && $particular ) {
+				} elseif ( $orden->tipo == "A domicilio"  ) {
 					$particular = PaqueteComprado::where( 'user_id', $orden->user_id )->where( 'tipo', 'A domicilio' )->orderBy( 'expiracion', 'desc' )->first();
 
 					$particular->disponibles = $particular->disponibles + $orden->tokens;

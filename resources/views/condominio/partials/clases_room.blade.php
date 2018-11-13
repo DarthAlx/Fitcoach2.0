@@ -182,8 +182,8 @@
                                         <p>&nbsp;</p>
                                         <div class="row">
                                             <div class="col-sm-8">
-                                                <div id="clasesseleccionadas{{$condominio->id}}"
-                                                     class="clasesseleccionadas title text-center">
+                                                <div id="clasesseleccionadasroom{{$condominio->id}}"
+                                                     class="clasesseleccionadasroom title text-center">
                                                     0 clases seleccionadas.
                                                 </div>
                                             </div>
@@ -211,7 +211,7 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal detalles user -->
     <script type="text/javascript">
-        clasesseleccionadas = 0;
+        clasesseleccionadasroom = 0;
 
         function agregaracarrito45(valor, valor2, valor3) {
             if (document.getElementById('carrito-23' + valor).checked) {
@@ -219,12 +219,12 @@
                 $('#carrito-23' + valor).removeClass('seleccionada');
                 $('.fa' + valor).removeClass('fa-square');
                 $('.fa' + valor).addClass('fa-square-o');
-                if (clasesseleccionadas > 0) {
-                    clasesseleccionadas--;
+                if (clasesseleccionadasroom > 0) {
+                    clasesseleccionadasroom--;
                 }
-                $('#cantidad' + valor3).val(clasesseleccionadas);
-                $('#clasesseleccionadas' + valor3).html(clasesseleccionadas + " clases seleccionadas.");
-                if (clasesseleccionadas <= 0) {
+                $('#cantidad' + valor3).val(clasesseleccionadasroom);
+                $('#clasesseleccionadasroom' + valor3).html(clasesseleccionadasroom + " clases seleccionadas.");
+                if (clasesseleccionadasroom <= 0) {
                     $('#reservar' + valor3).prop("disabled", true);
                     $('.reservar' + valor3).prop("disabled", true);
                 }
@@ -234,17 +234,17 @@
                 $('#carrito-23' + valor).addClass('seleccionada');
                 $('.fa' + valor).removeClass('fa-square-o');
                 $('.fa' + valor).addClass('fa-square');
-                clasesseleccionadas++;
-                $('#cantidad' + valor3).val(clasesseleccionadas);
-                $('#clasesseleccionadas' + valor3).html(clasesseleccionadas + " clases seleccionadas.");
+                clasesseleccionadasroom++;
+                $('#cantidad' + valor3).val(clasesseleccionadasroom);
+                $('#clasesseleccionadasroom' + valor3).html(clasesseleccionadasroom + " clases seleccionadas.");
                 $('#reservar' + valor3).prop("disabled", false);
                 $('.reservar' + valor3).prop("disabled", false);
             }
         }
 
         function acero() {
-            clasesseleccionadas = 0;
-            $('.clasesseleccionadas').html("0 clases seleccionadas.");
+            clasesseleccionadasroom = 0;
+            $('.clasesseleccionadasroom').html("0 clases seleccionadas.");
             $('.faselect').removeClass('fa-square');
             $('.faselect').removeClass('fa-square-o');
             $('.faselect').addClass('fa-square-o');

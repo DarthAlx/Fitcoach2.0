@@ -102,19 +102,19 @@
                             @if (count($proximas)>0)
                                 @foreach ($proximas as $proxima)
                                     <div class="list-group-item row">
-                                        <div class="col-xs-2">
+                                        <div class="col-xs-3">
                                             <strong>{{$proxima->nombre}}</strong>
                                         </div>
-                                        <div class="col-xs-2">
+                                        <div class="col-xs-4">
                                             {{$proxima->direccion}}
                                         </div>
-                                        <div class="col-xs-2">
+                                        <div class="col-xs-5">
                                             {{strftime("%d %B", strtotime($proxima->fecha))}} {{ $proxima->hora }}
                                         </div>
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-4">
                                             {{$proxima->room}}
                                         </div>
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-8">
                                             @if($proxima->active && $proxima->estado=='PROXIMA')
                                                 @if($proxima->tienePlan)
                                                     <div class="pull-right">
@@ -133,15 +133,17 @@
                                             @endif
                                             @if($proxima->estado=='COMENZADA')
                                                 <div class="pull-right" data-toggle="modal"
-                                                     data-target="#terminar{{$proxima->id}}">
-                                                    <a href="#"><i class="fa fa-check icopopup"></i></a>
+                                                     data-target="#proximas{{$proxima->id}}">
+                                                    <a href="#"><i class="fa fa-play icopopup"
+                                                                   style="background-color: #00ff00"></i> &nbsp</a>
+                                                </div>
+                                            @elseif($proxima->estado=='PROXIMA')
+                                                <div class="pull-right" data-toggle="modal"
+                                                     data-target="#plan{{$proxima->id}}">
+                                                    <a href="#"><i class="fa fa-check-square-o icopopup"></i> &nbsp;</a>
                                                 </div>
                                             @endif
-                                            <div class="pull-right" data-toggle="modal"
-                                                 data-target="#plan{{$proxima->id}}">
-                                                <a href="#"><i class="fa fa-check-square-o icopopup"></i> &nbsp;</a>
-                                            </div>
-                                            @if(!$proxima->active && $proxima->tipo=='clase')
+                                            @if($proxima->estado=='PROXIMA' && $proxima->tipo=='clase')
                                                 <div class="pull-right">
                                                     <a href="{{url('/listainscritos')}}/{{$proxima->id}}?tipo={{$proxima->tipo}}"
                                                        target="_blank"><i class="fa fa-list icopopup"></i>

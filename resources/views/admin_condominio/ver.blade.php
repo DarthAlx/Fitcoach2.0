@@ -61,7 +61,7 @@
                         </div>
                         <div class="row">
                             @foreach($rooms as $room)
-                                <div class="col-xs-6">
+                                <div class="col-xs-6" style="padding: 0 !important;">
                                     <a data-toggle="modal" data-target="#calendario-room{{$room->id}}">
                                         <img src="{{ url('uploads/rooms') }}/{{ $room->imagen }}"
                                              class="img-responsive">

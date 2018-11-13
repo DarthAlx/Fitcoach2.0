@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class Grupo extends Model {
 
@@ -45,9 +46,29 @@ class Grupo extends Model {
 	}
 
 	public function aforoPromedio() {
-		return collect(DB::select( DB::raw( "SELECT AVG(ocupados) as promedio FROM horarios INNER JOIN reservaciones ON (horarios.id=reservaciones.horario_id) WHERE horarios.grupo_id =:grupo_id AND reservaciones.status='COMPLETA';" ), [
-			'grupo_id' => $this->attributes['id']
-		] ))->first();
+
+		$horarios      = Horario::where( 'grupo_id', $this->attributes['id'] )->get();
+		$horarioIds    = collect( $horarios )->pluck( 'id' );
+		$reservaciones = Reservacion::whereIn( 'horario_id', $horarioIds )
+		                            ->where( function ( $query ) {
+			                            $query->where( 'status', 'COMPLETA' );
+			                            $query->orWhere( 'status', 'EN REVISIÓN' );
+		                            } )->get();
+		$count = count( $reservaciones );
+		Log::debug( "this is ths reservations", [ "count" => $count ] );
+		$total = 0;
+		foreach ( $reservaciones as $reservacion ) {
+			$data      = collect( DB::select( DB::raw( "SELECT COUNT(*) as aforo FROM reservacion_usuarios WHERE reservacion_usuarios.asistencia = 1 AND reservacion_usuarios.reservacion_id =:reservacion_id;" ), [
+				'reservacion_id' => $reservacion->id
+			] ) )->first()->aforo;
+			$invitados = Invitado::where( 'reservacion_id', $reservacion->id )->get()->count();
+			$total     = $data + $invitados;
+		}
+		if ( $count > 0 ) {
+			return $total / $count;
+		} else {
+			return 0;
+		}
 	}
 
 }

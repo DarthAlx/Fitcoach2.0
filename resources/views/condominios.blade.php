@@ -7,12 +7,26 @@
         <div class="">
             <div class="container-bootstrap-fluid">
                 <div class="row">
-                    <div class="col-sm-12">
-                        <div class="title" style="font-size: 10vw; float: left; line-height: 0.8;">CONDOMINIOS</div>
+                    <div class="col-sm-10">
+                        <div class="title" style="font-size: 8vw; float: left; line-height: 0.8;">CONDOMINIOS</div>
 
                     </div>
+                    <div class="col-sm-2">
+                        <div class="buscador hidden-xs" style="float: right; position: absolute; right: 0;">
+                            <div class="coupon">
+                                <form action="{{url('buscarresidencial')}}" onsubmit="fbq('track', 'Search');"
+                                      method="post">
+                                    {!! csrf_field() !!}
+                                    <input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
+                                    <button class="applyCoupon" type="submit"><i class="fa fa-search" aria-hidden="true"
+                                                                                 onblur="fbq('track', 'Search');"></i>
+                                    </button>
+                                </form>
+                            </div>
 
-                    <div class="col-sm-3 visible-xs">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 visible-xs">
                         <div class="buscador">
                             <div class="coupon">
                                 <form action="{{url('buscarresidencial')}}" onsubmit="fbq('track', 'Search');"
@@ -28,23 +42,6 @@
                         </div>
                     </div>
 
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="buscador hidden-xs" style="float: right; position: absolute; right: 0;">
-                            <div class="coupon">
-                                <form action="{{url('buscarresidencial')}}" onsubmit="fbq('track', 'Search');"
-                                      method="post">
-                                    {!! csrf_field() !!}
-                                    <input class="" type="text" name="busqueda" value="" placeholder="Buscar...">
-                                    <button class="applyCoupon" type="submit"><i class="fa fa-search" aria-hidden="true"
-                                                                                 onblur="fbq('track', 'Search');"></i>
-                                    </button>
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
                 </div>
                 <p>&nbsp;</p>
                 <p>&nbsp;</p>

@@ -92,11 +92,7 @@
                                                 </td>
                                                 <td style="text-transform:uppercase">{{$clase->status}} {{$clase->metadata}}</td>
                                                 <td>
-                                                    @if($clase->aforo!=null)
-                                                        {{$clase->aforo}}
-                                                    @else
-                                                        -
-                                                    @endif
+                                                    {{$clase->aforo()}}
                                                 </td>
                                                 <td>
                                                     @if($clase->abono)
@@ -144,11 +140,7 @@
                                             <td>{{$clase->status}} {{$clase->metadata}}
                                             </td>
                                             <td>
-                                                @if($clase->aforo!=null)
-                                                    {{$clase->aforo}}
-                                                @else
-                                                    -
-                                                @endif
+                                                {{$clase->aforo()}}
                                             </td>
                                             <td>
                                                 @if($clase->abono)

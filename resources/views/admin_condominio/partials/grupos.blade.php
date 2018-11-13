@@ -17,7 +17,7 @@
                 <p>&nbsp;</p>
                 <div class="row">
                     <div class="adv-table table-responsive" style="padding-left: 10px;padding-right: 10px;">
-                        <table class="display table table-bordered table-striped table-hover" id="dynamic-table2">
+                        <table class="display table table-bordered table-striped table-hover" id="dynamic-table5">
                             <thead>
                             <tr>
                                 <th>Nombre</th>
@@ -65,7 +65,7 @@
                                         </td>
                                         <td>
                                             @if($grupo!=null)
-                                                {{$grupo->aforoPromedio()->promedio}}
+                                                {{$grupo->aforoPromedio()}}
                                             @endif
                                         </td>
                                     </tr>

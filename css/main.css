@@ -717,7 +717,7 @@ body.modal-open .pagecontainer {
 
     .cart-header .title .numofclass {
         font-weight: bold;
-        font-size: 4rem !important;
+        font-size: 3rem !important;
     }
 
     .mainMenu ul li {
@@ -1114,7 +1114,6 @@ button.close {
     color: #A7A5A6 !important;
     margin: 0;
     text-transform: uppercase;
-    font-size: 1vh;
 }
 
 .cart-header .title .numofclass {

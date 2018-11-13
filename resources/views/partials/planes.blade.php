@@ -278,6 +278,8 @@
                                                placeholder="Nombre" required>
                                         <input type="email" class="form-control add-adult-form-email" name="email"
                                                placeholder="Email" required>
+                                        <input type="date" class="form-control add-adult-form-dob" name="dob"
+                                               placeholder="Fecha de nacimiento aaaa-mm-dd" required>
                                         <input type="password" class="form-control add-adult-form-password"
                                                name="password"
                                                placeholder="Contraseña">

@@ -170,7 +170,7 @@ class PerfilInstructor extends Controller {
 				    'name' => ucfirst($input['nombre']),
 				    'email' => $input['email'],
 				    'password' => bcrypt($input['password']),
-				    'dob' => '',
+				    'dob' => $input['dob'],
 				    'tel' => $input['telefono'],
 				    'genero' => $input['genero'],
 				    'code'=>str_random(6),

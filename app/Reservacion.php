@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Reservacion extends Model {
 	protected $table = 'reservaciones';
@@ -59,5 +60,19 @@ class Reservacion extends Model {
 
 	public function mensajes(){
 		return $this->hasMany( 'App\Mensaje', 'reservacion_id', 'id' )->orderby('created_at','desc');
+	}
+
+	public function aforo()
+	{
+		if($this->attributes['status']=='COMPLETADA' || $this->attributes['status']=='EN REVISIÓN'){
+			$data      = collect( DB::select( DB::raw( "SELECT COUNT(*) as aforo FROM reservacion_usuarios WHERE reservacion_usuarios.asistencia = 1 AND reservacion_usuarios.reservacion_id =:reservacion_id;" ), [
+				'reservacion_id' => $this->attributes['id']
+			] ) )->first()->aforo;
+			$invitados = Invitado::where('reservacion_id',$this->attributes['id'])->get()->count();
+			return $data+$invitados;
+		}else{
+			return '-';
+		}
+
 	}
 }

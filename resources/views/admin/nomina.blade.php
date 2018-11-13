@@ -60,7 +60,7 @@
                                         <td>
 
 
-                                            {{$coach->name}} - {{$coach->detalles->rating}}
+                                            {{$coach->name}} - {{number_format(floatval($coach->detalles->rating), 2, '.', '')}}
 
 
                                         </td>
@@ -223,7 +223,7 @@
                                             <tr>
                                                 <td>
                                                     <?php
-                                                    echo \Carbon\Carbon::parse($abono->created_at)->toDateTimeString();
+                                                    echo \Carbon\Carbon::parse($abono->reservacion->fecha.' '.$abono->reservacion->hora)->toDateTimeString();
                                                     $count += $abono->abono;
                                                     ?>
                                                 </td>
