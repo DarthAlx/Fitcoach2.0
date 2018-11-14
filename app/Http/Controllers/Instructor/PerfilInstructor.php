@@ -41,7 +41,11 @@ class PerfilInstructor extends Controller {
 			date_default_timezone_set( 'America/Mexico_City' );
 			if ( $item->tipo == "clase" ) {
 				$horario     = Horario::with( 'condominio' )->where( 'id', '=', $item->horarioId )->get()->first();
-				$item->lugar = $horario->condominio->direccion;
+				if($horario!=null && $horario->condominio!=null){
+					$item->lugar = $horario->condominio->direccion;
+				}else{
+					$item->lugar = '';
+				}
 			} else {
 				$reservacion   = Reservacion::where( 'id', '=', $item->reservacionId )->get()->first();
 				$cliente       = User::with( 'detalles' )->find( $reservacion->user_id );
