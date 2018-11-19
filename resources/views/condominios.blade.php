@@ -8,7 +8,7 @@
             <div class="container-bootstrap-fluid">
                 <div class="row">
                     <div class="col-sm-10">
-                        <div class="title" style="font-size: 8vw; float: left; line-height: 0.8;">CONDOMINIOS</div>
+                        <div class="title" style="font-size: 6vw; float: left; line-height: 0.8;">CONDOMINIOS</div>
 
                     </div>
                     <div class="col-sm-2">
@@ -28,7 +28,7 @@
                     </div>
                     <div class="col-sm-12 visible-xs">
                         <div class="buscador">
-                            <div class="coupon">
+                            <div class="coupon" style="margin-top: 30px;">
                                 <form action="{{url('buscarresidencial')}}" onsubmit="fbq('track', 'Search');"
                                       method="post">
                                     {!! csrf_field() !!}

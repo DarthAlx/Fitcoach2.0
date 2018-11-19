@@ -142,22 +142,16 @@ class User extends Model implements AuthenticatableContract,
     public function nomina()
     {
         $pagos = collect(Pago::where('user_id',$this->attributes['id'])->get());
-        $lastDate=null;
-        foreach ($pagos as &$pago){
-                $query=Abono::with('reservacion')
-                    ->with('reservacion.horario')
-                    ->with('reservacion.horario.clase')
-                    ->where('realizado',true)
+	    $abonos=Abono::with('reservacion')
+	                ->with('reservacion.horario')
+	                ->with('reservacion.horario.clase')
+	                ->where('realizado',true)
 	                ->where('user_id',$this->attributes['id'])
-                    ->where('created_at','<=',$pago->created_at);
-                if($lastDate!=null){
-                    $query->where('created_at','>',$lastDate);
-                }
-                $pago->abonos = $query->get();
-                $lastDate = $pago->created_at;
-        }
-        Log::debug('this is payments',['pagos'=>$pagos]);
-        return $pagos;
+	                ->get();
+	    $collection = collect($pagos)->merge($abonos)->sortByDate('created_at', false);
+
+        Log::debug('this is payments',['pagos'=>$collection]);
+        return $collection;
     }
 
     public function paquetesDisponiblesDomicilio()

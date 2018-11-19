@@ -66,7 +66,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <?php $array = array(); ?>
+							<?php $array = array(); ?>
                             @if ($clases)
                                 @foreach ($clases as $clase)
                                     @if ($clase->tipo=="En condominio")
@@ -80,10 +80,10 @@
 
                                                 <td>{{$clase->nombre}}</td>
                                                 <td>
-                                                    <?php
-                                                    $coach = App\User::find($clase->coach_id);
+													<?php
+													$coach = App\User::find( $clase->coach_id );
 
-                                                    ?>
+													?>
 
 
                                                     {{$coach->name}}
@@ -117,7 +117,7 @@
                                                     @endif
                                                 </td>
                                             </tr>
-                                            <?php $array[] = $clase->nombre . $clase->fecha . $clase->hora; ?>
+											<?php $array[] = $clase->nombre . $clase->fecha . $clase->hora; ?>
                                         @endif
 
                                     @elseif ($clase->tipo=="A domicilio")
@@ -127,10 +127,10 @@
 
                                             <td>{{$clase->nombre}}</td>
                                             <td>
-                                                <?php
-                                                $coach = App\User::find($clase->coach_id);
+												<?php
+												$coach = App\User::find( $clase->coach_id );
 
-                                                ?>
+												?>
 
 
                                                 {{$coach->name}}
@@ -227,16 +227,16 @@
                                         <p>No existe el usuario</p>
                                     @endif<br>
 
-                                    <?php
-                                    $coach = App\User::find($clase->coach_id);
-                                    $calificacion = App\Rating::where('reservacion_id', $clase->id)->first();
-                                    if ($calificacion) {
-                                        $promedio = $calificacion->rate;
-                                    } else {
-                                        $promedio = "Sin rating";
-                                    }
+									<?php
+									$coach = App\User::find( $clase->coach_id );
+									$calificacion = App\Rating::where( 'reservacion_id', $clase->id )->first();
+									if ( $calificacion ) {
+										$promedio = $calificacion->rate;
+									} else {
+										$promedio = "Sin rating";
+									}
 
-                                    ?>
+									?>
 
 
                                     <strong>Rating: </strong> {{$promedio}}
@@ -278,26 +278,27 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img
                                         src="{{url('/images/cross.svg')}}" alt=""></button>
                             <h4 class="title">Abonar</h4>
-                            <?php $coach = App\User::find($clase->coach_id); ?>
-                            <p>{{$coach->name}}</p>
-                            <div class="row">
+							<?php $coach = App\User::find( $clase->coach_id ); ?>
+                            @if($coach!=null)
+                                <p>{{$coach->name}}</p>
+                                <div class="row">
 
-                                <div class="col-sm-12">
-                                    <form action="{{ url('/abonar') }}" method="post">
-                                        <label for="">¿Cuanto quieres abonar?</label>
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="hidden" name="user_id" value="{{ $coach->id }}">
-                                        <input type="hidden" name="reservacion_id" value="{{ $clase->id }}">
-                                        <input type="number" name="abono" class="form-control" placeholder="Abono"
-                                               required>
-                                        <button class="btn btn-success" type="submit"
-                                                style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
-                                            Completar
-                                        </button>
-                                    </form>
+                                    <div class="col-sm-12">
+                                        <form action="{{ url('/abonar') }}" method="post">
+                                            <label for="">¿Cuanto quieres abonar?</label>
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <input type="hidden" name="user_id" value="{{ $coach->id }}">
+                                            <input type="hidden" name="reservacion_id" value="{{ $clase->id }}">
+                                            <input type="number" name="abono" class="form-control" placeholder="Abono"
+                                                   required>
+                                            <button class="btn btn-success" type="submit"
+                                                    style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
+                                                Completar
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
-
+                            @endif
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
@@ -316,30 +317,34 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img
                                         src="{{url('/images/cross.svg')}}" alt=""></button>
                             <h4 class="title">Cancelar</h4>
-                            <?php $coach = App\User::find($clase->coach_id); ?>
-                            <p>{{$clase->nombre}}</p>
-                            <div class="row">
+							<?php $coach = App\User::find( $clase->coach_id ); ?>
+                            @if($coach!=null)
+                                <p>{{$clase->nombre}}</p>
+                                <div class="row">
 
-                                <div class="col-sm-12">
-                                    <form action="{{ url('/cancelar') }}" method="post">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="hidden" name="user_id" value="{{ $coach->id }}">
-                                        <input type="hidden" name="orden_id" value="{{ $clase->id }}">
-                                        <input type="hidden" name="id" value="{{ $clase->id }}">
-                                        <select class="form-control" name="tipocancelacion" required>
-                                            <option value="">Tipo de cancelación</option>
-                                            <option value="token">Token</option>
-                                            <option value="abono">Abonar</option>
-                                        </select>
-                                        <input type="text" name="abono" class="form-control" placeholder="Abono/Tokens"
-                                               required>
-                                        <button class="btn btn-success" type="submit"
-                                                style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
-                                            Completar
-                                        </button>
-                                    </form>
+                                    <div class="col-sm-12">
+                                        <form action="{{ url('/cancelar') }}" method="post">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <input type="hidden" name="user_id" value="{{ $coach->id }}">
+                                            <input type="hidden" name="orden_id" value="{{ $clase->id }}">
+                                            <input type="hidden" name="id" value="{{ $clase->id }}">
+                                            <select class="form-control" name="tipocancelacion" required>
+                                                <option value="">Tipo de cancelación</option>
+                                                <option value="token">Token</option>
+                                                <option value="abono">Abonar</option>
+                                            </select>
+                                            <input type="text" name="abono" class="form-control" placeholder="Abono/Tokens"
+                                                   required>
+                                            <button class="btn btn-success" type="submit"
+                                                    style="color: #fff !important; background-color: #D58628 !important; border-color: rgba(213, 134, 40, 0.64) !important;">
+                                                Completar
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
+
+                            @endif
+
 
                         </div>
                     </div><!-- /.modal-content -->

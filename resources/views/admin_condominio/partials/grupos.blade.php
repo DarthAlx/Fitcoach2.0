@@ -65,7 +65,7 @@
                                         </td>
                                         <td>
                                             @if($grupo!=null)
-                                                {{$grupo->aforoPromedio()}}
+                                                {{number_format((float)$grupo->aforoPromedio(), 2, '.', '')}}
                                             @endif
                                         </td>
                                     </tr>

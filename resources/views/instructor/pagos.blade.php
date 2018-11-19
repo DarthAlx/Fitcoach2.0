@@ -9,28 +9,31 @@
     </tr>
     </thead>
     <tbody>
+    <?php
+    $count = 0;
+    ?>
     @foreach($user->nomina() as $pago)
         @if($pago!=null)
-	        <?php
-	        $count = 0;
-	        ?>
-            @foreach($pago->abonos as $abono)
+
+            @if($pago->metodo==null)
                 <tr>
                     <td>
-				        <?php
-	                    echo \Carbon\Carbon::parse($abono->reservacion->fecha.' '.$abono->reservacion->hora)->toDateTimeString();
-				        $count += $abono->abono;
-				        ?>
+						<?php
+						if ($pago->reservacion!=null ) {
+							echo \Carbon\Carbon::parse( $pago->reservacion->fecha . ' ' . $pago->reservacion->hora )->toDateTimeString();
+						}
+						$count += $pago->abono;
+						?>
                     </td>
                     <td>
-                        @if($abono->reservacion!=null)
-                            {{$abono->reservacion->horario->clase->nombre}} - {{$abono->reservacion->id}}
+                        @if($pago->reservacion!=null)
+                            {{$pago->reservacion->horario->clase->nombre}} - {{$pago->reservacion->id}}
                         @else
                             <span>-</span>
                         @endif
                     </td>
                     <td>
-                        $ {{$abono->abono}}
+                        $ {{$pago->abono}}
                     </td>
                     <td>
                         -
@@ -39,13 +42,12 @@
                         ${{$count}}
                     </td>
                 </tr>
-            @endforeach
-            @if($pago->metodo=='Asimilados')
+            @elseif($pago->metodo=='Asimilados')
                 <tr>
                     <td>
-				        <?php
-				        echo \Carbon\Carbon::parse($pago->created_at)->toDateTimeString();
-				        ?>
+						<?php
+						echo \Carbon\Carbon::parse( $pago->created_at )->toDateTimeString();
+						?>
                     </td>
                     <td>
                         <span>Deduccion por asimilados</span>
@@ -62,9 +64,9 @@
                 </tr>
                 <tr>
                     <td>
-				        <?php
-				        echo \Carbon\Carbon::parse($pago->created_at)->toDateTimeString();
-				        ?>
+						<?php
+						echo \Carbon\Carbon::parse( $pago->created_at )->toDateTimeString();
+						?>
                     </td>
                     <td>
                         <span>Pago a cuenta propia - {{$pago->id}}</span>
@@ -82,9 +84,9 @@
             @elseif($pago->metodo=='Efectivo')
                 <tr>
                     <td>
-				        <?php
-				        echo \Carbon\Carbon::parse($pago->created_at)->toDateTimeString();
-				        ?>
+						<?php
+						echo \Carbon\Carbon::parse( $pago->created_at )->toDateTimeString();
+						?>
                     </td>
                     <td>
                         <span>Pago en efectivo</span>
@@ -102,9 +104,9 @@
             @elseif($pago->metodo=='Transferencia')
                 <tr>
                     <td>
-				        <?php
-				        echo \Carbon\Carbon::parse($pago->created_at)->toDateTimeString();
-				        ?>
+						<?php
+						echo \Carbon\Carbon::parse( $pago->created_at )->toDateTimeString();
+						?>
                     </td>
                     <td>
                         <span>Iva por factura</span>
@@ -121,9 +123,9 @@
                 </tr>
                 <tr>
                     <td>
-				        <?php
-				        echo \Carbon\Carbon::parse($pago->created_at)->toDateTimeString();
-				        ?>
+						<?php
+						echo \Carbon\Carbon::parse( $pago->created_at )->toDateTimeString();
+						?>
                     </td>
                     <td>
                         <span>Pago a cuenta propia - {{$pago->id}}</span>

@@ -188,7 +188,7 @@
                                 @endforeach
                             </select>
                             <script type="text/javascript">
-                                if (document.getElementById('clases_id{{ $grupo->id }}') != null) document.getElementById('clases_id{{ $grupo->id }}').value = '{!! $grupo->clase_id !!}';
+                                if (document.getElementById('clases_id{{ $grupo->id }}') != null) document.getElementById('clases_id{{ $grupo->id }}').value = {!! $grupo->clase_id !!};
                             </script>
                             <select class="form-control" name="audiencia" id="audiencia{{  $grupo->id }}"
                                     required>

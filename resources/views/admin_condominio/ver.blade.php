@@ -84,7 +84,7 @@
                                     <div class="col-lg-2 col-xs-4">
                                         <p class="condominios-clases-text">{{$horario->grupo->room->nombre}}</p>
                                     </div>
-                                    <div class="col-lg-2 col-xs-4">
+                                    <div class="col-lg-1 col-xs-4">
                                         <p class="condominios-clases-text">{{$horario->hora}}</p>
                                     </div>
                                     <div class="col-lg-1 col-xs-2">
@@ -100,7 +100,7 @@
                                             @endif
                                         </p>
                                     </div>
-                                    <div class="col-lg-3 col-xs-10">
+                                    <div class="col-lg-4 col-xs-10">
                                         <a data-toggle="modal"
                                            data-target="#admin-condominios-horarios-ver{{$reservacion->id}}">
                                             <i class="icon-classes-image fa fa-list-ul"></i>

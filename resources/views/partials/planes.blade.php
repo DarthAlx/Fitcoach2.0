@@ -277,9 +277,9 @@
                                         <input type="text" class="form-control add-adult-form-nombre" name="nombre"
                                                placeholder="Nombre" required>
                                         <input type="email" class="form-control add-adult-form-email" name="email"
-                                               placeholder="Email" required>
+                                               placeholder="Email">
                                         <input type="date" class="form-control add-adult-form-dob" name="dob"
-                                               placeholder="Fecha de nacimiento aaaa-mm-dd" required>
+                                               placeholder="Fecha de nacimiento aaaa-mm-dd" >
                                         <input type="password" class="form-control add-adult-form-password"
                                                name="password"
                                                placeholder="Contraseña">

@@ -43,7 +43,7 @@
                 @if ($eventos)
                     @foreach ($eventos as $evento)
                         <div class="teamItem">
-                            <a><img src="{{ url('uploads/clases') }}/{{ $evento->imagenevento }}"
+                            <a><img src="{{ url('uploads/clases') }}/{{ $evento->imagen }}"
                                     class="img-responsive"></a>
                             <div class="overlay" data-toggle="modal" data-target="#evento{{$evento->id}}">
                                 <div class="teamItemNameWrap">

@@ -64,7 +64,7 @@ class Reservacion extends Model {
 
 	public function aforo()
 	{
-		if($this->attributes['status']=='COMPLETADA' || $this->attributes['status']=='EN REVISIÓN'){
+		if($this->attributes['status']=='COMPLETA' || $this->attributes['status']=='COMPLETADA' || $this->attributes['status']=='EN REVISIÓN'){
 			$data      = collect( DB::select( DB::raw( "SELECT COUNT(*) as aforo FROM reservacion_usuarios WHERE reservacion_usuarios.asistencia = 1 AND reservacion_usuarios.reservacion_id =:reservacion_id;" ), [
 				'reservacion_id' => $this->attributes['id']
 			] ) )->first()->aforo;

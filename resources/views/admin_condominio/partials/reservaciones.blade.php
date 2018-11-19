@@ -9,7 +9,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <h4>RESERVACIONES Y ASISTENCIA
-                                            <span style="color: #cdcdcd">{!! $horario->clase->id !!}</span>
+                                            <span style="color: #cdcdcd">{!! $horario->id !!}</span>
                                             &nbsp;
                                             <a target="_blank"
                                                href="{{url('/listainscritos')}}/{{$reservacion->id}}?tipo=clase">
@@ -39,27 +39,29 @@
                                 <br/>
                                 @foreach ($reservacion->asistentes as $asistente)
                                     @if($asistente->reserva)
-                                        <div class="row">
-                                            <div class="col-sm-1">
-                                                @if($asistente->asistencia)
-                                                    <i class="fa fa-check-circle"></i>
-                                                @else
-                                                    <i class="fa fa-times-circle"></i>
-                                                @endif
+                                        @if($asistente->estado!='CANCELADA')
+                                            <div class="row">
+                                                <div class="col-sm-1">
+                                                    @if($asistente->asistencia)
+                                                        <i class="fa fa-check-circle"></i>
+                                                    @else
+                                                        <i class="fa fa-times-circle"></i>
+                                                    @endif
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    {{$asistente->usuario->name}}
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    {{$asistente->usuario->genero}}
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    {{$asistente->usuario->email}}
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    {{$asistente->usuario->tel}}
+                                                </div>
                                             </div>
-                                            <div class="col-sm-4">
-                                                {{$asistente->usuario->name}}
-                                            </div>
-                                            <div class="col-sm-2">
-                                                {{$asistente->usuario->genero}}
-                                            </div>
-                                            <div class="col-sm-3">
-                                                {{$asistente->usuario->email}}
-                                            </div>
-                                            <div class="col-sm-1">
-                                                {{$asistente->usuario->tel}}
-                                            </div>
-                                        </div>
+                                        @endif
                                     @endif
                                 @endforeach
                                 <br/>

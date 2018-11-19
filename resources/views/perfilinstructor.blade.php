@@ -176,9 +176,9 @@
                                            id="dynamic-table2">
                                         <thead>
                                         <tr>
+                                            <th>Fecha</th>
                                             <th>Nombre</th>
                                             <th>Dirección</th>
-                                            <th>Fecha</th>
                                             <th>Room</th>
                                             <th>Estado</th>
                                             <th></th>
@@ -188,14 +188,15 @@
                                         @foreach ($pasadas as $pasada)
                                             <tr>
                                                 <td>
+                                                    {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
+                                                </td>
+                                                <td>
                                                     <strong>{{$pasada->nombre}}</strong>
                                                 </td>
                                                 <td>
                                                     {{$pasada->direccion}}
                                                 </td>
-                                                <td>
-                                                    {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
-                                                </td>
+
                                                 <td>
                                                     {{$pasada->room}}
                                                 </td>
@@ -401,9 +402,9 @@
                                    id="dynamic-table">
                                 <thead>
                                 <tr>
+                                    <th>Fecha</th>
                                     <th>Nombre</th>
                                     <th>Dirección</th>
-                                    <th>Fecha</th>
                                     <th>Room</th>
                                     <th>Estado</th>
                                     <th></th>
@@ -413,14 +414,15 @@
                                 @foreach ($pasadas as $pasada)
                                     <tr>
                                         <td>
+                                            {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
+                                        </td>
+                                        <td>
                                             <strong>{{$pasada->nombre}}</strong>
                                         </td>
                                         <td>
                                             {{$pasada->direccion}}
                                         </td>
-                                        <td>
-                                            {{strftime("%d %B", strtotime($pasada->fecha))}} {{ $pasada->hora }}
-                                        </td>
+
                                         <td>
                                             {{$pasada->room}}
                                         </td>

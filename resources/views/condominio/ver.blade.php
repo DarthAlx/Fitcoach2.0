@@ -58,11 +58,11 @@
                                     </div>
                                     <div class="col-lg-2 col-xs-4">
                                         @if($hour>$horario->hora)
-                                            <button class="btn" style="background-color: #999; color:#fff">
+                                            <button class="btn" style="background-color: #999; color:#fff;border-radius: 40px;display: block;margin: auto">
                                                 Impartida
                                             </button>
                                         @elseif($reservacion->status!='PROXIMA')
-                                            <button class="btn" style="background-color: #999; color:#fff">
+                                            <button class="btn" style="background-color: #999; color:#fff;border-radius: 40px;display: block;margin: auto"">
                                                 No disponible
                                             </button>
                                         @else
