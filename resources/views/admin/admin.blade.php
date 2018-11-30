@@ -27,7 +27,7 @@
     </div>
     <div class="col-md-3 col-sm-4 col-xs-6 modulo" id="coaches-admin" style="display:none;">
       <a href="{{ url('/condominio-admins') }}">
-        <img src="{{ url('images/coaches.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/coaches_b.png')}}'" onmouseout="this.src='{{ url('images/coaches.png')}}'" alt="">
+        <img src="{{ url('images/admin-condo.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/admin-condo_b.png')}}'" onmouseout="this.src='{{ url('images/admin-condo.png')}}'" alt="">
       </a>
     </div>
     <div class="col-md-3 col-sm-4 col-xs-6 modulo" id="condominios" style="display:none;">
@@ -37,7 +37,7 @@
     </div>
     <div class="col-md-3 col-sm-4 col-xs-6 modulo" id="rooms" style="display:none;">
       <a href="{{ url('/rooms') }}">
-        <img src="{{ url('images/grupos.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/grupos_b.png')}}'" onmouseout="this.src='{{ url('images/grupos.png')}}'" alt="">
+        <img src="{{ url('images/rooms.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/rooms_b.png')}}'" onmouseout="this.src='{{ url('images/rooms.png')}}'" alt="">
       </a>
     </div>
 
@@ -102,7 +102,7 @@
 
     <div class="col-md-3 col-sm-4 col-xs-6 modulo" id="reportes" style="display:none;">
       <a href="{{ url('/reportes') }}">
-        <img src="{{ url('images/zonas.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/zonas_b.png')}}'" onmouseout="this.src='{{ url('images/zonas.png')}}'" alt="">
+        <img src="{{ url('images/reportes.png')}}" class="img-responsive" onmouseover="this.src='{{ url('images/reportes_b.png')}}'" onmouseout="this.src='{{ url('images/reportes.png')}}'" alt="">
       </a>
     </div>
 
